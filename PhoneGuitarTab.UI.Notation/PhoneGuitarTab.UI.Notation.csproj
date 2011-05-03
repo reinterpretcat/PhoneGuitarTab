@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8A7BCC7D-607A-4D9F-B991-18EB5FDD728F}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PhoneGuitarTab.UI.Notation</RootNamespace>
+    <AssemblyName>PhoneGuitarTab.UI.Notation</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>PhoneGuitarTab.UI.Notation.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>PhoneGuitarTab.UI.Notation.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Coding4Fun.Phone.Controls">
+      <HintPath>..\ExternalLibs\Toolkit\Coding4Fun.Phone.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Coding4Fun.Phone.Controls.Toolkit">
+      <HintPath>..\ExternalLibs\Toolkit\Coding4Fun.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Coding4Fun.Phone.Site.Controls">
+      <HintPath>..\ExternalLibs\Toolkit\Coding4Fun.Phone.Site.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="LazyListBox">
+      <HintPath>..\ExternalLibs\LazyListBox\LazyListBox.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Practices.Prism.Interactivity, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Interactivity, Version=3.7.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIExtensionMethods">
+      <HintPath>..\ExternalLibs\LazyListBox\UIExtensionMethods.dll</HintPath>
+    </Reference>
+    <Reference Include="Wintellect.Sterling.WindowsPhone">
+      <HintPath>..\ExternalLibs\Sterling\Wintellect.Sterling.WindowsPhone.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HelpView.xaml.cs">
+      <DependentUpon>HelpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionView.xaml.cs">
+      <DependentUpon>CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\ButtonBaseClickCommandBehavior.cs" />
+    <Compile Include="Commands\Click.cs" />
+    <Compile Include="Commands\CommandBehaviorBase.cs" />
+    <Compile Include="Commands\KeyUp.cs" />
+    <Compile Include="Commands\TextBoxCommandBehavior.cs" />
+    <Compile Include="GroupView.xaml.cs">
+      <DependentUpon>GroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\GroupToBrushValueConverter.cs" />
+    <Compile Include="Infrastructure\IsolatedStorageHelper.cs" />
+    <Compile Include="Infrastructure\TabToBrushValueConverter.cs" />
+    <Compile Include="Infrastructure\Tombstoning.cs" />
+    <Compile Include="Infrastructure\UpperStringConverter.cs" />
+    <Compile Include="Infrastructure\IntToStringConverter.cs" />
+    <Compile Include="Persistence\RepositoryHelper.cs" />
+    <Compile Include="Persistence\TabInGroup.cs" />
+    <Compile Include="Persistence\TabByName.cs" />
+    <Compile Include="Persistence\BandInGroup.cs" />
+    <Compile Include="Persistence\Group.cs" />
+    <Compile Include="Persistence\BandByName.cs" />
+    <Compile Include="Persistence\Tab.cs" />
+    <Compile Include="Persistence\TabType.cs" />
+    <Compile Include="Infrastructure\Constants.cs" />
+    <Compile Include="Persistence\TabDataBaseInstance.cs" />
+    <Compile Include="Infrastructure\LazyTrackDataItem.cs" />
+    <Compile Include="Infrastructure\MeasureHelper.cs" />
+    <Compile Include="Infrastructure\NavigationServiceEx.cs" />
+    <Compile Include="Infrastructure\PageMapping.cs" />
+    <Compile Include="Infrastructure\PageType.cs" />
+    <Compile Include="Persistence\SterlingService.cs" />
+    <Compile Include="Infrastructure\VirtualizedTrackList.cs" />
+    <Compile Include="Infrastructure\MemoryDiagnosticsHelper.cs" />
+    <Compile Include="SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StartupView.xaml.cs">
+      <DependentUpon>StartupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TabView.xaml.cs">
+      <DependentUpon>TabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextTabView.xaml.cs">
+      <DependentUpon>TextTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\HelpViewModel.cs" />
+    <Compile Include="ViewModel\TextTabViewModel.cs" />
+    <Compile Include="ViewModel\GroupViewModel.cs" />
+    <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="MeasureView.xaml.cs">
+      <DependentUpon>MeasureView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\StartupViewModel.cs" />
+    <Compile Include="ViewModel\TabViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="HelpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StartupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MeasureView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TextTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\all\BlueWater.jpg" />
+    <Content Include="Images\all\Group.png" />
+    <Content Include="Images\all\TabGP.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\all\TabPTB.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\all\TabText.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\all\Water.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\dark\appbar.feature.email.rest.png" />
+    <Content Include="Images\dark\appbar.feature.search.rest.png" />
+    <Content Include="Images\dark\appbar.feature.settings.rest.png" />
+    <Resource Include="Images\light\appbar.feature.email.rest.png" />
+    <Resource Include="Images\light\appbar.feature.settings.rest.png" />
+    <Content Include="Images\light\appbar.feature.search.rest.png" />
+    <Content Include="Images\light\appbar.folder.rest.png" />
+    <Content Include="Images\dark\appbar.folder.rest.png" />
+    <Content Include="SplashScreenImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
+      <Project>{0A2CDA04-2A0F-44BB-A9B6-9815CB02C328}</Project>
+      <Name>PhoneGuitarTab.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneGuitarTab.Search\PhoneGuitarTab.Search.csproj">
+      <Project>{84717845-7D26-4F3F-9DED-AE0C33FEE1E6}</Project>
+      <Name>PhoneGuitarTab.Search</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+</Project>
