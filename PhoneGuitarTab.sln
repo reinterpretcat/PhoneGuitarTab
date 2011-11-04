@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Search", "Ph
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Tests", "PhoneGuitarTab.Tests\PhoneGuitarTab.Tests.csproj", "{804392BB-6FBA-4186-B409-37F484FC04B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Tools", "PhoneGuitarTab.Tools\PhoneGuitarTab.Tools.csproj", "{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,16 @@ Global
 		{804392BB-6FBA-4186-B409-37F484FC04B4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{804392BB-6FBA-4186-B409-37F484FC04B4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{804392BB-6FBA-4186-B409-37F484FC04B4}.Release|x86.ActiveCfg = Release|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,22 +7,24 @@ using System.Net;
 
 namespace PhoneGuitarTab.Search.UltimateGuitar
 {
-    public class SearchTabDownloader:FileDownloader
+    public class SearchTabDownloader: FileDownloader
     {
         private const string UrlTemplateFile = "http://ultimate-guitar.com/tab_download.php?tab_id={0}";
 
         private SearchTabResultEntry Entry { get; set; }
 
 
-        public SearchTabDownloader(SearchTabResultEntry entry)
+        public SearchTabDownloader(SearchTabResultEntry entry, string destination)
         {
             Entry = entry;
+            IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
+            stream = store.OpenFile(destination, FileMode.CreateNew);
         }
-        
-        public void Download(string destination)
+
+        public override void Download()
         {
             string link;
-            //only these types are supported by UrlTemplateFile link
+           /* //only these types are supported by UrlTemplateFile link
             if ((Entry.Type != "guitar pro") && (Entry.Type != "power tab"))
             {
                 //InvokeDownloadComplete(new EventArgs());
@@ -30,12 +32,14 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                 link = Entry.Url;
             }
             else
-            {
+            {*/
+            if (Entry.Type == "tab pro")
                 link = String.Format(UrlTemplateFile, Entry.Id);
-            }
+            else
+                link = Entry.Url;
+            //}
 
-           Download(link,destination);
-
+            base.Download(new UgHttpWebRequest(link));
         }
     }
 }

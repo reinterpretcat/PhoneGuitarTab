@@ -102,7 +102,6 @@
       <DependentUpon>GroupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\GroupToBrushValueConverter.cs" />
-    <Compile Include="Infrastructure\IsolatedStorageHelper.cs" />
     <Compile Include="Infrastructure\TabToBrushValueConverter.cs" />
     <Compile Include="Infrastructure\Tombstoning.cs" />
     <Compile Include="Infrastructure\UpperStringConverter.cs" />
@@ -239,6 +238,10 @@
     <ProjectReference Include="..\PhoneGuitarTab.Search\PhoneGuitarTab.Search.csproj">
       <Project>{84717845-7D26-4F3F-9DED-AE0C33FEE1E6}</Project>
       <Name>PhoneGuitarTab.Search</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneGuitarTab.Tools\PhoneGuitarTab.Tools.csproj">
+      <Project>{63C51BFB-80AB-4A27-B7EA-5FBB2DFF1D50}</Project>
+      <Name>PhoneGuitarTab.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

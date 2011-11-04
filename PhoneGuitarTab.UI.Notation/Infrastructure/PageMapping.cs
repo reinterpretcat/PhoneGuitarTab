@@ -28,7 +28,7 @@ namespace PhoneGuitarTab.UI.Notation.Infrastructure
         {
             switch (tab.Type)
             {
-                case "guitar pro":
+                case "tab pro":
                     return PageType.Tab;
                 default:
                     return  PageType.TextTab;

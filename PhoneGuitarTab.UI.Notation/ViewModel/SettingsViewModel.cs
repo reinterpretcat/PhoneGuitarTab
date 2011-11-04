@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Notation.Infrastructure;
 
 namespace PhoneGuitarTab.UI.Notation.ViewModel
@@ -42,6 +43,13 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
                         {
                             new NavigationServiceEx().NavigateTo(PageType.Startup);
                         });
+
+            Login =
+                new DelegateCommand(
+                    () =>
+                    {
+                        //UgSession.Instance.LogIn();
+                    });
           
             if(!IsolatedStorageHelper.IsExistParameter("Settings.Search.IsGuitarPro"))
                 IsGuitarPro = IsPowerTab = IsText = true;
@@ -111,6 +119,12 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
             {
                 return this.submitNotificationInteractionRequest;
             }
+        }
+
+        public DelegateCommand Login
+        {
+            get;
+            private set;
         }
 
         public DelegateCommand SearchCommand

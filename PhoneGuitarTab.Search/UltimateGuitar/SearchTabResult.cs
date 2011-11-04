@@ -10,7 +10,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
     public class SearchTabResult
     {
         private const string RequestTemplate =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=500&version_la=&iphone=1&order=band_name_srt&page={2}";
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=400&type[]=500&version_la=&iphone=1&order=band_name_srt&page={2}";
 
         public SearchTabResultSummary Summary;
         public List<SearchTabResultEntry> Entries;

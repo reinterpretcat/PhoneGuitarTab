@@ -2,20 +2,27 @@
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+
 
 namespace PhoneGuitarTab.Search
 {
-    public class FileDownloader
+    /// <summary>
+    /// Downloads files and stores it to destination
+    /// </summary>
+    public class FileDownloader: IDisposable
     {
-         public event EventHandler DownloadComplete;
+        protected Stream stream; 
+        public event EventHandler DownloadComplete;
+
+
+        public FileDownloader(Stream writeStream)
+        {
+            stream = writeStream;
+        }
+
+        protected FileDownloader()
+        {
+        }
 
         private void InvokeDownloadComplete(EventArgs e)
         {
@@ -23,30 +30,45 @@ namespace PhoneGuitarTab.Search
             if (handler != null) handler(this, e);
         }
 
-        public void Download(string url, string destination)
+        public virtual void Download()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //nothing to do
+            InvokeDownloadComplete(new EventArgs());
+        }
+
+        /// <summary>
+        /// Download via HttpWebRequest
+        /// </summary>
+        /// <param name="url"></param>
+        public void Download(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
+            Download(request);
+        }
+
+        /// <summary>
+        /// Download via decorated WebRequest
+        /// </summary>
+        /// <typeparam name="T">type of WebRequest</typeparam>
+        /// <param name="request">decorated WebRequest</param>
+        public void Download<T>(T request) where T: WebRequest
+        {
             request.BeginGetResponse(r =>
             {
                 var response = request.EndGetResponse(r);
                 try
                 {
-
                     // Open the response stream
                     using (Stream responseStream = response.GetResponseStream())
                     {
-                        IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
-                        using (var fileStream = store.OpenFile(destination, FileMode.CreateNew))
-                        {
-                            // Create a 4K buffer to chunk the file
-                            byte[] myBuffer = new byte[4096];
-                            int bytesRead;
-                            while (0 <
-                                   (bytesRead =
-                                    responseStream.Read(myBuffer, 0, myBuffer.Length)))
-                                fileStream.Write(myBuffer, 0, bytesRead);
-                        }
-
+                        //TODO: catch error here
+                        // Create a 4K buffer to chunk the file
+                        byte[] myBuffer = new byte[4096];
+                        int bytesRead;
+                        while (0 <
+                               (bytesRead =
+                                responseStream.Read(myBuffer, 0, myBuffer.Length)))
+                            stream.Write(myBuffer, 0, bytesRead);
                     }
 
                 }
@@ -64,6 +86,11 @@ namespace PhoneGuitarTab.Search
                 }
 
             }, null);
+        }
+
+        public void Dispose()
+        {
+            stream.Dispose();
         }
     }
 }

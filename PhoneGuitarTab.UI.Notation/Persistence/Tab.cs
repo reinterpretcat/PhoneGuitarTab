@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,25 +21,26 @@ namespace PhoneGuitarTab.UI.Notation.Persistence
         public string Name { get; set; }
         public Group Group { get; set; }
 
+        internal static Dictionary<string, string> ImageTypeMapping { get; set; }
+        static Tab()
+        {
+            ImageTypeMapping = new Dictionary<string, string>
+                                   {
+                                       {"tab pro", "/Images/all/TabGP.png"},
+                                       {"power tab", "/Images/all/TabPTB.jpg"},
+                                       {"default", "/Images/all/TabText.png"}
+                                   };
+        }                                                     
+
         private string _type;
         public string Type
         {
             get { return _type; } 
-            set { 
+            set
+            {
                 _type = value;
-                switch (_type)
-                {
-                    case "guitar pro":
-                        ImageUrl = "/Images/all/TabGP.png";
-                        break;
-                    case "power tab":
-                        ImageUrl = "/Images/all/TabPTB.jpg";
-                        break;
-                    default:
-                        ImageUrl = "/Images/all/TabText.png";
-                        break;
-                }
-
+                ImageUrl = ImageTypeMapping.ContainsKey(_type) ? 
+                    ImageTypeMapping[_type] : ImageTypeMapping["default"];
             }
         }
 

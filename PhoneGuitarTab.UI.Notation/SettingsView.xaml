@@ -10,8 +10,7 @@
     xmlns:Custom="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
     xmlns:prismInteractivity="clr-namespace:Microsoft.Practices.Prism.Interactivity;assembly=Microsoft.Practices.Prism.Interactivity" 
     xmlns:prismInteractionRequest="clr-namespace:Microsoft.Practices.Prism.Interactivity.InteractionRequest;assembly=Microsoft.Practices.Prism.Interactivity" 
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" xmlns:cmd="clr-namespace:Microsoft.Practices.Prism.Commands" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     x:Name="root"
@@ -44,6 +43,19 @@
                         <CheckBox Content="text" IsChecked="{Binding IsText, Mode=TwoWay}"/>
                     </StackPanel>
                 </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel>
+                        <TextBox Text="aidan" />
+                        <TextBox Text="1103897" cmd:KeyUp.Command="{Binding Path=DataContext.Login, ElementName=root}"  />
+                    </StackPanel>
+                </Grid>
+                    
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,16 +54,24 @@ namespace PhoneGuitarTab.UI.Notation.Infrastructure
         }
 
 	    private const string TabDirectory = "Tabs";
-        public static string GetTabFilePath()
+
+        public static string CreateTabFilePath()
         {
-            if(!Store.DirectoryExists(TabDirectory))
+            if (!Store.DirectoryExists(TabDirectory))
                 Store.CreateDirectory(TabDirectory);
 
             return String.Format("{0}\\{1}.tab", TabDirectory, Guid.NewGuid().ToString());
         }
 
+        public static Stream CreateTabFile(string filePath)
+        {
+            return IsolatedStorageFile.GetUserStoreForApplication().OpenFile(filePath, FileMode.CreateNew);
+        }
+
+
+
 	    private const string ImageDirectory = "DownloadedImages";
-        public static string GetImageFilePath(string type)
+        public static string CreateImageFilePath(string type)
         {
             if (!Store.DirectoryExists(ImageDirectory))
                 Store.CreateDirectory(ImageDirectory);

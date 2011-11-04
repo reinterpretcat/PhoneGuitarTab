@@ -84,9 +84,10 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
         private bool FilterTab(SearchTabResultEntry entry)
         {
             //TODO optimize this
-            return ((entry.Type == "guitar pro") && (_isGuitarPro))||
+            /*return ((entry.Type == "guitar pro") && (_isGuitarPro))||
                 ((entry.Type == "power tab") && (_isPowerTab))||
-                (((entry.Type == "bass") || (entry.Type == "tab")) && (_isText));
+                (((entry.Type == "bass") || (entry.Type == "tab")) && (_isText));*/
+            return true;
         }
 
         private void DoLaunchSearch(string arg)
@@ -178,9 +179,10 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
             string customTab = CustomTabName;
             string url = arg;
             //
-            string filePath = IsolatedStorageHelper.GetTabFilePath();
+            var filePath = IsolatedStorageHelper.CreateTabFilePath();
+            var fileStream = IsolatedStorageHelper.CreateTabFile(filePath);
 
-            FileDownloader downloader = new FileDownloader();
+            FileDownloader downloader = new FileDownloader(fileStream);
             downloader.DownloadComplete += delegate
                                                {
                                                    Tab tab = new Tab()
@@ -204,7 +206,7 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
             };
             IsSearching = true;
 
-            downloader.Download(url,filePath);
+            downloader.Download(url);
 
         }
 
@@ -226,9 +228,14 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
                                                  Type = tab.Type
                                              };
 
-            string filePath = IsolatedStorageHelper.GetTabFilePath();
+            string filePath = IsolatedStorageHelper.CreateTabFilePath();
+
+            //TODO Hard coded credentials
+            SearchContext.Instance["name"] = "eiskalt";
+            SearchContext.Instance["password"] = "1103897";
+
             //TODO examine IO errors
-            SearchTabDownloader downloader = new SearchTabDownloader(entry);
+            SearchTabDownloader downloader = new SearchTabDownloader(entry, filePath);
             downloader.DownloadComplete += delegate
                                                {
                                                    tab.Id = RepositoryHelper.GetId<Tab>();
@@ -245,8 +252,24 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
                                                            });
                                                };
             IsSearching = true;
-            
-            downloader.Download(filePath);
+
+            try
+            {
+                if(!UgSession.Instance.IsAuthenticated)
+                {
+                    UgSession.Instance.BeginLogin("eiskalt", "1103897", ar => downloader.Download(), null);
+                }
+                else
+                {
+                    downloader.Download();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Error: {0}",ex));
+            }
+
 
         }
 
@@ -290,16 +313,20 @@ namespace PhoneGuitarTab.UI.Notation.ViewModel
             }
         }
 
+        private List<Tuple<string, string>> _customTabTypes;
         public List<Tuple<string,string>> CustomTabTypes
         {
             get
             {
-                return new List<Tuple<string, string>>()
-                           {
-                               new Tuple<string, string>("/Images/all/TabGP.png", "guitar pro"),
-                               new Tuple<string, string>("/Images/all/TabText.png", "text"),
-                               new Tuple<string, string>("/Images/all/TabPTB.jpg", "power tab"),
-                           };
+                //create type-image mapping
+                if(_customTabTypes == null)
+                {
+                    _customTabTypes = new List<Tuple<string, string>>();
+                    foreach (string key in Tab.ImageTypeMapping.Keys)
+                        _customTabTypes.Add(new Tuple<string, string>(key, Tab.ImageTypeMapping[key]));
+                }
+
+                return _customTabTypes;
             }
         }
 
