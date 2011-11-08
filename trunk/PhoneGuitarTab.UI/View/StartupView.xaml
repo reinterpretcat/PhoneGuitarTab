@@ -1,0 +1,164 @@
+﻿<Core:ViewPage
+    x:Class="PhoneGuitarTab.UI.View.StartupView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" 
+    xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core" 
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    x:Name="root"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    DataContext="{Binding Startup, Source={StaticResource Locator}}"
+    shell:SystemTray.IsVisible="False">
+
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <Grid.Resources>
+            <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
+                <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="HyperlinkButton">
+                            <Border Background="Transparent">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="MouseOver" />
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To="0.5"
+                                                                  Storyboard.TargetProperty="Opacity"
+                                                                   Storyboard.TargetName="TextElement" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground"
+                                                                    Storyboard.TargetName="TextElement">
+                                                    <DiscreteObjectKeyFrame KeyTime="0"  Value="{StaticResource PhoneDisabledBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border Background="{TemplateBinding Background}" 
+                                                     Margin="{StaticResource PhoneHorizontalMargin}"
+                                                     Padding="20">
+                                    <TextBlock x:Name="TextElement"
+                                                    HorizontalAlignment="Center"
+                                                    FontSize="42"
+                                                    Text="{TemplateBinding Content}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    TextWrapping="Wrap" />
+                                </Border>
+                            </Border>
+                        </ControlTemplate>
+
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+        <Controls:Panorama Title="my tabs">
+            <Controls:Panorama.Background>
+                <ImageBrush ImageSource="/Images/all/BlueWater.jpg"/>
+            </Controls:Panorama.Background>
+            <!--Panorama item one-->
+            <Controls:PanoramaItem Header="navigation" HorizontalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+
+                        <HyperlinkButton Content="my collection" Style="{StaticResource HyperlinkButtonContentStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:EventToCommand x:Name="CollectionClick"
+                                      Command="{Binding GoTo}" CommandParameterValue="Collection" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HyperlinkButton>
+                        <HyperlinkButton Content="search" Style="{StaticResource HyperlinkButtonContentStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:EventToCommand x:Name="SearchClick"
+                                      Command="{Binding GoTo}" CommandParameterValue="Search" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HyperlinkButton>
+                        <HyperlinkButton Content="settings" 
+                                     Style="{StaticResource HyperlinkButtonContentStyle}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:EventToCommand x:Name="SettingsClick"
+                                      Command="{Binding GoTo}" CommandParameterValue="Settings" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HyperlinkButton>
+                        <HyperlinkButton Content="help" 
+                                     Style="{StaticResource HyperlinkButtonContentStyle}" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:EventToCommand x:Name="HelpClick"
+                                      Command="{Binding GoTo}" CommandParameterValue="Help" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HyperlinkButton>
+                </StackPanel>
+                    <TextBlock Text="{Binding Path=DataContext.ProductVersion, ElementName=root}" 
+                               Style="{StaticResource PhoneTextSmallStyle}"
+                               Grid.Row="1" HorizontalAlignment="Right" />
+                </Grid>
+            </Controls:PanoramaItem>
+
+            <!--Panorama item two-->
+            <Controls:PanoramaItem Header="history">
+                <Grid>
+                    <ListBox ItemsSource="{Binding TabsHistory}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <Command:EventToCommand Command="{Binding GoToTabView}"
+                                                PassEventArgsToCommand="True"  />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
+                                        <TextBlock Text="{Binding Group.Name}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text=" Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
+                                            <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                            <TextBlock Text="{Binding Type}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Controls:PanoramaItem>
+        </Controls:Panorama>
+    </Grid>
+
+    <!--Panorama-based applications should not show an ApplicationBar-->
+
+</Core:ViewPage>
