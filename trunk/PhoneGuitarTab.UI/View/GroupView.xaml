@@ -44,18 +44,27 @@
                     </i:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
+                                <!--<Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
                                     <StackPanel Orientation="Horizontal">                                     
                                         <TextBlock Text=" Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
                                         <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                        <TextBlock Text="{Binding Type}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        <TextBlock Text="{Binding TabType.Name}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    </StackPanel>
+                                </StackPanel>-->
+                                <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
+                                    <TextBlock Text="{Binding TabType.Name}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
+                                        <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
                                     </StackPanel>
                                 </StackPanel>
                                 <toolkit:ContextMenuService.ContextMenu>
@@ -79,14 +88,14 @@
             </controls:PivotItem>
         </controls:Pivot>
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
-            <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />
+            <!--<custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />-->
             <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}" IconUri="/Images/dark/appbar.feature.search.rest.png" Text="Search" />
-            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.email.rest.png" Text="Home" />
-            <custom:BindableApplicationBar.MenuItems>
+            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.home.png" Text="Home" />
+            <!--<custom:BindableApplicationBar.MenuItems>
                 <custom:BindableApplicationBarMenuItem  Text="Settings" Command="{Binding SettingsCommand}" />
                 <custom:BindableApplicationBarMenuItem  Text="Search" 	Command="{Binding SearchCommand}" />
                 <custom:BindableApplicationBarMenuItem  Text="Home" 	Command="{Binding HomeCommand}" />
-            </custom:BindableApplicationBar.MenuItems>
+            </custom:BindableApplicationBar.MenuItems>-->
         </custom:BindableApplicationBar>
     </Grid>
 </Core:ViewPage >

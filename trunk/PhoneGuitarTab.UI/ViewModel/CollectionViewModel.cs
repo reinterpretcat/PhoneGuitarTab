@@ -10,10 +10,10 @@ using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class CollectionViewModel : PhoneGuitarTab.Core.ViewModel
+    public class CollectionViewModel : DataContextViewModel
     {
         //private readonly InteractionRequest<Notification> submitNotificationInteractionRequest;
-
+        
         public CollectionViewModel()
         {
             SearchCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Search)));
@@ -25,20 +25,16 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             GoToGroup = new RelayCommand<object>(DoGoToGroup);
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
-
-            Initialize();
            
         }
 
-        private void Initialize()
+        protected override void DataBind()
         {
-            //get group list
             Groups = new BandByName();
             RaisePropertyChanged("Groups");
             //get songs list
             AllTabs = new TabByName();
             RaisePropertyChanged("AllTabs");
-     
         }
 
         public RelayCommand<object> GoToGroup
@@ -50,25 +46,34 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoGoToGroup(object sender)
         {       
             var selector = sender as Microsoft.Phone.Controls.LongListSelector;
-            Group group = (selector.SelectedItem as Tuple<int,Group>).Item2;
-            navigationService.NavigateTo(PageType.Get(PageType.EnumType.Group), new Dictionary<string,object> {{"group", group}});
+            if (selector != null && selector.SelectedItem is Tuple<int, Group>)
+            {
+                Group group = (selector.SelectedItem as Tuple<int, Group>).Item2;
+                navigationService.NavigateTo(PageType.Get(PageType.EnumType.Group),
+                                             new Dictionary<string, object> {{"group", group}});
+            }
         }
 
         private void DoGoToTabView(object sender)
         {
-            //e.AddedItems[0] as Microsoft.Phone.Controls.LongListSelector.ItemTuple
             Microsoft.Phone.Controls.LongListSelector selector = sender as Microsoft.Phone.Controls.LongListSelector;
-            Tab tab = selector.SelectedItem as Tab;
-            navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string,object>()
-                                                                        {
-                                                                            {"Tab", tab}
-                                                                        });
+            if (selector != null && selector.SelectedItem is TabEntity)
+            {
+                TabEntity tabEntity = selector.SelectedItem as TabEntity;
+                Tab tab = (from Tab t in Database.Tabs
+                           where t.Id == tabEntity.Id
+                           select t).Single();
+                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
+                                                                                          {
+                                                                                              {"Tab", tab}
+                                                                                          });
+            }
         }
 
         private void DoRemoveTab(int id)
         {
             TabDataContextHelper.DeleteTabById(id);
-            Initialize();
+            DataBind();
         }
 
         #region Properties
@@ -118,12 +123,13 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public override void SaveStateTo(IDictionary<string, object> state)
         {
+            base.SaveStateTo(state);
             
         }
 
         public override void LoadStateFrom(IDictionary<string, object> state)
         {
-           
+           base.LoadStateFrom(state);
         }
 
     }

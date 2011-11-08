@@ -21,5 +21,7 @@ namespace PhoneGuitarTab.Data
         Table<Group> Groups { get; }
 
         void SubmitChanges();
+
+        event EventHandler<EventArgs> OnChanged;
     }
 }

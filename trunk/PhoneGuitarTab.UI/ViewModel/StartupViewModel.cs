@@ -9,24 +9,25 @@ using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class StartupViewModel : PhoneGuitarTab.Core.ViewModel
+    public class StartupViewModel : DataContextViewModel
     {
         public StartupViewModel()
         {
             GoTo = new RelayCommand<string>(DoGoTo);
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
 
-
-            IDataContextService database = Container.Resolve<IDataContextService>();
-
-            TabsHistory = (from Tab t in database.Tabs
-                           //where t.LastOpened.HasValue && t.LastOpened.Value !=DateTime.MinValue
-                           orderby t.LastOpened descending 
-                           select t).Take(4).ToList();
             //detect version
             string name = typeof(App).Assembly.FullName;
             AssemblyName asmName = new AssemblyName(name);
             ProductVersion = asmName.Version.ToString();
+        }
+
+        protected override void DataBind()
+        {
+            TabsHistory = (from Tab t in Database.Tabs
+                           //where t.LastOpened.HasValue && t.LastOpened.Value !=DateTime.MinValue
+                           orderby t.LastOpened descending
+                           select t).Take(4).ToList();
         }
 
         #region GoTo command
@@ -59,94 +60,41 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoGoToTabView(object args)
         {
             var selector = (args as System.Windows.Controls.SelectionChangedEventArgs);
-            Tab tab = selector.AddedItems[0] as Tab;
-            navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
-                                                                        {
-                                                                            {"Tab", tab}
-                                                                        });
+            if (selector != null && selector.AddedItems.Count > 0)
+            {
+                Tab tab = selector.AddedItems[0] as Tab;
+                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
+                                                                                          {
+                                                                                              {"Tab", tab}
+                                                                                          });
+            }
         }
 
         #endregion
 
         public string ProductVersion { get; set; }
-        public List<Tab> TabsHistory { get; set; }
-
-        /*  public StartupViewModel()
-        {
-            GoTo = new DelegateCommand<string>(DoGoTo, CanGoTo);
-            ProductVersion = App.ProductVersion;
-            TabsHistory = RepositoryHelper.GetAllTabs()
-                .Where(t => t.LastOpened != DateTime.MinValue)
-                .OrderByDescending(t => t.LastOpened)
-                .Take(4).ToList();
-
-
-        }
 
         private List<Tab> _tabsHistory;
         public List<Tab> TabsHistory
         {
+            get { return _tabsHistory; }
             set
             {
                 _tabsHistory = value;
-                RaisePropertyChanged(() => TabsHistory);
-            }
-            get
-            {
-                return _tabsHistory;
+                RaisePropertyChanged("TabsHistory");
             }
         }
-
-        private Tab _selectedTab;
-        public Tab SelectedTab
-        {
-            set
-            {
-                _selectedTab = value;
-                RaisePropertyChanged(() => SelectedTab);
-                //NOTE: go to specific group page 
-                //Commad would be better
-                NavigationServiceEx nav = new NavigationServiceEx();
-                nav.NavigateToWithParams(PageMapping<ViewModelBase>
-                    .GetPageTypeByTab(_selectedTab), new Dictionary<string, object>()
-                                                           {
-                                                               {"TabId", _selectedTab.Id}
-                                                           });
-            }
-            get { return _selectedTab; }
-        }
-
-        public DelegateCommand<string> GoTo
-        {
-            get;
-            private set;
-        }
-
-        private void DoGoTo(string arg)
-        {
-            PageType pageType = (PageType) Enum.Parse(typeof (PageType), arg, true);
-            NavigationServiceEx nav = new NavigationServiceEx();
-            nav.NavigateTo(pageType);
-        }
-
-       
-
-        private bool CanGoTo(string arg)
-        {
-            return true;
-        }*/
-
 
         #region Tombstoning
 
         public override void LoadStateFrom(IDictionary<string, object> state)
         {
-
+            base.LoadStateFrom(state);
         }
 
         public override void SaveStateTo(IDictionary<string, object> state)
         {
-
+            base.SaveStateTo(state);
         }
 
         #endregion

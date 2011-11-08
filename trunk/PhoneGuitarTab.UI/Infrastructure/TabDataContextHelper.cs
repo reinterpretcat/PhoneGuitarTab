@@ -50,8 +50,13 @@ namespace PhoneGuitarTab.UI.Infrastructure
             Tab tab = (from Tab t in database.Tabs
                        where t.Id == id
                        select t).Single();
+            Group group = tab.Group;
             database.Tabs.DeleteOnSubmit(tab);
+            if (group.Tabs.Count <= 1)
+                database.Groups.DeleteOnSubmit(group);
+
             database.SubmitChanges();
+           
         }
 
         public static Group GetOrCreateGroupByName(string name)

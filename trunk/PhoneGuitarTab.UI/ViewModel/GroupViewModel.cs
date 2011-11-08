@@ -9,7 +9,7 @@ using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class GroupViewModel : PhoneGuitarTab.Core.ViewModel
+    public class GroupViewModel : DataContextViewModel
     {
         public GroupViewModel()
         {
@@ -24,25 +24,55 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         }
 
-        public Group CurrentGroup { get; set; }
-        public List<Tab> Tabs { get; set; }
+        protected override void DataBind()
+        {
+            Tabs = (from Tab t in Database.Tabs
+                    where t.Group.Id == CurrentGroup.Id
+                    select t).ToList();
+        }
+
+        public Group _currentGroup;
+        public Group CurrentGroup
+        {
+            get { return _currentGroup; }
+            set
+            {
+                _currentGroup = value;              
+                RaisePropertyChanged("CurrentGroup");
+                DataBind();
+            }
+        }
+
+        public List<Tab> _tabs;
+        public List<Tab> Tabs
+        {
+            get { return _tabs; }
+            set
+            {
+                _tabs = value;
+                RaisePropertyChanged("Tabs");
+            }
+        }
 
         #region Actions
 
         private void DoGoToTabView(object args)
         {
             var selector = (args as System.Windows.Controls.SelectionChangedEventArgs);
-            Tab tab = selector.AddedItems[0] as Tab;
-            navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
-                                                                        {
-                                                                            {"Tab", tab}
-                                                                        });
+            if (selector != null && selector.AddedItems.Count > 0 && selector.AddedItems[0] is Tab)
+            {
+                Tab tab = selector.AddedItems[0] as Tab;
+                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
+                                                                                          {
+                                                                                              {"Tab", tab}
+                                                                                          });
+            }
         }
 
         private void DoRemoveTab(int id)
         {
             TabDataContextHelper.DeleteTabById(id);
-            UpdateTabs();
+            DataBind();
         }
 
         #endregion
@@ -87,25 +117,28 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         #endregion
-
-        private void UpdateTabs()
-        {
-            IDataContextService database = Container.Resolve<IDataContextService>();
-            Tabs = (from Tab t in database.Tabs
-                    where t.Group.Id == CurrentGroup.Id
-                    select t).ToList();
-            
-            RaisePropertyChanged("Tabs");
-        }
-
+   
         protected override void ReadNavigationParameters()
         {
-
             if (NavigationParameters == null)
                 return;
-
             CurrentGroup = (Group)NavigationParameters["group"];
-            UpdateTabs();
+        }
+
+        public override void SaveStateTo(IDictionary<string, object> state)
+        {
+            base.SaveStateTo(state);
+            state["CurrentGroupId"] = CurrentGroup.Id;
+        }
+
+        public override void LoadStateFrom(IDictionary<string, object> state)
+        {
+            base.LoadStateFrom(state);
+            if (state.ContainsKey("CurrentGroupId"))
+            {
+                int currentGroupId = (int) state["CurrentGroupId"];
+            }
+
         }
     }
 }

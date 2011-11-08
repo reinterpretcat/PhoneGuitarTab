@@ -26,9 +26,9 @@
             <Infrastructure:TabToBrushValueConverter x:Key="tabBrush"/>
         </Grid.Resources>
         <!--Pivot Control-->
-        <controls:Pivot Title="TAB SEARCH">
+        <controls:Pivot Title="TAB COLLECTION">
             <!--Pivot item one-->
-            <controls:PivotItem Header="collection">
+            <controls:PivotItem Header="search">
                 <toolkit:LongListSelector Background="Transparent"
                             ItemsSource="{Binding SearchGroupTabs}">
                     <toolkit:LongListSelector.GroupItemsPanel>
@@ -175,27 +175,15 @@
             VerticalAlignment="Top"
             IsIndeterminate="{Binding IsSearching, Mode=TwoWay}"
             />
-       
+        <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
+            <!--<custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />-->
+            <custom:BindableApplicationBarIconButton Command="{Binding CollectionCommand}" IconUri="/Images/dark/appbar.folder.rest.png" Text="Collection" />
+            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.home.png" Text="Home" />
+            <!-- <custom:BindableApplicationBar.MenuItems>
+               <custom:BindableApplicationBarMenuItem  Text="Settings" Command="{Binding SettingsCommand}" />
+                <custom:BindableApplicationBarMenuItem  Text="Collection" 	Command="{Binding CollectionCommand}" />
+                <custom:BindableApplicationBarMenuItem  Text="Home" 	Command="{Binding HomeCommand}" />
+            </custom:BindableApplicationBar.MenuItems>-->
+        </custom:BindableApplicationBar>
     </Grid>
-
-
-    <!--Sample code showing usage of ApplicationBar-->
-   <!-- <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.folder.rest.png" Text="Collection"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.feature.email.rest.png" Text="Home"/>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
-    <Custom:Interaction.Triggers>
-        <prismInteractionRequest:InteractionRequestTrigger SourceObject="{Binding SubmitNotificationInteractionRequest}">
-            <prismInteractionRequest:MessageBoxAction />
-        </prismInteractionRequest:InteractionRequestTrigger>
-    </Custom:Interaction.Triggers>
-    <Custom:Interaction.Behaviors>
-        <prismInteractivity:ApplicationBarButtonCommand  ButtonText="Collection" CommandBinding="{Binding CollectionCommand}"/>
-        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Settings" CommandBinding="{Binding SettingsCommand}" />
-        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Home" CommandBinding="{Binding HomeCommand}" />
-    </Custom:Interaction.Behaviors>-->
-
 </Core:ViewPage>

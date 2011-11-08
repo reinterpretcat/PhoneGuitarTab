@@ -50,6 +50,9 @@ namespace PhoneGuitarTab.Data
             {
                 _database.SubmitChanges();
             }
+
+
+            public event EventHandler<EventArgs> OnChanged;
         }
         #region ITabDataContextService
 
@@ -74,9 +77,19 @@ namespace PhoneGuitarTab.Data
         public void SubmitChanges()
         {
             _database.SubmitChanges();
+            InvokeOnChanged(new EventArgs());
         }
 
         #endregion
 
+
+
+        public event EventHandler<EventArgs> OnChanged;
+
+        private void InvokeOnChanged(EventArgs e)
+        {
+            EventHandler<EventArgs> handler = OnChanged;
+            if (handler != null) handler(this, e);
+        }
     }
 }

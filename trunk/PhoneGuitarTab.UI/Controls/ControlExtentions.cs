@@ -10,6 +10,7 @@ namespace PhoneGuitarTab.UI.Controls
         {
             return new TabEntity()
                        {
+                           Id = tab.Id,
                            Name = tab.Name,
                            Type = tab.TabType.Name,
                            ImageUrl = tab.TabType.ImageUrl,

@@ -70,7 +70,7 @@
 
                     <toolkit:LongListSelector.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -141,7 +141,7 @@
 
                     <toolkit:LongListSelector.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -174,14 +174,14 @@
             </controls:PivotItem>
         </controls:Pivot>
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
-            <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />
+            <!--<custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />-->
             <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}" IconUri="/Images/dark/appbar.feature.search.rest.png" Text="Search" />
-            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.email.rest.png" Text="Home" />
-            <custom:BindableApplicationBar.MenuItems>
-                <custom:BindableApplicationBarMenuItem  Text="Settings" Command="{Binding SettingsCommand}" />
+            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.home.png" Text="Home" />
+            <!-- <custom:BindableApplicationBar.MenuItems>
+               <custom:BindableApplicationBarMenuItem  Text="Settings" Command="{Binding SettingsCommand}" />
                 <custom:BindableApplicationBarMenuItem  Text="Search" 	Command="{Binding SearchCommand}" />
                 <custom:BindableApplicationBarMenuItem  Text="Home" 	Command="{Binding HomeCommand}" />
-            </custom:BindableApplicationBar.MenuItems>
+            </custom:BindableApplicationBar.MenuItems>-->
         </custom:BindableApplicationBar>
     </Grid>
 </Core:ViewPage>
