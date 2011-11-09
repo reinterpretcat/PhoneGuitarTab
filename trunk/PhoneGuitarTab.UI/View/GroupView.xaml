@@ -12,7 +12,7 @@
     xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls" 
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" 
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     x:Name="root"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -84,7 +84,19 @@
 
             <!--Pivot item two-->
             <controls:PivotItem Header="info">
-                <Grid/>
+                <ScrollViewer>
+                    <StackPanel >
+                        <TextBlock Text="{Binding Summary}" HorizontalAlignment="Stretch" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeMedium}"  />
+                        <HyperlinkButton Content="More.." HorizontalAlignment="Right">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:EventToCommand
+                                            Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}"  />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HyperlinkButton>
+                    </StackPanel>
+                </ScrollViewer>
             </controls:PivotItem>
         </controls:Pivot>
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">

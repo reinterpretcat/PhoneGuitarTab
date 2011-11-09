@@ -56,7 +56,8 @@
     <Compile Include="ISession.cs" />
     <Compile Include="Lastfm\SearchImageResult.cs" />
     <Compile Include="Lastfm\SearchImageResultEntry.cs" />
-    <Compile Include="Lastfm\SearchImageResultSummary.cs" />
+    <Compile Include="Lastfm\SearchInfoResult.cs" />
+    <Compile Include="Lastfm\SearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchContext.cs" />
     <Compile Include="SearchExceptions.cs" />

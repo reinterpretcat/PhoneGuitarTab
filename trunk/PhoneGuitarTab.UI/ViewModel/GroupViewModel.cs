@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
+using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Infrastructure;
+using Group = PhoneGuitarTab.Data.Group;
 
 
 namespace PhoneGuitarTab.UI.ViewModel
@@ -30,6 +34,38 @@ namespace PhoneGuitarTab.UI.ViewModel
                     orderby t.Name ascending 
                     where t.Group.Id == CurrentGroup.Id
                     select t).ToList();
+            if(String.IsNullOrEmpty(CurrentGroup.Description))
+            {
+                SearchInfoResult result = new SearchInfoResult(CurrentGroup.Name);
+                result.SearchComplete += (o, e) =>
+                                             {
+                                                 try
+                                                 {
+                                                     var description = Regex.Replace(result.Summary, @"<(.|\n)*?>",
+                                                                                     string.Empty);
+                                                     if (description.Length > 2040)
+                                                     {
+                                                         description = description.Substring(0, 2080);
+                                                         description += "..";
+                                                     }
+                                                     Summary = description;
+                                                     CurrentGroup.Description = Summary;
+                                                     CurrentGroup.Url = result.Url;
+                                                     Database.SubmitChanges();
+                                                 }
+                                                 catch
+                                                 {
+                                                     
+                                                 }
+
+                                             };
+                result.Run();
+            }
+            else
+            {
+                Summary = CurrentGroup.Description;
+            }
+
         }
 
         public Group _currentGroup;
@@ -41,6 +77,17 @@ namespace PhoneGuitarTab.UI.ViewModel
                 _currentGroup = value;              
                 RaisePropertyChanged("CurrentGroup");
                 DataBind();
+            }
+        }
+
+        public string _summary;
+        public string Summary
+        {
+            get { return _summary; }
+            set
+            {
+                _summary = value;
+                RaisePropertyChanged("Summary");
             }
         }
 
@@ -115,6 +162,15 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get;
             set;
+        }
+
+        public RelayCommand GetMoreInfo
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                  new WebBrowserTask { URL = CurrentGroup.Url }.Show());
+            }
         }
 
         #endregion

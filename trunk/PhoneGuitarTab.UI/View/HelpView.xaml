@@ -73,7 +73,7 @@
                             </Canvas>
                         </Button>
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap"  Margin="0,40,0,0"
-                            Text="{Binding ReviewTheApp}"/>
+                            Text="{Binding ReviewTheApp}" />
                         <Button x:Name="ReviewButton" Content="{Binding Review}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">

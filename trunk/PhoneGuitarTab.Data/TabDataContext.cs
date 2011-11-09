@@ -76,8 +76,12 @@ namespace PhoneGuitarTab.Data
 		private string _Name;
 		
 		private string _ImageUrl;
+
+        private string _Url;
 		
 		private string _BackgroundUrl;
+
+        private string _Description;
 		
 		private EntitySet<Tab> _Tabs;
 		
@@ -91,8 +95,12 @@ namespace PhoneGuitarTab.Data
     partial void OnNameChanged();
     partial void OnImageUrlChanging(string value);
     partial void OnImageUrlChanged();
+    partial void OnUrlChanging(string value);
+    partial void OnUrlChanged();
     partial void OnBackgroundUrlChanging(string value);
     partial void OnBackgroundUrlChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
     #endregion
 		
 		public Group()
@@ -160,6 +168,26 @@ namespace PhoneGuitarTab.Data
 				}
 			}
 		}
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Url", DbType = "NVarChar(256)")]
+        public string Url
+        {
+            get
+            {
+                return this._Url;
+            }
+            set
+            {
+                if ((this._Url != value))
+                {
+                    this.OnUrlChanging(value);
+                    this.SendPropertyChanging();
+                    this._Url = value;
+                    this.SendPropertyChanged("Url");
+                    this.OnUrlChanged();
+                }
+            }
+        }
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackgroundUrl", DbType="NVarChar(256)")]
 		public string BackgroundUrl
@@ -180,6 +208,26 @@ namespace PhoneGuitarTab.Data
 				}
 			}
 		}
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Description", DbType = "NVarChar(2096)")]
+        public string Description
+        {
+            get
+            {
+                return this._Description;
+            }
+            set
+            {
+                if ((this._Description != value))
+                {
+                    this.OnDescriptionChanging(value);
+                    this.SendPropertyChanging();
+                    this._Description = value;
+                    this.SendPropertyChanged("Description");
+                    this.OnDescriptionChanged();
+                }
+            }
+        }
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Group", Storage="_Tabs", ThisKey="Id", OtherKey="GroupId", DeleteRule="CASCADE")]
 		public EntitySet<Tab> Tabs
@@ -419,7 +467,7 @@ namespace PhoneGuitarTab.Data
             }
             set
             {
-                if ((this._Path != value))
+                if ((this._Description != value))
                 {
                     this.OnDescriptionChanging(value);
                     this.SendPropertyChanging();
