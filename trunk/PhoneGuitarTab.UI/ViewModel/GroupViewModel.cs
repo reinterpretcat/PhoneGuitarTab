@@ -27,6 +27,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         protected override void DataBind()
         {
             Tabs = (from Tab t in Database.Tabs
+                    orderby t.Name ascending 
                     where t.Group.Id == CurrentGroup.Id
                     select t).ToList();
         }

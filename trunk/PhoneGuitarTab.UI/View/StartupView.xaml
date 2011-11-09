@@ -10,19 +10,23 @@
     xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core" 
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     x:Name="root"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     DataContext="{Binding Startup, Source={StaticResource Locator}}"
     shell:SystemTray.IsVisible="False">
-
+    <Core:ViewPage.Resources>
+        <Style x:Key="StartupThemePanorama" TargetType="Controls:Panorama">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </Core:ViewPage.Resources>
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
         <Grid.Resources>
             <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
-                <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}" />
+                <Setter Property="Foreground" Value="WhiteSmoke" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}" />
                 <Setter Property="Padding" Value="0" />
@@ -68,12 +72,12 @@
                 </Setter>
             </Style>
         </Grid.Resources>
-        <Controls:Panorama Title="my tabs">
+        <Controls:Panorama Title="my tabs"  Style="{StaticResource StartupThemePanorama}">
             <Controls:Panorama.Background>
                 <ImageBrush ImageSource="/Images/all/BlueWater.jpg"/>
             </Controls:Panorama.Background>
             <!--Panorama item one-->
-            <Controls:PanoramaItem Header="navigation" HorizontalAlignment="Center" >
+            <Controls:PanoramaItem Header="navigation" HorizontalAlignment="Center">
                 <Grid Margin="0,40,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"  />
@@ -125,7 +129,7 @@
             <Controls:PanoramaItem Header="history">
                 <Grid>
                     <ListBox ItemsSource="{Binding TabsHistory}">
-                        <i:Interaction.Triggers>
+                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <Command:EventToCommand Command="{Binding GoToTabView}"
                                                 PassEventArgsToCommand="True"  />
@@ -133,19 +137,22 @@
                         </i:Interaction.Triggers>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
-                                        <TextBlock Text="{Binding Group.Name}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        <TextBlock Text="{Binding Name}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text=" Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
-                                            <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                            <TextBlock Text="{Binding Type}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                            <TextBlock Text="{Binding Group.Name}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                            <TextBlock Text="{Binding TabType.Name}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text=" Rating:" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextSmallStyle}"/>
+                                            <TextBlock Text="{Binding Rating}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                            
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>

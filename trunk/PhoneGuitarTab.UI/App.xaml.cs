@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
@@ -130,5 +131,15 @@ namespace PhoneGuitarTab.UI
         }
 
         #endregion
+
+        public static string Version
+        {
+            get
+            {
+                string name = typeof(App).Assembly.FullName;
+                AssemblyName asmName = new AssemblyName(name);
+                return asmName.Version.ToString();
+            }
+        }
     }
 }

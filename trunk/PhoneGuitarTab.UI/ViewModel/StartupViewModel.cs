@@ -16,10 +16,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             GoTo = new RelayCommand<string>(DoGoTo);
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
 
-            //detect version
-            string name = typeof(App).Assembly.FullName;
-            AssemblyName asmName = new AssemblyName(name);
-            ProductVersion = asmName.Version.ToString();
+            ProductVersion = App.Version;
         }
 
         protected override void DataBind()
