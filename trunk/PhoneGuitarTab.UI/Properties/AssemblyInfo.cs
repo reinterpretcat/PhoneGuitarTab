@@ -6,12 +6,12 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PhoneGuitarTab.UI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("PhoneGuitarTab")]
+[assembly: AssemblyDescription("Simple text guitar tabulature viewer")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PhoneGuitarTab.UI")]
-[assembly: AssemblyCopyright("Copyright ©  2011")]
+[assembly: AssemblyProduct("PhoneGuitarTab")]
+[assembly: AssemblyCopyright("Copyright ©  2011 Ilya Builuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,4 +32,5 @@ using System.Resources;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.3.*")]
+[assembly: AssemblyVersion("1.0.*")]
+[assembly: NeutralResourcesLanguageAttribute("en-US")]

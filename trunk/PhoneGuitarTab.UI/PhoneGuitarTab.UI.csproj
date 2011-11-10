@@ -20,7 +20,7 @@
     </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>PhoneGuitarTab.UI.xap</XapFilename>
+    <XapFilename>PhoneGuitarTab.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>PhoneGuitarTab.UI.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
@@ -170,7 +170,6 @@
     <Content Include="Images\all\TabGP.png" />
     <Content Include="Images\all\TabPTB.jpg" />
     <Content Include="Images\all\TabText.png" />
-    <Content Include="Images\all\Water.jpg" />
     <Content Include="Images\dark\appbar.feature.search.rest.png" />
     <Content Include="Images\dark\appbar.feature.home.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -181,7 +180,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\light\appbar.folder.rest.png" />
-    <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
     <Resource Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Resource Include="Toolkit.Content\ApplicationBar.Check.png" />

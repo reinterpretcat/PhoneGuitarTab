@@ -55,27 +55,9 @@
     <Compile Include="BindableApplicationBar\BindableApplicationBarMenuItem.cs" />
     <Compile Include="BindableApplicationBar\VisualTreeHelperExtensions.cs" />
     <Compile Include="CommandBehaviorBase.cs" />
-    <Compile Include="LazyListBox\ILazyDataItem.cs" />
-    <Compile Include="LazyListBox\InvalidStateTransitionException.cs" />
-    <Compile Include="LazyListBox\ISupportOffsetChanges.cs" />
-    <Compile Include="LazyListBox\LazyDataCharacteristics.cs" />
-    <Compile Include="LazyListBox\LazyDataItemPausedStateChangedEventArgs.cs" />
-    <Compile Include="LazyListBox\LazyDataItemStateChangedEventArgs.cs" />
-    <Compile Include="LazyListBox\LazyDataItemStateManagerHelper.cs" />
-    <Compile Include="LazyListBox\LazyDataLoadState.cs" />
-    <Compile Include="LazyListBox\LazyListBox.cs" />
-    <Compile Include="LazyListBox\LazyListBoxItem.cs" />
-    <Compile Include="LazyListBox\ScrollingStateChangedEventArgs.cs" />
-    <Compile Include="LazyListBox\UIExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBox\KeyUp.cs" />
     <Compile Include="TextBox\TextBoxCommandBehavior.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="LazyListBox\Themes\generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

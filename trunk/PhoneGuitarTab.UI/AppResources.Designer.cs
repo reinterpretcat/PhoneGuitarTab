@@ -133,7 +133,7 @@ namespace PhoneGuitarTab.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Simple application for searching, storing and viewing text guitar tabulature. Search syntax: &lt;group,[song]&gt;. For technical support or when you have suggestions or comments, don&apos;t hesitate to contact me at Ilya.Builuk@gmail.com:.
+        ///   Looks up a localized string similar to A simple application for searching, storing and viewing text guitar tablatures. Search syntax: &lt;group,[song]&gt;. For technical support or when you have suggestions or comments, don&apos;t hesitate to contact me at Ilya.Builuk@gmail.com:.
         /// </summary>
         internal static string SupportMessage {
             get {
