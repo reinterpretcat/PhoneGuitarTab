@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Core", "PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj", "{06005B3A-BCE2-4B59-95BD-8A697F758F35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Data", "PhoneGuitarTab.Data\PhoneGuitarTab.Data.csproj", "{7D931B37-264D-4605-89C7-548BF544A22C}"
@@ -14,6 +14,30 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Search", "PhoneGuitarTab.Search\PhoneGuitarTab.Search.csproj", "{5CF049D1-5C85-45EE-A481-3D25970141FA}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PhoneGuitarTab.Core\\PhoneGuitarTab.Core.csproj
+		SccProjectName1 = PhoneGuitarTab.Core
+		SccLocalPath1 = PhoneGuitarTab.Core
+		SccProjectUniqueName2 = PhoneGuitarTab.Data\\PhoneGuitarTab.Data.csproj
+		SccProjectName2 = PhoneGuitarTab.Data
+		SccLocalPath2 = PhoneGuitarTab.Data
+		SccProjectUniqueName3 = PhoneGuitarTab.Tablature\\PhoneGuitarTab.Tablature.csproj
+		SccProjectName3 = PhoneGuitarTab.Tablature
+		SccLocalPath3 = PhoneGuitarTab.Tablature
+		SccProjectUniqueName4 = PhoneGuitarTab.UI\\PhoneGuitarTab.UI.csproj
+		SccProjectName4 = PhoneGuitarTab.UI
+		SccLocalPath4 = PhoneGuitarTab.UI
+		SccProjectUniqueName5 = PhoneGuitarTab.Controls\\PhoneGuitarTab.Controls.csproj
+		SccProjectName5 = PhoneGuitarTab.Controls
+		SccLocalPath5 = PhoneGuitarTab.Controls
+		SccProjectUniqueName6 = PhoneGuitarTab.Search\\PhoneGuitarTab.Search.csproj
+		SccProjectName6 = PhoneGuitarTab.Search
+		SccLocalPath6 = PhoneGuitarTab.Search
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
