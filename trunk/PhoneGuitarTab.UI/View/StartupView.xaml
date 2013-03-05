@@ -1,28 +1,33 @@
-﻿<Core:ViewPage
-    x:Class="PhoneGuitarTab.UI.View.StartupView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls" 
-    xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core" 
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
-    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    x:Name="root"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
-    DataContext="{Binding Startup, Source={StaticResource Locator}}"
-    shell:SystemTray.IsVisible="False">
+﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.StartupView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+               xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               x:Name="root"
+               DataContext="{Binding Startup,
+                                     Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="800"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="False"
+               mc:Ignorable="d">
     <Core:ViewPage.Resources>
         <Style x:Key="StartupThemePanorama" TargetType="Controls:Panorama">
             <Setter Property="Foreground" Value="White" />
         </Style>
     </Core:ViewPage.Resources>
-    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <!--  LayoutRoot contains the root grid where all other page content is placed  -->
     <Grid x:Name="LayoutRoot">
         <Grid.Resources>
             <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
@@ -40,30 +45,30 @@
                                         <VisualState x:Name="MouseOver" />
                                         <VisualState x:Name="Pressed">
                                             <Storyboard>
-                                                <DoubleAnimation Duration="0" To="0.5"
-                                                                  Storyboard.TargetProperty="Opacity"
-                                                                   Storyboard.TargetName="TextElement" />
+                                                <DoubleAnimation Duration="0"
+                                                                 Storyboard.TargetName="TextElement"
+                                                                 Storyboard.TargetProperty="Opacity"
+                                                                 To="0.5" />
                                             </Storyboard>
                                         </VisualState>
                                         <VisualState x:Name="Disabled">
                                             <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground"
-                                                                    Storyboard.TargetName="TextElement">
-                                                    <DiscreteObjectKeyFrame KeyTime="0"  Value="{StaticResource PhoneDisabledBrush}" />
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TextElement" Storyboard.TargetProperty="Foreground">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <Border Background="{TemplateBinding Background}" 
-                                                     Margin="{StaticResource PhoneHorizontalMargin}"
-                                                     Padding="20">
+                                <Border Margin="{StaticResource PhoneHorizontalMargin}"
+                                        Background="{TemplateBinding Background}"
+                                        Padding="20">
                                     <TextBlock x:Name="TextElement"
-                                                    HorizontalAlignment="Center"
-                                                    FontSize="42"
-                                                    Text="{TemplateBinding Content}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    TextWrapping="Wrap" />
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               FontSize="42"
+                                               Text="{TemplateBinding Content}"
+                                               TextWrapping="Wrap" />
                                 </Border>
                             </Border>
                         </ControlTemplate>
@@ -72,23 +77,28 @@
                 </Setter>
             </Style>
         </Grid.Resources>
-        <Controls:Panorama Title="my tabs"  Style="{StaticResource StartupThemePanorama}">
-            <Controls:Panorama.Background>
+        <Controls:Panorama Title="my tabs" Style="{StaticResource StartupThemePanorama}">
+            <!--
+                <Controls:Panorama.Background>
                 <ImageBrush ImageSource="/Images/all/BlueWater.jpg"/>
-            </Controls:Panorama.Background>
-            <!--Panorama item one-->
-            <Controls:PanoramaItem Header="navigation" HorizontalAlignment="Center">
+                </Controls:Panorama.Background>
+            -->
+            <!--  Panorama item one  -->
+            <Controls:PanoramaItem HorizontalAlignment="Center" Header="navigation">
                 <Grid Margin="0,40,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"  />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Vertical" Grid.Row="0"  toolkit:TiltEffect.IsTiltEnabled="True">
+                    <StackPanel Grid.Row="0"
+                                Orientation="Vertical"
+                                toolkit:TiltEffect.IsTiltEnabled="True">
                         <HyperlinkButton Content="my collection" Style="{StaticResource HyperlinkButtonContentStyle}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <Command:EventToCommand x:Name="CollectionClick"
-                                      Command="{Binding GoTo}" CommandParameterValue="Collection" />
+                                                            Command="{Binding GoTo}"
+                                                            CommandParameterValue="Collection" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </HyperlinkButton>
@@ -96,63 +106,87 @@
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <Command:EventToCommand x:Name="SearchClick"
-                                      Command="{Binding GoTo}" CommandParameterValue="Search" />
+                                                            Command="{Binding GoTo}"
+                                                            CommandParameterValue="Search" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </HyperlinkButton>
-                        <!--<HyperlinkButton Content="settings" 
-                                     Style="{StaticResource HyperlinkButtonContentStyle}">
+                        <!--
+                            <HyperlinkButton Content="settings"
+                            Style="{StaticResource HyperlinkButtonContentStyle}">
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <Command:EventToCommand x:Name="SettingsClick"
-                                      Command="{Binding GoTo}" CommandParameterValue="Settings" />
-                                </i:EventTrigger>
+                            <i:EventTrigger EventName="Click">
+                            <Command:EventToCommand x:Name="SettingsClick"
+                            Command="{Binding GoTo}" CommandParameterValue="Settings" />
+                            </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </HyperlinkButton>-->
-                        <HyperlinkButton Content="help" 
-                                     Style="{StaticResource HyperlinkButtonContentStyle}" >
+                            </HyperlinkButton>
+                        -->
+                        <HyperlinkButton Content="help" Style="{StaticResource HyperlinkButtonContentStyle}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <Command:EventToCommand x:Name="HelpClick"
-                                      Command="{Binding GoTo}" CommandParameterValue="Help" />
+                                                            Command="{Binding GoTo}"
+                                                            CommandParameterValue="Help" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </HyperlinkButton>
-                </StackPanel>
-                    <TextBlock Text="{Binding Path=DataContext.ProductVersion, ElementName=root}" 
+                    </StackPanel>
+                    <TextBlock Grid.Row="1"
+                               HorizontalAlignment="Right"
                                Style="{StaticResource PhoneTextSmallStyle}"
-                               Grid.Row="1" HorizontalAlignment="Right" />
+                               Text="{Binding Path=DataContext.ProductVersion,
+                                              ElementName=root}" />
                 </Grid>
             </Controls:PanoramaItem>
 
-            <!--Panorama item two-->
+            <!--  Panorama item two  -->
             <Controls:PanoramaItem Header="history">
                 <Grid>
                     <ListBox ItemsSource="{Binding TabsHistory}">
-                         <i:Interaction.Triggers>
+                        <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <Command:EventToCommand Command="{Binding GoToTabView}"
-                                                PassEventArgsToCommand="True"  />
+                                <Command:EventToCommand Command="{Binding GoToTabView}" PassEventArgsToCommand="True" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
+                                    <Image Width="60"
+                                           Height="60"
+                                           VerticalAlignment="Center"
+                                           Source="{Binding TabType.ImageUrl}" />
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Name}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
+                                        <TextBlock Margin="12,-12,12,6"
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   Foreground="WhiteSmoke"
+                                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                                   Text="{Binding Name}" />
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Group.Name}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                            <TextBlock Text="{Binding TabType.Name}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                       Foreground="WhiteSmoke"
+                                                       Style="{StaticResource PhoneTextNormalStyle}"
+                                                       Text="{Binding Group.Name}"
+                                                       TextWrapping="Wrap" />
+                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                       Foreground="WhiteSmoke"
+                                                       Style="{StaticResource PhoneTextSmallStyle}"
+                                                       Text="{Binding TabType.Name}"
+                                                       TextWrapping="Wrap" />
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text=" Rating:" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextSmallStyle}"/>
-                                            <TextBlock Text="{Binding Rating}" Foreground="WhiteSmoke" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                            
+                                            <TextBlock Foreground="WhiteSmoke"
+                                                       Style="{StaticResource PhoneTextSmallStyle}"
+                                                       Text=" Rating:" />
+                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                       Foreground="WhiteSmoke"
+                                                       Style="{StaticResource PhoneTextSmallStyle}"
+                                                       Text="{Binding Rating}" />
+
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
