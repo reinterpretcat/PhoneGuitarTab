@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using PhoneGuitarTab.Core;
+﻿using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
+using System.Linq;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
@@ -26,15 +15,6 @@ namespace PhoneGuitarTab.UI.Infrastructure
             service.TabTypes.InsertOnSubmit(t2);
             service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/all/TabText.png" });
             service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/all/TabText.png" });
-
-            /*Group g1 = new Group() { Name = "Opeth", ImageUrl = "/Images/all/Group.png"};
-            Group g2 = new Group() { Name = "Ayreon", ImageUrl = "/Images/all/Group.png"};
-            Tab tab1 = new Tab() { Name = "Benighted", Group = g1, TabType = t1};
-            Tab tab2 = new Tab() { Name = "Advent", Group = g1, TabType = t1 };
-            Tab tab3 = new Tab() { Name = "My House On Mars", Group = g2, TabType = t2 };
-            service.Tabs.InsertOnSubmit(tab1);
-            service.Tabs.InsertOnSubmit(tab2);
-            service.Tabs.InsertOnSubmit(tab3);*/
         }
 
         public static void InsertTab(Tab tab)
@@ -55,8 +35,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (group.Tabs.Count <= 1)
                 database.Groups.DeleteOnSubmit(group);
 
-            database.SubmitChanges();
-           
+            database.SubmitChanges();          
         }
 
         public static Group GetOrCreateGroupByName(string name)
@@ -82,6 +61,5 @@ namespace PhoneGuitarTab.UI.Infrastructure
                     where t.Name == name
                     select t).Single();
         }
-
     }
 }

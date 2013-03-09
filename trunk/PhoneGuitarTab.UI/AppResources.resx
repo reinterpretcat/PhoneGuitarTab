@@ -124,7 +124,7 @@
     <value>http://phoneguitartab.codeplex.com/</value>
   </data>
   <data name="Copyright" xml:space="preserve">
-    <value>Copyright © 2011 Ilya Builuk</value>
+    <value>Copyright © 2011-2013 Ilya Builuk</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>about</value>
@@ -133,7 +133,7 @@
     <value>review</value>
   </data>
   <data name="ReviewTheApp" xml:space="preserve">
-    <value>If you like this app and think others might find this application useful,sharing your experience in a short review would be highly appreciated:</value>
+    <value>If you like this app and think others might find this application useful, sharing your experience in a short review would be highly appreciated:</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>support</value>

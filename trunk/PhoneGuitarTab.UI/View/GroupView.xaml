@@ -1,79 +1,88 @@
-﻿<Core:ViewPage 
-    x:Class="PhoneGuitarTab.UI.View.GroupView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
-    xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core" 
-    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure" 
-    xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls" 
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" 
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
-    x:Name="root"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
-    DataContext="{Binding Group, Source={StaticResource Locator}}"
-    shell:SystemTray.IsVisible="True">
+﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.GroupView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
+               xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               x:Name="root"
+               DataContext="{Binding Group,
+                                     Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="True"
+               mc:Ignorable="d">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <!--Pivot Control-->
+        <!--  Pivot Control  -->
         <Grid.Resources>
             <Infrastructure:UpperStringConverter x:Name="UpperStr" />
             <Infrastructure:IntToStringConverter x:Name="IntToStr" />
         </Grid.Resources>
-        <controls:Pivot Title="{Binding CurrentGroup.Name,Converter={StaticResource UpperStr}}">
-            <!--Pivot item one-->
-            <!--<controls:Pivot.Background>
-                <ImageBrush 
-                    ImageSource="{Binding BackgroundImagePath}" Stretch="None" />
-            </controls:Pivot.Background>-->
+        <controls:Pivot Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}">
             <controls:PivotItem Header="tabs">
                 <ListBox ItemsSource="{Binding Tabs}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <Command:EventToCommand Command="{Binding GoToTabView}"
-                                                 PassEventArgsToCommand="True"   />
+                            <Command:EventToCommand Command="{Binding GoToTabView}" PassEventArgsToCommand="True" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <!--<Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <!--
+                                    <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
-                                    <StackPanel Orientation="Horizontal">                                     
-                                        <TextBlock Text=" Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
-                                        <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                        <TextBlock Text="{Binding TabType.Name}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                    </StackPanel>
-                                </StackPanel>-->
-                                <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
-                                    <TextBlock Text="{Binding TabType.Name}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
-                                        <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    <TextBlock Text=" Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
+                                    <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    <TextBlock Text="{Binding TabType.Name}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    </StackPanel>
+                                    </StackPanel>
+                                -->
+                                <Image Width="60"
+                                       Height="60"
+                                       VerticalAlignment="Center"
+                                       Source="{Binding TabType.ImageUrl}" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                                    <TextBlock Margin="12,-12,12,6"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               Style="{StaticResource PhoneTextLargeStyle}"
+                                               Text="{Binding Name}" />
+                                    <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               Style="{StaticResource PhoneTextNormalStyle}"
+                                               Text="{Binding TabType.Name}"
+                                               TextWrapping="Wrap" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource PhoneTextSmallStyle}" Text="Rating:" />
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   Style="{StaticResource PhoneTextSmallStyle}"
+                                                   Text="{Binding Rating}" />
                                     </StackPanel>
                                 </StackPanel>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu>
-                                        <toolkit:MenuItem Header="remove tab" 
-                                                          Command="{Binding Path=DataContext.RemoveTab, ElementName=root}"
-                                                          CommandParameter="{Binding Id}"/>
-                                        <toolkit:MenuItem Header="cancel"
-                                                          Command="{Binding Path=DataContext.CancelTab, ElementName=root}"/>
+                                        <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
+                                                                            ElementName=root}"
+                                                          CommandParameter="{Binding Id}"
+                                                          Header="remove tab" />
                                     </toolkit:ContextMenu>
                                 </toolkit:ContextMenuService.ContextMenu>
                             </Grid>
@@ -82,16 +91,17 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <!--Pivot item two-->
             <controls:PivotItem Header="info">
                 <ScrollViewer>
-                    <StackPanel >
-                        <TextBlock Text="{Binding Summary}" HorizontalAlignment="Stretch" TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeMedium}"  />
-                        <HyperlinkButton Content="More.." HorizontalAlignment="Right">
+                    <StackPanel>
+                        <TextBlock HorizontalAlignment="Stretch"
+                                   FontSize="{StaticResource PhoneFontSizeMedium}"
+                                   Text="{Binding Summary}"
+                                   TextWrapping="Wrap" />
+                        <HyperlinkButton HorizontalAlignment="Right" Content="More..">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
-                                    <Command:EventToCommand
-                                            Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}"  />
+                                    <Command:EventToCommand Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </HyperlinkButton>
@@ -99,15 +109,16 @@
                 </ScrollViewer>
             </controls:PivotItem>
         </controls:Pivot>
+
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
-            <!--<custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />-->
-            <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}" IconUri="/Images/dark/appbar.feature.search.rest.png" Text="Search" />
-            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.home.png" Text="Home" />
-            <!--<custom:BindableApplicationBar.MenuItems>
-                <custom:BindableApplicationBarMenuItem  Text="Settings" Command="{Binding SettingsCommand}" />
-                <custom:BindableApplicationBarMenuItem  Text="Search" 	Command="{Binding SearchCommand}" />
-                <custom:BindableApplicationBarMenuItem  Text="Home" 	Command="{Binding HomeCommand}" />
-            </custom:BindableApplicationBar.MenuItems>-->
+            <!--  <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />  -->
+            <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}"
+                                                     CommandParameter="{Binding CurrentGroup}"
+                                                     IconUri="/Images/dark/appbar.feature.search.rest.png"
+                                                     Text="more online" />
+            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}"
+                                                     IconUri="/Images/dark/appbar.feature.home.png"
+                                                     Text="To all tabs" />
         </custom:BindableApplicationBar>
     </Grid>
-</Core:ViewPage >
+</Core:ViewPage>

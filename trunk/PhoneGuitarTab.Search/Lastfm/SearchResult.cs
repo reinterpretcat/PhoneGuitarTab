@@ -40,7 +40,6 @@ namespace PhoneGuitarTab.Search.Lastfm
                                                   {
                                                       try
                                                       {
-
                                                           if (e.Error == null)
                                                           {
 

@@ -1,23 +1,39 @@
-﻿using System;
+﻿using Microsoft.Phone.Controls;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
 
 namespace PhoneGuitarTab.Core.Navigation
 {
     public class NavigationService : INavigationService
     {
+        #region Fields
+
         private PhoneApplicationFrame _mainFrame;
         private PageMapping _pageMapping;
+
+        #endregion Fields
+
+
+        #region Constructor
 
         public NavigationService()
         {
            _pageMapping = Container.Resolve<PageMapping>();
         }
 
+        #endregion Constructor
+
+
+        #region Events
 
         public event NavigatingCancelEventHandler Navigating;
+
+        #endregion Events
+
+
+        #region Public methods
 
         public void NavigateTo(Uri pageUri)
         {
@@ -54,6 +70,11 @@ namespace PhoneGuitarTab.Core.Navigation
             }
         }
 
+        #endregion Public methods
+
+
+        #region Helper methods
+
         private bool EnsureMainFrame()
         {
             if (_mainFrame != null)
@@ -73,11 +94,11 @@ namespace PhoneGuitarTab.Core.Navigation
                         Navigating(s, e);
                     }
                 };
-
                 return true;
             }
-
             return false;
         }
+
+        #endregion Helper methods
     }
 }

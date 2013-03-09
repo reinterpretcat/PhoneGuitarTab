@@ -36,7 +36,8 @@ namespace PhoneGuitarTab.UI.Infrastructure
             Settings,
             Tab,
             TextTab,
-            Help
+            Help,
+            About
         }
     }
 }

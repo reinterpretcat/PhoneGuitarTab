@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using Microsoft.Phone.Tasks;
-using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Group = PhoneGuitarTab.Data.Group;
 
 
@@ -15,60 +14,27 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     public class GroupViewModel : DataContextViewModel
     {
-        public GroupViewModel()
-        {
-
-            SearchCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Search)));
-            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Settings)));
-            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Startup)));
-
-            GoToTabView = new RelayCommand<object>(DoGoToTabView);
-            RemoveTab = new RelayCommand<int>(DoRemoveTab);
-            CancelTab = new RelayCommand(() => { });
-
-        }
-
-        protected override void DataBind()
-        {
-            Tabs = (from Tab t in Database.Tabs
-                    orderby t.Name ascending 
-                    where t.Group.Id == CurrentGroup.Id
-                    select t).ToList();
-            if(String.IsNullOrEmpty(CurrentGroup.Description))
-            {
-                SearchInfoResult result = new SearchInfoResult(CurrentGroup.Name);
-                result.SearchComplete += (o, e) =>
-                                             {
-                                                 try
-                                                 {
-                                                     var description = Regex.Replace(result.Summary, @"<(.|\n)*?>",
-                                                                                     string.Empty);
-                                                     if (description.Length > 2040)
-                                                     {
-                                                         description = description.Substring(0, 2080);
-                                                         description += "..";
-                                                     }
-                                                     Summary = description;
-                                                     CurrentGroup.Description = Summary;
-                                                     CurrentGroup.Url = result.Url;
-                                                     Database.SubmitChanges();
-                                                 }
-                                                 catch
-                                                 {
-                                                     
-                                                 }
-
-                                             };
-                result.Run();
-            }
-            else
-            {
-                Summary = CurrentGroup.Description;
-            }
-
-        }
+        #region  Fields
 
         public Group _currentGroup;
+        public string _summary;
+        public List<Tab> _tabs;
+
+        #endregion  Fields
+
+
+        #region Constructors
+
+        public GroupViewModel()
+        {
+            CreateCommands();
+        }
+
+        #endregion Constructors
+
+
+        #region Properties
+
         public Group CurrentGroup
         {
             get { return _currentGroup; }
@@ -80,7 +46,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public string _summary;
         public string Summary
         {
             get { return _summary; }
@@ -91,7 +56,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public List<Tab> _tabs;
         public List<Tab> Tabs
         {
             get { return _tabs; }
@@ -102,28 +66,76 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        #region Actions
+        #endregion Properties
 
-        private void DoGoToTabView(object args)
+
+        #region Override members
+
+        public override void SaveStateTo(IDictionary<string, object> state)
         {
-            var selector = (args as System.Windows.Controls.SelectionChangedEventArgs);
-            if (selector != null && selector.AddedItems.Count > 0 && selector.AddedItems[0] is Tab)
+            base.SaveStateTo(state);
+            state["CurrentGroupId"] = CurrentGroup.Id;
+        }
+
+        public override void LoadStateFrom(IDictionary<string, object> state)
+        {
+            base.LoadStateFrom(state);
+            if (state.ContainsKey("CurrentGroupId"))
             {
-                Tab tab = selector.AddedItems[0] as Tab;
-                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
-                                                                                          {
-                                                                                              {"Tab", tab}
-                                                                                          });
+                int currentGroupId = (int)state["CurrentGroupId"];
             }
+
         }
 
-        private void DoRemoveTab(int id)
+        protected override void DataBind()
         {
-            TabDataContextHelper.DeleteTabById(id);
-            DataBind();
+            Tabs = (from Tab t in Database.Tabs
+                    orderby t.Name ascending
+                    where t.Group.Id == CurrentGroup.Id
+                    select t).ToList();
+            if (String.IsNullOrEmpty(CurrentGroup.Description))
+            {
+                SearchInfoResult result = new SearchInfoResult(CurrentGroup.Name);
+                result.SearchComplete += (o, e) =>
+                {
+                    try
+                    {
+                        var description = Regex.Replace(result.Summary, @"<(.|\n)*?>",
+                                                        string.Empty);
+                        if (description.Length > 2040)
+                        {
+                            description = description.Substring(0, 2080);
+                            description += "..";
+                        }
+                        Summary = description;
+                        CurrentGroup.Description = Summary;
+                        CurrentGroup.Url = result.Url;
+                        Database.SubmitChanges();
+                    }
+                    catch
+                    {
+
+                    }
+
+                };
+                result.Run();
+            }
+            else
+            {
+                Summary = CurrentGroup.Description;
+            }
+
         }
 
-        #endregion
+        protected override void ReadNavigationParameters()
+        {
+            if (NavigationParameters == null)
+                return;
+            CurrentGroup = (Group)NavigationParameters["group"];
+        }
+
+        #endregion Override members
+
 
         #region Commands
 
@@ -146,7 +158,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
 
-        public RelayCommand SearchCommand
+        public RelayCommand<Group> SearchCommand
         {
             get;
             set;
@@ -173,29 +185,51 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        #endregion
-   
-        protected override void ReadNavigationParameters()
-        {
-            if (NavigationParameters == null)
-                return;
-            CurrentGroup = (Group)NavigationParameters["group"];
-        }
+        #endregion Commands
 
-        public override void SaveStateTo(IDictionary<string, object> state)
-        {
-            base.SaveStateTo(state);
-            state["CurrentGroupId"] = CurrentGroup.Id;
-        }
 
-        public override void LoadStateFrom(IDictionary<string, object> state)
+        #region Command handlers
+
+        private void DoGoToTabView(object args)
         {
-            base.LoadStateFrom(state);
-            if (state.ContainsKey("CurrentGroupId"))
+            var selector = (args as System.Windows.Controls.SelectionChangedEventArgs);
+            if (selector != null && selector.AddedItems.Count > 0 && selector.AddedItems[0] is Tab)
             {
-                int currentGroupId = (int) state["CurrentGroupId"];
+                Tab tab = selector.AddedItems[0] as Tab;
+                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
+                                                                                          {
+                                                                                              {"Tab", tab}
+                                                                                          });
             }
-
         }
+
+        private void DoRemoveTab(int id)
+        {
+            TabDataContextHelper.DeleteTabById(id);
+            DataBind();
+        }
+
+        private void DoSearch(Group group)
+        {
+            navigationService.NavigateTo(PageType.Get(PageType.EnumType.Search), new Dictionary<string, object>() { {"SearchTerm", group.Name} });
+        }
+
+        #endregion Command handlers
+
+
+        #region Helper methods
+
+        private void CreateCommands()
+        {
+            SearchCommand = new RelayCommand<Group>(DoSearch);
+            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Settings)));
+            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Startup)));
+
+            GoToTabView = new RelayCommand<object>(DoGoToTabView);
+            RemoveTab = new RelayCommand<int>(DoRemoveTab);
+            CancelTab = new RelayCommand(() => { });
+        }
+
+        #endregion Helper methods
     }
 }

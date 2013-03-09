@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-
 namespace PhoneGuitarTab.Search.Lastfm
 {
    
@@ -61,7 +60,9 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         }
 
+
         #region Nested classes
+
         public class Owner
         {
             public string Name { get; set; }
@@ -82,7 +83,7 @@ namespace PhoneGuitarTab.Search.Lastfm
             public int ThumbsUp { get; set; }
             public int ThumbsDown { get; set; }
         }
-        #endregion
 
+        #endregion Nested classes
     }
 }

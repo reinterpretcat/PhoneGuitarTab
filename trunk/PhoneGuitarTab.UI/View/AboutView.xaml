@@ -1,0 +1,88 @@
+﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.AboutView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
+               xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               DataContext="{Binding About,
+                                     Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="True"
+               mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot" Margin="32, 8, 4, 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="0, 16, 0, 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Canvas xmlns="http://schemas.microsoft.com/client/2007"
+                        Width="16"
+                        Height="60.000"
+                        HorizontalAlignment="Left">
+                    <Path Data=" M 15.393,3.596 C 17.718,19.307 -2.038,16.232 0.173,5.387 C 1.435,-0.804 11.028,-2.002 15.393,3.596 Z" Fill="{StaticResource PhoneAccentBrush}" />
+                    <Path Data=" M 1.963,18.816 C 5.843,18.816 9.722,18.816 13.602,18.816 C 13.602,32.545 13.602,46.272 13.602,60.000 C 9.722,60.000 5.843,60.000 1.963,60.000 C 1.963,46.272 1.963,32.545 1.963,18.816 Z" Fill="{StaticResource PhoneAccentBrush}" />
+                </Canvas>
+                <TextBlock x:Name="PageTitle"
+                           Grid.Column="1"
+                           Style="{StaticResource PhoneTextTitle1Style}"
+                           Text="{Binding Help}" />
+            </Grid>
+
+            <TextBlock VerticalAlignment="Bottom"
+                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                       FontSize="{StaticResource PhoneFontSizeLarge}"
+                       Foreground="{StaticResource PhoneAccentBrush}"
+                       Text="{Binding AppTitle}" />
+
+            <TextBlock Margin="0,4"
+                       Text="{Binding Copyright}"
+                       TextWrapping="Wrap" />
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Margin="2, 0, 0, 16">
+            
+            <StackPanel Margin="0,24"
+                        Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Text="version: " />
+                <TextBlock Margin="12, 8"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           FontSize="{StaticResource PhoneFontSizeMedium}"
+                           Text="{Binding ApplicationVersion}" />
+            </StackPanel>
+
+            
+            <TextBlock Margin="0,48,0,6" Text="visit project page at:" />
+            <HyperlinkButton Grid.Row="1" Content="{Binding CompanyUrl}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewWebsiteCommand, Mode=OneWay}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </HyperlinkButton>
+        </StackPanel>
+
+    </Grid>
+
+</Core:ViewPage>

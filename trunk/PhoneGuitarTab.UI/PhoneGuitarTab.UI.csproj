@@ -96,6 +96,7 @@
     <Compile Include="Infrastructure\TabDataContextHelper.cs" />
     <Compile Include="Infrastructure\TabStorageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
     <Compile Include="ViewModel\DataContextViewModel.cs" />
@@ -104,6 +105,9 @@
     <Compile Include="ViewModel\StartupViewModel.cs" />
     <Compile Include="ViewModel\TextTabViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HelpView.xaml.cs">
       <DependentUpon>HelpView.xaml</DependentUpon>
     </Compile>
@@ -128,6 +132,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="View\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\HelpView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,7 +167,6 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Thumbs.db" />
     <None Include="Toolkit.Content\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>

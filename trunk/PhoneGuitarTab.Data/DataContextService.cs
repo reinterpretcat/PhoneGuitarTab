@@ -21,6 +21,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 
+
         /// <summary>
         /// It is used by external classes in order to provide startup initialization through Data Context instantiation
         /// </summary>
@@ -51,10 +52,11 @@ namespace PhoneGuitarTab.Data
                 _database.SubmitChanges();
             }
 
-
             public event EventHandler<EventArgs> OnChanged;
         }
-        #region ITabDataContextService
+
+
+        #region ITabDataContextService memnbers
 
         // Specify a table for the tabs.
         public Table<Tab> Tabs
@@ -80,7 +82,7 @@ namespace PhoneGuitarTab.Data
             InvokeOnChanged(new EventArgs());
         }
 
-        #endregion
+        #endregion ITabDataContextService memnbers
 
 
 

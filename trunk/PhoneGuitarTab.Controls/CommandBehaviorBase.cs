@@ -11,8 +11,7 @@ namespace PhoneGuitarTab.Controls
     /// <remarks>
     /// CommandBehaviorBase can be used to provide new behaviors similar to <see cref="ButtonBaseClickCommandBehavior"/>.
     /// </remarks>
-    public class CommandBehaviorBase<T>
-				where T : Control
+    public class CommandBehaviorBase<T> where T : Control
     {
         private ICommand command;
         private object commandParameter;
@@ -29,6 +28,7 @@ namespace PhoneGuitarTab.Controls
             this.targetObject = new WeakReference(targetObject);
             this.commandCanExecuteChangedHandler = new EventHandler(this.CommandCanExecuteChanged);
         }
+
 
         /// <summary>
         /// Corresponding command to be execute and monitored for <see cref="ICommand.CanExecuteChanged"/>

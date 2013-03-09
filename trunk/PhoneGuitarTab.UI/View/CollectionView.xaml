@@ -8,7 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
     xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core" 
-    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls" mc:Ignorable="d"
+    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure" 
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" 
+    xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls" 
+    mc:Ignorable="d"
     d:DesignWidth="480" 
     d:DesignHeight="768"
     x:Name="root"
@@ -28,7 +32,7 @@
         </Grid.Resources>
         <!--Pivot Control-->
         <controls:Pivot Title="MY TAB COLLECTION">
-            <!--Pivot item one-->
+
             <controls:PivotItem Header="groups">
                 <toolkit:LongListSelector Background="Transparent" x:Name="GroupList"
                     ItemsSource="{Binding Groups}">
@@ -174,6 +178,9 @@
             </controls:PivotItem>
         </controls:Pivot>
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
+            <custom:BindableApplicationBar.Foreground>
+                <SolidColorBrush Color="{StaticResource PhoneForegroundColor}"/>
+            </custom:BindableApplicationBar.Foreground>
             <!--<custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />-->
             <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}" IconUri="/Images/dark/appbar.feature.search.rest.png" Text="Search" />
             <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.home.png" Text="Home" />

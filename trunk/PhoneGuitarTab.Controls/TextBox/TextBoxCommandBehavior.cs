@@ -20,17 +20,6 @@ namespace PhoneGuitarTab.Controls
                                                ExecuteCommand();
                                            }
                                        };
-                                             
-            /*textBoxObject.LostFocus += (s, e) =>
-                                           {
-                                               string input = (s as TextBox).Text;
-                                               if (!String.IsNullOrEmpty(input))
-                                               {
-                                                   this.CommandParameter = input;
-                                                   ExecuteCommand();
-                                               }
-                                           };*/
-
         }
     }
 }

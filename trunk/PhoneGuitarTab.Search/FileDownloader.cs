@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.IO.IsolatedStorage;
 using System.Net;
-
 
 namespace PhoneGuitarTab.Search
 {
@@ -12,8 +10,12 @@ namespace PhoneGuitarTab.Search
     public class FileDownloader: IDisposable
     {
         protected Stream stream; 
+
+
         public event EventHandler DownloadComplete;
 
+
+        #region Constructors
 
         public FileDownloader(Stream writeStream)
         {
@@ -24,11 +26,10 @@ namespace PhoneGuitarTab.Search
         {
         }
 
-        private void InvokeDownloadComplete(EventArgs e)
-        {
-            EventHandler handler = DownloadComplete;
-            if (handler != null) handler(this, e);
-        }
+        #endregion Constructors
+
+
+        #region Public methods
 
         public virtual void Download()
         {
@@ -92,5 +93,18 @@ namespace PhoneGuitarTab.Search
         {
             stream.Dispose();
         }
+
+        #endregion Public methods
+
+
+        #region Helper methods
+
+        private void InvokeDownloadComplete(EventArgs e)
+        {
+            EventHandler handler = DownloadComplete;
+            if (handler != null) handler(this, e);
+        }
+
+        #endregion Helper methods
     }
 }

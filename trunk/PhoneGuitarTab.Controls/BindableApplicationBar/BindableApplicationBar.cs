@@ -1,3 +1,5 @@
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using System;
 using System.Collections;
 using System.Linq;
@@ -5,8 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 
 namespace PhoneGuitarTab.Controls
 {
@@ -64,8 +64,6 @@ namespace PhoneGuitarTab.Controls
             }
         }
 
-
-
         public static readonly DependencyProperty ModeProperty =
           DependencyProperty.RegisterAttached("Mode", typeof(ApplicationBarMode), typeof(BindableApplicationBar), new PropertyMetadata(ApplicationBarMode.Default, OnModeChanged));
 
@@ -92,7 +90,6 @@ namespace PhoneGuitarTab.Controls
         {
             get { return _applicationBar.MiniSize; }
         }
-
 
         public bool IsVisible
         {

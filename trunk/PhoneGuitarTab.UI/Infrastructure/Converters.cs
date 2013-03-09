@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PhoneGuitarTab.UI.Controls;
+using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using PhoneGuitarTab.UI.Controls;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
@@ -98,5 +99,23 @@ namespace PhoneGuitarTab.UI.Infrastructure
         #endregion
     }
 
+    public class BooleanToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return Visibility.Collapsed;
 
+            var isVisible = (bool)value;
+
+            return isVisible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var visiblity = (Visibility)value;
+
+            return visiblity == Visibility.Visible;
+        }
+    }
 }

@@ -7,15 +7,27 @@ namespace PhoneGuitarTab.Core
 {
     public static class Container
     {
+        #region Fields
+
         private static readonly Dictionary<Type, Tuple<Type, object[]>> _registration = new Dictionary<Type, Tuple<Type, object[]>>();
         private static readonly Dictionary<Type, object> _rot = new Dictionary<Type, object>();
         private static readonly object[] _emptyArguments = new object[0];
         private static readonly object _syncLock = new object();
 
+        #endregion Fields
+
+
+        #region Static constructor
+
         static Container()
         {
            
         }
+
+        #endregion Static constructor
+
+
+        #region Public methods
 
         public static object Resolve(Type type)
         {
@@ -67,5 +79,7 @@ namespace PhoneGuitarTab.Core
                 _registration.Add(typeof(C), new Tuple<Type, object[]>(null, args));
             }
         }
+
+        #endregion Public methods
     }
 }

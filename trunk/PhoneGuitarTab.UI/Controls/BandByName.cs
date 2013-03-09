@@ -37,14 +37,14 @@ namespace PhoneGuitarTab.UI.Controls
             }
 
            
-            foreach (Group g in allGroups)
+            foreach (Group tabGroup in allGroups)
             {
                 //get count of tab for this group
                 var count = (from Tab t in database.Tabs
-                            where t.Group.Id == g.Id
+                             where t.Group.Id == tabGroup.Id
                             select t).Count();
-                groups[g.GetNameKey()].Add(new PhoneGuitarTab.Core.Tuple<int, Group>
-                                               (count, g));
+                groups[tabGroup.GetNameKey()].Add(new PhoneGuitarTab.Core.Tuple<int, Group>
+                                               (count, tabGroup));
             }
 
         }

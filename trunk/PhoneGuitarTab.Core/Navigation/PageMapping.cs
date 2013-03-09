@@ -27,6 +27,5 @@ namespace PhoneGuitarTab.Core.Navigation
         {
             return _pageMapping.Keys.Single(m => _pageMapping[m].Item1 == pageUri);
         }
-
     }
 }

@@ -1,20 +1,23 @@
-﻿<Core:ViewPage 
-    x:Class="PhoneGuitarTab.UI.View.HelpView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core" 
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-    xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" 
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    DataContext="{Binding Help, Source={StaticResource Locator}}"
-    shell:SystemTray.IsVisible="True">
+﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.HelpView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
+               xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               DataContext="{Binding Help,
+                                     Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="True"
+               mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
@@ -22,90 +25,79 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,12">
-            <TextBlock x:Name="ApplicationTitle" Text="{Binding AppTitle}"  Style="{StaticResource PhoneTextNormalStyle}" />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Canvas xmlns="http://schemas.microsoft.com/client/2007" Width="15.583" Height="60.000">
-                    <Path Fill="{StaticResource PhoneAccentBrush}" Data=" M 15.393,3.596 C 17.718,19.307 -2.038,16.232 0.173,5.387 C 1.435,-0.804 11.028,-2.002 15.393,3.596 Z" />
-                    <Path Fill="{StaticResource PhoneAccentBrush}" Data=" M 1.963,18.816 C 5.843,18.816 9.722,18.816 13.602,18.816 C 13.602,32.545 13.602,46.272 13.602,60.000 C 9.722,60.000 5.843,60.000 1.963,60.000 C 1.963,46.272 1.963,32.545 1.963,18.816 Z" />
-                </Canvas>
-                <TextBlock Grid.Column="1" x:Name="PageTitle" Text="{Binding Help}"  
-                           Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
-            </Grid>
-        </StackPanel>
-
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel"
+              Grid.Row="1"
+              Margin="32,0,12,0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding AppTitle}" 
-                          FontSize="{StaticResource PhoneFontSizeLarge}" 
-                          FontFamily="{StaticResource PhoneFontFamilySemiBold}" 
-                          VerticalAlignment="Bottom" 
-                          Foreground="{StaticResource PhoneAccentBrush}" />
-                    <TextBlock Text="{Binding ApplicationVersion}" Margin="12,0,0,2" 
-                          FontSize="{StaticResource PhoneFontSizeMediumLarge}" 
-                          VerticalAlignment="Bottom" 
-                          FontFamily="{StaticResource PhoneFontFamilySemiBold}" />
+                    <TextBlock VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               FontSize="{StaticResource PhoneFontSizeLarge}"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Text="{Binding AppTitle}" />
+                    <TextBlock Margin="12,0,0,2"
+                               VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                               Text="{Binding ApplicationVersion}" />
                 </StackPanel>
-                <TextBlock TextWrapping="Wrap" Text="{Binding Copyright}" />
-                <ScrollViewer Margin="0,40,0,0">
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding SupportMessage}" TextWrapping="Wrap" d:LayoutOverrides="Width" />
-                        <Button x:Name="MailButton" Padding="17,12">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand 
-                                        Command="{Binding SupportQuestionCommand, Mode=OneWay}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <Canvas xmlns="http://schemas.microsoft.com/client/2007" Width="23.903" Height="18.441">
-                                <Path Fill="{StaticResource PhoneForegroundBrush}" Data="F1 M 2.446,15.994 L 2.446,5.334 L 11.021,12.021 C 11.243,12.193 11.510,12.279 11.774,12.279 C 12.038,12.279 12.303,12.193 12.524,12.023 L 21.457,5.100 L 21.457,15.994 L 2.446,15.994 Z M 20.883,2.447 L 11.776,9.506 L 2.728,2.447 L 20.883,2.447 Z M 22.678,0.000 L 1.221,0.000 C 0.547,0.000 0.000,0.547 0.000,1.223 L 0.000,17.217 C 0.000,17.893 0.547,18.441 1.221,18.441 L 22.678,18.441 C 23.354,18.441 23.903,17.893 23.903,17.217 L 23.903,1.223 C 23.903,0.547 23.354,0.000 22.678,0.000" />
-                            </Canvas>
-                        </Button>
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap"  Margin="0,40,0,0"
-                            Text="{Binding ReviewTheApp}" />
-                        <Button x:Name="ReviewButton" Content="{Binding Review}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <GalaSoft_MvvmLight_Command:EventToCommand 
-                                        Command="{Binding ReviewCommand, Mode=OneWay}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                    </StackPanel>
-                </ScrollViewer>
+
+                <TextBlock Text="{Binding Copyright}" TextWrapping="Wrap" />
+
+                <StackPanel Margin="24">
+                    <TextBlock Margin="0, 4"
+                               Text="{Binding SupportMessage}"
+                               TextWrapping="Wrap"
+                               d:LayoutOverrides="Width" FontStretch="Expanded"/>
+
+                    <Button x:Name="MailButton"
+                            Margin="-12,0,0,0"
+                            Padding="17,12">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding SupportQuestionCommand, Mode=OneWay}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Canvas xmlns="http://schemas.microsoft.com/client/2007"
+                                Width="23.903"
+                                Height="18.441">
+                            <Path Data="F1 M 2.446,15.994 L 2.446,5.334 L 11.021,12.021 C 11.243,12.193 11.510,12.279 11.774,12.279 C 12.038,12.279 12.303,12.193 12.524,12.023 L 21.457,5.100 L 21.457,15.994 L 2.446,15.994 Z M 20.883,2.447 L 11.776,9.506 L 2.728,2.447 L 20.883,2.447 Z M 22.678,0.000 L 1.221,0.000 C 0.547,0.000 0.000,0.547 0.000,1.223 L 0.000,17.217 C 0.000,17.893 0.547,18.441 1.221,18.441 L 22.678,18.441 C 23.354,18.441 23.903,17.893 23.903,17.217 L 23.903,1.223 C 23.903,0.547 23.354,0.000 22.678,0.000" Fill="{StaticResource PhoneForegroundBrush}" />
+                        </Canvas>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Margin="24">
+                    <TextBlock Margin="0, 4"
+                               HorizontalAlignment="Stretch"
+                               Text="{Binding ReviewTheApp}"
+                               TextWrapping="Wrap" FontStretch="Expanded" />
+                    <Button x:Name="ReviewButton"
+                            Margin="-12,0,0,0"
+                            Content="{Binding Review}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ReviewCommand, Mode=OneWay}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
+
             </StackPanel>
-            <HyperlinkButton Content="{Binding CompanyUrl}" Grid.Row="1" Margin="0,0,0,6" >
+            <HyperlinkButton Grid.Row="1"
+                             Margin="0,0,0,6"
+                             Content="{Binding CompanyUrl}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <GalaSoft_MvvmLight_Command:EventToCommand 
-                            Command="{Binding ViewWebsiteCommand, Mode=OneWay}"/>
+                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ViewWebsiteCommand, Mode=OneWay}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </HyperlinkButton>
         </Grid>
     </Grid>
 
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
-
-</Core:ViewPage >
+</Core:ViewPage>

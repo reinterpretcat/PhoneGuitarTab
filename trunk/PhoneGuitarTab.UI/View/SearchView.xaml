@@ -1,62 +1,75 @@
-﻿<Core:ViewPage
-    x:Class="PhoneGuitarTab.UI.Notation.SearchView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" 
-    xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
-    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure" 
-    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71" xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    x:Name="root"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
-    DataContext="{Binding Search, Source={StaticResource Locator}}"
-    shell:SystemTray.IsVisible="True">
+﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.Notation.SearchView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
+               xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               x:Name="root"
+               DataContext="{Binding Search,
+                                     Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="True"
+               mc:Ignorable="d">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.Resources>
             <Infrastructure:IntToStringConverter x:Name="IntToStr" />
-            <Infrastructure:TabToBrushValueConverter x:Key="tabBrush"/>
+            <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
+            <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
         </Grid.Resources>
-        <!--Pivot Control-->
+        <!--  Pivot Control  -->
         <controls:Pivot Title="TAB COLLECTION">
-            <!--Pivot item one-->
+            <!--  Pivot item one  -->
             <controls:PivotItem Header="search">
-                <toolkit:LongListSelector Background="Transparent"
-                            ItemsSource="{Binding SearchGroupTabs}">
+                <toolkit:LongListSelector x:Name="resultsList"
+                                          Background="Transparent"
+                                          ItemsSource="{Binding SearchGroupTabs}">
                     <toolkit:LongListSelector.GroupItemsPanel>
                         <ItemsPanelTemplate>
-                            <toolkit:WrapPanel Orientation="Horizontal"/>
+                            <toolkit:WrapPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </toolkit:LongListSelector.GroupItemsPanel>
                     <toolkit:LongListSelector.GroupItemTemplate>
                         <DataTemplate>
-                            <Border Background="{Binding Converter={StaticResource tabBrush}}" 
-                                    Width="99" Height="99" Margin="6" IsHitTestVisible="{Binding HasItems}">
-                                <TextBlock Text="{Binding Key}" 
-                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                       FontSize="36"
-                                       Margin="{StaticResource PhoneTouchTargetOverhang}"
-                                       Foreground="{StaticResource PhoneForegroundBrush}"                                        
-                                       VerticalAlignment="Bottom"/>
+                            <Border Width="99"
+                                    Height="99"
+                                    Margin="6"
+                                    Background="{Binding Converter={StaticResource tabBrush}}"
+                                    IsHitTestVisible="{Binding HasItems}">
+                                <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
+                                           VerticalAlignment="Bottom"
+                                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                           FontSize="36"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           Text="{Binding Key}" />
                             </Border>
                         </DataTemplate>
                     </toolkit:LongListSelector.GroupItemTemplate>
                     <toolkit:LongListSelector.GroupHeaderTemplate>
                         <DataTemplate>
                             <Border Background="Transparent">
-                                <Border Background="{StaticResource PhoneAccentBrush}" Width="75" Height="75" HorizontalAlignment="Left">
-                                    <TextBlock Text="{Binding Key}" 
-                                           Foreground="{StaticResource PhoneForegroundBrush}" 
-                                           Style="{StaticResource PhoneTextExtraLargeStyle}"
-                                           VerticalAlignment="Bottom"/>
+                                <Border Width="75"
+                                        Height="75"
+                                        HorizontalAlignment="Left"
+                                        Background="{StaticResource PhoneAccentBrush}">
+                                    <TextBlock VerticalAlignment="Bottom"
+                                               Foreground="{StaticResource PhoneForegroundBrush}"
+                                               Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                               Text="{Binding Key}" />
                                 </Border>
                             </Border>
                         </DataTemplate>
@@ -64,40 +77,36 @@
                     <toolkit:LongListSelector.ListHeaderTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
-                                <!--<Grid>
+                                <!--
+                                    <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="260" />
-                                        <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="260" />
+                                    <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Text="Type group[,song]" />
                                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Text="{Binding Path=DataContext.SearchGroupTabsSummary.TotalResults, ElementName=root}" />
-                                        <TextBlock Text=" tabs total" />
+                                    <TextBlock Text="{Binding Path=DataContext.SearchGroupTabsSummary.TotalResults, ElementName=root}" />
+                                    <TextBlock Text=" tabs total" />
                                     </StackPanel>
-                                </Grid>-->
-                                <TextBox Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}"
-                                         custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch, ElementName=root}">
-                     
-                                </TextBox>
-                                        <!--:KeyUp.Command="{Binding Path=DataContext.LaunchSearch, ElementName=root}" />-->
+                                    </Grid>
+                                -->
+                                <TextBox Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}" custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch, ElementName=root}" />
+                                <!--  :KeyUp.Command="{Binding Path=DataContext.LaunchSearch, ElementName=root}" />  -->
 
                                 <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.HeaderPagingVisibility, ElementName=root}">
                                     <TextBlock Padding="8" Text="Pages:" />
-                                    <ItemsControl
-                                        ItemsSource="{Binding Path=DataContext.Pages,ElementName=root}">
+                                    <ItemsControl ItemsSource="{Binding Path=DataContext.Pages, ElementName=root}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <StackPanel Orientation="Horizontal" />
-                                             </ItemsPanelTemplate>
+                                            </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <HyperlinkButton Padding="8" Content="{Binding}">
+                                                <HyperlinkButton Content="{Binding}" Padding="8">
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="Click">
-                                                           <Command:EventToCommand
-                                                                Command="{Binding Path=DataContext.SelectPage, ElementName=root}" 
-                                                                CommandParameter="{Binding}" />
+                                                            <Command:EventToCommand Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding}" />
                                                         </i:EventTrigger>
                                                     </i:Interaction.Triggers>
                                                 </HyperlinkButton>
@@ -112,78 +121,96 @@
                         <DataTemplate>
                             <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Width="60" Height="60" Source="{Binding ImageUrl}" VerticalAlignment="Center"/>
+                                <Image Width="60"
+                                       Height="60"
+                                       VerticalAlignment="Center"
+                                       Source="{Binding ImageUrl}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
-                                    <TextBlock Text="{Binding Type}" Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                    <TextBlock Margin="12,-12,12,6"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               Style="{StaticResource PhoneTextLargeStyle}"
+                                               Text="{Binding Name}" />
+                                    <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               Style="{StaticResource PhoneTextNormalStyle}"
+                                               Text="{Binding Type}"
+                                               TextWrapping="Wrap" />
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
-                                        <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+                                        <TextBlock Style="{StaticResource PhoneTextSmallStyle}" Text="Rating:" />
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   Style="{StaticResource PhoneTextSmallStyle}"
+                                                   Text="{Binding Rating}" />
                                     </StackPanel>
                                 </StackPanel>
                                 <toolkit:ContextMenuService.ContextMenu>
-                                            <toolkit:ContextMenu>
-                                                          <toolkit:MenuItem Header="download" 
-                                                          Command="{Binding Path=DataContext.DownloadTab, ElementName=root}"
-                                                          CommandParameter="{Binding SearchId}"/>
-                                                <toolkit:MenuItem Header="cancel"
-                                                          Command="{Binding Path=DataContext.CancelTab, ElementName=root}"/>
-                                            </toolkit:ContextMenu>
-                                        </toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu>
+                                        <toolkit:MenuItem Command="{Binding Path=DataContext.DownloadTab,
+                                                                            ElementName=root}"
+                                                          CommandParameter="{Binding SearchId}"
+                                                          Header="download" />
+                                        <toolkit:MenuItem Command="{Binding Path=DataContext.CancelTab, ElementName=root}" Header="cancel" />
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
                             </Grid>
                         </DataTemplate>
                     </toolkit:LongListSelector.ItemTemplate>
                 </toolkit:LongListSelector>
             </controls:PivotItem>
-            
-            <!--<controls:PivotItem Header="custom">
-                <StackPanel>
-                    <TextBlock Text="group name" Style="{StaticResource PhoneTextNormalStyle}"  />
-                    <TextBox Text="{Binding CustomGroupName, Mode=TwoWay}" />
-                    <TextBlock Text="tab name" Style="{StaticResource PhoneTextNormalStyle}"/>
-                    <TextBox Text="{Binding CustomTabName, Mode=TwoWay}" />-->
-                    <!--<toolkit:ListPicker ItemsSource="{Binding CustomTabTypes}" Header="type"
-                                        SelectedItem="{Binding SelectedCustomTabType, Mode=TwoWay}"
-                                        FullModeHeader="TYPE" CacheMode="BitmapCache">
-                        <toolkit:ListPicker.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Item1}" Width="24" Height="24"/>
-                                    <TextBlock Text="{Binding Item2}" Margin="12 0 0 0"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </toolkit:ListPicker.ItemTemplate>
-                        <toolkit:ListPicker.FullModeItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
-                                    <Image Source="{Binding Item1}" Width="43" Height="43"/>
-                                    <TextBlock Text="{Binding Item2}" Margin="16 0 0 0" FontSize="43" FontFamily="{StaticResource PhoneFontFamilyLight}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </toolkit:ListPicker.FullModeItemTemplate>
 
-                    </toolkit:ListPicker>-->
-            <!--        <TextBlock Text="download url" Style="{StaticResource PhoneTextNormalStyle}" />
-                    <TextBox custom:KeyUp.Command="{Binding Path=DataContext.CustomDownloadTab, ElementName=root}" />
+            <!--
+                <controls:PivotItem Header="custom">
+                <StackPanel>
+                <TextBlock Text="group name" Style="{StaticResource PhoneTextNormalStyle}"  />
+                <TextBox Text="{Binding CustomGroupName, Mode=TwoWay}" />
+                <TextBlock Text="tab name" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <TextBox Text="{Binding CustomTabName, Mode=TwoWay}" />
+            -->
+            <!--
+                <toolkit:ListPicker ItemsSource="{Binding CustomTabTypes}" Header="type"
+                SelectedItem="{Binding SelectedCustomTabType, Mode=TwoWay}"
+                FullModeHeader="TYPE" CacheMode="BitmapCache">
+                <toolkit:ListPicker.ItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Item1}" Width="24" Height="24"/>
+                <TextBlock Text="{Binding Item2}" Margin="12 0 0 0"/>
                 </StackPanel>
-            </controls:PivotItem>-->
+                </DataTemplate>
+                </toolkit:ListPicker.ItemTemplate>
+                <toolkit:ListPicker.FullModeItemTemplate>
+                <DataTemplate>
+                <StackPanel Orientation="Horizontal" Margin="16 21 0 20">
+                <Image Source="{Binding Item1}" Width="43" Height="43"/>
+                <TextBlock Text="{Binding Item2}" Margin="16 0 0 0" FontSize="43" FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+                </StackPanel>
+                </DataTemplate>
+                </toolkit:ListPicker.FullModeItemTemplate>
+                
+                </toolkit:ListPicker>
+            -->
+            <!--
+                <TextBlock Text="download url" Style="{StaticResource PhoneTextNormalStyle}" />
+                <TextBox custom:KeyUp.Command="{Binding Path=DataContext.CustomDownloadTab, ElementName=root}" />
+                </StackPanel>
+                </controls:PivotItem>
+            -->
         </controls:Pivot>
-        <toolkit:PerformanceProgressBar
-            VerticalAlignment="Top"
-            IsIndeterminate="{Binding IsSearching, Mode=TwoWay}"
-            />
+
+        <toolkit:PerformanceProgressBar x:Name="performanceBar"
+                                        VerticalAlignment="Top"
+                                        IsIndeterminate="{Binding IsSearching,
+                                                                  Mode=TwoWay}" 
+                                        Visibility="{Binding Search.IsSearching,
+                                                                  Source={StaticResource Locator},
+                                                                  Converter={StaticResource boolVisibility}}"/>
+
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
-            <!--<custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />-->
-            <custom:BindableApplicationBarIconButton Command="{Binding CollectionCommand}" IconUri="/Images/dark/appbar.folder.rest.png" Text="Collection" />
-            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}" IconUri="/Images/dark/appbar.feature.home.png" Text="Home" />
-            <!-- <custom:BindableApplicationBar.MenuItems>
-               <custom:BindableApplicationBarMenuItem  Text="Settings" Command="{Binding SettingsCommand}" />
-                <custom:BindableApplicationBarMenuItem  Text="Collection" 	Command="{Binding CollectionCommand}" />
-                <custom:BindableApplicationBarMenuItem  Text="Home" 	Command="{Binding HomeCommand}" />
-            </custom:BindableApplicationBar.MenuItems>-->
+            <!--  <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />  -->
+            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}"
+                                                     IconUri="/Images/dark/appbar.feature.home.png"
+                                                     Text="To all tabs" />
         </custom:BindableApplicationBar>
     </Grid>
 </Core:ViewPage>

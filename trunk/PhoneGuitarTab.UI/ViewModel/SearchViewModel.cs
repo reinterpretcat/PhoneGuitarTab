@@ -1,22 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using PhoneGuitarTab.Core;
+using PhoneGuitarTab.Core.Navigation;
 using PhoneGuitarTab.Data;
-using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Controls;
 using PhoneGuitarTab.UI.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
     public class SearchViewModel : Core.ViewModel
     {
+        #region Fields
+
         private SearchTabResult groupSearch;
-        
+
+        private PageMapping pageMapping;
+        private CollectionViewModel collectionViewModel;
+
+        private string _customTabName;
+        private string _customGroupName;
+        //private List<Core.Tuple<string, string>> _customTabTypes;
+        private Core.Tuple<string, string> _selectedCustomTabType;
+        private SearchTabResultSummary _searchGroupTabsSummary;
+        private Visibility _headerPagingVisibility;
+        private IEnumerable<string> _pages;
+        private TabByName _searchGroupTabs;
+        private bool _isSearching;
+
+        #endregion Fields
+
+
+        #region Constructors
 
         public SearchViewModel()
         {
@@ -48,10 +66,217 @@ namespace PhoneGuitarTab.UI.ViewModel
             HeaderPagingVisibility = Visibility.Collapsed;
         }
 
+        #endregion Constructors
+
+
+        #region Properties
+
+        public string CustomGroupName
+        {
+            get { return _customGroupName; }
+            set
+            {
+                _customGroupName = value;
+                RaisePropertyChanged("CustomGroupName");
+                CustomDownloadTab.RaiseCanExecuteChanged();
+            }
+        }
+
+        public string CustomTabName
+        {
+            get { return _customTabName; }
+            set
+            {
+                _customTabName = value;
+                RaisePropertyChanged("CustomTabName");
+                CustomDownloadTab.RaiseCanExecuteChanged();
+            }
+        }
+
+        /*public List<Core.Tuple<string,string>> CustomTabTypes
+        {
+            get
+            {
+                //create type-image mapping
+                if(_customTabTypes == null)
+                {
+                    _customTabTypes = new List<Core.Tuple<string, string>>();
+                    foreach (string key in TabDataContextHelper.TabImageTypeMapping.Keys)
+                        _customTabTypes.Add(new Core.Tuple<string, string>(key, TabDataContextHelper.TabImageTypeMapping[key]));
+                }
+
+                return _customTabTypes;
+            }
+        }*/
+
+        public Core.Tuple<string, string> SelectedCustomTabType
+        {
+            get { return _selectedCustomTabType; }
+            set
+            {
+                _selectedCustomTabType = value;
+                RaisePropertyChanged("CustomTabName");
+                CustomDownloadTab.RaiseCanExecuteChanged();
+            }
+        }
+
+        public SearchTabResultSummary SearchGroupTabsSummary
+        {
+            get { return _searchGroupTabsSummary; }
+            set
+            {
+                _searchGroupTabsSummary = value;
+                RaisePropertyChanged("SearchGroupTabsSummary");
+            }
+        }
+
+        public Visibility HeaderPagingVisibility
+        {
+            get { return _headerPagingVisibility; }
+            set
+            {
+                _headerPagingVisibility = value;
+                RaisePropertyChanged("HeaderPagingVisibility");
+            }
+        }
+
+        //NOTE I cannot bind Command in ItemsControl with custom ItemPanelTemplate
+        //So this type is used instead
+        public IEnumerable<string> Pages
+        {
+            get { return _pages; }
+            set
+            {
+                _pages = value;
+                RaisePropertyChanged("Pages");
+            }
+        }
+
+        public TabByName SearchGroupTabs
+        {
+            set
+            {
+                _searchGroupTabs = value;
+                RaisePropertyChanged("SearchGroupTabs");
+            }
+            get { return _searchGroupTabs; }
+
+        }
+
+        public bool IsSearching
+        {
+            set
+            {
+                _isSearching = value;
+                RaisePropertyChanged("IsSearching");
+            }
+            get { return _isSearching; }
+        }
+
+        //helpers properties
+        public string CurrentSearchText { get; set; }
+
+        public int CurrentPageIndex { get; set; }
+
+        #endregion Properties
+
+
+        #region Private properties
+      
         private bool FilterTab(SearchTabResultEntry entry)
         {
             return true;
         }
+
+        private PageMapping PageMapping
+        {
+            get
+            {
+                if (pageMapping == null)
+                    pageMapping = Container.Resolve<PageMapping>();
+                return pageMapping;
+            }
+        }
+
+        private CollectionViewModel CollectionViewModel
+        {
+            get
+            {
+                if (collectionViewModel == null)
+                    collectionViewModel = PageMapping.GetViewModel(PageType.Get(PageType.EnumType.Collection)) as CollectionViewModel;
+                return collectionViewModel;
+            }
+        }
+
+        #endregion Private properties
+
+
+        #region Override members
+
+        protected override void ReadNavigationParameters()
+        {
+            if (base.NavigationParameters.ContainsKey("SearchTerm"))
+            {
+                object searchTerm;
+                NavigationParameters.TryGetValue("SearchTerm", out searchTerm);
+                if (searchTerm != null)
+                    DoLaunchSearch(searchTerm.ToString());
+                else
+                    DoLaunchSearch(String.Empty);
+            }
+        }
+
+        #endregion Override members
+
+
+        #region Commands
+
+        public RelayCommand<string> LaunchSearch
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand<string> SelectPage
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand<string> DownloadTab
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand<string> CustomDownloadTab
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand CollectionCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand SettingsCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand HomeCommand
+        {
+            get;
+            set;
+        }
+
+        #endregion Commands
+
+
+        #region Command handlers
 
         private void DoLaunchSearch(string arg)
         {
@@ -64,32 +289,32 @@ namespace PhoneGuitarTab.UI.ViewModel
                 //TODO examine e.Error 
                 if (e.Error == null)
                 {
-                        var groupTabs = groupSearch.Entries.Where(FilterTab).
-                        Select(entry => new TabEntity()
-                                            {
-                                                            SearchId = entry.Id, 
-                                                            SearchUrl = entry.Url,
-                                                            Name = entry.Name,
-                                                            Group = entry.Artist, 
-                                                            Rating = entry.Rating,
-                                                            Type = entry.Type,
-                                                            ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
-                                                        }).ToList();
+                    var groupTabs = groupSearch.Entries.Where(FilterTab).
+                    Select(entry => new TabEntity()
+                    {
+                        SearchId = entry.Id,
+                        SearchUrl = entry.Url,
+                        Name = entry.Name,
+                        Group = entry.Artist,
+                        Rating = entry.Rating,
+                        Type = entry.Type,
+                        ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
+                    }).ToList();
                     Deployment.Current.Dispatcher.BeginInvoke(
                         () =>
-                            {
-                                SearchGroupTabsSummary = groupSearch.Summary;
-                                Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p=>p.ToString());
-                                HeaderPagingVisibility =
-                                    groupSearch.Summary.PageCount > 1
-                                        ? Visibility.Visible
-                                        : Visibility.Collapsed;
-                                SearchGroupTabs = new TabByName(groupTabs);
-                            });
+                        {
+                            SearchGroupTabsSummary = groupSearch.Summary;
+                            Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
+                            HeaderPagingVisibility =
+                                groupSearch.Summary.PageCount > 1
+                                    ? Visibility.Visible
+                                    : Visibility.Collapsed;
+                            SearchGroupTabs = new TabByName(groupTabs);
+                        });
                 }
                 IsSearching = false;
-
             };
+
             IsSearching = true;
             groupSearch.Run(CurrentPageIndex);
         }
@@ -103,7 +328,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoSelectPage(string index)
         {
             int pageNumber;
-            if(Int32.TryParse(index, out pageNumber))
+            if (Int32.TryParse(index, out pageNumber))
             {
                 CurrentPageIndex = pageNumber;
                 DoLaunchSearch(CurrentSearchText);
@@ -164,21 +389,21 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoDownloadTab(string arg)
         {
-            if(_isSearching)
+            if (_isSearching)
             {
                 MessageBox.Show("Sorry, you cannot download the tab right now.");
                 return;
             }
-           var tab =
-                SearchGroupTabs.AllTabs.Where(t => t.SearchId == arg).FirstOrDefault();
+            var tab =
+                 SearchGroupTabs.AllTabs.Where(t => t.SearchId == arg).FirstOrDefault();
 
             //TODO create converter
             SearchTabResultEntry entry = new SearchTabResultEntry()
-                                             {
-                                                 Id = tab.SearchId,
-                                                 Url = tab.SearchUrl,
-                                                 Type = tab.Description
-                                             };
+            {
+                Id = tab.SearchId,
+                Url = tab.SearchUrl,
+                Type = tab.Description
+            };
 
             var filePath = TabStorageHelper.CreateTabFilePath();
 
@@ -186,23 +411,25 @@ namespace PhoneGuitarTab.UI.ViewModel
             SearchTabDownloader downloader = new SearchTabDownloader(entry, filePath);
             downloader.DownloadComplete += delegate
             {
-                Tab t = new Tab()
+                Tab downloadedTab = new Tab()
                 {
                     Name = tab.Name,
                     Group = TabDataContextHelper.GetOrCreateGroupByName(tab.Group),
-                    TabType =TabDataContextHelper.GetTabTypeByName(tab.Type),
+                    TabType = TabDataContextHelper.GetTabTypeByName(tab.Type),
                     Rating = tab.Rating,
                     Path = filePath
                 };
-                
-                TabDataContextHelper.InsertTab(t);
+
+                TabDataContextHelper.InsertTab(downloadedTab);
+
+                NotifyCollection(downloadedTab);
 
                 Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
-                        {
-                            IsSearching = false;
-                            MessageBox.Show("The tab was downloaded");
-                        });
+                    {
+                        IsSearching = false;
+                        MessageBox.Show("The tab was downloaded");
+                    });
             };
             IsSearching = true;
             try
@@ -213,12 +440,12 @@ namespace PhoneGuitarTab.UI.ViewModel
                 }
                 else
                 {*/
-                    downloader.Download();
+                downloader.Download();
                 //}
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Error: {0}",ex));
+                MessageBox.Show(String.Format("Error: {0}", ex));
                 IsSearching = false;
             }
         }
@@ -229,168 +456,16 @@ namespace PhoneGuitarTab.UI.ViewModel
             return !_isSearching;
         }
 
-        private string _customGroupName;
-        public string CustomGroupName
+        #endregion Command handlers
+
+
+        #region Helper methods
+
+        private void NotifyCollection(Tab downloadedTab)
         {
-            get { return _customGroupName; }
-            set
-            {
-                _customGroupName = value;
-                RaisePropertyChanged("CustomGroupName");
-                CustomDownloadTab.RaiseCanExecuteChanged();
-            }
+            CollectionViewModel.AddDownloadedTab(downloadedTab);
         }
 
-        private string _customTabName;
-        public string CustomTabName
-        {
-            get { return _customTabName; }
-            set
-            {
-                _customTabName = value;
-                RaisePropertyChanged("CustomTabName");
-                CustomDownloadTab.RaiseCanExecuteChanged();
-            }
-        }
-
-        private List<Core.Tuple<string, string>> _customTabTypes;
-        /*public List<Core.Tuple<string,string>> CustomTabTypes
-        {
-            get
-            {
-                //create type-image mapping
-                if(_customTabTypes == null)
-                {
-                    _customTabTypes = new List<Core.Tuple<string, string>>();
-                    foreach (string key in TabDataContextHelper.TabImageTypeMapping.Keys)
-                        _customTabTypes.Add(new Core.Tuple<string, string>(key, TabDataContextHelper.TabImageTypeMapping[key]));
-                }
-
-                return _customTabTypes;
-            }
-        }*/
-
-        private Core.Tuple<string, string> _selectedCustomTabType;
-        public Core.Tuple<string, string> SelectedCustomTabType
-        {
-            get { return _selectedCustomTabType; }
-            set
-            {
-                _selectedCustomTabType = value;
-                RaisePropertyChanged("CustomTabName");
-                CustomDownloadTab.RaiseCanExecuteChanged();
-            }
-        }
-
-        private SearchTabResultSummary _searchGroupTabsSummary;
-        public SearchTabResultSummary SearchGroupTabsSummary
-        {
-            get { return _searchGroupTabsSummary; }
-            set
-            {
-                _searchGroupTabsSummary = value;
-                RaisePropertyChanged("SearchGroupTabsSummary");
-            }
-        }
-
-        private Visibility _headerPagingVisibility;
-        public Visibility HeaderPagingVisibility
-        {
-            get { return _headerPagingVisibility; }
-            set
-            {
-                _headerPagingVisibility = value;
-                RaisePropertyChanged("HeaderPagingVisibility");
-            }
-        }
-
-        //NOTE I cannot bind Command in ItemsControl with custom ItemPanelTemplate
-        //So this type is used instead
-        private IEnumerable<string> _pages;
-        public IEnumerable<string> Pages
-        {
-            get { return _pages; }
-            set
-            {
-                _pages = value;
-                RaisePropertyChanged("Pages");
-            }
-        }
-
-        private TabByName _searchGroupTabs;
-        public TabByName SearchGroupTabs
-        {
-            set
-            {
-                _searchGroupTabs = value;
-                RaisePropertyChanged("SearchGroupTabs");
-            }
-            get { return _searchGroupTabs; }
-
-        }
-
-        private bool _isSearching;
-        public bool IsSearching
-        {
-            set
-            {
-                _isSearching = value;
-                RaisePropertyChanged("IsSearching");
-            }
-            get { return _isSearching; }
-        }
-
-        //helpers properties
-        public string CurrentSearchText { get; set; }
-        public int CurrentPageIndex { get; set; }
-
-        #region Properties
-
-        public RelayCommand<string> LaunchSearch
-        {
-            get;
-            private set;
-        }
-
-        public RelayCommand<string> SelectPage
-        {
-            get;
-            private set;
-        }
-
-        public RelayCommand<string> DownloadTab
-        {
-            get;
-            private set;
-        }
-
-        public RelayCommand<string> CustomDownloadTab
-        {
-            get;
-            private set;
-        }
-
-      
-        public RelayCommand CollectionCommand
-        {
-            get;
-            set;
-        }
-
-        public RelayCommand SettingsCommand
-        {
-            get;
-            set;
-        }
-
-        public RelayCommand HomeCommand
-        {
-            get;
-            set;
-        }
-
-      
-
-        #endregion
+        #endregion Helper methods
     }
 }

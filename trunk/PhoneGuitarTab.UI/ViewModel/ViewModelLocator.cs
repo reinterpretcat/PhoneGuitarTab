@@ -34,6 +34,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private static Core.ViewModel _search;
         private static Core.ViewModel _textTab;
         private static Core.ViewModel _help;
+        private static Core.ViewModel _about;
 
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
@@ -49,6 +50,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             _search = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.Search));
             _textTab = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.TextTab));
             _help = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.Help));
+            _about = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.About));
         }
 
         /// <summary>
@@ -66,6 +68,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                                                              {PageType.Get(PageType.EnumType.Search),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/SearchView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new SearchViewModel()))},
                                                              {PageType.Get(PageType.EnumType.TextTab),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/TextTabView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new TextTabViewModel()))},
                                                              {PageType.Get(PageType.EnumType.Help),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/HelpView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new HelpViewModel()))},
+                                                             {PageType.Get(PageType.EnumType.About),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/AboutView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new AboutViewModel()))},
                                                              {PageType.Get(PageType.EnumType.Group),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/GroupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new GroupViewModel()))}
                                                          }
                                                 });
@@ -79,10 +82,10 @@ namespace PhoneGuitarTab.UI.ViewModel
                                                                                 initialize
                                                                             });
             Container.Register<IFileSystemService, IsolatedStorageFileService>();
-            Container.Register<ISettingService, IsolatedStorageSettingService>();
-            
+            Container.Register<ISettingService, IsolatedStorageSettingService>();        
         }
      
+
         #region View models
 
         /// <summary>
@@ -154,6 +157,17 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        #endregion
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+          "CA1822:MarkMembersAsStatic",
+          Justification = "This non-static member is needed for data binding purposes.")]
+        public PhoneGuitarTab.Core.ViewModel About
+        {
+            get
+            {
+                return _about;
+            }
+        }
+
+        #endregion View models
     }
 }

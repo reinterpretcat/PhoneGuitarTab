@@ -23,9 +23,9 @@ namespace PhoneGuitarTab.UI.Controls
         {
             IDataContextService database = Container.Resolve<IDataContextService>();
             
-            AllTabs = (from Tab t in database.Tabs
-                       orderby t.Name
-                       select t).Select(t=> t.CreateEntity()).ToList();
+            AllTabs = (from Tab tab in database.Tabs
+                       orderby tab.Name
+                       select tab).Select(tab => tab.CreateEntity()).ToList();
             Initialize();
         }
 
