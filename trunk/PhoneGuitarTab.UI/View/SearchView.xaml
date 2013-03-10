@@ -11,6 +11,7 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
                x:Name="root"
                DataContext="{Binding Search,
                                      Source={StaticResource Locator}}"
@@ -30,6 +31,7 @@
             <Infrastructure:IntToStringConverter x:Name="IntToStr" />
             <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
             <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+            <Infrastructure:StringToIntConverter x:Key="stringToInt" />
         </Grid.Resources>
         <!--  Pivot Control  -->
         <controls:Pivot Title="TAB COLLECTION">
@@ -128,8 +130,8 @@
                                        Height="60"
                                        VerticalAlignment="Center"
                                        Source="{Binding ImageUrl}" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Margin="12,-12,12,6"
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Margin="12,0"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                Style="{StaticResource PhoneTextLargeStyle}"
                                                Text="{Binding Name}" />
@@ -137,12 +139,7 @@
                                                Style="{StaticResource PhoneTextNormalStyle}"
                                                Text="{Binding Type}"
                                                TextWrapping="Wrap" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource PhoneTextSmallStyle}" Text="Rating:" />
-                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                                   Text="{Binding Rating}" />
-                                    </StackPanel>
+                                    <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                                 </StackPanel>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu>
@@ -201,10 +198,10 @@
         <toolkit:PerformanceProgressBar x:Name="performanceBar"
                                         VerticalAlignment="Top"
                                         IsIndeterminate="{Binding IsSearching,
-                                                                  Mode=TwoWay}" 
+                                                                  Mode=TwoWay}"
                                         Visibility="{Binding Search.IsSearching,
-                                                                  Source={StaticResource Locator},
-                                                                  Converter={StaticResource boolVisibility}}"/>
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}" />
 
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
             <!--  <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />  -->

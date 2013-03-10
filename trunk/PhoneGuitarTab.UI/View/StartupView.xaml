@@ -12,6 +12,7 @@
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
                x:Name="root"
                DataContext="{Binding Startup,
                                      Source={StaticResource Locator}}"
@@ -31,6 +32,7 @@
             <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush" />
             <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
             <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+            <Infrastructure:StringToIntConverter x:Key="stringToInt" />
 
             <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
                 <Setter Property="Foreground" Value="WhiteSmoke" />
@@ -140,21 +142,18 @@
                                        VerticalAlignment="Center"
                                        Source="{Binding ImageUrl}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Margin="12,-12,12,6"
+                                    <TextBlock Margin="12,0"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                Style="{StaticResource PhoneTextLargeStyle}"
                                                Text="{Binding Name}" />
-                                    <TextBlock Grid.Column="0"
+                                    <TextBlock Margin="32,0"
                                                HorizontalAlignment="Left"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                Style="{StaticResource PhoneTextNormalStyle}"
-                                               Text="{Binding Group.Name}"
+                                               Text="{Binding Group}"
                                                TextWrapping="Wrap" />
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource PhoneTextSmallStyle}" Text=" Rating:" />
-                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                                   Text="{Binding Rating}" />
+                                        <uiControls:RatingControl Margin="12, 2, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                                         <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                    Style="{StaticResource PhoneTextSmallStyle}"
                                                    Text="{Binding Type}"
@@ -231,19 +230,23 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Width="75"
-                                       Height="100"
-                                       VerticalAlignment="Top"
-                                       Source="{Binding Item2.ImageUrl}" />
+                                <!--
+                                    <Image Width="75"
+                                    Height="100"
+                                    VerticalAlignment="Top"
+                                    Source="{Binding Item2.ImageUrl}" />
+                                -->
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Margin="12,-12,12,6"
-                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                Style="{StaticResource PhoneTextLargeStyle}"
                                                Text="{Binding Item2.Name}" />
-                                    <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                               Style="{StaticResource PhoneTextNormalStyle}"
-                                               Text="{Binding Item1}"
-                                               TextWrapping="Wrap" />
+                                    <TextBlock Margin="48,0"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               Style="{StaticResource PhoneTextNormalStyle}">
+                                        <Run Text="Tabs: " />
+                                        <Run Text="{Binding Item1}" />
+                                    </TextBlock>
                                 </StackPanel>
 
                             </Grid>
@@ -273,33 +276,17 @@
                                            VerticalAlignment="Center"
                                            Source="{Binding TabType.ImageUrl}" />
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Margin="12,-12,12,6"
+                                        <TextBlock Margin="12,0"
                                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Foreground="WhiteSmoke"
                                                    Style="{StaticResource PhoneTextLargeStyle}"
                                                    Text="{Binding Name}" />
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       Foreground="WhiteSmoke"
-                                                       Style="{StaticResource PhoneTextNormalStyle}"
-                                                       Text="{Binding Group.Name}"
-                                                       TextWrapping="Wrap" />
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       Foreground="WhiteSmoke"
-                                                       Style="{StaticResource PhoneTextSmallStyle}"
-                                                       Text="{Binding TabType.Name}"
-                                                       TextWrapping="Wrap" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Foreground="WhiteSmoke"
-                                                       Style="{StaticResource PhoneTextSmallStyle}"
-                                                       Text=" Rating:" />
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       Foreground="WhiteSmoke"
-                                                       Style="{StaticResource PhoneTextSmallStyle}"
-                                                       Text="{Binding Rating}" />
-
-                                        </StackPanel>
+                                        <TextBlock Margin="32,0"
+                                                   HorizontalAlignment="Left"
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                                   Text="{Binding Group.Name}"
+                                                   TextWrapping="Wrap" />
+                                        <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
@@ -405,8 +392,8 @@
                                        Height="60"
                                        VerticalAlignment="Center"
                                        Source="{Binding ImageUrl}" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Margin="12,-12,12,6"
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Margin="12,0"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                Style="{StaticResource PhoneTextLargeStyle}"
                                                Text="{Binding Name}" />
@@ -414,12 +401,7 @@
                                                Style="{StaticResource PhoneTextNormalStyle}"
                                                Text="{Binding Type}"
                                                TextWrapping="Wrap" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource PhoneTextSmallStyle}" Text="Rating:" />
-                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                                   Text="{Binding Rating}" />
-                                    </StackPanel>
+                                    <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                                 </StackPanel>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu>
@@ -427,7 +409,6 @@
                                                                             ElementName=searchPivotItem}"
                                                           CommandParameter="{Binding SearchId}"
                                                           Header="download" />
-                                        <toolkit:MenuItem Command="{Binding Path=DataContext.CancelTab, ElementName=searchPivotItem}" Header="cancel" />
                                     </toolkit:ContextMenu>
                                 </toolkit:ContextMenuService.ContextMenu>
                             </Grid>
@@ -517,8 +498,8 @@
                                                                   Source={StaticResource Locator},
                                                                   Mode=TwoWay}"
                                         Visibility="{Binding Search.IsSearching,
-                                                                  Source={StaticResource Locator},
-                                                                  Converter={StaticResource boolVisibility}}"/>
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}" />
 
     </Grid>
 

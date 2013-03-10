@@ -88,6 +88,12 @@
     <Compile Include="Controls\BandByName.cs" />
     <Compile Include="Controls\BandInGroup.cs" />
     <Compile Include="Controls\ControlExtentions.cs" />
+    <Compile Include="Controls\RatingControl\RatingControl.xaml.cs">
+      <DependentUpon>RatingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RatingControl\RatingStar.xaml.cs">
+      <DependentUpon>RatingStar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TabByName.cs" />
     <Compile Include="Controls\TabEntity.cs" />
     <Compile Include="Controls\TabInGroup.cs" />
@@ -132,6 +138,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\RatingControl\RatingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RatingControl\RatingStar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,6 +235,7 @@
       <Name>PhoneGuitarTab.Search</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

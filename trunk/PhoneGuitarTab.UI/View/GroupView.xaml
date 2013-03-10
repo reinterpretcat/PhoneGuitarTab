@@ -5,6 +5,7 @@
                xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
                xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -30,6 +31,7 @@
         <Grid.Resources>
             <Infrastructure:UpperStringConverter x:Name="UpperStr" />
             <Infrastructure:IntToStringConverter x:Name="IntToStr" />
+            <Infrastructure:StringToIntConverter x:Key="stringToInt" />
         </Grid.Resources>
         <controls:Pivot Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}">
             <controls:PivotItem Header="tabs">
@@ -61,8 +63,8 @@
                                        Height="60"
                                        VerticalAlignment="Center"
                                        Source="{Binding TabType.ImageUrl}" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Margin="12,-12,12,6"
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Margin="12,0"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                Style="{StaticResource PhoneTextLargeStyle}"
                                                Text="{Binding Name}" />
@@ -70,12 +72,7 @@
                                                Style="{StaticResource PhoneTextNormalStyle}"
                                                Text="{Binding TabType.Name}"
                                                TextWrapping="Wrap" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource PhoneTextSmallStyle}" Text="Rating:" />
-                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                                   Text="{Binding Rating}" />
-                                    </StackPanel>
+                                    <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                                 </StackPanel>
                                 <toolkit:ContextMenuService.ContextMenu>
                                     <toolkit:ContextMenu>

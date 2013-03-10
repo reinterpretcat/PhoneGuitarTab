@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="PhoneGuitarTab.UI.Controls.RatingStar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="20"
+             d:DesignWidth="20"
+             mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Path x:Name="PathFilled"
+              Width="13"
+              Height="13"
+              HorizontalAlignment="Left"
+              Data="F1 M 607.098,563.56L 602.874,566.499L 604.365,561.574L 600.264,558.464L 605.41,558.36L 607.098,553.499L 608.787,558.36L 613.933,558.464L 609.833,561.574L 611.322,566.499L 607.098,563.56 Z "
+              Fill="#FFFFC200"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              d:IsHidden="True"
+              d:IsLocked="True" />
+
+        <Path x:Name="PathEmpty"
+              Width="13"
+              Height="13"
+              HorizontalAlignment="Left"
+              Data="F1 M 607.098,563.56L 602.874,566.499L 604.365,561.574L 600.264,558.464L 605.41,558.36L 607.098,553.499L 608.787,558.36L 613.933,558.464L 609.833,561.574L 611.322,566.499L 607.098,563.56 Z "
+              Fill="#FF80796F"
+              Stretch="Fill"
+              UseLayoutRounding="False"
+              Visibility="Collapsed" />
+    </Grid>
+</UserControl>
