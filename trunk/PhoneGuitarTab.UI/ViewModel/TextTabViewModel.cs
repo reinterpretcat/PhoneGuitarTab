@@ -1,14 +1,13 @@
-﻿using System;
+﻿using PhoneGuitarTab.Core;
+using PhoneGuitarTab.Data;
+using System;
 using System.IO;
 using System.Windows;
-using PhoneGuitarTab.Core;
-using PhoneGuitarTab.Data;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
     public class TextTabViewModel : Core.ViewModel
     {
-
         public string TabContent { get; set; }
 
         protected override void ReadNavigationParameters()
@@ -22,7 +21,11 @@ namespace PhoneGuitarTab.UI.ViewModel
                 IFileSystemService service = Container.Resolve<IFileSystemService>();
 
                 using (var stream = service.OpenFile(tab.Path, FileMode.Open))
-                    TabContent = String.Format(@"<html><body>{0}</body></html>", (new StreamReader(stream)).ReadToEnd());
+                    TabContent = String.Format("<html><head><meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0\" /></head><body>{0}</body></html>", 
+                        (new StreamReader(stream)).ReadToEnd());
+                //unfortunately "initial-scale" attribute is not supported in windows phone 7
+                //http://msdn.microsoft.com/en-us/library/ff462082%28VS.92%29.aspx
+                //so user need to double tap browser to adjust viewport
             }
             catch (Exception ex)
             {

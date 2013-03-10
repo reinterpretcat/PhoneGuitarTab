@@ -1,5 +1,6 @@
 ﻿using System;
 using PhoneGuitarTab.UI.ViewModel;
+using Microsoft.Phone.Controls;
 
 
 namespace PhoneGuitarTab.UI
