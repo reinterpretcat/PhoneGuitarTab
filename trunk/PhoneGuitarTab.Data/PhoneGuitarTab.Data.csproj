@@ -62,7 +62,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
       <Project>{06005B3A-BCE2-4B59-95BD-8A697F758F35}</Project>
-      <Name>PhoneGuitarTab.System</Name>
+      <Name>PhoneGuitarTab.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

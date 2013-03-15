@@ -13,31 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Controls", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Search", "PhoneGuitarTab.Search\PhoneGuitarTab.Search.csproj", "{5CF049D1-5C85-45EE-A481-3D25970141FA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A18B5BDE-0B3C-4680-9611-974D0B255980}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs30
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = PhoneGuitarTab.Core\\PhoneGuitarTab.Core.csproj
-		SccProjectName1 = PhoneGuitarTab.Core
-		SccLocalPath1 = PhoneGuitarTab.Core
-		SccProjectUniqueName2 = PhoneGuitarTab.Data\\PhoneGuitarTab.Data.csproj
-		SccProjectName2 = PhoneGuitarTab.Data
-		SccLocalPath2 = PhoneGuitarTab.Data
-		SccProjectUniqueName3 = PhoneGuitarTab.Tablature\\PhoneGuitarTab.Tablature.csproj
-		SccProjectName3 = PhoneGuitarTab.Tablature
-		SccLocalPath3 = PhoneGuitarTab.Tablature
-		SccProjectUniqueName4 = PhoneGuitarTab.UI\\PhoneGuitarTab.UI.csproj
-		SccProjectName4 = PhoneGuitarTab.UI
-		SccLocalPath4 = PhoneGuitarTab.UI
-		SccProjectUniqueName5 = PhoneGuitarTab.Controls\\PhoneGuitarTab.Controls.csproj
-		SccProjectName5 = PhoneGuitarTab.Controls
-		SccLocalPath5 = PhoneGuitarTab.Controls
-		SccProjectUniqueName6 = PhoneGuitarTab.Search\\PhoneGuitarTab.Search.csproj
-		SccProjectName6 = PhoneGuitarTab.Search
-		SccLocalPath6 = PhoneGuitarTab.Search
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
