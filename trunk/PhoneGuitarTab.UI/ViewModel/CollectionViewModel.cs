@@ -144,6 +144,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
+                selector.SelectedItem = null;
             }
         }
 

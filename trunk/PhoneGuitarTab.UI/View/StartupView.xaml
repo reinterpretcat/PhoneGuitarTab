@@ -85,6 +85,7 @@
 
             <Controls:PivotItem DataContext="{Binding Collection, Source={StaticResource Locator}}" Header="tabs">
                 <toolkit:LongListSelector x:Name="TabList"
+                                          BufferSize="10.0"
                                           Background="Transparent"
                                           ItemsSource="{Binding AllTabs}">
                     <i:Interaction.Triggers>
