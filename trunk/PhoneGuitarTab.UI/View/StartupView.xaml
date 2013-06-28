@@ -89,7 +89,7 @@
                                           Background="Transparent"
                                           ItemsSource="{Binding AllTabs}">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
                             <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

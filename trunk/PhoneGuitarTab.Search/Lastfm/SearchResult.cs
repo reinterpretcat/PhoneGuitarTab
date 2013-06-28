@@ -9,18 +9,18 @@ using System.Xml.Linq;
 namespace PhoneGuitarTab.Search.Lastfm
 {
     /// <summary>
-    /// /http://www.lastfm.ru/api/show?service=407
+    /// lastfm API call result
     /// </summary>
     public abstract class SearchResult
     {
         
         public string Artist;
 
-        public event DownloadStringCompletedEventHandler SearchComplete;
+        public event DownloadStringCompletedEventHandler SearchCompleted;
 
         private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
         {
-            DownloadStringCompletedEventHandler handler = SearchComplete;
+            DownloadStringCompletedEventHandler handler = SearchCompleted;
             if (handler != null) handler(this, e);
         }
 
@@ -53,9 +53,9 @@ namespace PhoneGuitarTab.Search.Lastfm
                                                               }
                                                           }
                                                       }
-                                                      catch
+                                                      catch (Exception ex)
                                                       {
-                                                          
+                                                          //xml parse exceptions. buried intentionally
                                                       }
                                                       finally
                                                       {

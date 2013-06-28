@@ -12,7 +12,10 @@ namespace PhoneGuitarTab.UI
             InitializeComponent();
             tabWebBrowser.Loaded += delegate
                 {
-                    tabWebBrowser.NavigateToString((DataContext as TextTabViewModel).TabContent);
+                    var viewModel = DataContext as TextTabViewModel;
+                    // TODO (cent) move styles somewhere to settings; add more style controls
+                    viewModel.Style += "font-weight:bold;";
+                    tabWebBrowser.NavigateToString(viewModel.TabContent);
                 };
         }
     }

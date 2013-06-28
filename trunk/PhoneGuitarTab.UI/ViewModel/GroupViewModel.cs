@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.Lastfm;
@@ -6,7 +7,9 @@ using PhoneGuitarTab.UI.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
+using System.Windows;
 using Group = PhoneGuitarTab.Data.Group;
 
 
@@ -16,9 +19,14 @@ namespace PhoneGuitarTab.UI.ViewModel
     {
         #region  Fields
 
-        public Group _currentGroup;
-        public string _summary;
-        public List<Tab> _tabs;
+        private Group _currentGroup;
+        private string _summary;
+        private List<Tab> _tabs;
+
+        private SearchInfoResult result;
+
+        private bool isLoading = false;
+        private bool infoFound = false;
 
         #endregion  Fields
 
@@ -66,6 +74,42 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        public bool IsLoading
+        {
+            get 
+            { 
+                return isLoading; 
+            }
+            set
+            {
+                isLoading = value;
+                RaisePropertyChanged("IsLoading");
+                RaisePropertyChanged("InfoLoaded");
+            }
+        }
+
+        public bool InfoLoaded
+        {
+            get
+            {
+                return !IsLoading && infoFound;
+            }
+        }
+
+        public bool NothingFound
+        {
+            get
+            {
+                return !infoFound;
+            }
+            set
+            {
+                infoFound = !value;
+                RaisePropertyChanged("NothingFound");
+                RaisePropertyChanged("InfoLoaded");
+            }
+        }
+
         #endregion Properties
 
 
@@ -93,38 +137,17 @@ namespace PhoneGuitarTab.UI.ViewModel
                     orderby t.Name ascending
                     where t.Group.Id == CurrentGroup.Id
                     select t).ToList();
+
+            NothingFound = false;
+
             if (String.IsNullOrEmpty(CurrentGroup.Description))
             {
-                SearchInfoResult result = new SearchInfoResult(CurrentGroup.Name);
-                result.SearchComplete += (o, e) =>
-                {
-                    try
-                    {
-                        var description = Regex.Replace(result.Summary, @"<(.|\n)*?>",
-                                                        string.Empty);
-                        if (description.Length > 2040)
-                        {
-                            description = description.Substring(0, 2080);
-                            description += "..";
-                        }
-                        Summary = description;
-                        CurrentGroup.Description = Summary;
-                        CurrentGroup.Url = result.Url;
-                        Database.SubmitChanges();
-                    }
-                    catch
-                    {
-
-                    }
-
-                };
-                result.Run();
+                GetCurrentGroupInfo(CurrentGroup);
             }
             else
             {
                 Summary = CurrentGroup.Description;
             }
-
         }
 
         protected override void ReadNavigationParameters()
@@ -157,7 +180,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
-
         public RelayCommand<Group> SearchCommand
         {
             get;
@@ -183,6 +205,12 @@ namespace PhoneGuitarTab.UI.ViewModel
                 return new RelayCommand(() =>
                   new WebBrowserTask { URL = CurrentGroup.Url }.Show());
             }
+        }
+
+        public RelayCommand<Group> RefreshInfoCommand
+        {
+            get;
+            set;
         }
 
         #endregion Commands
@@ -214,7 +242,54 @@ namespace PhoneGuitarTab.UI.ViewModel
             navigationService.NavigateTo(PageType.Get(PageType.EnumType.Search), new Dictionary<string, object>() { {"SearchTerm", group.Name} });
         }
 
+        private void DoRefreshInfo(Group group)
+        {
+            GetCurrentGroupInfo(group);
+        }
+
         #endregion Command handlers
+
+
+        #region Event handlers
+
+        private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            try
+            {
+                var description = result.Summary;
+
+                if (!string.IsNullOrEmpty(description))
+                {
+                    if (description.Length > 2040)
+                    {
+                        description = description.Substring(0, 2080);
+                        description += "..";
+                    }
+                    Summary = description;
+                    CurrentGroup.Description = Summary;
+                    CurrentGroup.Url = result.Url;
+
+                    NothingFound = false;
+
+                    Database.SubmitChanges();
+                }
+                else
+                {
+                    NothingFound = true;
+                    // TODO: show user that nothing found
+                }
+            }
+            catch (Exception) 
+            {
+                NothingFound = true;
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
+        #endregion Event handlers
 
 
         #region Helper methods
@@ -224,10 +299,20 @@ namespace PhoneGuitarTab.UI.ViewModel
             SearchCommand = new RelayCommand<Group>(DoSearch);
             SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Settings)));
             HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Startup)));
+            RefreshInfoCommand = new RelayCommand<Group>(DoRefreshInfo);
 
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
             RemoveTab = new RelayCommand<int>(DoRemoveTab);
             CancelTab = new RelayCommand(() => { });
+        }
+
+        private void GetCurrentGroupInfo(Group group)
+        {
+            result = new SearchInfoResult(group.Name);
+            result.SearchCompleted += SearchCompleted;
+
+            IsLoading = true;
+            result.Run();
         }
 
         #endregion Helper methods

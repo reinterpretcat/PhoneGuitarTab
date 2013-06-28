@@ -5,13 +5,13 @@
                xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
                xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
                x:Name="root"
                DataContext="{Binding Group,
                                      Source={StaticResource Locator}}"
@@ -32,8 +32,12 @@
             <Infrastructure:UpperStringConverter x:Name="UpperStr" />
             <Infrastructure:IntToStringConverter x:Name="IntToStr" />
             <Infrastructure:StringToIntConverter x:Key="stringToInt" />
+            <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
         </Grid.Resources>
-        <controls:Pivot Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}">
+        <controls:Pivot x:Name="PivotControl"
+                        Title="{Binding CurrentGroup.Name,
+                                        Converter={StaticResource UpperStr}}"
+                        SelectionChanged="PivotSelectionChangedHandler">
             <controls:PivotItem Header="tabs">
                 <ListBox ItemsSource="{Binding Tabs}">
                     <i:Interaction.Triggers>
@@ -88,14 +92,36 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="info">
+            <controls:PivotItem x:Name="InfoPivotItem" Header="info">
                 <ScrollViewer>
                     <StackPanel>
-                        <TextBlock HorizontalAlignment="Stretch"
-                                   FontSize="{StaticResource PhoneFontSizeMedium}"
-                                   Text="{Binding Summary}"
-                                   TextWrapping="Wrap" />
-                        <HyperlinkButton HorizontalAlignment="Right" Content="More..">
+                        <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"
+                                     TextAlignment="Justify"
+                                     Visibility="{Binding InfoLoaded,
+                                                          Converter={StaticResource boolVisibility}}">
+                            <Paragraph>
+                                <Run Text="{Binding Summary}" />
+                            </Paragraph>
+                        </RichTextBox>
+
+                        <toolkit:PerformanceProgressBar x:Name="loadingBar"
+                                                        VerticalAlignment="Top"
+                                                        IsIndeterminate="{Binding IsLoading}"
+                                                        Visibility="{Binding IsLoading,
+                                                                             Converter={StaticResource boolVisibility}}" />
+                        <TextBlock HorizontalAlignment="Center"
+                                   Margin="0,20"
+                                   FontSize="30"
+                                   Opacity="0.5"
+                                   Text="Sorry, nothing found."
+                                   Visibility="{Binding NothingFound,
+                                                        Converter={StaticResource boolVisibility}}" />
+
+                        <HyperlinkButton Margin="0,0,0,50"
+                                         HorizontalAlignment="Right"
+                                         Content="More.."
+                                         Visibility="{Binding InfoLoaded,
+                                                              Converter={StaticResource boolVisibility}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <Command:EventToCommand Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}" />
@@ -109,13 +135,20 @@
 
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
             <!--  <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />  -->
+
+            <!--  IsEnabled for this button is changing from codebehind PivotSelectionChangedHandler()  -->
+            <custom:BindableApplicationBarIconButton x:Name="RefreshButton"
+                                                     Command="{Binding RefreshInfoCommand}"
+                                                     CommandParameter="{Binding CurrentGroup}"
+                                                     IconUri="/Images/dark/refresh.png"
+                                                     Text="refresh" />
             <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}"
                                                      CommandParameter="{Binding CurrentGroup}"
                                                      IconUri="/Images/dark/appbar.feature.search.rest.png"
                                                      Text="more online" />
             <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}"
                                                      IconUri="/Images/dark/appbar.feature.home.png"
-                                                     Text="To all tabs" />
+                                                     Text="to all tabs" />
         </custom:BindableApplicationBar>
     </Grid>
 </Core:ViewPage>

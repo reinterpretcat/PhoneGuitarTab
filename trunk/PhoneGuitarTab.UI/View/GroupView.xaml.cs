@@ -1,5 +1,6 @@
-﻿using System;
-
+﻿using Microsoft.Phone.Controls;
+using System;
+using System.Windows.Controls;
 
 namespace PhoneGuitarTab.UI.View
 {
@@ -8,6 +9,11 @@ namespace PhoneGuitarTab.UI.View
         public GroupView()
         {
             InitializeComponent();
+        }
+
+        public void PivotSelectionChangedHandler(object sender, SelectionChangedEventArgs e)
+        {
+            this.RefreshButton.IsEnabled = this.PivotControl.SelectedIndex == 1;
         }
     }
 }
