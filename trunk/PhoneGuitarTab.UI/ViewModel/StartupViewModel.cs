@@ -80,10 +80,12 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoGoToTabView(object args)
         {
-            var selector = (args as System.Windows.Controls.SelectionChangedEventArgs);
-            if (selector != null && selector.AddedItems.Count > 0)
+            var tabEntity = (args as TabEntity);
+            if (tabEntity != null)
             {
-                Tab tab = selector.AddedItems[0] as Tab;
+                Tab tab = (from Tab t in Database.Tabs
+                           where t.Id == tabEntity.Id
+                           select t).Single();
                 navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
                                                                                           {
                                                                                               {"Tab", tab}

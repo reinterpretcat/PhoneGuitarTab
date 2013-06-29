@@ -83,8 +83,8 @@
                 <toolkit:LongListSelector x:Name="TabList"
                                           Background="Transparent"
                                           BufferSize="10.0"
-                                          ItemsSource="{Binding AllTabs}"
-                                          ItemTemplate="{StaticResource TabItemDataTemplate}">
+                                          ItemTemplate="{StaticResource TabItemDataTemplate}"
+                                          ItemsSource="{Binding AllTabs}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonUp">
                             <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList}" />
@@ -214,11 +214,12 @@
 
             <Controls:PivotItem Header="history">
                 <Grid>
-                    <ListBox ItemsSource="{Binding TabsHistory.Tabs}" 
-                             ItemTemplate="{StaticResource TabItemDataTemplate}">
+                    <ListBox x:Name="HistoryTabsListBox"
+                             ItemTemplate="{StaticResource TabItemDataTemplate}"
+                             ItemsSource="{Binding TabsHistory.Tabs}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonUp">
-                                <Command:EventToCommand Command="{Binding GoToTabView}" PassEventArgsToCommand="True" />
+                                <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=HistoryTabsListBox, Path=SelectedItem}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ListBox>
