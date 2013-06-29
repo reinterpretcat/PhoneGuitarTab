@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using PhoneGuitarTab.Data;
 
-namespace PhoneGuitarTab.UI.Controls
+namespace PhoneGuitarTab.UI.Entities
 {
-    public class BandInGroup : List<PhoneGuitarTab.Core.Tuple<int, Group>>
+    public class TabInGroup : List<TabEntity>
     {
-        public BandInGroup(string category)
+        public TabInGroup(string category)
         {
             Key = category;
         }

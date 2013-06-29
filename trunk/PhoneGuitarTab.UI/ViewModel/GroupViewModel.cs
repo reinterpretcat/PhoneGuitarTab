@@ -3,6 +3,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.Lastfm;
+using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private Group _currentGroup;
         private string _summary;
-        private List<Tab> _tabs;
+        private TabsForBand _tabs;
 
         private SearchInfoResult result;
 
@@ -64,7 +65,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public List<Tab> Tabs
+        public TabsForBand Tabs
         {
             get { return _tabs; }
             set
@@ -133,10 +134,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
-            Tabs = (from Tab t in Database.Tabs
-                    orderby t.Name ascending
-                    where t.Group.Id == CurrentGroup.Id
-                    select t).ToList();
+            Tabs = new TabsForBand(CurrentGroup.Id);
 
             NothingFound = false;
 

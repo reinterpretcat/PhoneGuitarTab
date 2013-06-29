@@ -1,4 +1,4 @@
-﻿using PhoneGuitarTab.UI.Controls;
+﻿using PhoneGuitarTab.UI.Entities;
 using System;
 using System.Globalization;
 using System.Windows;

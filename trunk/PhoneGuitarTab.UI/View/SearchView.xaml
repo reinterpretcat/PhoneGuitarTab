@@ -28,9 +28,9 @@
     <!--  LayoutRoot is the root grid where all page content is placed  -->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-            </Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Grid.Resources>
             <Infrastructure:IntToStringConverter x:Name="IntToStr" />
             <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
@@ -39,9 +39,9 @@
         </Grid.Resources>
 
         <TextBlock Margin="2,0,2,8">
-                            <Run Text="Results for " />
-                            <Run Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}" />
-                            <Run Text=" online" />
+            <Run Text="Results for " />
+            <Run Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}" />
+            <Run Text=" online" />
         </TextBlock>
 
         <toolkit:LongListSelector x:Name="resultsList"
@@ -118,10 +118,9 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Width="60"
-                               Height="60"
-                               VerticalAlignment="Center"
-                               Source="{Binding ImageUrl}" />
+
+
+
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock Margin="12,0"
                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"

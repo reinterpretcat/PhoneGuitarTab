@@ -35,10 +35,8 @@
             <Infrastructure:StringToIntConverter x:Key="stringToInt" />
 
             <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
-                <Setter Property="Foreground" Value="WhiteSmoke" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}" />
-                <Setter Property="Padding" Value="0" />
+                <Setter Property="FontSize" Value="36" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="HyperlinkButton">
@@ -68,9 +66,7 @@
                                         Background="{TemplateBinding Background}"
                                         Padding="20">
                                     <TextBlock x:Name="TextElement"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                               FontSize="42"
+                                               FontSize="{TemplateBinding FontSize}"
                                                Text="{TemplateBinding Content}"
                                                TextWrapping="Wrap" />
                                 </Border>
@@ -87,7 +83,8 @@
                 <toolkit:LongListSelector x:Name="TabList"
                                           Background="Transparent"
                                           BufferSize="10.0"
-                                          ItemsSource="{Binding AllTabs}">
+                                          ItemsSource="{Binding AllTabs}"
+                                          ItemTemplate="{StaticResource TabItemDataTemplate}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonUp">
                             <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList}" />
@@ -130,50 +127,6 @@
                             </Border>
                         </DataTemplate>
                     </toolkit:LongListSelector.GroupHeaderTemplate>
-
-                    <toolkit:LongListSelector.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Image Width="60"
-                                       Height="60"
-                                       VerticalAlignment="Center"
-                                       Source="{Binding ImageUrl}" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                                    <TextBlock Margin="12,0"
-                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                               Style="{StaticResource PhoneTextLargeStyle}"
-                                               Text="{Binding Name}" />
-                                    <TextBlock Margin="32,0"
-                                               HorizontalAlignment="Left"
-                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                               Style="{StaticResource PhoneTextNormalStyle}"
-                                               Text="{Binding Group}"
-                                               TextWrapping="Wrap" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <uiControls:RatingControl Margin="12, 2, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
-                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Style="{StaticResource PhoneTextSmallStyle}"
-                                                   Text="{Binding Type}"
-                                                   TextWrapping="Wrap" />
-                                    </StackPanel>
-                                </StackPanel>
-                                <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu>
-                                        <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
-                                                                            ElementName=TabList}"
-                                                          CommandParameter="{Binding Id}"
-                                                          Header="remove tab" />
-                                        <toolkit:MenuItem Command="{Binding Path=DataContext.CancelTab, ElementName=TabList}" Header="cancel" />
-                                    </toolkit:ContextMenu>
-                                </toolkit:ContextMenuService.ContextMenu>
-                            </Grid>
-                        </DataTemplate>
-                    </toolkit:LongListSelector.ItemTemplate>
-
                 </toolkit:LongListSelector>
 
             </Controls:PivotItem>
@@ -231,14 +184,16 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <!--
-                                    <Image Width="75"
-                                    Height="100"
-                                    VerticalAlignment="Top"
-                                    Source="{Binding Item2.ImageUrl}" />
-                                -->
+                                <Image VerticalAlignment="Center"
+                                       Source="../Images/light/Electric-Guitar_light.png"
+                                       Stretch="None"
+                                       Visibility="{StaticResource PhoneLightThemeVisibility}" />
+                                <Image VerticalAlignment="Center"
+                                       Source="../Images/dark/Electric-Guitar_dark.png"
+                                       Stretch="None"
+                                       Visibility="{StaticResource PhoneDarkThemeVisibility}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Margin="12,-12,12,6"
+                                    <TextBlock Margin="20,-10,8,6"
                                                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                Style="{StaticResource PhoneTextLargeStyle}"
                                                Text="{Binding Item2.Name}" />
@@ -259,39 +214,13 @@
 
             <Controls:PivotItem Header="history">
                 <Grid>
-                    <ListBox ItemsSource="{Binding TabsHistory}">
+                    <ListBox ItemsSource="{Binding TabsHistory.Tabs}" 
+                             ItemTemplate="{StaticResource TabItemDataTemplate}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonUp">
                                 <Command:EventToCommand Command="{Binding GoToTabView}" PassEventArgsToCommand="True" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Width="60"
-                                           Height="60"
-                                           VerticalAlignment="Center"
-                                           Source="{Binding TabType.ImageUrl}" />
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Margin="12,0"
-                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                                   Text="{Binding Name}" />
-                                        <TextBlock Margin="32,0"
-                                                   HorizontalAlignment="Left"
-                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                   Style="{StaticResource PhoneTextNormalStyle}"
-                                                   Text="{Binding Group.Name}"
-                                                   TextWrapping="Wrap" />
-                                        <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </Controls:PivotItem>
@@ -389,10 +318,16 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Image Width="60"
-                                       Height="60"
-                                       VerticalAlignment="Center"
-                                       Source="{Binding ImageUrl}" />
+
+                                <Image VerticalAlignment="Center"
+                                       Source="../Images/light/Text-Justify-Align_light.png"
+                                       Stretch="None"
+                                       Visibility="{StaticResource PhoneLightThemeVisibility}" />
+                                <Image VerticalAlignment="Center"
+                                       Source="../Images/dark/Text-Justify-Align_dark.png"
+                                       Stretch="None"
+                                       Visibility="{StaticResource PhoneDarkThemeVisibility}" />
+
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock Margin="12,0"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
@@ -427,31 +362,6 @@
                     <StackPanel Grid.Row="0"
                                 Orientation="Vertical"
                                 toolkit:TiltEffect.IsTiltEnabled="True">
-                        <!--
-                            <HyperlinkButton Content="my collection" Style="{StaticResource HyperlinkButtonContentStyle}">
-                            <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                            <Command:EventToCommand x:Name="CollectionClick"
-                            Command="{Binding GoTo}"
-                            CommandParameterValue="Collection" />
-                            </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            </HyperlinkButton>
-                        -->
-
-
-                        <!--
-                            <HyperlinkButton Content="search" Style="{StaticResource HyperlinkButtonContentStyle}">
-                            <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                            <Command:EventToCommand x:Name="SearchClick"
-                            Command="{Binding GoTo}"
-                            CommandParameterValue="Search" />
-                            </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            </HyperlinkButton>
-                        -->
-
 
                         <HyperlinkButton Content="help" Style="{StaticResource HyperlinkButtonContentStyle}">
                             <i:Interaction.Triggers>
@@ -473,7 +383,10 @@
                             </i:Interaction.Triggers>
                         </HyperlinkButton>
 
-                        <HyperlinkButton Content="review" Style="{StaticResource HyperlinkButtonContentStyle}">
+                        <HyperlinkButton Margin="0,50,0,0"
+                                         Content="review"
+                                         FontSize="28"
+                                         Style="{StaticResource HyperlinkButtonContentStyle}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <Command:EventToCommand x:Name="ReviewClick" Command="{Binding Review}" />
@@ -481,13 +394,6 @@
                             </i:Interaction.Triggers>
                         </HyperlinkButton>
                     </StackPanel>
-                    <!--
-                        <TextBlock Grid.Row="1"
-                        HorizontalAlignment="Right"
-                        Style="{StaticResource PhoneTextSmallStyle}"
-                        Text="{Binding Path=DataContext.ProductVersion,
-                        ElementName=root}" />
-                    -->
                 </Grid>
             </Controls:PivotItem>
 

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace PhoneGuitarTab.UI.ViewModel
     {
         #region Fields
 
-        private List<Tab> _tabsHistory;
+        private TabsForHistory _tabsHistory;
 
         #endregion Fields
 
@@ -34,7 +35,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public string ProductVersion { get; set; }
 
-        public List<Tab> TabsHistory
+        public TabsForHistory TabsHistory
         {
             get { return _tabsHistory; }
             set
@@ -102,9 +103,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
-            TabsHistory = (from Tab t in Database.Tabs
-                           orderby t.LastOpened descending
-                           select t).Take(5).ToList();
+            TabsHistory = new TabsForHistory(5);
         }
 
         public override void LoadStateFrom(IDictionary<string, object> state)

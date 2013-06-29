@@ -11,7 +11,7 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
+               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Entities"
                x:Name="root"
                DataContext="{Binding Group,
                                      Source={StaticResource Locator}}"
@@ -39,56 +39,12 @@
                                         Converter={StaticResource UpperStr}}"
                         SelectionChanged="PivotSelectionChangedHandler">
             <controls:PivotItem Header="tabs">
-                <ListBox ItemsSource="{Binding Tabs}">
+                <ListBox ItemTemplate="{StaticResource TabItemDataTemplate}" ItemsSource="{Binding Tabs.Tabs}">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
                             <Command:EventToCommand Command="{Binding GoToTabView}" PassEventArgsToCommand="True" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <!--
-                                    <Image Width="60" Height="60" Source="{Binding TabType.ImageUrl}" VerticalAlignment="Center"/>
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Margin="12,-12,12,6"/>
-                                    <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text=" Rating:" Style="{StaticResource PhoneTextSmallStyle}"/>
-                                    <TextBlock Text="{Binding Rating}" Style="{StaticResource PhoneTextSmallStyle}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                    <TextBlock Text="{Binding TabType.Name}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                                    </StackPanel>
-                                    </StackPanel>
-                                -->
-                                <Image Width="60"
-                                       Height="60"
-                                       VerticalAlignment="Center"
-                                       Source="{Binding TabType.ImageUrl}" />
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Margin="12,0"
-                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                               Style="{StaticResource PhoneTextLargeStyle}"
-                                               Text="{Binding Name}" />
-                                    <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                               Style="{StaticResource PhoneTextNormalStyle}"
-                                               Text="{Binding TabType.Name}"
-                                               TextWrapping="Wrap" />
-                                    <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
-                                </StackPanel>
-                                <toolkit:ContextMenuService.ContextMenu>
-                                    <toolkit:ContextMenu>
-                                        <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
-                                                                            ElementName=root}"
-                                                          CommandParameter="{Binding Id}"
-                                                          Header="remove tab" />
-                                    </toolkit:ContextMenu>
-                                </toolkit:ContextMenuService.ContextMenu>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
                 </ListBox>
             </controls:PivotItem>
 
@@ -109,8 +65,8 @@
                                                         IsIndeterminate="{Binding IsLoading}"
                                                         Visibility="{Binding IsLoading,
                                                                              Converter={StaticResource boolVisibility}}" />
-                        <TextBlock HorizontalAlignment="Center"
-                                   Margin="0,20"
+                        <TextBlock Margin="0,20"
+                                   HorizontalAlignment="Center"
                                    FontSize="30"
                                    Opacity="0.5"
                                    Text="Sorry, nothing found."

@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls">
+
+    <Infrastructure:StringToIntConverter x:Key="stringToInt" />
+
+    <DataTemplate x:Key="TabItemDataTemplate">
+        <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image VerticalAlignment="Center"
+                   Source="../Images/light/Text-Justify-Align_light.png"
+                   Stretch="None"
+                   Visibility="{StaticResource PhoneLightThemeVisibility}" />
+            <Image VerticalAlignment="Center"
+                   Source="../Images/dark/Text-Justify-Align_dark.png"
+                   Stretch="None"
+                   Visibility="{StaticResource PhoneDarkThemeVisibility}" />
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                <TextBlock Margin="12,0"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextLargeStyle}"
+                           Text="{Binding Name}" />
+                <TextBlock Margin="32,0"
+                           HorizontalAlignment="Left"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="{Binding Group}"
+                           TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal">
+                    <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
+                    <TextBlock VerticalAlignment="Center"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               Style="{StaticResource PhoneTextSmallStyle}"
+                               Text="{Binding Type}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu>
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
+                                                        ElementName=TabList}"
+                                      CommandParameter="{Binding Id}"
+                                      Header="remove tab" />
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.CancelTab, ElementName=TabList}" Header="cancel" />
+                </toolkit:ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

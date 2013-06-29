@@ -13,7 +13,7 @@ using System.Windows.Shapes;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 
-namespace PhoneGuitarTab.UI.Controls
+namespace PhoneGuitarTab.UI.Entities
 {
     public class BandByName : List<BandInGroup>
     {

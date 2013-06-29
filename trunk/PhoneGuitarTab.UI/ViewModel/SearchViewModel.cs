@@ -3,7 +3,7 @@ using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Core.Navigation;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.UltimateGuitar;
-using PhoneGuitarTab.UI.Controls;
+using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
         private IEnumerable<string> _pages;
-        private TabByName _searchGroupTabs;
+        private TabsByName _searchGroupTabs;
         private bool _isSearching;
 
         #endregion Fields
@@ -71,55 +71,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Properties
 
-        public string CustomGroupName
-        {
-            get { return _customGroupName; }
-            set
-            {
-                _customGroupName = value;
-                RaisePropertyChanged("CustomGroupName");
-                CustomDownloadTab.RaiseCanExecuteChanged();
-            }
-        }
-
-        public string CustomTabName
-        {
-            get { return _customTabName; }
-            set
-            {
-                _customTabName = value;
-                RaisePropertyChanged("CustomTabName");
-                CustomDownloadTab.RaiseCanExecuteChanged();
-            }
-        }
-
-        /*public List<Core.Tuple<string,string>> CustomTabTypes
-        {
-            get
-            {
-                //create type-image mapping
-                if(_customTabTypes == null)
-                {
-                    _customTabTypes = new List<Core.Tuple<string, string>>();
-                    foreach (string key in TabDataContextHelper.TabImageTypeMapping.Keys)
-                        _customTabTypes.Add(new Core.Tuple<string, string>(key, TabDataContextHelper.TabImageTypeMapping[key]));
-                }
-
-                return _customTabTypes;
-            }
-        }*/
-
-        public Core.Tuple<string, string> SelectedCustomTabType
-        {
-            get { return _selectedCustomTabType; }
-            set
-            {
-                _selectedCustomTabType = value;
-                RaisePropertyChanged("CustomTabName");
-                CustomDownloadTab.RaiseCanExecuteChanged();
-            }
-        }
-
         public SearchTabResultSummary SearchGroupTabsSummary
         {
             get { return _searchGroupTabsSummary; }
@@ -152,7 +103,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public TabByName SearchGroupTabs
+        public TabsByName SearchGroupTabs
         {
             set
             {
@@ -309,7 +260,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                                 groupSearch.Summary.PageCount > 1
                                     ? Visibility.Visible
                                     : Visibility.Collapsed;
-                            SearchGroupTabs = new TabByName(groupTabs);
+                            SearchGroupTabs = new TabsByName(groupTabs);
                         });
                 }
                 IsSearching = false;
@@ -395,7 +346,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 return;
             }
             var tab =
-                 SearchGroupTabs.AllTabs.Where(t => t.SearchId == arg).FirstOrDefault();
+                 SearchGroupTabs.Tabs.Where(t => t.SearchId == arg).FirstOrDefault();
 
             //TODO create converter
             SearchTabResultEntry entry = new SearchTabResultEntry()

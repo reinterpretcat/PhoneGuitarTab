@@ -90,18 +90,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BandByName.cs" />
-    <Compile Include="Controls\BandInGroup.cs" />
-    <Compile Include="Controls\ControlExtentions.cs" />
+    <Compile Include="Entities\BandByName.cs" />
+    <Compile Include="Entities\BandInGroup.cs" />
+    <Compile Include="Entities\ControlExtentions.cs" />
+    <Compile Include="Entities\TabsForBand.cs" />
+    <Compile Include="Entities\TabsCollection.cs" />
+    <Compile Include="Entities\TabsForHistory.cs" />
     <Compile Include="Controls\RatingControl\RatingControl.xaml.cs">
       <DependentUpon>RatingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RatingControl\RatingStar.xaml.cs">
       <DependentUpon>RatingStar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TabByName.cs" />
-    <Compile Include="Controls\TabEntity.cs" />
-    <Compile Include="Controls\TabInGroup.cs" />
+    <Compile Include="Entities\TabsByName.cs" />
+    <Compile Include="Entities\TabEntity.cs" />
+    <Compile Include="Entities\TabInGroup.cs" />
     <Compile Include="Infrastructure\Converters.cs" />
     <Compile Include="Infrastructure\PageType.cs" />
     <Compile Include="Infrastructure\TabDataContextHelper.cs" />
@@ -139,6 +142,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CommonResources\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\RatingControl\RatingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,6 +184,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
@@ -200,13 +208,17 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\dark\appbar.folder.rest.png" />
+    <Content Include="Images\dark\Electric-Guitar_dark.png" />
     <Content Include="Images\dark\refresh.png" />
+    <Content Include="Images\dark\Text-Justify-Align_dark.png" />
     <Content Include="Images\light\appbar.feature.search.rest.png" />
     <Content Include="Images\light\appbar.feature.home.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\light\appbar.folder.rest.png" />
+    <Content Include="Images\light\Electric-Guitar_light.png" />
     <Content Include="Images\light\refresh.png" />
+    <Content Include="Images\light\Text-Justify-Align_light.png" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
@@ -243,6 +255,7 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

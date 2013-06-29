@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace PhoneGuitarTab.Core
 {
     public class Lazy<T>

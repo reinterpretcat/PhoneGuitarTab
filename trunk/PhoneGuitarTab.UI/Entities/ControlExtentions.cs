@@ -1,7 +1,7 @@
 ﻿using System;
 using PhoneGuitarTab.Data;
 
-namespace PhoneGuitarTab.UI.Controls
+namespace PhoneGuitarTab.UI.Entities
 {
     public static class ControlExtentions
     {

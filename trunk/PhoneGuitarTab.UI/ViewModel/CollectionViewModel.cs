@@ -2,7 +2,7 @@
 using GalaSoft.MvvmLight.Threading;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
-using PhoneGuitarTab.UI.Controls;
+using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         public Tuple<int, Group> SelectedGroup { get; set; }
         public Tab SelectedTab { get; set; }
         public BandByName Groups { get; set; }
-        public TabByName AllTabs { get; set; }
+        public TabsByName AllTabs { get; set; }
 
         #endregion Properties
 
@@ -99,7 +99,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Groups = new BandByName();
             RaisePropertyChanged("Groups");
             //get songs list
-            AllTabs = new TabByName();
+            AllTabs = new TabsByName();
             RaisePropertyChanged("AllTabs");
         }
 

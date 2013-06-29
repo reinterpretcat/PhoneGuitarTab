@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PhoneGuitarTab.UI.Controls
+namespace PhoneGuitarTab.UI.Entities
 {
     public class TabEntity
     {
