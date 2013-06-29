@@ -90,6 +90,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\History.xaml.cs">
+      <DependentUpon>History.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entities\BandByName.cs" />
     <Compile Include="Entities\BandInGroup.cs" />
     <Compile Include="Entities\ControlExtentions.cs" />
@@ -106,6 +112,8 @@
     <Compile Include="Entities\TabEntity.cs" />
     <Compile Include="Entities\TabInGroup.cs" />
     <Compile Include="Infrastructure\Converters.cs" />
+    <Compile Include="Infrastructure\Messages\CollectionTabRemovedMessage - Copy.cs" />
+    <Compile Include="Infrastructure\Messages\GroupTabRemovedMessage.cs" />
     <Compile Include="Infrastructure\PageType.cs" />
     <Compile Include="Infrastructure\TabDataContextHelper.cs" />
     <Compile Include="Infrastructure\TabStorageHelper.cs" />
@@ -117,6 +125,7 @@
     <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\StartupViewModel.cs" />
+    <Compile Include="Infrastructure\Messages\HistoryTabRemovedMessage.cs" />
     <Compile Include="ViewModel\TextTabViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\AboutView.xaml.cs">
@@ -143,6 +152,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommonResources\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Search.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\History.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

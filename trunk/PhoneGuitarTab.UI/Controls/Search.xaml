@@ -1,0 +1,140 @@
+﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.Controls.Search"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+                    xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                    xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
+                    x:Name="searchPivotItem"
+                    DataContext="{Binding Search,
+                                          Source={StaticResource Locator}}"
+                    Header="online"
+                    mc:Ignorable="d">
+    <toolkit:LongListSelector Background="Transparent" ItemsSource="{Binding SearchGroupTabs}">
+        <toolkit:LongListSelector.GroupItemsPanel>
+            <ItemsPanelTemplate>
+                <toolkit:WrapPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </toolkit:LongListSelector.GroupItemsPanel>
+        <toolkit:LongListSelector.GroupItemTemplate>
+            <DataTemplate>
+                <Border Width="99"
+                        Height="99"
+                        Margin="6"
+                        Background="{Binding Converter={StaticResource tabBrush}}"
+                        IsHitTestVisible="{Binding HasItems}">
+
+                    <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
+                               VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               FontSize="36"
+                               Foreground="{StaticResource PhoneForegroundBrush}"
+                               Text="{Binding Key}" />
+                </Border>
+            </DataTemplate>
+        </toolkit:LongListSelector.GroupItemTemplate>
+        <toolkit:LongListSelector.GroupHeaderTemplate>
+            <DataTemplate>
+                <Border Background="Transparent">
+                    <Border Width="75"
+                            Height="75"
+                            HorizontalAlignment="Left"
+                            Background="{StaticResource PhoneAccentBrush}">
+                        <TextBlock VerticalAlignment="Bottom"
+                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                   Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                   Text="{Binding Key}" />
+                    </Border>
+                </Border>
+            </DataTemplate>
+        </toolkit:LongListSelector.GroupHeaderTemplate>
+        <toolkit:LongListSelector.ListHeaderTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="searchTextBox"
+                                 Text="{Binding Path=DataContext.CurrentSearchText,
+                                                ElementName=searchPivotItem}"
+                                 custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch,
+                                                                ElementName=searchPivotItem}" />
+                        <Button Grid.Column="1"
+                                Command="{Binding Path=DataContext.LaunchSearch,
+                                                  ElementName=searchPivotItem}"
+                                CommandParameter="{Binding Text,
+                                                           ElementName=searchTextBox}"
+                                Content="Go" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.HeaderPagingVisibility, ElementName=searchPivotItem}">
+                        <TextBlock Padding="8" Text="Pages:" />
+                        <ItemsControl ItemsSource="{Binding Path=DataContext.Pages, ElementName=searchPivotItem}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <HyperlinkButton Content="{Binding}" Padding="8">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <Command:EventToCommand Command="{Binding Path=DataContext.SelectPage, ElementName=searchPivotItem}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </HyperlinkButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </DataTemplate>
+        </toolkit:LongListSelector.ListHeaderTemplate>
+        <toolkit:LongListSelector.ItemTemplate>
+            <DataTemplate>
+                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image VerticalAlignment="Center"
+                           Source="../Images/light/Text-Justify-Align_light.png"
+                           Stretch="None"
+                           Visibility="{StaticResource PhoneLightThemeVisibility}" />
+                    <Image VerticalAlignment="Center"
+                           Source="../Images/dark/Text-Justify-Align_dark.png"
+                           Stretch="None"
+                           Visibility="{StaticResource PhoneDarkThemeVisibility}" />
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Margin="12,0"
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   Text="{Binding Name}" />
+                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                   Text="{Binding Type}"
+                                   TextWrapping="Wrap" />
+                        <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
+                    </StackPanel>
+                    <toolkit:ContextMenuService.ContextMenu>
+                        <toolkit:ContextMenu>
+                            <toolkit:MenuItem Command="{Binding Path=DataContext.DownloadTab,
+                                                                ElementName=searchPivotItem}"
+                                              CommandParameter="{Binding SearchId}"
+                                              Header="download" />
+                        </toolkit:ContextMenu>
+                    </toolkit:ContextMenuService.ContextMenu>
+                </Grid>
+            </DataTemplate>
+        </toolkit:LongListSelector.ItemTemplate>
+    </toolkit:LongListSelector>
+
+</Controls:PivotItem>

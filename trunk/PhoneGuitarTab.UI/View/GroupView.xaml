@@ -39,12 +39,12 @@
                                         Converter={StaticResource UpperStr}}"
                         SelectionChanged="PivotSelectionChangedHandler">
             <controls:PivotItem Header="tabs">
-                <ListBox x:Name="GroupTabsListBox"
+                <ListBox x:Name="TabList"
                          ItemTemplate="{StaticResource TabItemDataTemplate}"
                          ItemsSource="{Binding Tabs.Tabs}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonUp">
-                            <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=GroupTabsListBox, Path=SelectedItem}" />
+                            <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ListBox>

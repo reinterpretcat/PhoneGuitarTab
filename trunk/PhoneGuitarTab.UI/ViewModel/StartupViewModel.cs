@@ -3,6 +3,7 @@ using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,9 +22,10 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public StartupViewModel()
         {
-            GoTo = new RelayCommand<string>(DoGoTo);
-            GoToTabView = new RelayCommand<object>(DoGoToTabView);
-            Review = new RelayCommand(DoReview);
+            CreateCommands();
+
+            MessengerInstance.Register<CollectionTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+            MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
 
             ProductVersion = App.Version;
         }
@@ -68,6 +70,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
+        public RelayCommand<int> RemoveTab
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand CancelTab
+        {
+            get;
+            private set;
+        }
+
         #endregion Commands
 
 
@@ -98,6 +112,15 @@ namespace PhoneGuitarTab.UI.ViewModel
             new MarketplaceReviewTask().Show();
         }
 
+        private void DoRemoveTab(int id)
+        {
+            TabDataContextHelper.DeleteTabById(id);
+
+            RemoveTabFromList(id);
+
+            MessengerInstance.Send<HistoryTabRemovedMessage>(new HistoryTabRemovedMessage(id));
+        }
+
         #endregion Command handlers
 
 
@@ -119,5 +142,30 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         #endregion Override members
+
+
+        #region Helper methods
+
+        private void CreateCommands()
+        {
+            GoTo = new RelayCommand<string>(DoGoTo);
+            GoToTabView = new RelayCommand<object>(DoGoToTabView);
+            Review = new RelayCommand(DoReview);
+            RemoveTab = new RelayCommand<int>(DoRemoveTab);
+        }
+
+        private void RemoveTabFromList(int id)
+        {
+            //var tabToDelete = TabsHistory.Tabs.Where(tab => tab.Id == id).FirstOrDefault();
+            //if (tabToDelete != null)
+            //{
+            //    TabsHistory.Tabs.Remove(tabToDelete);
+            //    RaisePropertyChanged("TabsHistory");
+            //}
+
+            DataBind();
+        }
+
+        #endregion Helper methods
     }
 }

@@ -4,6 +4,7 @@ using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,24 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     public class CollectionViewModel : DataContextViewModel
     {
+        #region Fields
+
+        private BandByName groups;
+        private TabsByName allTabs;
+
+        #endregion Fields
+
+
         #region Constructor
 
         public CollectionViewModel()
         {
             CreateCommands();
             DataBind();
+
+            MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+            MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+
             DispatcherHelper.Initialize();
         }
 
@@ -27,9 +40,34 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Properties
 
         public Tuple<int, Group> SelectedGroup { get; set; }
+
         public Tab SelectedTab { get; set; }
-        public BandByName Groups { get; set; }
-        public TabsByName AllTabs { get; set; }
+
+        public BandByName Groups 
+        {
+            get
+            {
+                return groups;
+            }
+            set
+            {
+                groups = value;
+                RaisePropertyChanged("Groups");
+            }
+        }
+
+        public TabsByName AllTabs 
+        {
+            get
+            {
+                return allTabs;
+            }
+            set
+            {
+                allTabs = value;
+                RaisePropertyChanged("AllTabs");
+            }
+        }
 
         #endregion Properties
 
@@ -151,7 +189,10 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoRemoveTab(int id)
         {
             TabDataContextHelper.DeleteTabById(id);
-            DataBind();
+
+            RemoveTabFromList(id);
+
+            MessengerInstance.Send<CollectionTabRemovedMessage>(new CollectionTabRemovedMessage(id));
         }
 
         #endregion Command handlers
@@ -170,6 +211,16 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             GoToGroup = new RelayCommand<object>(DoGoToGroup);
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
+        }
+
+        private void RemoveTabFromList(int id)
+        {
+            //AllTabs.RemoveTab(AllTabs.Tabs.Where(tab => tab.Id == id).Single());
+            //RaisePropertyChanged("AllTabs");
+
+            // can't realize why RaisePropertyChanged won't work
+            // TODO it later, but for now:
+            DataBind();
         }
 
         #endregion Helper methods

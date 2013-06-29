@@ -1,17 +1,14 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
 using Group = PhoneGuitarTab.Data.Group;
 
 
@@ -38,6 +35,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         public GroupViewModel()
         {
             CreateCommands();
+            MessengerInstance.Register<CollectionTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+            MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
         }
 
         #endregion Constructors
@@ -135,17 +134,20 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
-            Tabs = new TabsForBand(CurrentGroup.Id);
-
-            NothingFound = false;
-
-            if (String.IsNullOrEmpty(CurrentGroup.Description))
+            if (CurrentGroup != null)
             {
-                GetCurrentGroupInfo(CurrentGroup);
-            }
-            else
-            {
-                Summary = CurrentGroup.Description;
+                Tabs = new TabsForBand(CurrentGroup.Id);
+
+                NothingFound = false;
+
+                if (String.IsNullOrEmpty(CurrentGroup.Description))
+                {
+                    GetCurrentGroupInfo(CurrentGroup);
+                }
+                else
+                {
+                    Summary = CurrentGroup.Description;
+                }
             }
         }
 
@@ -235,7 +237,10 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoRemoveTab(int id)
         {
             TabDataContextHelper.DeleteTabById(id);
-            DataBind();
+
+            RemoveTabFromList(id);
+
+            MessengerInstance.Send<GroupTabRemovedMessage>(new GroupTabRemovedMessage(id));
         }
 
         private void DoSearch(Group group)
@@ -314,6 +319,16 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             IsLoading = true;
             result.Run();
+        }
+
+        private void RemoveTabFromList(int id)
+        {
+            //if (Tabs != null)
+            //{
+            //    Tabs.RemoveTab(Tabs.Tabs.Where(tab => tab.Id == id).Single());
+            //}
+
+            DataBind();
         }
 
         #endregion Helper methods

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    public abstract class TabsCollection : List<TabInGroup>
+    public abstract class TabsCollection : List<TabInGroup>, INotifyPropertyChanged
     {
         #region Fields
 
@@ -16,6 +17,20 @@ namespace PhoneGuitarTab.UI.Entities
         public List<TabEntity> Tabs { get; protected set; }
 
         #endregion Properties
+
+
+        #region Public methods
+
+        public void RemoveTab(TabEntity tabToRemove)
+        {
+            if (tabToRemove != null)
+            {
+                Tabs.Remove(tabToRemove);
+                RaisePropertyChanged("Tabs");
+            }
+        }
+
+        #endregion Public methods
 
 
         #region Helper methods
@@ -37,5 +52,18 @@ namespace PhoneGuitarTab.UI.Entities
         }
 
         #endregion Helper methods
+
+
+        #region INotifyPropertyChanged members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged(string p)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(p));
+        }
+
+        #endregion INotifyPropertyChanged members
     }
 }

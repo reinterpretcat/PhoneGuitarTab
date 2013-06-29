@@ -15,7 +15,8 @@ namespace PhoneGuitarTab.UI
                     var viewModel = DataContext as TextTabViewModel;
                     // TODO (cent) move styles somewhere to settings; add more style controls
                     viewModel.Style += "font-weight:bold;";
-                    tabWebBrowser.NavigateToString(viewModel.TabContent);
+                    if (viewModel.TabContent != null)
+                        tabWebBrowser.NavigateToString(viewModel.TabContent);
                 };
         }
     }
