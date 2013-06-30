@@ -21,15 +21,13 @@ namespace PhoneGuitarTab.UI.ViewModel
         private PageMapping pageMapping;
         private CollectionViewModel collectionViewModel;
 
-        private string _customTabName;
-        private string _customGroupName;
-        //private List<Core.Tuple<string, string>> _customTabTypes;
-        private Core.Tuple<string, string> _selectedCustomTabType;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
         private IEnumerable<string> _pages;
         private TabsByName _searchGroupTabs;
         private bool _isSearching;
+        private string currentSearchText;
+        private bool isNothingFound = false;
 
         #endregion Fields
 
@@ -105,29 +103,59 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public TabsByName SearchGroupTabs
         {
+            get 
+            { 
+                return _searchGroupTabs; 
+            }
             set
             {
                 _searchGroupTabs = value;
                 RaisePropertyChanged("SearchGroupTabs");
             }
-            get { return _searchGroupTabs; }
-
         }
 
         public bool IsSearching
         {
+            get 
+            { 
+                return _isSearching; 
+            }
             set
             {
                 _isSearching = value;
                 RaisePropertyChanged("IsSearching");
             }
-            get { return _isSearching; }
         }
 
         //helpers properties
-        public string CurrentSearchText { get; set; }
+        public string CurrentSearchText 
+        {
+            get
+            {
+                return currentSearchText;
+            }
+            set
+            {
+                currentSearchText = value;
+                if (currentSearchText == string.Empty)
+                    IsNothingFound = false;
+            }
+        }
 
         public int CurrentPageIndex { get; set; }
+
+        public bool IsNothingFound
+        {
+            get
+            {
+                return isNothingFound;
+            }
+            set
+            {
+                isNothingFound = value;
+                RaisePropertyChanged("IsNothingFound");
+            }
+        }
 
         #endregion Properties
 
@@ -235,6 +263,8 @@ namespace PhoneGuitarTab.UI.ViewModel
             string[] pattern = arg.Split(',');
             string song = pattern.Length > 1 ? pattern[1] : "";
             groupSearch = new SearchTabResult(pattern[0], song);
+
+            IsNothingFound = false;
             groupSearch.SearchComplete += (s, e) =>
             {
                 //TODO examine e.Error 
@@ -251,6 +281,10 @@ namespace PhoneGuitarTab.UI.ViewModel
                         Type = entry.Type,
                         ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
                     }).ToList();
+
+                    if (groupTabs.Count == 0)
+                        IsNothingFound = true;
+                    
                     Deployment.Current.Dispatcher.BeginInvoke(
                         () =>
                         {

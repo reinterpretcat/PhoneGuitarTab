@@ -3,6 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                     xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                     xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -14,12 +15,20 @@
                                           Source={StaticResource Locator}}"
                     Header="online"
                     mc:Ignorable="d">
-    <toolkit:LongListSelector Background="Transparent" ItemsSource="{Binding SearchGroupTabs}">
+    <Controls:PivotItem.Resources>
+        <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
+        <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+    </Controls:PivotItem.Resources>
+
+    <toolkit:LongListSelector Background="Transparent"
+                              GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                              ItemsSource="{Binding SearchGroupTabs}">
         <toolkit:LongListSelector.GroupItemsPanel>
             <ItemsPanelTemplate>
                 <toolkit:WrapPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </toolkit:LongListSelector.GroupItemsPanel>
+
         <toolkit:LongListSelector.GroupItemTemplate>
             <DataTemplate>
                 <Border Width="99"
@@ -37,21 +46,7 @@
                 </Border>
             </DataTemplate>
         </toolkit:LongListSelector.GroupItemTemplate>
-        <toolkit:LongListSelector.GroupHeaderTemplate>
-            <DataTemplate>
-                <Border Background="Transparent">
-                    <Border Width="75"
-                            Height="75"
-                            HorizontalAlignment="Left"
-                            Background="{StaticResource PhoneAccentBrush}">
-                        <TextBlock VerticalAlignment="Bottom"
-                                   Foreground="{StaticResource PhoneForegroundBrush}"
-                                   Style="{StaticResource PhoneTextExtraLargeStyle}"
-                                   Text="{Binding Key}" />
-                    </Border>
-                </Border>
-            </DataTemplate>
-        </toolkit:LongListSelector.GroupHeaderTemplate>
+
         <toolkit:LongListSelector.ListHeaderTemplate>
             <DataTemplate>
                 <StackPanel Orientation="Vertical">
@@ -61,8 +56,11 @@
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="searchTextBox"
+                                 TextChanged="OnSearchTextBoxTextChanged"
                                  Text="{Binding Path=DataContext.CurrentSearchText,
-                                                ElementName=searchPivotItem}"
+                                                ElementName=searchPivotItem,
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=Explicit}"
                                  custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch,
                                                                 ElementName=searchPivotItem}" />
                         <Button Grid.Column="1"
@@ -93,9 +91,18 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
+                    <TextBlock Margin="0,80"
+                               HorizontalAlignment="Center"
+                               FontSize="30"
+                               Opacity="0.5"
+                               Text="Sorry, nothing found."
+                               Visibility="{Binding Path=DataContext.IsNothingFound,
+                                                    ElementName=searchPivotItem,
+                                                    Converter={StaticResource boolVisibility}}" />
                 </StackPanel>
             </DataTemplate>
         </toolkit:LongListSelector.ListHeaderTemplate>
+
         <toolkit:LongListSelector.ItemTemplate>
             <DataTemplate>
                 <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
@@ -136,5 +143,6 @@
             </DataTemplate>
         </toolkit:LongListSelector.ItemTemplate>
     </toolkit:LongListSelector>
+
 
 </Controls:PivotItem>
