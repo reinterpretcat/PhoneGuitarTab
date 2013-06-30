@@ -57,4 +57,20 @@
             </toolkit:ContextMenuService.ContextMenu>
         </Grid>
     </DataTemplate>
+
+    <DataTemplate x:Key="GroupHeaderTemplate">
+        <Border Background="Transparent">
+            <Border Width="70"
+                    Height="70"
+                    HorizontalAlignment="Left"
+                    Background="{StaticResource PhoneAccentBrush}">
+                <TextBlock Margin="8"
+                           VerticalAlignment="Bottom"
+                           Foreground="{StaticResource PhoneForegroundBrush}"
+                           Style="{StaticResource PhoneTextExtraLargeStyle}"
+                           Text="{Binding Key}" />
+            </Border>
+        </Border>
+    </DataTemplate>
+
 </ResourceDictionary>

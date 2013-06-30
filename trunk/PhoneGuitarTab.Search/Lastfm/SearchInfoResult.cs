@@ -34,7 +34,7 @@ namespace PhoneGuitarTab.Search.Lastfm
             Url = root.Element("artist").Element("url").Value;
             BandName = root.Element("artist").Element("name").Value;
             var bio = root.Element("artist").Element("bio");
-            Summary = Unescape(StripTagsCharArray(bio.Element("summary").Value));
+            Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));
         }
 
         protected override string GetRequestTemplate()
@@ -66,6 +66,37 @@ namespace PhoneGuitarTab.Search.Lastfm
                     continue;
                 }
                 if (let == '>')
+                {
+                    inside = false;
+                    continue;
+                }
+                if (!inside)
+                {
+                    array[arrayIndex] = let;
+                    arrayIndex++;
+                }
+            }
+            return new string(array, 0, arrayIndex);
+        }
+
+        /// <summary>
+        /// Remove all escape special chars (looking like &x-x; from string using char array.
+        /// </summary>
+        private string StripAllEscapeSymbols(string source)
+        {
+            char[] array = new char[source.Length];
+            int arrayIndex = 0;
+            bool inside = false;
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                char let = source[i];
+                if (let == '&')
+                {
+                    inside = true;
+                    continue;
+                }
+                if (let == ';')
                 {
                     inside = false;
                     continue;
