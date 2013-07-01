@@ -22,9 +22,11 @@
         <Infrastructure:SearchTypeConverter x:Key="searchTypeConverter" />
     </Controls:PivotItem.Resources>
 
-    <toolkit:LongListSelector Background="Transparent"
+    <toolkit:LongListSelector x:Name="tabsList"
+                              Background="Transparent"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
-                              ItemsSource="{Binding SearchGroupTabs}">
+                              ItemsSource="{Binding SearchGroupTabs}"
+                              Tag="{Binding FirstTabInList}">
         <toolkit:LongListSelector.GroupItemsPanel>
             <ItemsPanelTemplate>
                 <toolkit:WrapPanel Orientation="Horizontal" />
@@ -128,6 +130,19 @@
                 </StackPanel>
             </DataTemplate>
         </toolkit:LongListSelector.ListHeaderTemplate>
+
+        <toolkit:LongListSelector.ListFooterTemplate>
+            <DataTemplate>
+                <Button HorizontalAlignment="Stretch"
+                        Background="{StaticResource PhoneAccentBrush}"
+                        Click="ToTopButton_Click"
+                        Visibility="{Binding Path=DataContext.IsFooterNeeded,
+                                             ElementName=searchPivotItem,
+                                             Converter={StaticResource boolVisibility}}">
+                    to top
+                </Button>
+            </DataTemplate>
+        </toolkit:LongListSelector.ListFooterTemplate>
 
         <toolkit:LongListSelector.ItemTemplate>
             <DataTemplate>

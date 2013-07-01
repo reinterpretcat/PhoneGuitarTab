@@ -15,6 +15,13 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     public class SearchViewModel : Core.ViewModel
     {
+        #region Constants
+
+        private const int ItemsNumberForFooterVisibilityThreshold = 10;
+
+        #endregion Constants
+
+
         #region Fields
 
         private SearchTabResult groupSearch;
@@ -32,6 +39,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private bool isHintVisible = true;
         private SearchType searchMethod = SearchType.ByBand;
         private List<SearchType> searchOptions;
+        private TabEntity firstTabInList;
 
         #endregion Fields
 
@@ -95,6 +103,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 _searchGroupTabs = value;
                 RaisePropertyChanged("SearchGroupTabs");
+                RaisePropertyChanged("IsFooterNeeded");
             }
         }
 
@@ -174,6 +183,28 @@ namespace PhoneGuitarTab.UI.ViewModel
                 if (searchOptions == null)
                     searchOptions = new List<SearchType>() { SearchType.ByBand, SearchType.BySong };
                 return searchOptions;
+            }
+        }
+
+        public bool IsFooterNeeded
+        {
+            get
+            {
+                //return SearchGroupTabs != null && (SearchGroupTabs.Tabs.Count > ItemsNumberForFooterVisibilityThreshold);
+                return false;
+            }
+        }
+
+        public TabEntity FirstTabInList
+        {
+            get 
+            { 
+                return firstTabInList; 
+            }
+            set 
+            { 
+                firstTabInList = value;
+                RaisePropertyChanged("FirstTabInList");
             }
         }
 
@@ -286,8 +317,8 @@ namespace PhoneGuitarTab.UI.ViewModel
             //string song = pattern.Length > 1 ? pattern[1] : "";
             //groupSearch = new SearchTabResult(pattern[0], song);
 
-            string bandName = string.Empty;
-            string songName = string.Empty;
+            string  bandName = string.Empty, 
+                    songName = string.Empty;
             if (SearchMethod == SearchType.ByBand)
                 bandName = arg;
             else
@@ -299,37 +330,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             IsNothingFound = false;
             groupSearch.SearchComplete += (s, e) =>
             {
-                //TODO examine e.Error 
-                if (e.Error == null)
-                {
-                    var groupTabs = groupSearch.Entries.Where(FilterTab).
-                    Select(entry => new TabEntity()
-                    {
-                        SearchId = entry.Id,
-                        SearchUrl = entry.Url,
-                        Name = entry.Name,
-                        Group = entry.Artist,
-                        Rating = entry.Rating,
-                        Type = entry.Type,
-                        ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
-                    }).ToList();
-
-                    if (groupTabs.Count == 0)
-                        IsNothingFound = true;
-                    
-                    Deployment.Current.Dispatcher.BeginInvoke(
-                        () =>
-                        {
-                            SearchGroupTabsSummary = groupSearch.Summary;
-                            Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
-                            HeaderPagingVisibility =
-                                groupSearch.Summary.PageCount > 1
-                                    ? Visibility.Visible
-                                    : Visibility.Collapsed;
-                            SearchGroupTabs = new TabsByName(groupTabs);
-                        });
-                }
-                IsSearching = false;
+                SearchCompletedHandler(e);
             };
 
             IsSearching = true;
@@ -356,37 +357,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             IsNothingFound = false;
             groupSearch.SearchComplete += (s, e) =>
             {
-                //TODO examine e.Error 
-                if (e.Error == null)
-                {
-                    var groupTabs = groupSearch.Entries.Where(FilterTab).
-                    Select(entry => new TabEntity()
-                    {
-                        SearchId = entry.Id,
-                        SearchUrl = entry.Url,
-                        Name = entry.Name,
-                        Group = entry.Artist,
-                        Rating = entry.Rating,
-                        Type = entry.Type,
-                        ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
-                    }).ToList();
-
-                    if (groupTabs.Count == 0)
-                        IsNothingFound = true;
-
-                    Deployment.Current.Dispatcher.BeginInvoke(
-                        () =>
-                        {
-                            SearchGroupTabsSummary = groupSearch.Summary;
-                            Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
-                            HeaderPagingVisibility =
-                                groupSearch.Summary.PageCount > 1
-                                    ? Visibility.Visible
-                                    : Visibility.Collapsed;
-                            SearchGroupTabs = new TabsByName(groupTabs);
-                        });
-                }
-                IsSearching = false;
+                SearchCompletedHandler(e);
             };
 
             IsSearching = true;
@@ -473,6 +444,50 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         #endregion Command handlers
+
+
+        #region Event handlers
+
+        private void SearchCompletedHandler(System.Net.DownloadStringCompletedEventArgs e)
+        {
+            //TODO examine e.Error 
+            if (e.Error == null)
+            {
+                var groupTabs = groupSearch.Entries.Where(FilterTab).
+                Select(entry => new TabEntity()
+                {
+                    SearchId = entry.Id,
+                    SearchUrl = entry.Url,
+                    Name = entry.Name,
+                    Group = entry.Artist,
+                    Rating = entry.Rating,
+                    Type = entry.Type,
+                    ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
+                }).ToList();
+
+                if (groupTabs.Count == 0)
+                {
+                    IsNothingFound = true;
+                    IsSearching = false;
+                    return;
+                }
+                Deployment.Current.Dispatcher.BeginInvoke(
+                    () =>
+                    {
+                        SearchGroupTabsSummary = groupSearch.Summary;
+                        Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
+                        HeaderPagingVisibility =
+                            groupSearch.Summary.PageCount > 1
+                                ? Visibility.Visible
+                                : Visibility.Collapsed;
+                        SearchGroupTabs = new TabsByName(groupTabs);
+                        FirstTabInList = SearchGroupTabs.Tabs[0];
+                    });
+            }
+            IsSearching = false;
+        }
+
+        #endregion Event handlers
 
 
         #region Helper methods
