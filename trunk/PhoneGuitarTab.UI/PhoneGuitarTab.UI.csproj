@@ -90,19 +90,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Bands.xaml.cs">
+    <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
+    <Compile Include="View\StartupScreens\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Other.xaml.cs">
+    <Compile Include="View\StartupScreens\Other.xaml.cs">
       <DependentUpon>Other.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Tabs.xaml.cs">
+    <Compile Include="View\StartupScreens\Tabs.xaml.cs">
       <DependentUpon>Tabs.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Search.xaml.cs">
+    <Compile Include="View\StartupScreens\Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\History.xaml.cs">
+    <Compile Include="View\StartupScreens\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\BandByName.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Entities\TabEntity.cs" />
     <Compile Include="Entities\TabInGroup.cs" />
     <Compile Include="Infrastructure\Converters.cs" />
+    <Compile Include="Infrastructure\Enums\EnumType.cs" />
     <Compile Include="Infrastructure\Messages\CollectionTabRemovedMessage - Copy.cs" />
     <Compile Include="Infrastructure\Messages\GroupTabRemovedMessage.cs" />
     <Compile Include="Infrastructure\PageType.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="ViewModel\CollectionViewModel.cs" />
     <Compile Include="ViewModel\DataContextViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModel.cs" />
+    <Compile Include="Infrastructure\Enums\SearchType.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\StartupViewModel.cs" />
     <Compile Include="Infrastructure\Messages\HistoryTabRemovedMessage.cs" />
@@ -164,23 +167,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Bands.xaml">
+    <Page Include="View\StartupScreens\Bands.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Other.xaml">
+    <Page Include="View\StartupScreens\Other.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Tabs.xaml">
+    <Page Include="View\StartupScreens\Tabs.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Search.xaml">
+    <Page Include="View\StartupScreens\Search.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\History.xaml">
+    <Page Include="View\StartupScreens\History.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

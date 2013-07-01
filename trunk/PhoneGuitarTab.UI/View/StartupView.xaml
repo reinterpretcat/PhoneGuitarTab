@@ -12,7 +12,7 @@
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
+               xmlns:views="clr-namespace:PhoneGuitarTab.UI.View"
                x:Name="root"
                DataContext="{Binding Startup,
                                      Source={StaticResource Locator}}"
@@ -32,11 +32,11 @@
         </Grid.Resources>
 
         <Controls:Pivot Title="phone guitar tab">
-            <uiControls:Tabs />
-            <uiControls:Bands />
-            <uiControls:History />
-            <uiControls:Search />
-            <uiControls:Other />
+            <views:Tabs />
+            <views:Bands />
+            <views:History />
+            <views:Search />
+            <views:Other />
         </Controls:Pivot>
 
         <toolkit:PerformanceProgressBar x:Name="performanceBar"

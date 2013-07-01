@@ -1,9 +1,10 @@
-﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.Controls.Search"
+﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.View.Search"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                     xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
                     xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+                    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -18,6 +19,7 @@
     <Controls:PivotItem.Resources>
         <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
         <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+        <Infrastructure:SearchTypeConverter x:Key="searchTypeConverter" />
     </Controls:PivotItem.Resources>
 
     <toolkit:LongListSelector Background="Transparent"
@@ -51,25 +53,50 @@
             <DataTemplate>
                 <StackPanel Orientation="Vertical">
                     <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="searchTextBox"
-                                 TextChanged="OnSearchTextBoxTextChanged"
                                  Text="{Binding Path=DataContext.CurrentSearchText,
                                                 ElementName=searchPivotItem,
                                                 Mode=TwoWay,
                                                 UpdateSourceTrigger=Explicit}"
+                                 TextChanged="OnSearchTextBoxTextChanged"
                                  custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch,
-                                                                ElementName=searchPivotItem}" />
+                                                                ElementName=searchPivotItem}">
+                            <Interactivity:Interaction.Behaviors>
+                                <Infrastructure:Watermark FontStyle="Italic"
+                                                          Foreground="Gray"
+                                                          Text="type your query here.." />
+                            </Interactivity:Interaction.Behaviors>
+                        </TextBox>
                         <Button Grid.Column="1"
                                 Command="{Binding Path=DataContext.LaunchSearch,
                                                   ElementName=searchPivotItem}"
                                 CommandParameter="{Binding Text,
                                                            ElementName=searchTextBox}"
                                 Content="Go" />
+                        <StackPanel Grid.Row="1">
+                            <TextBlock Margin="12,0,0,-14"
+                                       FontSize="16"
+                                       Opacity="0.7"
+                                       Text="Search by " />
+                            <toolkit:ListPicker ItemsSource="{Binding Path=DataContext.SearchOptions, ElementName=searchPivotItem}" 
+                                                SelectedItem="{Binding Path=DataContext.SearchMethod, ElementName=searchPivotItem, Mode=TwoWay}">
+                                <toolkit:ListPicker.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" />
+                                    </DataTemplate>
+                                </toolkit:ListPicker.ItemTemplate>
+                            </toolkit:ListPicker>
+                        </StackPanel>
                     </Grid>
+
                     <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.HeaderPagingVisibility, ElementName=searchPivotItem}">
                         <TextBlock Padding="8" Text="Pages:" />
                         <ItemsControl ItemsSource="{Binding Path=DataContext.Pages, ElementName=searchPivotItem}">
@@ -120,7 +147,7 @@
                            Stretch="None"
                            Visibility="{StaticResource PhoneDarkThemeVisibility}" />
 
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <!--<StackPanel Grid.Column="1" VerticalAlignment="Center">
                         <TextBlock Margin="12,0"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    Style="{StaticResource PhoneTextLargeStyle}"
@@ -130,6 +157,27 @@
                                    Text="{Binding Type}"
                                    TextWrapping="Wrap" />
                         <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
+                    </StackPanel>-->
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                        <TextBlock Margin="12,0"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextLargeStyle}"
+                           Text="{Binding Name}" />
+                        <TextBlock Margin="28,0"
+                           HorizontalAlignment="Left"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="{Binding Group}"
+                           TextWrapping="Wrap" />
+                        <StackPanel Orientation="Horizontal">
+                            <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
+                            <TextBlock VerticalAlignment="Center"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               Style="{StaticResource PhoneTextSmallStyle}"
+                               Text="{Binding Type}"
+                               TextWrapping="Wrap" />
+                        </StackPanel>
                     </StackPanel>
                     <toolkit:ContextMenuService.ContextMenu>
                         <toolkit:ContextMenu>

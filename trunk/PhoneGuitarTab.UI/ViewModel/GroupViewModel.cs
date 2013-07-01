@@ -4,6 +4,7 @@ using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Enums;
 using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
@@ -227,7 +228,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
-                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
+                navigationService.NavigateTo(PageType.Get(ViewType.TextTab), new Dictionary<string, object>()
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
@@ -245,7 +246,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoSearch(Group group)
         {
-            navigationService.NavigateTo(PageType.Get(PageType.EnumType.Search), new Dictionary<string, object>() { {"SearchTerm", group.Name} });
+            navigationService.NavigateTo(PageType.Get(ViewType.Search), new Dictionary<string, object>() { {"SearchTerm", group.Name} });
         }
 
         private void DoRefreshInfo(Group group)
@@ -303,8 +304,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void CreateCommands()
         {
             SearchCommand = new RelayCommand<Group>(DoSearch);
-            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Settings)));
-            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Startup)));
+            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
+            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
             RefreshInfoCommand = new RelayCommand<Group>(DoRefreshInfo);
 
             GoToTabView = new RelayCommand<object>(DoGoToTabView);

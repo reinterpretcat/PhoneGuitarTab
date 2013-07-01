@@ -3,6 +3,7 @@ using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Enums;
 using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,7 +101,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
-                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
+                navigationService.NavigateTo(PageType.Get(ViewType.TextTab), new Dictionary<string, object>()
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });

@@ -4,6 +4,7 @@ using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Enums;
 using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
@@ -164,7 +165,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             if (selector != null && selector.SelectedItem is Tuple<int, Group>)
             {
                 Group group = (selector.SelectedItem as Tuple<int, Group>).Item2;
-                navigationService.NavigateTo(PageType.Get(PageType.EnumType.Group),
+                navigationService.NavigateTo(PageType.Get(ViewType.Group),
                                              new Dictionary<string, object> { { "group", group } });
             }
         }
@@ -178,7 +179,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
-                navigationService.NavigateTo(PageType.Get(PageType.EnumType.TextTab), new Dictionary<string, object>()
+                navigationService.NavigateTo(PageType.Get(ViewType.TextTab), new Dictionary<string, object>()
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
@@ -202,9 +203,9 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void CreateCommands()
         {
-            SearchCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Search)));
-            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Settings)));
-            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Startup)));
+            SearchCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Search)));
+            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
+            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
 
             RemoveTab = new RelayCommand<int>(DoRemoveTab);
             CancelTab = new RelayCommand(() => { });

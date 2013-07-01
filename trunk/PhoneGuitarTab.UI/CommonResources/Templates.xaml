@@ -31,7 +31,7 @@
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                            Style="{StaticResource PhoneTextLargeStyle}"
                            Text="{Binding Name}" />
-                <TextBlock Margin="32,0"
+                <TextBlock Margin="28,0"
                            HorizontalAlignment="Left"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                            Style="{StaticResource PhoneTextNormalStyle}"

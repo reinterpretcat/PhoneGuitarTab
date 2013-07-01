@@ -5,6 +5,7 @@ using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace PhoneGuitarTab.UI.ViewModel
         private bool _isSearching;
         private string currentSearchText;
         private bool isNothingFound = false;
+        private bool isHintVisible = true;
+        private SearchType searchMethod = SearchType.ByBand;
+        private List<SearchType> searchOptions;
 
         #endregion Fields
 
@@ -36,31 +40,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public SearchViewModel()
         {
-
-            CollectionCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Collection)));
-            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Settings)));
-            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(PageType.EnumType.Startup)));
-     
-            LaunchSearch = new RelayCommand<string>(DoLaunchSearch, CanLaunchSearch);
-            SelectPage = new RelayCommand<string>(DoSelectPage);
+            CreateCommands();
 
             CurrentPageIndex = 1;
             CurrentSearchText = String.Empty;
 
-            DownloadTab = new RelayCommand<string>(DoDownloadTab, CanDownloadTab);
-           // CustomDownloadTab = new RelayCommand<string>(DoCustomDownloadTab, CanCustomDownloadTab);
-            
-
-            /*
-            SelectedCustomTabType = CustomTabTypes[0];
-            //force bindin in order header rendering
-            SearchGroupTabs = new TabByName(new List<Tab>());
-            SearchGroupTabsSummary = new SearchTabResultSummary();
-            
-            CustomGroupName = "";
-            CustomTabName = "";
-            //Pages = Enumerable.Range(1, 1).Select(p=> new Tuple<ICommand,string>(SelectPage,p.ToString())).ToList();
-            */
             HeaderPagingVisibility = Visibility.Collapsed;
         }
 
@@ -157,6 +141,42 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        public bool IsHintVisible
+        {
+            get 
+            { 
+                return isHintVisible; 
+            }
+            set 
+            { 
+                isHintVisible = value;
+                RaisePropertyChanged("IsHintVisible");
+            }
+        }
+
+        public SearchType SearchMethod
+        {
+            get
+            {
+                return searchMethod;
+            }
+            set
+            {
+                searchMethod = value;
+                RaisePropertyChanged("SearchMethod");
+            }
+        }
+
+        public List<SearchType> SearchOptions
+        {
+            get
+            {
+                if (searchOptions == null)
+                    searchOptions = new List<SearchType>() { SearchType.ByBand, SearchType.BySong };
+                return searchOptions;
+            }
+        }
+
         #endregion Properties
 
 
@@ -182,7 +202,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             get
             {
                 if (collectionViewModel == null)
-                    collectionViewModel = PageMapping.GetViewModel(PageType.Get(PageType.EnumType.Collection)) as CollectionViewModel;
+                    collectionViewModel = PageMapping.GetViewModel(PageType.Get(ViewType.Collection)) as CollectionViewModel;
                 return collectionViewModel;
             }
         }
@@ -260,10 +280,20 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoLaunchSearch(string arg)
         {
             CurrentSearchText = arg;
-            string[] pattern = arg.Split(',');
-            string song = pattern.Length > 1 ? pattern[1] : "";
-            groupSearch = new SearchTabResult(pattern[0], song);
+            //string[] pattern = arg.Split(',');
+            //string song = pattern.Length > 1 ? pattern[1] : "";
+            //groupSearch = new SearchTabResult(pattern[0], song);
 
+            string bandName = string.Empty;
+            string songName = string.Empty;
+            if (SearchMethod == SearchType.ByBand)
+                bandName = arg;
+            else
+                songName = arg;
+
+            groupSearch = new SearchTabResult(bandName, songName);
+
+            IsHintVisible = false;
             IsNothingFound = false;
             groupSearch.SearchComplete += (s, e) =>
             {
@@ -319,58 +349,6 @@ namespace PhoneGuitarTab.UI.ViewModel
                 DoLaunchSearch(CurrentSearchText);
             }
         }
-
-        /* private bool CanCustomDownloadTab(string arg)
-         {
-             return (!_isSearching) &&
-                 (!String.IsNullOrEmpty(_customGroupName) &&
-                 (!String.IsNullOrEmpty(_customTabName)));
-         }
-
-         private void DoCustomDownloadTab(string arg)
-         {
-             if (_isSearching)
-             {
-                 MessageBox.Show("Sorry, you cannot download the tab right now.");
-                 return;
-             }
-             string customType = SelectedCustomTabType.Item2;
-             string customGroup = CustomGroupName;
-             string customTab = CustomTabName;
-             string url = arg;
-             //
-
-           
-             var filePath = TabStorageHelper.CreateTabFilePath();
-             var fileStream = TabStorageHelper.CreateTabFile(filePath);
-
-             FileDownloader downloader = new FileDownloader(fileStream);
-             downloader.DownloadComplete += delegate
-                                                {
-                                                    Tab tab = new Tab()
-                                                                  {
-                                                                      TabType = TabDataContextHelper.GetTabTypeByName(customType),
-                                                                      Name = customTab
-                                                                  };
-
-                 tab.Path = filePath;
-                 //Note get or create new instance from/in database
-                 tab.Group = TabDataContextHelper.GetOrCreateGroupByName(customGroup);
-
-                 TabDataContextHelper.InsertTab(tab);
-
-                 Deployment.Current.Dispatcher.BeginInvoke(
-                     () =>
-                     {
-                         IsSearching = false;
-                         MessageBox.Show("Your tab was downloaded");
-                     });
-             };
-             IsSearching = true;
-
-             downloader.Download(url);
-
-         }*/
 
         private void DoDownloadTab(string arg)
         {
@@ -446,8 +424,19 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Helper methods
 
+        private void CreateCommands()
+        {
+            CollectionCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Collection)));
+            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
+            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
+            LaunchSearch = new RelayCommand<string>(DoLaunchSearch, CanLaunchSearch);
+            SelectPage = new RelayCommand<string>(DoSelectPage);
+            DownloadTab = new RelayCommand<string>(DoDownloadTab, CanDownloadTab);
+        }
+
         private void NotifyCollection(Tab downloadedTab)
         {
+            // TODO: use MVVM's Messager for loosely coupled design sake
             CollectionViewModel.AddDownloadedTab(downloadedTab);
         }
 

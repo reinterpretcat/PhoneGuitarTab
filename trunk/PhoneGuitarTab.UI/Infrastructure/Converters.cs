@@ -1,4 +1,5 @@
 ﻿using PhoneGuitarTab.UI.Entities;
+using PhoneGuitarTab.UI.Infrastructure.Enums;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -131,6 +132,35 @@ namespace PhoneGuitarTab.UI.Infrastructure
             var visiblity = (Visibility)value;
 
             return visiblity == Visibility.Visible;
+        }
+    }
+
+    public class SearchTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string returnString = string.Empty;
+            SearchType searchType = (SearchType)value;
+
+            switch (searchType)
+            {
+                case SearchType.ByBand :
+                    returnString = "band name";
+                    break;
+                case SearchType.BySong :
+                    returnString = "song name";
+                    break;
+                default:
+
+                    break;
+            }
+
+            return returnString;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException("Convert from string to se");
         }
     }
 }

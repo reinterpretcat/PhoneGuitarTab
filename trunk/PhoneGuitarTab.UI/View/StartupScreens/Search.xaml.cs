@@ -1,8 +1,9 @@
 ﻿using Microsoft.Phone.Controls;
+using PhoneGuitarTab.UI.Infrastructure.Enums;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace PhoneGuitarTab.UI.Controls
+namespace PhoneGuitarTab.UI.View
 {
     public partial class Search : PivotItem
     {

@@ -19,6 +19,7 @@ using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Core.Navigation;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Infrastructure.Enums;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -44,13 +45,13 @@ namespace PhoneGuitarTab.UI.ViewModel
             RegisterAll();
 
             PageMapping pageMapping = Container.Resolve<PageMapping>();
-            _startup = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.Startup));
-            _collection = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.Collection)); 
-            _group = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.Group));
-            _search = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.Search));
-            _textTab = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.TextTab));
-            _help = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.Help));
-            _about = pageMapping.GetViewModel(PageType.Get(PageType.EnumType.About));
+            _startup = pageMapping.GetViewModel(PageType.Get(ViewType.Startup));
+            _collection = pageMapping.GetViewModel(PageType.Get(ViewType.Collection)); 
+            _group = pageMapping.GetViewModel(PageType.Get(ViewType.Group));
+            _search = pageMapping.GetViewModel(PageType.Get(ViewType.Search));
+            _textTab = pageMapping.GetViewModel(PageType.Get(ViewType.TextTab));
+            _help = pageMapping.GetViewModel(PageType.Get(ViewType.Help));
+            _about = pageMapping.GetViewModel(PageType.Get(ViewType.About));
         }
 
         /// <summary>
@@ -63,13 +64,13 @@ namespace PhoneGuitarTab.UI.ViewModel
                                                 {
                                                      new Dictionary<IPageType,Tuple<Uri, Lazy<Core.ViewModel>>>()
                                                          {
-                                                             {PageType.Get(PageType.EnumType.Startup), new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/StartupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new StartupViewModel()))},
-                                                             {PageType.Get(PageType.EnumType.Collection),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/CollectionView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new CollectionViewModel()))},
-                                                             {PageType.Get(PageType.EnumType.Search),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/SearchView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new SearchViewModel()))},
-                                                             {PageType.Get(PageType.EnumType.TextTab),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/TextTabView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new TextTabViewModel()))},
-                                                             {PageType.Get(PageType.EnumType.Help),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/HelpView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new HelpViewModel()))},
-                                                             {PageType.Get(PageType.EnumType.About),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/AboutView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new AboutViewModel()))},
-                                                             {PageType.Get(PageType.EnumType.Group),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/GroupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new GroupViewModel()))}
+                                                             {PageType.Get(ViewType.Startup), new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/StartupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new StartupViewModel()))},
+                                                             {PageType.Get(ViewType.Collection),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/CollectionView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new CollectionViewModel()))},
+                                                             {PageType.Get(ViewType.Search),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/SearchView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new SearchViewModel()))},
+                                                             {PageType.Get(ViewType.TextTab),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/TextTabView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new TextTabViewModel()))},
+                                                             {PageType.Get(ViewType.Help),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/HelpView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new HelpViewModel()))},
+                                                             {PageType.Get(ViewType.About),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/AboutView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new AboutViewModel()))},
+                                                             {PageType.Get(ViewType.Group),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/GroupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new GroupViewModel()))}
                                                          }
                                                 });
             

@@ -1,4 +1,4 @@
-﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.Controls.History"
+﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.View.History"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
