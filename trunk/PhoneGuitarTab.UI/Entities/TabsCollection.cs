@@ -30,6 +30,17 @@ namespace PhoneGuitarTab.UI.Entities
             }
         }
 
+        public TabEntity GetFirstTabInFirstNonEmptyGroup()
+        {
+            foreach (var group in this)
+            {
+                if (group.HasItems)
+                    return group[0];
+            }
+
+            return null;
+        }
+
         #endregion Public methods
 
 

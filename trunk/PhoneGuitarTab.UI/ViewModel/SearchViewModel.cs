@@ -8,6 +8,7 @@ using PhoneGuitarTab.UI.Infrastructure;
 using PhoneGuitarTab.UI.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 
@@ -93,6 +94,8 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        public string SelectedPage { get; set; }
+
         public TabsByName SearchGroupTabs
         {
             get 
@@ -121,7 +124,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         //helpers properties
-        public string CurrentSearchText 
+        public string CurrentSearchText
         {
             get
             {
@@ -132,6 +135,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 currentSearchText = value;
                 if (currentSearchText == string.Empty)
                     IsNothingFound = false;
+                RaisePropertyChanged("CurrentSearchBand");
             }
         }
 
@@ -190,11 +194,13 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get
             {
-                //return SearchGroupTabs != null && (SearchGroupTabs.Tabs.Count > ItemsNumberForFooterVisibilityThreshold);
-                return false;
+                return SearchGroupTabs != null && (SearchGroupTabs.Tabs.Count > ItemsNumberForFooterVisibilityThreshold);
             }
         }
 
+        /// <summary>
+        /// used for "jump to top" feature
+        /// </summary>
         public TabEntity FirstTabInList
         {
             get 
@@ -310,67 +316,38 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoLaunchSearch(string arg)
         {
-            SearchGroupTabs = null;
-            HeaderPagingVisibility = Visibility.Collapsed;
-
-            //string[] pattern = arg.Split(',');
-            //string song = pattern.Length > 1 ? pattern[1] : "";
-            //groupSearch = new SearchTabResult(pattern[0], song);
-
             string  bandName = string.Empty, 
                     songName = string.Empty;
             if (SearchMethod == SearchType.ByBand)
-                bandName = arg;
+                bandName = CurrentSearchText = arg;
             else
-                songName = arg;
+                songName = CurrentSearchText = arg;
 
-            groupSearch = new SearchTabResult(bandName, songName);
+            CurrentPageIndex = 1;
 
-            IsHintVisible = false;
-            IsNothingFound = false;
-            groupSearch.SearchComplete += (s, e) =>
-            {
-                SearchCompletedHandler(e);
-            };
-
-            IsSearching = true;
-            groupSearch.Run(CurrentPageIndex);
+            RunSearch(bandName, songName);
         }
 
-        private bool CanLaunchSearch(string arg)
-        {
-            //TODO test arg
-            return true;
-        }
-
+        
         private void DoLaunchSearchForBand(string arg)
         {
             SearchMethod = SearchType.ByBand;
-            CurrentSearchText = "\"" + arg + "\"";
-            HeaderPagingVisibility = Visibility.Collapsed;
+            CurrentPageIndex = 1;
+            CurrentSearchText = arg;
 
-            SearchGroupTabs = null;
-
-            groupSearch = new SearchTabResult(arg, string.Empty);
-
-            IsHintVisible = false;
-            IsNothingFound = false;
-            groupSearch.SearchComplete += (s, e) =>
-            {
-                SearchCompletedHandler(e);
-            };
-
-            IsSearching = true;
-            groupSearch.Run(CurrentPageIndex);
+            RunSearch(CurrentSearchText, string.Empty);
         }
 
         private void DoSelectPage(string index)
         {
+            if (index == null)
+                return;
+
             int pageNumber;
             if (Int32.TryParse(index, out pageNumber))
             {
                 CurrentPageIndex = pageNumber;
-                DoLaunchSearch(CurrentSearchText);
+                RunSearch(CurrentSearchText, string.Empty);
             }
         }
 
@@ -474,14 +451,15 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {
-                        SearchGroupTabsSummary = groupSearch.Summary;
                         Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
                         HeaderPagingVisibility =
                             groupSearch.Summary.PageCount > 1
                                 ? Visibility.Visible
                                 : Visibility.Collapsed;
                         SearchGroupTabs = new TabsByName(groupTabs);
-                        FirstTabInList = SearchGroupTabs.Tabs[0];
+                        FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
+                        SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
+                        RaisePropertyChanged("SelectedPage");
                     });
             }
             IsSearching = false;
@@ -497,7 +475,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             CollectionCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Collection)));
             SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
             HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
-            LaunchSearch = new RelayCommand<string>(DoLaunchSearch, CanLaunchSearch);
+            LaunchSearch = new RelayCommand<string>(DoLaunchSearch);
             LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);
             SelectPage = new RelayCommand<string>(DoSelectPage);
             DownloadTab = new RelayCommand<string>(DoDownloadTab, CanDownloadTab);
@@ -507,6 +485,24 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             // TODO: use MVVM's Messager for loosely coupled design sake
             CollectionViewModel.AddDownloadedTab(downloadedTab);
+        }
+
+        private void RunSearch(string bandName, string songName)
+        {
+            HeaderPagingVisibility = Visibility.Collapsed;
+            SearchGroupTabs = null;
+
+            groupSearch = new SearchTabResult(bandName, songName);
+
+            IsHintVisible = false;
+            IsNothingFound = false;
+            groupSearch.SearchComplete += (s, e) =>
+            {
+                SearchCompletedHandler(e);
+            };
+
+            IsSearching = true;
+            groupSearch.Run(CurrentPageIndex);
         }
 
         #endregion Helper methods

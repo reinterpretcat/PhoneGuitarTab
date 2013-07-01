@@ -5,7 +5,6 @@ namespace PhoneGuitarTab.UI.Entities
 {
     public static class ControlExtentions
     {
-
         public static TabEntity CreateEntity(this Tab tab)
         {
             return new TabEntity()
@@ -41,7 +40,5 @@ namespace PhoneGuitarTab.UI.Entities
 
             return key.ToString();
         }
-
-
     }
 }
