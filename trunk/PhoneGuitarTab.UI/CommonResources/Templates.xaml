@@ -30,7 +30,8 @@
                 <TextBlock Margin="12,0"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                            Style="{StaticResource PhoneTextLargeStyle}"
-                           Text="{Binding Name}" />
+                           Text="{Binding Name}"
+                           TextTrimming="WordEllipsis" />
                 <TextBlock Margin="28,0"
                            HorizontalAlignment="Left"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"

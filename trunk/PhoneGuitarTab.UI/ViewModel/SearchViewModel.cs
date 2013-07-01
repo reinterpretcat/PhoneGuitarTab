@@ -219,7 +219,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 object searchTerm;
                 NavigationParameters.TryGetValue("SearchTerm", out searchTerm);
                 if (searchTerm != null)
-                    DoLaunchSearch(searchTerm.ToString());
+                    DoLaunchSearchForBand(searchTerm.ToString());
                 else
                     DoLaunchSearch(String.Empty);
             }
@@ -236,6 +236,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
+        public RelayCommand<string> LaunchSearchForBand
+        {
+            get;
+            private set;
+        }
+
         public RelayCommand<string> SelectPage
         {
             get;
@@ -243,12 +249,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         public RelayCommand<string> DownloadTab
-        {
-            get;
-            private set;
-        }
-
-        public RelayCommand<string> CustomDownloadTab
         {
             get;
             private set;
@@ -279,7 +279,9 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoLaunchSearch(string arg)
         {
-            CurrentSearchText = arg;
+            SearchGroupTabs = null;
+            HeaderPagingVisibility = Visibility.Collapsed;
+
             //string[] pattern = arg.Split(',');
             //string song = pattern.Length > 1 ? pattern[1] : "";
             //groupSearch = new SearchTabResult(pattern[0], song);
@@ -338,6 +340,57 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             //TODO test arg
             return true;
+        }
+
+        private void DoLaunchSearchForBand(string arg)
+        {
+            SearchMethod = SearchType.ByBand;
+            CurrentSearchText = "\"" + arg + "\"";
+            HeaderPagingVisibility = Visibility.Collapsed;
+
+            SearchGroupTabs = null;
+
+            groupSearch = new SearchTabResult(arg, string.Empty);
+
+            IsHintVisible = false;
+            IsNothingFound = false;
+            groupSearch.SearchComplete += (s, e) =>
+            {
+                //TODO examine e.Error 
+                if (e.Error == null)
+                {
+                    var groupTabs = groupSearch.Entries.Where(FilterTab).
+                    Select(entry => new TabEntity()
+                    {
+                        SearchId = entry.Id,
+                        SearchUrl = entry.Url,
+                        Name = entry.Name,
+                        Group = entry.Artist,
+                        Rating = entry.Rating,
+                        Type = entry.Type,
+                        ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
+                    }).ToList();
+
+                    if (groupTabs.Count == 0)
+                        IsNothingFound = true;
+
+                    Deployment.Current.Dispatcher.BeginInvoke(
+                        () =>
+                        {
+                            SearchGroupTabsSummary = groupSearch.Summary;
+                            Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
+                            HeaderPagingVisibility =
+                                groupSearch.Summary.PageCount > 1
+                                    ? Visibility.Visible
+                                    : Visibility.Collapsed;
+                            SearchGroupTabs = new TabsByName(groupTabs);
+                        });
+                }
+                IsSearching = false;
+            };
+
+            IsSearching = true;
+            groupSearch.Run(CurrentPageIndex);
         }
 
         private void DoSelectPage(string index)
@@ -430,6 +483,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
             HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
             LaunchSearch = new RelayCommand<string>(DoLaunchSearch, CanLaunchSearch);
+            LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);
             SelectPage = new RelayCommand<string>(DoSelectPage);
             DownloadTab = new RelayCommand<string>(DoDownloadTab, CanDownloadTab);
         }

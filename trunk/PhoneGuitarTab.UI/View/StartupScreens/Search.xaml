@@ -86,8 +86,7 @@
                                        FontSize="16"
                                        Opacity="0.7"
                                        Text="Search by " />
-                            <toolkit:ListPicker ItemsSource="{Binding Path=DataContext.SearchOptions, ElementName=searchPivotItem}" 
-                                                SelectedItem="{Binding Path=DataContext.SearchMethod, ElementName=searchPivotItem, Mode=TwoWay}">
+                            <toolkit:ListPicker ItemsSource="{Binding Path=DataContext.SearchOptions, ElementName=searchPivotItem}" SelectedItem="{Binding Path=DataContext.SearchMethod, ElementName=searchPivotItem, Mode=TwoWay}">
                                 <toolkit:ListPicker.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" />
@@ -139,44 +138,33 @@
                     </Grid.ColumnDefinitions>
 
                     <Image VerticalAlignment="Center"
-                           Source="../Images/light/Text-Justify-Align_light.png"
+                           Source="../Images/light/Document-Download_light.png"
                            Stretch="None"
                            Visibility="{StaticResource PhoneLightThemeVisibility}" />
                     <Image VerticalAlignment="Center"
-                           Source="../Images/dark/Text-Justify-Align_dark.png"
+                           Source="../Images/dark/Document-Download_dark.png"
                            Stretch="None"
                            Visibility="{StaticResource PhoneDarkThemeVisibility}" />
 
-                    <!--<StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <StackPanel Grid.Column="1" VerticalAlignment="Top">
                         <TextBlock Margin="12,0"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    Style="{StaticResource PhoneTextLargeStyle}"
-                                   Text="{Binding Name}" />
-                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextNormalStyle}"
-                                   Text="{Binding Type}"
-                                   TextWrapping="Wrap" />
-                        <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
-                    </StackPanel>-->
-
-                    <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                        <TextBlock Margin="12,0"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextLargeStyle}"
-                           Text="{Binding Name}" />
+                                   Text="{Binding Name}"
+                                   TextTrimming="WordEllipsis" />
                         <TextBlock Margin="28,0"
-                           HorizontalAlignment="Left"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           Text="{Binding Group}"
-                           TextWrapping="Wrap" />
+                                   HorizontalAlignment="Left"
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                   Text="{Binding Group}"
+                                   TextWrapping="Wrap" />
                         <StackPanel Orientation="Horizontal">
                             <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                             <TextBlock VerticalAlignment="Center"
-                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                               Style="{StaticResource PhoneTextSmallStyle}"
-                               Text="{Binding Type}"
-                               TextWrapping="Wrap" />
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                       Style="{StaticResource PhoneTextSmallStyle}"
+                                       Text="{Binding Type}"
+                                       TextWrapping="Wrap" />
                         </StackPanel>
                     </StackPanel>
                     <toolkit:ContextMenuService.ContextMenu>

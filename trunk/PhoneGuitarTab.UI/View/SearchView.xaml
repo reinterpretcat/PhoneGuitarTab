@@ -39,9 +39,9 @@
         </Grid.Resources>
 
         <TextBlock Margin="2,0,2,8">
-            <Run Text="Results for " />
+            <Run Text="Results for" />
             <Run Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}" />
-            <Run Text=" online" />
+            <Run Text="online" />
         </TextBlock>
 
         <toolkit:LongListSelector x:Name="resultsList"
@@ -111,6 +111,7 @@
                     </StackPanel>
                 </DataTemplate>
             </toolkit:LongListSelector.ListHeaderTemplate>
+
             <toolkit:LongListSelector.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
@@ -119,18 +120,29 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
+                        <Image VerticalAlignment="Center"
+                               Source="../Images/light/Document-Download_light.png"
+                               Stretch="None"
+                               Visibility="{StaticResource PhoneLightThemeVisibility}" />
+                        <Image VerticalAlignment="Center"
+                               Source="../Images/dark/Document-Download_dark.png"
+                               Stretch="None"
+                               Visibility="{StaticResource PhoneDarkThemeVisibility}" />
 
-
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="1" VerticalAlignment="Top">
                             <TextBlock Margin="12,0"
                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        Style="{StaticResource PhoneTextLargeStyle}"
-                                       Text="{Binding Name}" />
-                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                       Style="{StaticResource PhoneTextNormalStyle}"
-                                       Text="{Binding Type}"
-                                       TextWrapping="Wrap" />
-                            <uiControls:RatingControl Margin="12, 5, 4, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
+                                       Text="{Binding Name}" 
+                                       TextTrimming="WordEllipsis"/>
+                            <StackPanel Orientation="Horizontal">
+                                <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
+                                <TextBlock VerticalAlignment="Center"
+                                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                           Style="{StaticResource PhoneTextSmallStyle}"
+                                           Text="{Binding Type}"
+                                           TextWrapping="Wrap" />
+                            </StackPanel>
                         </StackPanel>
                         <toolkit:ContextMenuService.ContextMenu>
                             <toolkit:ContextMenu>
