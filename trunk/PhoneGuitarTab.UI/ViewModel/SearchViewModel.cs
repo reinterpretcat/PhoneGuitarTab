@@ -41,6 +41,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private SearchType searchMethod = SearchType.ByBand;
         private List<SearchType> searchOptions;
         private TabEntity firstTabInList;
+        private TabEntity selectedTab;
 
         #endregion Fields
 
@@ -211,6 +212,17 @@ namespace PhoneGuitarTab.UI.ViewModel
             { 
                 firstTabInList = value;
                 RaisePropertyChanged("FirstTabInList");
+            }
+        }
+
+        public TabEntity SelectedTab
+        {
+            get { return selectedTab; }
+            set 
+            {
+                selectedTab.ActionAreaVisible = false;
+                selectedTab = value;
+                selectedTab.ActionAreaVisible = true;
             }
         }
 

@@ -21,7 +21,7 @@
         <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
         <Infrastructure:SearchTypeConverter x:Key="searchTypeConverter" />
 
-        <Style TargetType="ListBoxItem">
+        <Style x:Key="PagesListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="BorderBrush" Value="Transparent" />
@@ -37,13 +37,7 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
                             <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="MouseOver" />
-                                    <VisualState x:Name="Disabled" />
-                                </VisualStateGroup>
                                 <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Unselected" />
                                     <VisualState x:Name="Selected">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentContainer" Storyboard.TargetProperty="(Control.FontWeight)">
@@ -71,13 +65,15 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Controls:PivotItem.Resources>
 
     <toolkit:LongListSelector x:Name="tabsList"
                               Background="Transparent"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}">
+                              Tag="{Binding FirstTabInList}"
+                              SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
         <toolkit:LongListSelector.GroupItemsPanel>
             <ItemsPanelTemplate>
                 <toolkit:WrapPanel Orientation="Horizontal" />
@@ -149,9 +145,13 @@
                         </StackPanel>
                     </Grid>
 
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.HeaderPagingVisibility, ElementName=searchPivotItem}" Margin="0,2,0,4">
+                    <StackPanel Margin="0,2,0,4"
+                                Orientation="Horizontal"
+                                Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
+                                                     ElementName=searchPivotItem}">
                         <TextBlock Padding="8" Text="Pages:" />
                         <ListBox x:Name="pagesList"
+                                 ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
                                  ItemsSource="{Binding Path=DataContext.Pages,
                                                        ElementName=searchPivotItem}"
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,
@@ -169,9 +169,9 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock x:Name="pageHyperlink"
-                                               Padding="24,8"
                                                FontSize="22"
-                                               Text="{Binding}"/>
+                                               Padding="24,8"
+                                               Text="{Binding}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
 
@@ -205,6 +205,10 @@
         <toolkit:LongListSelector.ItemTemplate>
             <DataTemplate>
                 <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -240,6 +244,22 @@
                                        TextWrapping="Wrap" />
                         </StackPanel>
                     </StackPanel>
+
+                    <Grid x:Name="ActionsGrid"
+                          Grid.Row="1"
+                          Grid.ColumnSpan="2"
+                          Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1"
+                                Command="{Binding Path=DataContext.DownloadTab,
+                                                  ElementName=searchPivotItem}"
+                                CommandParameter="{Binding SearchId}"
+                                Content="Download" />
+                    </Grid>
+
                     <toolkit:ContextMenuService.ContextMenu>
                         <toolkit:ContextMenu>
                             <toolkit:MenuItem Command="{Binding Path=DataContext.DownloadTab,
