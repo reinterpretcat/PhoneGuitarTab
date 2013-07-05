@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Microsoft.Phone.Controls;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Core.Navigation;
 using PhoneGuitarTab.Data;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -215,17 +217,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public TabEntity SelectedTab
-        {
-            get { return selectedTab; }
-            set 
-            {
-                selectedTab.ActionAreaVisible = false;
-                selectedTab = value;
-                selectedTab.ActionAreaVisible = true;
-            }
-        }
-
         #endregion Properties
 
 
@@ -321,6 +312,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             set;
         }
 
+        public RelayCommand<SelectionChangedEventArgs> SelectTab
+        {
+            get;
+            private set;
+        }
+
         #endregion Commands
 
 
@@ -339,7 +336,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             RunSearch(bandName, songName);
         }
-
         
         private void DoLaunchSearchForBand(string arg)
         {
@@ -370,8 +366,9 @@ namespace PhoneGuitarTab.UI.ViewModel
                 MessageBox.Show("Sorry, you cannot download the tab right now.");
                 return;
             }
-            var tab =
-                 SearchGroupTabs.Tabs.Where(t => t.SearchId == arg).FirstOrDefault();
+            TabEntity tab = selectedTab;
+            selectedTab.ActionAreaVisible = false;
+            selectedTab = null;
 
             //TODO create converter
             SearchTabResultEntry entry = new SearchTabResultEntry()
@@ -430,6 +427,21 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             //TODO test arg
             return !_isSearching;
+        }
+
+        private void DoSelectTab(SelectionChangedEventArgs args)
+        {
+            if (args == null)
+                return;
+
+            var selectedItem = args.AddedItems[0] as LongListSelectorItem;
+            if (selectedItem != null && selectedItem.Item != null)
+            {
+                if (selectedTab != null)
+                    selectedTab.ActionAreaVisible = false;
+                selectedTab = ((TabEntity)selectedItem.Item);
+                selectedTab.ActionAreaVisible = true;
+            }
         }
 
         #endregion Command handlers
@@ -491,6 +503,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);
             SelectPage = new RelayCommand<string>(DoSelectPage);
             DownloadTab = new RelayCommand<string>(DoDownloadTab, CanDownloadTab);
+            SelectTab = new RelayCommand<SelectionChangedEventArgs>(DoSelectTab);
         }
 
         private void NotifyCollection(Tab downloadedTab)

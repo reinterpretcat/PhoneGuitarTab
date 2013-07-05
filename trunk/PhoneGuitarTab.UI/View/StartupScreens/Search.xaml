@@ -72,8 +72,12 @@
                               Background="Transparent"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}"
-                              SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
+                              Tag="{Binding FirstTabInList}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="SelectionChanged">
+                <Command:EventToCommand Command="{Binding SelectTab}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <toolkit:LongListSelector.GroupItemsPanel>
             <ItemsPanelTemplate>
                 <toolkit:WrapPanel Orientation="Horizontal" />
@@ -248,7 +252,8 @@
                     <Grid x:Name="ActionsGrid"
                           Grid.Row="1"
                           Grid.ColumnSpan="2"
-                          Visibility="Collapsed">
+                          Visibility="{Binding ActionAreaVisible,
+                                               Converter={StaticResource boolVisibility}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -259,15 +264,6 @@
                                 CommandParameter="{Binding SearchId}"
                                 Content="Download" />
                     </Grid>
-
-                    <toolkit:ContextMenuService.ContextMenu>
-                        <toolkit:ContextMenu>
-                            <toolkit:MenuItem Command="{Binding Path=DataContext.DownloadTab,
-                                                                ElementName=searchPivotItem}"
-                                              CommandParameter="{Binding SearchId}"
-                                              Header="download" />
-                        </toolkit:ContextMenu>
-                    </toolkit:ContextMenuService.ContextMenu>
                 </Grid>
             </DataTemplate>
         </toolkit:LongListSelector.ItemTemplate>

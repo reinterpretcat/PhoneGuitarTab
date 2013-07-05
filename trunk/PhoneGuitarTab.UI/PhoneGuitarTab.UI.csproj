@@ -91,6 +91,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
+    <Compile Include="ViewModel\LonListSelectorItem.cs" />
     <Compile Include="View\StartupScreens\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>
