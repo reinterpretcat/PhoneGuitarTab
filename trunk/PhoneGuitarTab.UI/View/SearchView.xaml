@@ -40,7 +40,10 @@
 
         <TextBlock Margin="2,0,2,8">
             <Run Text="Results for" />
-            <Run Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}" />
+            <Run FontStyle="Bold"
+                 Foreground="{StaticResource PhoneAccentBrush}"
+                 Text="{Binding Path=DataContext.CurrentSearchText,
+                                ElementName=root}" />
             <Run Text="online" />
         </TextBlock>
 
@@ -133,8 +136,8 @@
                             <TextBlock Margin="12,0"
                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        Style="{StaticResource PhoneTextLargeStyle}"
-                                       Text="{Binding Name}" 
-                                       TextTrimming="WordEllipsis"/>
+                                       Text="{Binding Name}"
+                                       TextTrimming="WordEllipsis" />
                             <StackPanel Orientation="Horizontal">
                                 <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                                 <TextBlock VerticalAlignment="Center"

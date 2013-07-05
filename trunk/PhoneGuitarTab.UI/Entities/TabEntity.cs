@@ -5,7 +5,15 @@ namespace PhoneGuitarTab.UI.Entities
 {
     public class TabEntity : INotifyPropertyChanged
     {
+        #region Fields
+
         private bool actionAreaVisible = false;
+        private bool isDownloaded = false;
+
+        #endregion Fields
+
+
+        #region Properties
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -35,6 +43,30 @@ namespace PhoneGuitarTab.UI.Entities
                 RaisePropertyChanged("ActionAreaVisible");
             }
         }
+
+        public bool IsDownloaded
+        {
+            get 
+            { 
+                return isDownloaded; 
+            }
+            set 
+            { 
+                isDownloaded = value;
+                RaisePropertyChanged("IsDownloaded");
+                RaisePropertyChanged("IsNotDownloaded");
+            }
+        }
+
+        public bool IsNotDownloaded
+        {
+            get
+            {
+                return !isDownloaded;
+            }
+        }
+
+        #endregion Properties
 
 
         #region INotifyPropertyChanged members

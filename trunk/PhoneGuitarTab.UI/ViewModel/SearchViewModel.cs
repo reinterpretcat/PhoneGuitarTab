@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using Coding4Fun.Toolkit.Controls;
+using GalaSoft.MvvmLight.Command;
 using Microsoft.Phone.Controls;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Core.Navigation;
@@ -9,7 +10,6 @@ using PhoneGuitarTab.UI.Infrastructure;
 using PhoneGuitarTab.UI.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -123,7 +123,13 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 _isSearching = value;
                 RaisePropertyChanged("IsSearching");
+                RaisePropertyChanged("CanDownload");
             }
+        }
+
+        public bool CanDownload
+        {
+            get { return !IsSearching; }
         }
 
         //helpers properties
@@ -367,14 +373,13 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoDownloadTab(string arg)
         {
-            if (_isSearching)
+            if (IsSearching)
             {
                 MessageBox.Show("Sorry, you cannot download the tab right now.");
                 return;
             }
             TabEntity tab = SearchGroupTabs.Tabs.Where(t => t.SearchId == arg).FirstOrDefault();
             selectedTab.ActionAreaVisible = false;
-            selectedTab = null;
 
             //TODO create converter
             SearchTabResultEntry entry = new SearchTabResultEntry()
@@ -390,49 +395,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             SearchTabDownloader downloader = new SearchTabDownloader(entry, filePath);
             downloader.DownloadComplete += delegate
             {
-                Tab downloadedTab = new Tab()
-                {
-                    Name = tab.Name,
-                    Group = TabDataContextHelper.GetOrCreateGroupByName(tab.Group),
-                    TabType = TabDataContextHelper.GetTabTypeByName(tab.Type),
-                    Rating = tab.Rating,
-                    Path = filePath
-                };
-
-                TabDataContextHelper.InsertTab(downloadedTab);
-
-                NotifyCollection(downloadedTab);
-
-                Deployment.Current.Dispatcher.BeginInvoke(
-                    () =>
-                    {
-                        IsSearching = false;
-                        MessageBox.Show("The tab was downloaded");
-                    });
+                DownloadTabComplete(tab, filePath);
             };
             IsSearching = true;
             try
             {
-                /*if(!UgSession.Instance.IsAuthenticated)
-                {
-                    UgSession.Instance.BeginLogin("", "", ar => downloader.Download(), null);
-                }
-                else
-                {*/
                 downloader.Download();
-                //}
             }
             catch (Exception ex)
             {
                 MessageBox.Show(String.Format("Error: {0}", ex));
                 IsSearching = false;
             }
-        }
-
-        private bool CanDownloadTab(string arg)
-        {
-            //TODO test arg
-            return !_isSearching;
         }
 
         private void DoSelectTab(SelectionChangedEventArgs args)
@@ -504,7 +478,49 @@ namespace PhoneGuitarTab.UI.ViewModel
                         RaisePropertyChanged("SelectedPage");
                     });
             }
+            else
+            {
+                var toast = new ToastPrompt
+                {
+                    Title = "Sorry,",
+                    Message = "can't reach the server right now."
+                };
+                toast.Show();
+            }
             IsSearching = false;
+        }
+
+        private void DownloadTabComplete(TabEntity tab, string filePath)
+        {
+            Tab downloadedTab = new Tab()
+            {
+                Name = tab.Name,
+                Group = TabDataContextHelper.GetOrCreateGroupByName(tab.Group),
+                TabType = TabDataContextHelper.GetTabTypeByName(tab.Type),
+                Rating = tab.Rating,
+                Path = filePath
+            };
+
+            TabDataContextHelper.InsertTab(downloadedTab);
+
+            NotifyCollection(downloadedTab);
+
+            Deployment.Current.Dispatcher.BeginInvoke(
+                () =>
+                {
+                    var toast = new ToastPrompt
+                    {
+                        Title = "\"" + tab.Name + "\" by " + tab.Group,
+                        Message = " was downloaded",
+                        TextOrientation = System.Windows.Controls.Orientation.Vertical
+                    };
+                    toast.Show();
+
+                    tab.IsDownloaded = true;
+
+                    IsSearching = false;
+                    DownloadTab.RaiseCanExecuteChanged();
+                });
         }
 
         #endregion Event handlers
@@ -520,7 +536,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             LaunchSearch = new RelayCommand<string>(DoLaunchSearch);
             LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);
             SelectPage = new RelayCommand<string>(DoSelectPage);
-            DownloadTab = new RelayCommand<string>(DoDownloadTab, CanDownloadTab);
+            DownloadTab = new RelayCommand<string>(DoDownloadTab);
             SelectTab = new RelayCommand<SelectionChangedEventArgs>(DoSelectTab);
             HideActionArea = new RelayCommand<TabEntity>(DoHideActionArea);
         }
