@@ -20,6 +20,7 @@
         <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
         <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
         <Infrastructure:SearchTypeConverter x:Key="searchTypeConverter" />
+        <Infrastructure:IntToVisibilityConverter x:Key="intToVisibility" />
 
         <Style x:Key="PagesListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="Background" Value="Transparent" />
@@ -218,6 +219,13 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                            <Command:EventToCommand Command="{Binding ElementName=tabsList, Path=DataContext.HideActionArea}" 
+                                                    CommandParameter="{Binding}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
                     <Image VerticalAlignment="Center"
                            Source="../Images/light/Document-Download_light.png"
                            Stretch="None"
@@ -258,6 +266,21 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        <StackPanel Margin="62,0">
+                            <TextBlock Margin="22,0,0,0"
+                                       FontSize="16"
+                                       FontStyle="Italic"
+                                       Foreground="Gray"
+                                       Visibility="{Binding Votes,
+                                                            Converter={StaticResource intToVisibility}}">
+                                <Run Text="Votes:" />
+                                <Run Text="{Binding Votes}" />
+                            </TextBlock>
+                            <TextBlock Margin="0,6,0,0" Style="{StaticResource PhoneTextNormalStyle}">
+                                <Run Text="Version:" />
+                                <Run Text="{Binding Version}" />
+                            </TextBlock>
+                        </StackPanel>
                         <Button Grid.Column="1"
                                 Command="{Binding Path=DataContext.DownloadTab,
                                                   ElementName=searchPivotItem}"

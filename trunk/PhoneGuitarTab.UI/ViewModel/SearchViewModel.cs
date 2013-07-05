@@ -318,6 +318,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
+        public RelayCommand<TabEntity> HideActionArea
+        {
+            get;
+            set;
+        }
+
         #endregion Commands
 
 
@@ -366,7 +372,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 MessageBox.Show("Sorry, you cannot download the tab right now.");
                 return;
             }
-            TabEntity tab = selectedTab;
+            TabEntity tab = SearchGroupTabs.Tabs.Where(t => t.SearchId == arg).FirstOrDefault();
             selectedTab.ActionAreaVisible = false;
             selectedTab = null;
 
@@ -431,8 +437,12 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoSelectTab(SelectionChangedEventArgs args)
         {
-            if (args == null)
+            if (args == null || args.AddedItems.Count == 0)
+            {
+                if (selectedTab != null)
+                    selectedTab.ActionAreaVisible = false;
                 return;
+            }
 
             var selectedItem = args.AddedItems[0] as LongListSelectorItem;
             if (selectedItem != null && selectedItem.Item != null)
@@ -442,6 +452,12 @@ namespace PhoneGuitarTab.UI.ViewModel
                 selectedTab = ((TabEntity)selectedItem.Item);
                 selectedTab.ActionAreaVisible = true;
             }
+        }
+
+        private void DoHideActionArea(TabEntity tab)
+        {
+            if (tab == selectedTab)
+                selectedTab.ActionAreaVisible = !selectedTab.ActionAreaVisible;
         }
 
         #endregion Command handlers
@@ -463,7 +479,9 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Group = entry.Artist,
                     Rating = entry.Rating,
                     Type = entry.Type,
-                    ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl
+                    ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl,
+                    Votes = entry.Votes,
+                    Version = entry.Version
                 }).ToList();
 
                 if (groupTabs.Count == 0)
@@ -504,6 +522,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             SelectPage = new RelayCommand<string>(DoSelectPage);
             DownloadTab = new RelayCommand<string>(DoDownloadTab, CanDownloadTab);
             SelectTab = new RelayCommand<SelectionChangedEventArgs>(DoSelectTab);
+            HideActionArea = new RelayCommand<TabEntity>(DoHideActionArea);
         }
 
         private void NotifyCollection(Tab downloadedTab)

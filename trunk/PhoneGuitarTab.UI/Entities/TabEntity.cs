@@ -20,6 +20,9 @@ namespace PhoneGuitarTab.UI.Entities
         public string SearchId { get; set; }
         public string SearchUrl { get; set; }
 
+        public string Version { get; set; }
+        public int Votes { get; set; }
+
         public bool ActionAreaVisible
         {
             get
