@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultRequestInspector.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="FileDownloader.cs" />
     <Compile Include="IRequestInspector.cs" />
     <Compile Include="ISession.cs" />

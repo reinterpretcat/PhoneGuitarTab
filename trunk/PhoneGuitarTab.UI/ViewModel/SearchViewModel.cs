@@ -4,6 +4,7 @@ using Microsoft.Phone.Controls;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Core.Navigation;
 using PhoneGuitarTab.Data;
+using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
@@ -393,9 +394,16 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             //TODO examine IO errors
             SearchTabDownloader downloader = new SearchTabDownloader(entry, filePath);
-            downloader.DownloadComplete += delegate
+            downloader.DownloadComplete += delegate(object sender, DownloadCompletedEventArgs args)
             {
-                DownloadTabComplete(tab, filePath);
+                if (args.HadErrors)
+                    Deployment.Current.Dispatcher.BeginInvoke(
+                    () =>
+                    {
+                        IsSearching = false;
+                    });
+                else
+                    DownloadTabComplete(tab, filePath);
             };
             IsSearching = true;
             try

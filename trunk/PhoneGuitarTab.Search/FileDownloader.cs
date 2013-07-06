@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Windows;
 
 namespace PhoneGuitarTab.Search
 {
@@ -9,10 +10,10 @@ namespace PhoneGuitarTab.Search
     /// </summary>
     public class FileDownloader: IDisposable
     {
-        protected Stream stream; 
+        protected Stream stream;
 
-
-        public event EventHandler DownloadComplete;
+        public delegate void DownloadEventHandler(object sender, DownloadCompletedEventArgs e);
+        public event DownloadEventHandler DownloadComplete;
 
 
         #region Constructors
@@ -34,7 +35,7 @@ namespace PhoneGuitarTab.Search
         public virtual void Download()
         {
             //nothing to do
-            InvokeDownloadComplete(new EventArgs());
+            //InvokeDownloadComplete(new DownloadCompletedEventArgs(true));
         }
 
         /// <summary>
@@ -56,9 +57,10 @@ namespace PhoneGuitarTab.Search
         {
             request.BeginGetResponse(r =>
             {
-                var response = request.EndGetResponse(r);
                 try
                 {
+                    var response = request.EndGetResponse(r);
+
                     // Open the response stream
                     using (Stream responseStream = response.GetResponseStream())
                     {
@@ -71,21 +73,30 @@ namespace PhoneGuitarTab.Search
                                 responseStream.Read(myBuffer, 0, myBuffer.Length)))
                             stream.Write(myBuffer, 0, bytesRead);
                     }
-
+                    InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
                 }
                 catch (BadCodeSearchException)
                 {
                     throw;
                 }
-                catch (Exception ex)
+                catch (WebException e)
                 {
-                    throw new SearchExceptions(SR.SearchResultDownloadUnexpected, ex);
-                }
-                finally
-                {
-                    InvokeDownloadComplete(new EventArgs());
-                }
+                    Deployment.Current.Dispatcher.BeginInvoke(
+                    () =>
+                    {
+                        if (e.Status == WebExceptionStatus.RequestCanceled)
+                            MessageBox.Show("Looks like your request was interrupted by tombstoning");
+                        else
+                        {
+                            using (HttpWebResponse response = (HttpWebResponse)e.Response)
+                            {
+                                MessageBox.Show("I got an http error of: " + response.StatusCode.ToString());
+                            }
+                        }
+                    });
 
+                    InvokeDownloadComplete(new DownloadCompletedEventArgs(true));
+                }
             }, null);
         }
 
@@ -99,9 +110,9 @@ namespace PhoneGuitarTab.Search
 
         #region Helper methods
 
-        private void InvokeDownloadComplete(EventArgs e)
+        private void InvokeDownloadComplete(DownloadCompletedEventArgs e)
         {
-            EventHandler handler = DownloadComplete;
+            var handler = DownloadComplete;
             if (handler != null) handler(this, e);
         }
 
