@@ -7,5 +7,10 @@ namespace PhoneGuitarTab.UI.Notation
         {
             InitializeComponent();
         }
+
+        private void ToTopButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.tabsList.ScrollTo(this.tabsList.Tag);
+        }
     }
 }

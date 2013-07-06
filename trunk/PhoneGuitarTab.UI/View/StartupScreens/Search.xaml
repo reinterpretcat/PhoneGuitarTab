@@ -11,97 +11,31 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                     xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
-                    x:Name="searchPivotItem"
+                    x:Name="root"
                     DataContext="{Binding Search,
                                           Source={StaticResource Locator}}"
                     Header="online"
                     mc:Ignorable="d">
-    <Controls:PivotItem.Resources>
-        <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
-        <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
-        <Infrastructure:SearchTypeConverter x:Key="searchTypeConverter" />
-        <Infrastructure:IntToVisibilityConverter x:Key="intToVisibility" />
-
-        <Style x:Key="PagesListBoxItemStyle" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="VerticalContentAlignment" Value="Top" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="LayoutRoot"
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="SelectionStates">
-                                    <VisualState x:Name="Selected">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentContainer" Storyboard.TargetProperty="(Control.FontWeight)">
-                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                    <DiscreteObjectKeyFrame.Value>
-                                                        <FontWeight>Bold</FontWeight>
-                                                    </DiscreteObjectKeyFrame.Value>
-                                                </DiscreteObjectKeyFrame>
-                                            </ObjectAnimationUsingKeyFrames>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentContainer" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneAccentBrush}" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <ContentControl x:Name="ContentContainer"
-                                            Margin="{TemplateBinding Padding}"
-                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-    </Controls:PivotItem.Resources>
 
     <toolkit:LongListSelector x:Name="tabsList"
                               Background="Transparent"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                              GroupItemTemplate="{StaticResource SearchListGroupItemTemplate}"
+                              ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
                               Tag="{Binding FirstTabInList}">
+
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="SelectionChanged">
                 <Command:EventToCommand Command="{Binding SelectTab}" PassEventArgsToCommand="True" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
+
         <toolkit:LongListSelector.GroupItemsPanel>
             <ItemsPanelTemplate>
                 <toolkit:WrapPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </toolkit:LongListSelector.GroupItemsPanel>
-
-        <toolkit:LongListSelector.GroupItemTemplate>
-            <DataTemplate>
-                <Border Width="99"
-                        Height="99"
-                        Margin="6"
-                        Background="{Binding Converter={StaticResource tabBrush}}"
-                        IsHitTestVisible="{Binding HasItems}">
-
-                    <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
-                               VerticalAlignment="Bottom"
-                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                               FontSize="36"
-                               Foreground="{StaticResource PhoneForegroundBrush}"
-                               Text="{Binding Key}" />
-                </Border>
-            </DataTemplate>
-        </toolkit:LongListSelector.GroupItemTemplate>
 
         <toolkit:LongListSelector.ListHeaderTemplate>
             <DataTemplate>
@@ -117,12 +51,12 @@
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="searchTextBox"
                                  Text="{Binding Path=DataContext.CurrentSearchText,
-                                                ElementName=searchPivotItem,
+                                                ElementName=root,
                                                 Mode=TwoWay,
                                                 UpdateSourceTrigger=Explicit}"
                                  TextChanged="OnSearchTextBoxTextChanged"
                                  custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch,
-                                                                ElementName=searchPivotItem}">
+                                                                ElementName=root}">
                             <Interactivity:Interaction.Behaviors>
                                 <Infrastructure:Watermark FontStyle="Italic"
                                                           Foreground="Gray"
@@ -131,7 +65,7 @@
                         </TextBox>
                         <Button Grid.Column="1"
                                 Command="{Binding Path=DataContext.LaunchSearch,
-                                                  ElementName=searchPivotItem}"
+                                                  ElementName=root}"
                                 CommandParameter="{Binding Text,
                                                            ElementName=searchTextBox}"
                                 Content="Go" />
@@ -140,8 +74,7 @@
                                        FontSize="16"
                                        Opacity="0.7"
                                        Text="Search by " />
-                            <toolkit:ListPicker ItemsSource="{Binding Path=DataContext.SearchOptions, ElementName=searchPivotItem}" 
-                                                SelectedItem="{Binding Path=DataContext.SearchMethod, ElementName=searchPivotItem, Mode=TwoWay}">
+                            <toolkit:ListPicker ItemsSource="{Binding Path=DataContext.SearchOptions, ElementName=root}" SelectedItem="{Binding Path=DataContext.SearchMethod, ElementName=root, Mode=TwoWay}">
                                 <toolkit:ListPicker.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" />
@@ -154,18 +87,17 @@
                     <StackPanel Margin="0,2,0,4"
                                 Orientation="Horizontal"
                                 Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
-                                                     ElementName=searchPivotItem}">
+                                                     ElementName=root}">
                         <TextBlock Padding="8" Text="Pages:" />
                         <ListBox x:Name="pagesList"
                                  ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
                                  ItemsSource="{Binding Path=DataContext.Pages,
-                                                       ElementName=searchPivotItem}"
+                                                       ElementName=root}"
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,
-                                                        ElementName=searchPivotItem}">
+                                                        ElementName=root}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
-                                    <Command:EventToCommand Command="{Binding Path=DataContext.SelectPage, ElementName=searchPivotItem}" 
-                                                            CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                    <Command:EventToCommand Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <ListBox.ItemsPanel>
@@ -190,7 +122,7 @@
                                Opacity="0.5"
                                Text="Sorry, nothing found."
                                Visibility="{Binding Path=DataContext.IsNothingFound,
-                                                    ElementName=searchPivotItem,
+                                                    ElementName=root,
                                                     Converter={StaticResource boolVisibility}}" />
                 </StackPanel>
             </DataTemplate>
@@ -202,108 +134,13 @@
                         Background="{StaticResource PhoneAccentBrush}"
                         Click="ToTopButton_Click"
                         Visibility="{Binding Path=DataContext.IsFooterNeeded,
-                                             ElementName=searchPivotItem,
+                                             ElementName=root,
                                              Converter={StaticResource boolVisibility}}">
                     to top
                 </Button>
             </DataTemplate>
         </toolkit:LongListSelector.ListFooterTemplate>
 
-        <toolkit:LongListSelector.ItemTemplate>
-            <DataTemplate>
-                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                            <Command:EventToCommand Command="{Binding ElementName=tabsList, Path=DataContext.HideActionArea}" CommandParameter="{Binding}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
-                    <Image VerticalAlignment="Center"
-                           Source="../Images/light/Document-Download_light.png"
-                           Stretch="None"
-                           Visibility="{StaticResource PhoneLightThemeVisibility}" />
-                    <Image VerticalAlignment="Center"
-                           Source="../Images/dark/Document-Download_dark.png"
-                           Stretch="None"
-                           Visibility="{StaticResource PhoneDarkThemeVisibility}" />
-
-                    <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                        <TextBlock Margin="12,0"
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextLargeStyle}"
-                                   Text="{Binding Name}"
-                                   TextTrimming="WordEllipsis" />
-                        <TextBlock Margin="28,0"
-                                   HorizontalAlignment="Left"
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextNormalStyle}"
-                                   Text="{Binding Group}"
-                                   TextWrapping="Wrap" />
-                        <StackPanel Orientation="Horizontal">
-                            <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
-                            <TextBlock VerticalAlignment="Center"
-                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                       Style="{StaticResource PhoneTextSmallStyle}"
-                                       Text="{Binding Type}"
-                                       TextWrapping="Wrap" />
-                        </StackPanel>
-                    </StackPanel>
-
-                    <Grid x:Name="ActionsGrid"
-                          Grid.Row="1"
-                          Grid.ColumnSpan="2"
-                          Visibility="{Binding ActionAreaVisible,
-                                               Converter={StaticResource boolVisibility}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Margin="62,0">
-                            <TextBlock Margin="22,0,0,0"
-                                       FontSize="16"
-                                       FontStyle="Italic"
-                                       Foreground="Gray"
-                                       Visibility="{Binding Votes,
-                                                            Converter={StaticResource intToVisibility}}">
-                                <Run Text="Votes:" />
-                                <Run Text="{Binding Votes}" />
-                            </TextBlock>
-                            <TextBlock Margin="0,6,0,0" Style="{StaticResource PhoneTextNormalStyle}">
-                                <Run Text="Version:" />
-                                <Run Text="{Binding Version}" />
-                            </TextBlock>
-                        </StackPanel>
-                        <Button Grid.Column="1"
-                                Command="{Binding Path=DataContext.DownloadTab,
-                                                  ElementName=searchPivotItem}"
-                                CommandParameter="{Binding SearchId}"
-                                Content="Download"
-                                IsEnabled="{Binding Path=DataContext.CanDownload,
-                                                    ElementName=searchPivotItem}"
-                                Visibility="{Binding IsNotDownloaded,
-                                                     Converter={StaticResource boolVisibility}}" />
-                        <TextBlock Grid.Column="1"
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextNormalStyle}"
-                                   Foreground="{StaticResource PhoneAccentBrush}"
-                                   Text="Downloaded"
-                                   HorizontalAlignment="Right"
-                                   Visibility="{Binding IsDownloaded,
-                                                        Converter={StaticResource boolVisibility}}" />
-                    </Grid>
-                </Grid>
-            </DataTemplate>
-        </toolkit:LongListSelector.ItemTemplate>
     </toolkit:LongListSelector>
-
 
 </Controls:PivotItem>
