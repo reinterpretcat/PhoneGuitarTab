@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.IO.IsolatedStorage;
-using System.Text;
 using System.IO;
-using System.Net;
+using System.IO.IsolatedStorage;
 
 namespace PhoneGuitarTab.Search.UltimateGuitar
 {
@@ -24,20 +21,11 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
         public override void Download()
         {
             string link;
-           /* //only these types are supported by UrlTemplateFile link
-            if ((Entry.Type != "guitar pro") && (Entry.Type != "power tab"))
-            {
-                //InvokeDownloadComplete(new EventArgs());
-                //return;
-                link = Entry.Url;
-            }
-            else
-            {*/
+
             if (Entry.Type == "tab pro")
                 link = String.Format(UrlTemplateFile, Entry.Id);
             else
                 link = Entry.Url;
-            //}
 
             base.Download(new UgHttpWebRequest(link));
         }

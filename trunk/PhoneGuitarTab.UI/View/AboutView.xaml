@@ -59,9 +59,8 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Margin="2, 0, 0, 16">
-            
-            <StackPanel Margin="0,24"
-                        Orientation="Horizontal">
+
+            <StackPanel Margin="0,24" Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                            Text="version: " />
@@ -72,8 +71,10 @@
                            Text="{Binding ApplicationVersion}" />
             </StackPanel>
 
-            
-            <TextBlock Margin="0,48,0,6" Text="visit project page at:" />
+
+            <TextBlock Margin="0,58,0,6"
+                       Text="Phone Guitar Tab is an open source project and is licensed under Microsoft Public License (Ms-PL). You can visit project page at CodePlex:"
+                       TextWrapping="Wrap" />
             <HyperlinkButton Grid.Row="1" Content="{Binding CompanyUrl}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">

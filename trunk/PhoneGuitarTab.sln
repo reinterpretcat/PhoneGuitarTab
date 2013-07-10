@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Core", "Phon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Data", "PhoneGuitarTab.Data\PhoneGuitarTab.Data.csproj", "{7D931B37-264D-4605-89C7-548BF544A22C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Tablature", "PhoneGuitarTab.Tablature\PhoneGuitarTab.Tablature.csproj", "{C1A1FB26-8B37-41A4-BB98-73695E76D0E4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.UI", "PhoneGuitarTab.UI\PhoneGuitarTab.UI.csproj", "{79393645-967F-4D71-BB54-5D92858C141E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Controls", "PhoneGuitarTab.Controls\PhoneGuitarTab.Controls.csproj", "{7396B903-5243-401D-84E5-5102C952ED04}"
@@ -21,6 +19,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A18B5B
 	EndProjectSection
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs30
+		SccProjectUniqueName0 = PhoneGuitarTab.Controls\\PhoneGuitarTab.Controls.csproj
+		SccProjectName0 = PhoneGuitarTab.Controls
+		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath0 = PhoneGuitarTab.Controls
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = PhoneGuitarTab.Core\\PhoneGuitarTab.Core.csproj
+		SccProjectName1 = PhoneGuitarTab.Core
+		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath1 = PhoneGuitarTab.Core
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = PhoneGuitarTab.Data\\PhoneGuitarTab.Data.csproj
+		SccProjectName2 = PhoneGuitarTab.Data
+		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath2 = PhoneGuitarTab.Data
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = PhoneGuitarTab.Search\\PhoneGuitarTab.Search.csproj
+		SccProjectName3 = PhoneGuitarTab.Search
+		SccAuxPath3 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath3 = PhoneGuitarTab.Search
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName4 = PhoneGuitarTab.UI\\PhoneGuitarTab.UI.csproj
+		SccProjectName4 = PhoneGuitarTab.UI
+		SccAuxPath4 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath4 = PhoneGuitarTab.UI
+		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -34,10 +62,6 @@ Global
 		{7D931B37-264D-4605-89C7-548BF544A22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D931B37-264D-4605-89C7-548BF544A22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D931B37-264D-4605-89C7-548BF544A22C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1A1FB26-8B37-41A4-BB98-73695E76D0E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1A1FB26-8B37-41A4-BB98-73695E76D0E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1A1FB26-8B37-41A4-BB98-73695E76D0E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1A1FB26-8B37-41A4-BB98-73695E76D0E4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

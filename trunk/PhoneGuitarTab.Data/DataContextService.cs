@@ -3,7 +3,7 @@ using System.Data.Linq;
 
 namespace PhoneGuitarTab.Data
 {
-    public class DataContextService : IDataContextService
+    public class DataContextService : IDataContextService, IDisposable
     {
         private readonly TabDataContext _database;
 
@@ -92,6 +92,11 @@ namespace PhoneGuitarTab.Data
         {
             EventHandler<EventArgs> handler = OnChanged;
             if (handler != null) handler(this, e);
+        }
+
+        public void Dispose()
+        {
+            _database.Dispose();
         }
     }
 }

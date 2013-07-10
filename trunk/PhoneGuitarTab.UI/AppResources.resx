@@ -139,9 +139,9 @@
     <value>support</value>
   </data>
   <data name="SupportEmail" xml:space="preserve">
-    <value>"Ilya Builuk" &lt;Ilya.Builuk@gmail.com&gt;</value>
+    <value>phoneguitartab@gmail.com</value>
   </data>
   <data name="SupportMessage" xml:space="preserve">
-    <value>A simple application for searching, storing and viewing text guitar tablatures. Search syntax: &lt;group,[song]&gt;. For technical support or when you have suggestions or comments, don't hesitate to contact me at Ilya.Builuk@gmail.com:</value>
+    <value>A simple application for searching, storing and viewing text guitar tablatures. For technical support or when you have suggestions or comments, don't hesitate to contact us at phoneguitartab@gmail.com</value>
   </data>
 </root>

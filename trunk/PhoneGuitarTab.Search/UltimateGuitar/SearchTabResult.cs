@@ -26,11 +26,6 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             Entries = new List<SearchTabResultEntry>();
         }
 
-       /* public Uri RequestUri
-        {
-            get { return new Uri(String.Format(RequestTemplate, _group, _song)); }
-        }*/
-
         public event DownloadStringCompletedEventHandler SearchComplete;
 
         private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
@@ -38,16 +33,6 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             DownloadStringCompletedEventHandler handler = SearchComplete;
             if (handler != null) handler(this, e);
         }
-
-        /*public IEnumerable<string> PageLinks
-        {
-           get
-           {
-               for (int i = 1; i <= Summary.PageCount; i++)
-                   yield return String.Format(RequestTemplate,
-                       _group, _song, i);
-           }
-        }*/
 
         /// <summary>
         /// Handler for WebClient that parses xml data into specific objects
@@ -60,10 +45,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                                                   {
                                                       try
                                                       {
-
                                                           if (e.Error == null)
-                                                             // throw new BadCodeSearchException(HttpStatusCode.NotFound);
-
                                                           {
                                                               using (XmlReader reader = XmlReader.Create(new StringReader(e.Result)))
                                                               {

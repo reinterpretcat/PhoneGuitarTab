@@ -13,7 +13,7 @@
                  ItemTemplate="{StaticResource TabItemDataTemplate}"
                  ItemsSource="{Binding TabsHistory.Tabs}">
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
+                <i:EventTrigger EventName="Tap">
                     <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>

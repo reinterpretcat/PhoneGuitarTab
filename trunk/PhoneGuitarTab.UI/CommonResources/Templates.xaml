@@ -60,7 +60,6 @@
                                                         ElementName=TabList}"
                                       CommandParameter="{Binding Id}"
                                       Header="remove tab" />
-                    <toolkit:MenuItem Command="{Binding Path=DataContext.CancelTab, ElementName=TabList}" Header="cancel" />
                 </toolkit:ContextMenu>
             </toolkit:ContextMenuService.ContextMenu>
         </Grid>
@@ -109,7 +108,7 @@
             </Grid.ColumnDefinitions>
 
             <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
+                <i:EventTrigger EventName="Tap">
                     <Command:EventToCommand Command="{Binding ElementName=tabsList, Path=DataContext.HideActionArea}" CommandParameter="{Binding}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>

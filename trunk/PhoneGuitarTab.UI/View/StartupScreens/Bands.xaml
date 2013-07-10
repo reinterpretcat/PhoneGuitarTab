@@ -21,7 +21,7 @@
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
                               ItemsSource="{Binding Groups}">
         <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseLeftButtonUp">
+            <i:EventTrigger EventName="Tap">
                 <Command:EventToCommand Command="{Binding GoToGroup}" CommandParameter="{Binding ElementName=GroupList}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>

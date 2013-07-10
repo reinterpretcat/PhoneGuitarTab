@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PhoneGuitarTab")]
-[assembly: AssemblyCopyright("Copyright ©  2011 Ilya Builuk")]
+[assembly: AssemblyCopyright("Copyright ©  2011-2013 Ilya Builuk")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +21,7 @@ using System.Resources;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a5e48753-8ec3-44cc-b47b-6e80287355df")]
+[assembly: Guid("b5e48753-8ec3-44cc-b47b-6e80287355df")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Resources;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.1.*")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
