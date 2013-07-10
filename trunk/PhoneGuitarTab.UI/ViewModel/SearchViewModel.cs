@@ -11,7 +11,9 @@ using PhoneGuitarTab.UI.Infrastructure;
 using PhoneGuitarTab.UI.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -44,7 +46,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         private SearchType searchMethod = SearchType.ByBand;
         private List<SearchType> searchOptions;
         private TabEntity firstTabInList;
-        private TabEntity selectedTab;
 
         #endregion Fields
 
@@ -319,13 +320,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             set;
         }
 
-        public RelayCommand<SelectionChangedEventArgs> SelectTab
-        {
-            get;
-            private set;
-        }
-
-        public RelayCommand<TabEntity> HideActionArea
+        public RelayCommand<TabEntity> ToggleActionArea
         {
             get;
             set;
@@ -380,7 +375,6 @@ namespace PhoneGuitarTab.UI.ViewModel
                 return;
             }
             TabEntity tab = SearchGroupTabs.Tabs.Where(t => t.SearchId == arg).FirstOrDefault();
-            selectedTab.ActionAreaVisible = false;
 
             //TODO create converter
             SearchTabResultEntry entry = new SearchTabResultEntry()
@@ -417,29 +411,9 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        private void DoSelectTab(SelectionChangedEventArgs args)
+        private void DoToggleActionArea(TabEntity tab)
         {
-            if (args == null || args.AddedItems.Count == 0)
-            {
-                if (selectedTab != null)
-                    selectedTab.ActionAreaVisible = false;
-                return;
-            }
-
-            var selectedItem = args.AddedItems[0] as LongListSelectorItem;
-            if (selectedItem != null && selectedItem.Item != null)
-            {
-                if (selectedTab != null)
-                    selectedTab.ActionAreaVisible = false;
-                selectedTab = ((TabEntity)selectedItem.Item);
-                selectedTab.ActionAreaVisible = true;
-            }
-        }
-
-        private void DoHideActionArea(TabEntity tab)
-        {
-            if (tab == selectedTab)
-                selectedTab.ActionAreaVisible = !selectedTab.ActionAreaVisible;
+            tab.ActionAreaVisible = !tab.ActionAreaVisible;
         }
 
         #endregion Command handlers
@@ -464,9 +438,9 @@ namespace PhoneGuitarTab.UI.ViewModel
                     ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl,
                     Votes = entry.Votes,
                     Version = entry.Version
-                }).ToList();
+                });
 
-                if (groupTabs.Count == 0)
+                if (groupTabs.Count() == 0)
                 {
                     IsNothingFound = true;
                     IsSearching = false;
@@ -480,7 +454,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                             groupSearch.Summary.PageCount > 1
                                 ? Visibility.Visible
                                 : Visibility.Collapsed;
-                        SearchGroupTabs = new TabsByName(groupTabs);
+                        SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs));
                         FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
                         SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
                         RaisePropertyChanged("SelectedPage");
@@ -545,8 +519,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);
             SelectPage = new RelayCommand<string>(DoSelectPage);
             DownloadTab = new RelayCommand<string>(DoDownloadTab);
-            SelectTab = new RelayCommand<SelectionChangedEventArgs>(DoSelectTab);
-            HideActionArea = new RelayCommand<TabEntity>(DoHideActionArea);
+            ToggleActionArea = new RelayCommand<TabEntity>(DoToggleActionArea);
         }
 
         private void NotifyCollection(Tab downloadedTab)
@@ -557,7 +530,14 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RunSearch(string bandName, string songName)
         {
-            HeaderPagingVisibility = Visibility.Collapsed;
+            if (!NetworkInterface.GetIsNetworkAvailable())
+            {
+                MessageBox.Show("No internet connection available.", "Can not perform operation", MessageBoxButton.OK);
+                return;
+            }
+
+            if (CurrentPageIndex == 0)
+                HeaderPagingVisibility = Visibility.Collapsed;
             SearchGroupTabs = null;
 
             groupSearch = new SearchTabResult(bandName, songName);

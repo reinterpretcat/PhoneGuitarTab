@@ -109,7 +109,7 @@
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Tap">
-                    <Command:EventToCommand Command="{Binding ElementName=tabsList, Path=DataContext.HideActionArea}" CommandParameter="{Binding}" />
+                    <Command:EventToCommand Command="{Binding ElementName=tabsList, Path=DataContext.ToggleActionArea}" CommandParameter="{Binding}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 

@@ -7,6 +7,7 @@ using PhoneGuitarTab.UI.Infrastructure.Enums;
 using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -157,14 +158,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RemoveTabFromList(int id)
         {
-            //var tabToDelete = TabsHistory.Tabs.Where(tab => tab.Id == id).FirstOrDefault();
-            //if (tabToDelete != null)
-            //{
-            //    TabsHistory.Tabs.Remove(tabToDelete);
-            //    RaisePropertyChanged("TabsHistory");
-            //}
-
-            DataBind();
+            var tabToDelete = TabsHistory.Tabs.Where(tab => tab.Id == id).FirstOrDefault();
+            if (tabToDelete != null)
+            {
+                TabsHistory.Tabs.Remove(tabToDelete);
+            }
         }
 
         #endregion Helper methods

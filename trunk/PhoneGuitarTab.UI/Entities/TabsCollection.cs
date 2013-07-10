@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using GalaSoft.MvvmLight.Threading;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    public abstract class TabsCollection : List<TabInGroup>, INotifyPropertyChanged
+    public abstract class TabsCollection : ObservableCollection<TabInGroup>, INotifyPropertyChanged
     {
         #region Fields
 
@@ -14,7 +17,7 @@ namespace PhoneGuitarTab.UI.Entities
 
         #region Properties
 
-        public List<TabEntity> Tabs { get; protected set; }
+        public ObservableCollection<TabEntity> Tabs { get; set; }
 
         #endregion Properties
 
@@ -26,7 +29,6 @@ namespace PhoneGuitarTab.UI.Entities
             if (tabToRemove != null)
             {
                 Tabs.Remove(tabToRemove);
-                RaisePropertyChanged("Tabs");
             }
         }
 

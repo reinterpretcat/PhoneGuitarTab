@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Windows;
 using Group = PhoneGuitarTab.Data.Group;
 
 
@@ -133,6 +134,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         }
 
+        //TODO: Make it async with progress indicator 
         protected override void DataBind()
         {
             if (CurrentGroup != null)
@@ -324,10 +326,14 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RemoveTabFromList(int id)
         {
-            //if (Tabs != null)
-            //{
-            //    Tabs.RemoveTab(Tabs.Tabs.Where(tab => tab.Id == id).Single());
-            //}
+            if (Tabs != null)
+            {
+                var tab = Tabs.Tabs.Where(t => t.Id == id).FirstOrDefault();
+                if (tab != null)
+                {
+                    Tabs.RemoveTab(tab);
+                }
+            }
 
             DataBind();
         }

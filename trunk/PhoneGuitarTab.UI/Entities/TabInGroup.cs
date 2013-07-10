@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using PhoneGuitarTab.Data;
+using System.Collections.ObjectModel;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    public class TabInGroup : List<TabEntity>
+    public class TabInGroup : ObservableCollection<TabEntity>
     {
         public TabInGroup(string category)
         {

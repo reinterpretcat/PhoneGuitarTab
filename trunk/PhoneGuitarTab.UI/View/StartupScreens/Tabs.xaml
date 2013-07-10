@@ -21,7 +21,7 @@
                               BufferSize="10.0"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
                               ItemTemplate="{StaticResource TabItemDataTemplate}"
-                              ItemsSource="{Binding AllTabs}">
+                              ItemsSource="{Binding AllTabs, Mode=TwoWay}">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Tap">
                 <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList}" />

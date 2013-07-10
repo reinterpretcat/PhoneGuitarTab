@@ -1,6 +1,7 @@
 ﻿using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PhoneGuitarTab.UI.Entities
@@ -9,7 +10,7 @@ namespace PhoneGuitarTab.UI.Entities
     {
         #region Constructors
 
-        public TabsByName(List<TabEntity> allTabs)
+        public TabsByName(ObservableCollection<TabEntity> allTabs)
         {
             Tabs = allTabs;
             Initialize();
@@ -19,9 +20,9 @@ namespace PhoneGuitarTab.UI.Entities
         {
             IDataContextService database = Container.Resolve<IDataContextService>();
             
-            Tabs = (from Tab tab in database.Tabs
+            Tabs = new ObservableCollection<TabEntity>((from Tab tab in database.Tabs
                        orderby tab.Name
-                       select tab).Select(tab => tab.CreateEntity()).ToList();
+                       select tab).Select(tab => tab.CreateEntity()));
 
             Initialize();
         }

@@ -9,6 +9,7 @@ using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -216,11 +217,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RemoveTabFromList(int id)
         {
-            //AllTabs.RemoveTab(AllTabs.Tabs.Where(tab => tab.Id == id).Single());
-            //RaisePropertyChanged("AllTabs");
+            AllTabs.RemoveTab(AllTabs.Tabs.Where(tab => tab.Id == id).Single());
 
-            // can't realize why RaisePropertyChanged won't work
-            // TODO it later, but for now:
             DataBind();
         }
 
