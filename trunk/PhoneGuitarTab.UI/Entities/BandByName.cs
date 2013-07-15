@@ -18,35 +18,58 @@ namespace PhoneGuitarTab.UI.Entities
     public class BandByName : List<BandInGroup>
     {
         private static readonly string Groups = "#abcdefghijklmnopqrstuvwxyz";
-       
+        private Dictionary<string, BandInGroup> bandGroupsDictionary;
+
         public BandByName()
         {
             IDataContextService database = Container.Resolve<IDataContextService>();
-
             var allGroups = (from Group g in database.Groups
                              orderby g.Name
                              select g).ToList();
 
-            Dictionary<string, BandInGroup> groups = new Dictionary<string, BandInGroup>();
+            bandGroupsDictionary = new Dictionary<string, BandInGroup>();
+            CreateEmptyGroups(bandGroupsDictionary);
 
+           
+            foreach (Group bandGroup in allGroups)
+            {
+                //get count of tab for this group
+                var count = (from Tab t in database.Tabs
+                             where t.Group.Id == bandGroup.Id
+                            select t).Count();
+
+                bandGroupsDictionary[bandGroup.GetNameKey()].Add(new Tuple<int, Group>
+                                               (count, bandGroup));
+            }
+        }
+
+
+        internal void DecreaseTabCount(string groupName)
+        {
+            if (string.IsNullOrEmpty(groupName))
+                return;
+
+            var firstChar = groupName.ToLower()[0];
+            var groupKey = ((firstChar < 'a' || firstChar > 'z') ? '#' : firstChar);
+            var band = bandGroupsDictionary[groupKey.ToString()].Where(g => g.Item2.Name == groupName).FirstOrDefault();
+
+            if (band != null)
+                band.Item1 = band.Item1 - 1;
+        }
+
+
+        #region Helper methods
+
+        private void CreateEmptyGroups(Dictionary<string, BandInGroup> bandGroupsDictionary)
+        {
             foreach (char c in Groups)
             {
                 BandInGroup group = new BandInGroup(c.ToString());
                 this.Add(group);
-                groups[c.ToString()] = group;
+                bandGroupsDictionary[c.ToString()] = group;
             }
-
-           
-            foreach (Group tabGroup in allGroups)
-            {
-                //get count of tab for this group
-                var count = (from Tab t in database.Tabs
-                             where t.Group.Id == tabGroup.Id
-                            select t).Count();
-                groups[tabGroup.GetNameKey()].Add(new PhoneGuitarTab.Core.Tuple<int, Group>
-                                               (count, tabGroup));
-            }
-
         }
+
+        #endregion Helper methods
     }
 }

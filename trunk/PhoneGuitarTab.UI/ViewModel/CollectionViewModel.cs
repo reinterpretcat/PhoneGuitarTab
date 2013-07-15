@@ -41,10 +41,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Properties
 
-        public Tuple<int, Group> SelectedGroup { get; set; }
-
-        public Tab SelectedTab { get; set; }
-
         public BandByName Groups 
         {
             get
@@ -94,12 +90,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
-        public RelayCommand CancelTab
-        {
-            get;
-            private set;
-        }
-
         public RelayCommand SearchCommand
         {
             get;
@@ -137,10 +127,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         protected override void DataBind()
         {
             Groups = new BandByName();
-            RaisePropertyChanged("Groups");
-            //get songs list
             AllTabs = new TabsByName();
-            RaisePropertyChanged("AllTabs");
         }
 
         #endregion Override methods
@@ -148,7 +135,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Public methods
 
-        public void AddDownloadedTab(Tab newTab)
+        public void AddDownloadedTabs()
         {
             //TODO (cent) test performance on large data collection
             // if it will impact ui responsiveness, rewrite
@@ -190,10 +177,9 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoRemoveTab(int id)
         {
-            TabDataContextHelper.DeleteTabById(id);
+            Deployment.Current.Dispatcher.BeginInvoke(() => TabDataContextHelper.DeleteTabById(id));
 
             RemoveTabFromList(id);
-
             MessengerInstance.Send<CollectionTabRemovedMessage>(new CollectionTabRemovedMessage(id));
         }
 
@@ -209,7 +195,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
 
             RemoveTab = new RelayCommand<int>(DoRemoveTab);
-            CancelTab = new RelayCommand(() => { });
 
             GoToGroup = new RelayCommand<object>(DoGoToGroup);
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
@@ -217,9 +202,9 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RemoveTabFromList(int id)
         {
-            AllTabs.RemoveTab(AllTabs.Tabs.Where(tab => tab.Id == id).Single());
-
-            DataBind();
+            var tabToRemove = AllTabs.Tabs.Where(tab => tab.Id == id).Single();
+            AllTabs.RemoveTab(tabToRemove);
+            Groups.DecreaseTabCount(tabToRemove.Group);
         }
 
         #endregion Helper methods

@@ -37,8 +37,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         public GroupViewModel()
         {
             CreateCommands();
-            MessengerInstance.Register<CollectionTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-            MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
         }
 
         #endregion Constructors
@@ -134,7 +132,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         }
 
-        //TODO: Make it async with progress indicator 
         protected override void DataBind()
         {
             if (CurrentGroup != null)
@@ -326,16 +323,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RemoveTabFromList(int id)
         {
-            if (Tabs != null)
-            {
-                var tab = Tabs.Tabs.Where(t => t.Id == id).FirstOrDefault();
-                if (tab != null)
-                {
-                    Tabs.RemoveTab(tab);
-                }
-            }
-
-            DataBind();
+            Tabs.RemoveTab(Tabs.Tabs.Where(tab => tab.Id == id).Single());
         }
 
         #endregion Helper methods

@@ -67,8 +67,8 @@
                 <TextBlock Margin="12, 8"
                            VerticalAlignment="Center"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           FontSize="{StaticResource PhoneFontSizeMedium}"
-                           Text="{Binding ApplicationVersion}" />
+                           Text="{Binding ApplicationVersion}"
+                           FontSize="22" />
             </StackPanel>
 
 

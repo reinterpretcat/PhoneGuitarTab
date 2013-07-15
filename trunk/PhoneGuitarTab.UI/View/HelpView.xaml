@@ -27,7 +27,7 @@
 
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
-              Margin="32,0,12,0">
+              Margin="24,0,12,0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
@@ -49,11 +49,13 @@
 
                 <TextBlock Text="{Binding Copyright}" TextWrapping="Wrap" />
 
-                <StackPanel Margin="24">
+                <StackPanel Margin="0,24">
                     <TextBlock Margin="0, 4"
+                               FontSize="22"
+                               FontStretch="Expanded"
                                Text="{Binding SupportMessage}"
                                TextWrapping="Wrap"
-                               d:LayoutOverrides="Width" FontStretch="Expanded"/>
+                               d:LayoutOverrides="Width" />
 
                     <Button x:Name="MailButton"
                             Margin="-12,0,0,0"
@@ -71,11 +73,13 @@
                     </Button>
                 </StackPanel>
 
-                <StackPanel Margin="24">
+                <StackPanel Margin="0,24">
                     <TextBlock Margin="0, 4"
                                HorizontalAlignment="Stretch"
+                               FontSize="22"
+                               FontStretch="Expanded"
                                Text="{Binding ReviewTheApp}"
-                               TextWrapping="Wrap" FontStretch="Expanded" />
+                               TextWrapping="Wrap" />
                     <Button x:Name="ReviewButton"
                             Margin="-12,0,0,0"
                             Content="{Binding Review}">

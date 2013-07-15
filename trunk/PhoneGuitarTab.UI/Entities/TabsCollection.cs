@@ -6,11 +6,12 @@ using System.Windows;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    public abstract class TabsCollection : ObservableCollection<TabInGroup>, INotifyPropertyChanged
+    public abstract class TabsGroupsCollection : ObservableCollection<TabInGroup>
     {
         #region Fields
 
         private static readonly string Groups = "#abcdefghijklmnopqrstuvwxyz";
+        private Dictionary<string, TabInGroup> groups;
 
         #endregion Fields
 
@@ -28,7 +29,7 @@ namespace PhoneGuitarTab.UI.Entities
         {
             if (tabToRemove != null)
             {
-                Tabs.Remove(tabToRemove);
+                groups[tabToRemove.GetNameKey()].Remove(tabToRemove);
             }
         }
 
@@ -48,9 +49,9 @@ namespace PhoneGuitarTab.UI.Entities
 
         #region Helper methods
 
-        protected void Initialize()
+        protected void Initialize() 
         {
-            Dictionary<string, TabInGroup> groups = new Dictionary<string, TabInGroup>();
+            groups = new Dictionary<string, TabInGroup>();
             foreach (char c in Groups)
             {
                 TabInGroup tab = new TabInGroup(c.ToString());
@@ -65,18 +66,5 @@ namespace PhoneGuitarTab.UI.Entities
         }
 
         #endregion Helper methods
-
-
-        #region INotifyPropertyChanged members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string p)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(p));
-        }
-
-        #endregion INotifyPropertyChanged members
     }
 }

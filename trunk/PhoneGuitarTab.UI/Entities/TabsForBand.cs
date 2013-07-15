@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    public class TabsForBand : TabsCollection
+    public class TabsForBand : TabsGroupsCollection
     {
         #region Constructors
 

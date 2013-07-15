@@ -8,5 +8,10 @@ namespace PhoneGuitarTab.UI.View
         {
             InitializeComponent();
         }
+
+        private void ToTopButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.TabList.ScrollTo(this.TabList.Tag);
+        }
     }
 }

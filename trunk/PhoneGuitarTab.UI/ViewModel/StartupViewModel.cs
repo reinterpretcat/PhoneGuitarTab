@@ -116,9 +116,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoRemoveTab(int id)
         {
-            TabDataContextHelper.DeleteTabById(id);
-
             RemoveTabFromList(id);
+            Deployment.Current.Dispatcher.BeginInvoke(() =>TabDataContextHelper.DeleteTabById(id));
 
             MessengerInstance.Send<HistoryTabRemovedMessage>(new HistoryTabRemovedMessage(id));
         }

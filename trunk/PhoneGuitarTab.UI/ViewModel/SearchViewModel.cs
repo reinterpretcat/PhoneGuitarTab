@@ -214,12 +214,12 @@ namespace PhoneGuitarTab.UI.ViewModel
         /// </summary>
         public TabEntity FirstTabInList
         {
-            get 
-            { 
-                return firstTabInList; 
+            get
+            {
+                return firstTabInList;
             }
-            set 
-            { 
+            set
+            {
                 firstTabInList = value;
                 RaisePropertyChanged("FirstTabInList");
             }
@@ -349,6 +349,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             SearchMethod = SearchType.ByBand;
             CurrentPageIndex = 1;
+            HeaderPagingVisibility = Visibility.Collapsed;
             CurrentSearchText = arg;
 
             RunSearch(CurrentSearchText, string.Empty);
@@ -485,7 +486,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             TabDataContextHelper.InsertTab(downloadedTab);
 
-            NotifyCollection(downloadedTab);
+            Deployment.Current.Dispatcher.BeginInvoke(
+                () =>
+                {
+                    CollectionViewModel.AddDownloadedTabs();
+                });
 
             Deployment.Current.Dispatcher.BeginInvoke(
                 () =>
@@ -522,12 +527,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             ToggleActionArea = new RelayCommand<TabEntity>(DoToggleActionArea);
         }
 
-        private void NotifyCollection(Tab downloadedTab)
-        {
-            // TODO: use MVVM's Messager for loosely coupled design sake
-            CollectionViewModel.AddDownloadedTab(downloadedTab);
-        }
-
         private void RunSearch(string bandName, string songName)
         {
             if (!NetworkInterface.GetIsNetworkAvailable())
@@ -536,10 +535,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 return;
             }
 
-            if (CurrentPageIndex == 0)
-                HeaderPagingVisibility = Visibility.Collapsed;
             SearchGroupTabs = null;
-
             groupSearch = new SearchTabResult(bandName, songName);
 
             IsHintVisible = false;
