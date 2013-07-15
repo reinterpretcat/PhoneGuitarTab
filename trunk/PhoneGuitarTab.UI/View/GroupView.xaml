@@ -41,7 +41,7 @@
             <controls:PivotItem Header="tabs">
                 <ListBox x:Name="TabList"
                          ItemTemplate="{StaticResource TabItemDataTemplate}"
-                         ItemsSource="{Binding Tabs.Tabs}">
+                         ItemsSource="{Binding Path=Tabs.Tabs}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Tap">
                             <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />

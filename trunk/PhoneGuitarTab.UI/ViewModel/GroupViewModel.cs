@@ -130,6 +130,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 int currentGroupId = (int)state["CurrentGroupId"];
             }
 
+            MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
         }
 
         protected override void DataBind()
@@ -231,14 +232,13 @@ namespace PhoneGuitarTab.UI.ViewModel
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
+                MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
             }
         }
 
         private void DoRemoveTab(int id)
         {
-            TabDataContextHelper.DeleteTabById(id);
-
-            RemoveTabFromList(id);
+            Deployment.Current.Dispatcher.BeginInvoke(() => { TabDataContextHelper.DeleteTabById(id); DataBind(); });
 
             MessengerInstance.Send<GroupTabRemovedMessage>(new GroupTabRemovedMessage(id));
         }
@@ -251,6 +251,11 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoRefreshInfo(Group group)
         {
             GetCurrentGroupInfo(group);
+        }
+
+        private void DoHome()
+        {
+            navigationService.NavigateTo(PageType.Get(ViewType.Startup));
         }
 
         #endregion Command handlers
@@ -303,8 +308,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void CreateCommands()
         {
             SearchCommand = new RelayCommand<Group>(DoSearch);
-            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
-            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
+            HomeCommand = new RelayCommand(DoHome);
             RefreshInfoCommand = new RelayCommand<Group>(DoRefreshInfo);
 
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
@@ -319,11 +323,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             IsLoading = true;
             result.Run();
-        }
-
-        private void RemoveTabFromList(int id)
-        {
-            Tabs.RemoveTab(Tabs.Tabs.Where(tab => tab.Id == id).Single());
         }
 
         #endregion Helper methods

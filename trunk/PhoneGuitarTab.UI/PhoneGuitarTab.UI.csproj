@@ -95,6 +95,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
+    <Compile Include="Infrastructure\Messages\RefreshTabsMessage.cs" />
     <Compile Include="Infrastructure\Messages\TabsDownloadedMessage.cs" />
     <Compile Include="View\StartupScreens\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>

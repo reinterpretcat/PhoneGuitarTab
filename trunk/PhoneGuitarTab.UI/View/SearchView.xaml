@@ -127,7 +127,6 @@
                                                              Converter={StaticResource boolVisibility}}" />
 
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
-            <!--  <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />  -->
             <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}"
                                                      IconUri="/Images/dark/appbar.feature.home.png"
                                                      Text="To all tabs" />

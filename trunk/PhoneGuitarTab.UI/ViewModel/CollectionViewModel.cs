@@ -31,9 +31,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             CreateCommands();
             DataBind();
 
-            MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-            MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-            MessengerInstance.Register<TabsDownloadedMessage>(this, (message) => { isPendingChangesOnCollection = true; });
+            RegisterMessages();
 
             DispatcherHelper.Initialize();
         }
@@ -205,6 +203,14 @@ namespace PhoneGuitarTab.UI.ViewModel
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
 
             RefreshData = new RelayCommand(DoRefreshData);
+        }
+
+        private void RegisterMessages()
+        {
+            MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+            MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+            MessengerInstance.Register<TabsDownloadedMessage>(this, (message) => { isPendingChangesOnCollection = true; });
+            MessengerInstance.Register<RefreshTabsMessage>(this, (message) => { DoRefreshData(); });
         }
 
         private void RemoveTabFromList(int id)

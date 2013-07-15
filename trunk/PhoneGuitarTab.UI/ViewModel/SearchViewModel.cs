@@ -416,6 +416,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             tab.ActionAreaVisible = !tab.ActionAreaVisible;
         }
 
+        private void DoHome()
+        {
+            MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
+            navigationService.NavigateTo(PageType.Get(ViewType.Startup));
+        }
+
         #endregion Command handlers
 
 
@@ -514,7 +520,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             CollectionCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Collection)));
             SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
-            HomeCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Startup)));
+            HomeCommand = new RelayCommand(DoHome);
             LaunchSearch = new RelayCommand<string>(DoLaunchSearch);
             LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);
             SelectPage = new RelayCommand<string>(DoSelectPage);
