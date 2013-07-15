@@ -16,10 +16,16 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             try
             {
-                IDataContextService database = Container.Resolve<IDataContextService>();
-                Tab tab = (Tab) NavigationParameters["Tab"];
-                tab.LastOpened = DateTime.Now;
-                database.SubmitChanges();
+                Tab tab = (Tab)NavigationParameters["Tab"];
+
+                Deployment.Current.Dispatcher.BeginInvoke(
+                () =>
+                {
+                    IDataContextService database = Container.Resolve<IDataContextService>();
+                    tab.LastOpened = DateTime.Now;
+                    database.SubmitChanges();
+                });
+
                 IFileSystemService service = Container.Resolve<IFileSystemService>();
 
                 using (var stream = service.OpenFile(tab.Path, FileMode.Open))

@@ -6,6 +6,7 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                DataContext="{Binding TextTab,
                                      Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -19,10 +20,16 @@
                mc:Ignorable="d">
 
     <!--  LayoutRoot is the root grid where all page content is placed  -->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="White">
         <phone:WebBrowser Name="tabWebBrowser"
                           Background="Transparent"
-                          IsScriptEnabled="True"/>
+                          IsScriptEnabled="True" >
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu>
+                    <toolkit:MenuItem Command="{Binding }" Header="test" />
+                </toolkit:ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
+        </phone:WebBrowser>
     </Grid>
 
 </Core:ViewPage>

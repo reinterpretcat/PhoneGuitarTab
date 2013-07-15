@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
+using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -26,8 +27,12 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             if (IsRequireBinding)
             {
-                DataBind();
-                IsRequireBinding = false;
+                Deployment.Current.Dispatcher.BeginInvoke(
+                () =>
+                {
+                    DataBind();
+                    IsRequireBinding = false;
+                });
             }
         }
 

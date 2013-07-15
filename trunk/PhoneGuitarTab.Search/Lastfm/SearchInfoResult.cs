@@ -122,7 +122,7 @@ namespace PhoneGuitarTab.Search.Lastfm
             returnString = returnString.Replace("&quot;", "\"");
             returnString = returnString.Replace("&gt;", ">");
             returnString = returnString.Replace("&lt;", "<");
-            returnString = returnString.Replace("&amp;", "&");
+            returnString = returnString.Replace("&amp;", "and");
             returnString = returnString.Replace(String.Format("Read more about {0} on Last.fm.", BandName), string.Empty);
 
             return returnString;

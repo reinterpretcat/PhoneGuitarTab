@@ -46,10 +46,11 @@
                            Text="{Binding Group}"
                            TextWrapping="Wrap" />
                 <StackPanel Orientation="Horizontal">
-                    <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
-                    <TextBlock VerticalAlignment="Center"
+                    <uiControls:RatingControl Margin="12, 2, 0, 4" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" VerticalAlignment="Bottom"/>
+                    <TextBlock VerticalAlignment="Bottom"
                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                Style="{StaticResource PhoneTextSmallStyle}"
+                               Foreground="{StaticResource PhoneAccentBrush}"
                                Text="{Binding Type}"
                                TextWrapping="Wrap" />
                 </StackPanel>

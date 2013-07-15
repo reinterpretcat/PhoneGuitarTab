@@ -179,11 +179,14 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoRefreshData()
         {
-            if (isPendingChangesOnCollection)
+            if (!isPendingChangesOnCollection)
+                return;
+            Deployment.Current.Dispatcher.BeginInvoke(
+            () =>
             {
                 AddDownloadedTabs();
                 isPendingChangesOnCollection = false;
-            }
+            });
         }
 
         #endregion Command handlers

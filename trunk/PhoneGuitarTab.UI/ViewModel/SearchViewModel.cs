@@ -363,7 +363,10 @@ namespace PhoneGuitarTab.UI.ViewModel
             if (Int32.TryParse(index, out pageNumber))
             {
                 CurrentPageIndex = pageNumber;
-                RunSearch(CurrentSearchText, string.Empty);
+                if (SearchMethod == SearchType.ByBand)
+                    RunSearch(CurrentSearchText, string.Empty);
+                else
+                    RunSearch(string.Empty, CurrentSearchText);
             }
         }
 
@@ -450,8 +453,10 @@ namespace PhoneGuitarTab.UI.ViewModel
                 {
                     IsNothingFound = true;
                     IsSearching = false;
+                    HeaderPagingVisibility = Visibility.Collapsed;
                     return;
                 }
+
                 Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {
@@ -464,6 +469,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                         FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
                         SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
                         RaisePropertyChanged("SelectedPage");
+                        IsSearching = false;
                     });
             }
             else
@@ -475,24 +481,28 @@ namespace PhoneGuitarTab.UI.ViewModel
                 };
                 toast.Show();
             }
-            IsSearching = false;
         }
 
         private void DownloadTabComplete(TabEntity tab, string filePath)
         {
-            Tab downloadedTab = new Tab()
-            {
-                Name = tab.Name,
-                Group = TabDataContextHelper.GetOrCreateGroupByName(tab.Group),
-                TabType = TabDataContextHelper.GetTabTypeByName(tab.Type),
-                Rating = tab.Rating,
-                Path = filePath
-            };
-
             Deployment.Current.Dispatcher.BeginInvoke(
                 () =>
                 {
+                    Tab downloadedTab = new Tab()
+                    {
+                        Name = tab.Name,
+                        Group = TabDataContextHelper.GetOrCreateGroupByName(tab.Group),
+                        TabType = TabDataContextHelper.GetTabTypeByName(tab.Type),
+                        Rating = tab.Rating,
+                        Path = filePath
+                    };
+
                     TabDataContextHelper.InsertTab(downloadedTab);
+
+                    MessengerInstance.Send<TabsDownloadedMessage>(new TabsDownloadedMessage());
+
+                    tab.IsDownloaded = true;
+                    IsSearching = false;
 
                     var toast = new ToastPrompt
                     {
@@ -501,13 +511,8 @@ namespace PhoneGuitarTab.UI.ViewModel
                         TextOrientation = System.Windows.Controls.Orientation.Vertical
                     };
                     toast.Show();
-
-                    tab.IsDownloaded = true;
-
-                    IsSearching = false;
-                    DownloadTab.RaiseCanExecuteChanged();
-
-                    MessengerInstance.Send<TabsDownloadedMessage>(new TabsDownloadedMessage());
+       
+                    DownloadTab.RaiseCanExecuteChanged(); 
                 });
         }
 
