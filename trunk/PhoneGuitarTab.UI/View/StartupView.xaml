@@ -27,16 +27,18 @@
                mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
-        <Grid.Resources>
-            <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
-        </Grid.Resources>
-
         <Controls:Pivot Title="phone guitar tab">
             <views:Tabs />
             <views:Bands />
             <views:History />
             <views:Search />
             <views:Other />
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <Command:EventToCommand Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </Controls:Pivot>
 
         <toolkit:PerformanceProgressBar x:Name="performanceBar"

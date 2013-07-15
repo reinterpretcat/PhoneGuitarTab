@@ -135,12 +135,25 @@
                            Text="{Binding Group}"
                            TextWrapping="Wrap" />
                 <StackPanel Orientation="Horizontal">
-                    <uiControls:RatingControl Margin="12, 2" Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
-                    <TextBlock VerticalAlignment="Center"
+                    <TextBlock Margin="14,0"
+                               VerticalAlignment="Bottom"
                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                               Style="{StaticResource PhoneTextSmallStyle}"
-                               Text="{Binding Type}"
-                               TextWrapping="Wrap" />
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               Text="{Binding Type}" />
+                    <uiControls:RatingControl Margin="12,0,6,4"
+                                              VerticalAlignment="Bottom"
+                                              Rating="{Binding Rating,
+                                                               Converter={StaticResource stringToInt}}" />
+                    <TextBlock VerticalAlignment="Bottom"
+                               FontSize="16"
+                               FontStyle="Italic"
+                               Foreground="Gray"
+                               Visibility="{Binding Votes,
+                                                    Converter={StaticResource intToVisibility}}">
+                        <Run Text="votes:" />
+                        <Run Text="{Binding Votes}" />                 
+                    </TextBlock>
+
                 </StackPanel>
             </StackPanel>
 
@@ -153,21 +166,16 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <StackPanel Margin="62,0">
-                    <TextBlock Margin="22,0,0,0"
-                               FontSize="16"
-                               FontStyle="Italic"
-                               Foreground="Gray"
-                               Visibility="{Binding Votes,
-                                                    Converter={StaticResource intToVisibility}}">
-                        <Run Text="Votes:" />
-                        <Run Text="{Binding Votes}" />
-                    </TextBlock>
-                    <TextBlock Margin="0,6,0,0" Style="{StaticResource PhoneTextNormalStyle}">
-                        <Run Text="Version:" />
-                        <Run Text="{Binding Version}" />
-                    </TextBlock>
-                </StackPanel>
+
+                <TextBlock Margin="60,0,0,0"
+                           VerticalAlignment="Center"
+                           FontStyle="Italic"
+                           Foreground="Gray"
+                           Style="{StaticResource PhoneTextNormalStyle}">
+                    <Run Text="Version:" />
+                    <Run Text="{Binding Version}" />
+                </TextBlock>
+
                 <Button Grid.Column="1"
                         Command="{Binding Path=DataContext.DownloadTab,
                                           ElementName=root}"
@@ -179,12 +187,14 @@
                                              Converter={StaticResource boolVisibility}}" />
                 <TextBlock Grid.Column="1"
                            HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                            Foreground="{StaticResource PhoneAccentBrush}"
                            Style="{StaticResource PhoneTextNormalStyle}"
                            Text="Downloaded"
                            Visibility="{Binding IsDownloaded,
                                                 Converter={StaticResource boolVisibility}}" />
+
             </Grid>
         </Grid>
     </DataTemplate>

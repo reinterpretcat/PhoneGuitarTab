@@ -19,6 +19,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private BandByName groups;
         private TabsByName allTabs;
+        private bool isPendingChangesOnCollection = false;
 
         #endregion Fields
 
@@ -32,6 +33,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
             MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+            MessengerInstance.Register<TabsDownloadedMessage>(this, (message) => { isPendingChangesOnCollection = true; });
 
             DispatcherHelper.Initialize();
         }
@@ -108,6 +110,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             set;
         }
 
+        public RelayCommand RefreshData
+        {
+            get;
+            set;
+        }
+
         #endregion Commands
 
 
@@ -126,23 +134,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
+            AllTabs = new TabsByName();            
             Groups = new BandByName();
-            AllTabs = new TabsByName();
         }
 
         #endregion Override methods
-
-
-        #region Public methods
-
-        public void AddDownloadedTabs()
-        {
-            //TODO (cent) test performance on large data collection
-            // if it will impact ui responsiveness, rewrite
-            DispatcherHelper.CheckBeginInvokeOnUI(new Action(() => DataBind())); 
-        }
-
-        #endregion Public methods
 
 
         #region Command handlers
@@ -183,6 +179,15 @@ namespace PhoneGuitarTab.UI.ViewModel
             MessengerInstance.Send<CollectionTabRemovedMessage>(new CollectionTabRemovedMessage(id));
         }
 
+        private void DoRefreshData()
+        {
+            if (isPendingChangesOnCollection)
+            {
+                AddDownloadedTabs();
+                isPendingChangesOnCollection = false;
+            }
+        }
+
         #endregion Command handlers
 
 
@@ -198,6 +203,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             GoToGroup = new RelayCommand<object>(DoGoToGroup);
             GoToTabView = new RelayCommand<object>(DoGoToTabView);
+
+            RefreshData = new RelayCommand(DoRefreshData);
         }
 
         private void RemoveTabFromList(int id)
@@ -205,6 +212,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             var tabToRemove = AllTabs.Tabs.Where(tab => tab.Id == id).Single();
             AllTabs.RemoveTab(tabToRemove);
             Groups.DecreaseTabCount(tabToRemove.Group);
+            RaisePropertyChanged("AllTabs");
+        }
+
+        private void AddDownloadedTabs()
+        {
+            DispatcherHelper.CheckBeginInvokeOnUI(new Action(() => DataBind()));
         }
 
         #endregion Helper methods

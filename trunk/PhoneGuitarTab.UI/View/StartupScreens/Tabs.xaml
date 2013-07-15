@@ -14,6 +14,7 @@
                     mc:Ignorable="d">
     <Controls:PivotItem.Resources>
         <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
+        <Infrastructure:TabsGroupsCollectionToVisibilityConverter x:Key="tabsGroupsCollectionToVisibility" />
     </Controls:PivotItem.Resources>
 
     <toolkit:LongListSelector x:Name="TabList"
@@ -28,6 +29,19 @@
                 <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
+
+        <toolkit:LongListSelector.ListHeaderTemplate>
+            <DataTemplate>
+                <TextBlock Margin="0,80"
+                           HorizontalAlignment="Center"
+                           FontSize="26"
+                           Opacity="0.5"
+                           Text="You have nothing downloaded yet."
+                           Visibility="{Binding DataContext.AllTabs,
+                                                ElementName=TabList,
+                                                Converter={StaticResource tabsGroupsCollectionToVisibility}}" />
+            </DataTemplate>
+        </toolkit:LongListSelector.ListHeaderTemplate>
 
         <toolkit:LongListSelector.GroupItemsPanel>
             <ItemsPanelTemplate>

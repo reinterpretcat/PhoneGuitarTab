@@ -1,10 +1,13 @@
 ﻿using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure.Enums;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Linq;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
@@ -175,6 +178,20 @@ namespace PhoneGuitarTab.UI.Infrastructure
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException("Convert from string to se");
+        }
+    }
+
+    public class TabsGroupsCollectionToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var hasTabs = ((IEnumerable<TabInGroup>)value).Any(g => g.HasItems);
+            return hasTabs ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException("ConvertBack is not supported.");
         }
     }
 }

@@ -1,17 +1,7 @@
-﻿using System;
+﻿using PhoneGuitarTab.Core;
+using PhoneGuitarTab.Data;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using PhoneGuitarTab.Core;
-using PhoneGuitarTab.Data;
 
 namespace PhoneGuitarTab.UI.Entities
 {
@@ -54,7 +44,12 @@ namespace PhoneGuitarTab.UI.Entities
             var band = bandGroupsDictionary[groupKey.ToString()].Where(g => g.Item2.Name == groupName).FirstOrDefault();
 
             if (band != null)
-                band.Item1 = band.Item1 - 1;
+            {
+                var tabCount = band.Item1 - 1;
+                band.Item1 = tabCount;
+                if (tabCount == 0)
+                    bandGroupsDictionary[groupKey.ToString()].Remove(band);
+            }
         }
 
 

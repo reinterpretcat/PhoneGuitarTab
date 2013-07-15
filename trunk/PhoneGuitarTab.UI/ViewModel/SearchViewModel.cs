@@ -1,6 +1,5 @@
 ﻿using Coding4Fun.Toolkit.Controls;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Phone.Controls;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Core.Navigation;
 using PhoneGuitarTab.Data;
@@ -9,13 +8,13 @@ using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 using PhoneGuitarTab.UI.Infrastructure.Enums;
+using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -484,17 +483,11 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Path = filePath
             };
 
-            TabDataContextHelper.InsertTab(downloadedTab);
-
             Deployment.Current.Dispatcher.BeginInvoke(
                 () =>
                 {
-                    CollectionViewModel.AddDownloadedTabs();
-                });
+                    TabDataContextHelper.InsertTab(downloadedTab);
 
-            Deployment.Current.Dispatcher.BeginInvoke(
-                () =>
-                {
                     var toast = new ToastPrompt
                     {
                         Title = "\"" + tab.Name + "\" by " + tab.Group,
@@ -507,6 +500,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
                     IsSearching = false;
                     DownloadTab.RaiseCanExecuteChanged();
+
+                    MessengerInstance.Send<TabsDownloadedMessage>(new TabsDownloadedMessage());
                 });
         }
 
