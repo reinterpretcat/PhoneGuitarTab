@@ -65,6 +65,7 @@
     <Compile Include="SearchContext.cs" />
     <Compile Include="SearchExceptions.cs" />
     <Compile Include="SR.cs" />
+    <Compile Include="TabulatureType.cs" />
     <Compile Include="UltimateGuitar\SearchTabDownloader.cs" />
     <Compile Include="UltimateGuitar\SearchTabResult.cs" />
     <Compile Include="UltimateGuitar\SearchTabResultEntry.cs" />

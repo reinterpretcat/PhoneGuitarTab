@@ -12,6 +12,12 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
         private const string RequestTemplate =
             "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=400&type[]=500&type[]=600&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
 
+        private const string RequestTemplateGuitar =
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+
+        private const string RequestTemplateBass =
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=400&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+
         public SearchTabResultSummary Summary;
         public List<SearchTabResultEntry> Entries;
 
@@ -38,7 +44,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
         /// Handler for WebClient that parses xml data into specific objects
         /// throws specific exceptions if error occurs
         /// </summary>
-        public void Run(int pageNumber)
+        public void Run(int pageNumber, TabulatureType type)
         {
             WebClient client = new WebClient();
             client.DownloadStringCompleted += (s, e) =>
@@ -73,7 +79,32 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                                                           InvokeSearchComplete(e);
                                                       }
                                                   };
-            client.DownloadStringAsync(new Uri(String.Format(RequestTemplate, _group, _song, pageNumber)));
+            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(type), _group, _song, pageNumber)));
+        }
+
+        private string GetRequestTemplate(TabulatureType tabType)
+        {
+            string requestTemplate;
+
+            switch (tabType)
+            {
+
+                case TabulatureType.All:
+                    requestTemplate = RequestTemplate;
+                    break;
+                case TabulatureType.Guitar:
+                    requestTemplate = RequestTemplateGuitar;
+                    break;
+                case TabulatureType.Bass:
+                    requestTemplate = RequestTemplateBass;
+                    break;
+
+                default:
+                    requestTemplate = RequestTemplate;
+                    break;
+            }
+
+            return requestTemplate;
         }
     }
 }

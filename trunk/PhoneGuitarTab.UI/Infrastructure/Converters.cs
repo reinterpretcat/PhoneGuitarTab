@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Linq;
+using PhoneGuitarTab.Search;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
@@ -169,6 +170,38 @@ namespace PhoneGuitarTab.UI.Infrastructure
                     break;
                 default:
 
+                    break;
+            }
+
+            return returnString;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException("Convert from string to se");
+        }
+    }
+
+    public class SearchTabTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string returnString = string.Empty;
+            TabulatureType searchType = (TabulatureType)value;
+
+            switch (searchType)
+            {
+                case TabulatureType.All:
+                    returnString = "all tabs";
+                    break;
+                case TabulatureType.Guitar:
+                    returnString = "guitar tabs";
+                    break;
+                case TabulatureType.Bass:
+                    returnString = "bass tabs";
+                    break;
+
+                default:
                     break;
             }
 

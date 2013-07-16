@@ -15,6 +15,7 @@
     <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
     <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
     <Infrastructure:SearchTypeConverter x:Key="searchTypeConverter" />
+    <Infrastructure:SearchTabTypeConverter x:Key="searchTabTypeConverter" />
     <Infrastructure:IntToVisibilityConverter x:Key="intToVisibility" />
 
     <DataTemplate x:Key="TabItemDataTemplate">
@@ -153,7 +154,7 @@
                                Visibility="{Binding Votes,
                                                     Converter={StaticResource intToVisibility}}">
                         <Run Text="votes:" />
-                        <Run Text="{Binding Votes}" />                 
+                        <Run Text="{Binding Votes}" />
                     </TextBlock>
 
                 </StackPanel>

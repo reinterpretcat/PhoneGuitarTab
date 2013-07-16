@@ -38,12 +38,16 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="8"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="searchTextBox"
+                                 Grid.ColumnSpan="2"
                                  Text="{Binding Path=DataContext.CurrentSearchText,
                                                 ElementName=root,
                                                 Mode=TwoWay,
@@ -57,25 +61,48 @@
                                                           Text=" type here.." />
                             </Interactivity:Interaction.Behaviors>
                         </TextBox>
-                        <Button Grid.Column="1"
+                        <Button Grid.Column="2"
                                 Command="{Binding Path=DataContext.LaunchSearch,
                                                   ElementName=root}"
                                 CommandParameter="{Binding Text,
                                                            ElementName=searchTextBox}"
                                 Content="Go" />
-                        <StackPanel Grid.Row="1">
-                            <TextBlock Margin="12,0,0,-14"
-                                       FontSize="16"
-                                       Opacity="0.7"
-                                       Text="Search by " />
-                            <toolkit:ListPicker ItemsSource="{Binding Path=DataContext.SearchOptions, ElementName=root}" SelectedItem="{Binding Path=DataContext.SearchMethod, ElementName=root, Mode=TwoWay}">
-                                <toolkit:ListPicker.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" />
-                                    </DataTemplate>
-                                </toolkit:ListPicker.ItemTemplate>
-                            </toolkit:ListPicker>
-                        </StackPanel>
+                        <TextBlock Grid.Row="1"
+                                   Margin="12,0,0,-14"
+                                   FontSize="16"
+                                   Opacity="0.7"
+                                   Text="search by " />
+                        <toolkit:ListPicker Grid.Row="2"
+                                            ItemsSource="{Binding Path=DataContext.SearchMethodOptions,
+                                                                  ElementName=root}"
+                                            SelectedItem="{Binding Path=DataContext.SearchMethod,
+                                                                   ElementName=root,
+                                                                   Mode=TwoWay}">
+                            <toolkit:ListPicker.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" />
+                                </DataTemplate>
+                            </toolkit:ListPicker.ItemTemplate>
+                        </toolkit:ListPicker>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Margin="12,0,0,-14"
+                                   FontSize="16"
+                                   Opacity="0.7"
+                                   Text="selected type " />
+                        <toolkit:ListPicker Grid.Row="2"
+                                            Grid.Column="1"
+                                            ItemsSource="{Binding Path=DataContext.SearchTabTypeOptions,
+                                                                  ElementName=root}"
+                                            SelectedItem="{Binding Path=DataContext.SearchTabType,
+                                                                   ElementName=root,
+                                                                   Mode=TwoWay}">
+                            <toolkit:ListPicker.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" />
+                                </DataTemplate>
+                            </toolkit:ListPicker.ItemTemplate>
+                        </toolkit:ListPicker>
                     </Grid>
 
                     <StackPanel Margin="0,2,0,4"

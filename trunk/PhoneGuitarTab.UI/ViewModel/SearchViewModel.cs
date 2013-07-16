@@ -43,7 +43,9 @@ namespace PhoneGuitarTab.UI.ViewModel
         private bool isNothingFound = false;
         private bool isHintVisible = true;
         private SearchType searchMethod = SearchType.ByBand;
-        private List<SearchType> searchOptions;
+        private TabulatureType searchTabType = TabulatureType.All;
+        private List<SearchType> searchMethodOptions;
+        private List<TabulatureType> searchTabTypeOptions;
         private TabEntity firstTabInList;
 
         #endregion Fields
@@ -190,13 +192,36 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public List<SearchType> SearchOptions
+        public TabulatureType SearchTabType
+        {
+            get 
+            { 
+                return searchTabType; 
+            }
+            set 
+            { 
+                searchTabType = value;
+                RaisePropertyChanged("SearchTabType");
+            }
+        }
+
+        public List<SearchType> SearchMethodOptions
         {
             get
             {
-                if (searchOptions == null)
-                    searchOptions = new List<SearchType>() { SearchType.ByBand, SearchType.BySong };
-                return searchOptions;
+                if (searchMethodOptions == null)
+                    searchMethodOptions = new List<SearchType>() { SearchType.ByBand, SearchType.BySong };
+                return searchMethodOptions;
+            }
+        }
+
+        public List<TabulatureType> SearchTabTypeOptions
+        {
+            get
+            {
+                if (searchTabTypeOptions == null)
+                    searchTabTypeOptions = new List<TabulatureType>() { TabulatureType.All, TabulatureType.Guitar, TabulatureType.Bass };
+                return searchTabTypeOptions;
             }
         }
 
@@ -347,6 +372,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoLaunchSearchForBand(string arg)
         {
             SearchMethod = SearchType.ByBand;
+            SearchTabType = TabulatureType.All;
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
             CurrentSearchText = arg;
@@ -552,7 +578,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             };
 
             IsSearching = true;
-            groupSearch.Run(CurrentPageIndex);
+            groupSearch.Run(CurrentPageIndex, SearchTabType);
         }
 
         #endregion Helper methods
