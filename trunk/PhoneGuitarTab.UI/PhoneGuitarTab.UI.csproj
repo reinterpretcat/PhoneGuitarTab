@@ -251,6 +251,7 @@
     <Content Include="Images\dark\appbar.folder.rest.png" />
     <Content Include="Images\dark\Document-Download_dark.png" />
     <Content Include="Images\dark\Electric-Guitar_dark.png" />
+    <Content Include="Images\dark\Find_dark.png" />
     <Content Include="Images\dark\refresh.png" />
     <Content Include="Images\dark\Text-Justify-Align_dark.png" />
     <Content Include="Images\light\appbar.feature.search.rest.png" />
@@ -260,6 +261,7 @@
     <Content Include="Images\light\appbar.folder.rest.png" />
     <Content Include="Images\light\Document-Download_light.png" />
     <Content Include="Images\light\Electric-Guitar_light.png" />
+    <Content Include="Images\light\Find_light.png" />
     <Content Include="Images\light\refresh.png" />
     <Content Include="Images\light\Text-Justify-Align_light.png" />
     <Content Include="README_FIRST.txt" />

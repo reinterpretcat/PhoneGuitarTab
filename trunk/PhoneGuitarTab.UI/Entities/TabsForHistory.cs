@@ -19,7 +19,7 @@ namespace PhoneGuitarTab.UI.Entities
 
             Tabs = new ObservableCollection<TabEntity>((from Tab tab in database.Tabs
                     orderby tab.LastOpened descending
-                    select tab).Take(n).Select(tab => tab.CreateEntity()));
+                    select tab).Where(t => t.LastOpened != null).Take(n).Select(tab => tab.CreateEntity()));
             Initialize();
         }
 

@@ -17,7 +17,7 @@ namespace PhoneGuitarTab.UI.Entities
                            Description = tab.Description,
                            Group = tab.Group.Name,
                            Rating = tab.Rating,
-                           LastOpened = tab.LastOpened
+                           LastOpened = tab.LastOpened ?? DateTime.MinValue
                        };
         }
 

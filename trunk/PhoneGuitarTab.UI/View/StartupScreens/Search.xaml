@@ -39,7 +39,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
-                            <RowDefinition Height="8"/>
+                            <RowDefinition Height="8" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -65,8 +65,22 @@
                                 Command="{Binding Path=DataContext.LaunchSearch,
                                                   ElementName=root}"
                                 CommandParameter="{Binding Text,
-                                                           ElementName=searchTextBox}"
-                                Content="Go" />
+                                                           ElementName=searchTextBox}">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Grid>
+                                        <Image VerticalAlignment="Center"
+                                               Source="../Images/light/Find_light.png"
+                                               Stretch="None"
+                                               Visibility="{StaticResource PhoneLightThemeVisibility}" />
+                                        <Image VerticalAlignment="Center"
+                                               Source="../Images/dark/Find_dark.png"
+                                               Stretch="None"
+                                               Visibility="{StaticResource PhoneDarkThemeVisibility}" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
                         <TextBlock Grid.Row="1"
                                    Margin="12,0,0,-14"
                                    FontSize="16"

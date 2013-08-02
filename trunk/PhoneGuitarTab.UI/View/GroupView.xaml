@@ -92,8 +92,6 @@
         </controls:Pivot>
 
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
-            <!--  <custom:BindableApplicationBarIconButton Command="{Binding SettingsCommand}" IconUri="/Images/dark/appbar.feature.settings.rest.png" Text="Settings" />  -->
-
             <!--  IsEnabled for this button is changing from codebehind PivotSelectionChangedHandler()  -->
             <custom:BindableApplicationBarIconButton x:Name="RefreshButton"
                                                      Command="{Binding RefreshInfoCommand}"

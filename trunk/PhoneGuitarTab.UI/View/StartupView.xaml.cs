@@ -4,7 +4,14 @@
     {
         public StartupView()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (System.InvalidCastException)
+            {
+
+            }
         }
     }
 }

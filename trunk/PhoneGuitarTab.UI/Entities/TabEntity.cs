@@ -23,7 +23,7 @@ namespace PhoneGuitarTab.UI.Entities
         public string Path { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }
-        public Nullable<DateTime> LastOpened { get; set; }
+        public DateTime LastOpened { get; set; }
 
         public string SearchId { get; set; }
         public string SearchUrl { get; set; }

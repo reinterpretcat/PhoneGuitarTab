@@ -292,7 +292,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
             catch (Exception) 
             {
-                NothingFound = true;
+                //NothingFound = true;
             }
             finally
             {

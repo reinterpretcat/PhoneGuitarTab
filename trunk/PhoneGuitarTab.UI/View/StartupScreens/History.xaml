@@ -10,7 +10,7 @@
                     mc:Ignorable="d">
     <Grid>
         <ListBox x:Name="TabList"
-                 ItemTemplate="{StaticResource TabItemDataTemplate}"
+                 ItemTemplate="{StaticResource HistoryTabItemDataTemplate}"
                  ItemsSource="{Binding TabsHistory.Tabs}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Tap">
