@@ -4,6 +4,8 @@
     {
         Guitar,
         Bass,
+        Chords,
+        Drum,
         All
     }
 }

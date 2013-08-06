@@ -9,14 +9,20 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
 {
     public class SearchTabResult
     {
-        private const string RequestTemplate =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=400&type[]=500&type[]=600&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+        private const string RequestTemplateAll =
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=300&type[]=400&type[]=700&type[]=800&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
 
         private const string RequestTemplateGuitar =
             "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
 
         private const string RequestTemplateBass =
             "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=400&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+
+        private const string RequestTemplateChords =
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=300&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+
+        private const string RequestTemplateDrum =
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=700&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
 
         public SearchTabResultSummary Summary;
         public List<SearchTabResultEntry> Entries;
@@ -88,9 +94,8 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
 
             switch (tabType)
             {
-
                 case TabulatureType.All:
-                    requestTemplate = RequestTemplate;
+                    requestTemplate = RequestTemplateAll;
                     break;
                 case TabulatureType.Guitar:
                     requestTemplate = RequestTemplateGuitar;
@@ -98,9 +103,15 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                 case TabulatureType.Bass:
                     requestTemplate = RequestTemplateBass;
                     break;
+                case TabulatureType.Chords:
+                    requestTemplate = RequestTemplateChords;
+                    break;
+                case TabulatureType.Drum:
+                    requestTemplate = RequestTemplateDrum;
+                    break;
 
                 default:
-                    requestTemplate = RequestTemplate;
+                    requestTemplate = RequestTemplateAll;
                     break;
             }
 

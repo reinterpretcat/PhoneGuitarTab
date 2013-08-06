@@ -199,9 +199,14 @@ namespace PhoneGuitarTab.UI.ViewModel
                 return searchTabType; 
             }
             set 
-            { 
-                searchTabType = value;
-                RaisePropertyChanged("SearchTabType");
+            {
+                if (searchTabType != value)
+                {
+                    searchTabType = value;
+                    HeaderPagingVisibility = Visibility.Collapsed;
+                    RunSearch(CurrentSearchText, string.Empty);
+                    RaisePropertyChanged("SearchTabType");
+                }
             }
         }
 
@@ -220,7 +225,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             get
             {
                 if (searchTabTypeOptions == null)
-                    searchTabTypeOptions = new List<TabulatureType>() { TabulatureType.All, TabulatureType.Guitar, TabulatureType.Bass };
+                    searchTabTypeOptions = new List<TabulatureType>() { TabulatureType.All, TabulatureType.Guitar, TabulatureType.Bass, TabulatureType.Chords, TabulatureType.Drum};
                 return searchTabTypeOptions;
             }
         }
@@ -365,6 +370,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 songName = CurrentSearchText = arg;
 
             CurrentPageIndex = 1;
+            HeaderPagingVisibility = Visibility.Collapsed;
 
             RunSearch(bandName, songName);
         }
@@ -506,6 +512,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Message = "can't reach the server right now."
                 };
                 toast.Show();
+                IsSearching = false;
             }
         }
 

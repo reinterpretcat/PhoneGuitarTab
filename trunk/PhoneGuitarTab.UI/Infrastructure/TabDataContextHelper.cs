@@ -9,12 +9,14 @@ namespace PhoneGuitarTab.UI.Infrastructure
         public static void InitializeDatabase(IDataContextService service)
         {
             //add initial values
-            TabType t1 = new TabType() { Name = "tab pro", ImageUrl = "/Images/all/TabGP.png" };
-            service.TabTypes.InsertOnSubmit(t1);
-            TabType t2 = new TabType() { Name = "power tab", ImageUrl = "/Images/all/TabPTB.jpg" };
-            service.TabTypes.InsertOnSubmit(t2);
+            //TabType t1 = new TabType() { Name = "tab pro", ImageUrl = "/Images/all/TabGP.png" };
+            //service.TabTypes.InsertOnSubmit(t1);
+            //TabType t2 = new TabType() { Name = "power tab", ImageUrl = "/Images/all/TabPTB.jpg" };
+            //service.TabTypes.InsertOnSubmit(t2);
             service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/all/TabText.png" });
             service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/all/TabText.png" });
+            service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/all/TabText.png" });
+            service.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/all/TabText.png" });
         }
 
         public static void InsertTab(Tab tab)
