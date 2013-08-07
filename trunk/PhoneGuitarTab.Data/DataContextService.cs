@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Phone.Data.Linq;
+using PhoneGuitarTab.Core;
+using System;
 using System.Data.Linq;
 
 namespace PhoneGuitarTab.Data
@@ -16,7 +18,6 @@ namespace PhoneGuitarTab.Data
                 //create the local database
                 _database.CreateDatabase();
                 initialize(new TabDataContextInitializator(_database));
-                //InitializeDatabase();
                 _database.SubmitChanges();
             }
         }

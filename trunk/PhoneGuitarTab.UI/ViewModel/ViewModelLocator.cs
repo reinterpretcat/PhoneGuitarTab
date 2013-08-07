@@ -79,7 +79,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Action<IDataContextService> initialize = TabDataContextHelper.InitializeDatabase;
             Container.Register<IDataContextService, DataContextService>(new object[]
                                                                             {
-                                                                                "Data Source=isostore:/TabData.sdf",
+                                                                                App.dbConnectionString,
                                                                                 initialize
                                                                             });
             Container.Register<IFileSystemService, IsolatedStorageFileService>();

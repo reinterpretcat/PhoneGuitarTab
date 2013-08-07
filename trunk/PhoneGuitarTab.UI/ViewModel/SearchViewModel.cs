@@ -204,7 +204,10 @@ namespace PhoneGuitarTab.UI.ViewModel
                 {
                     searchTabType = value;
                     HeaderPagingVisibility = Visibility.Collapsed;
-                    RunSearch(CurrentSearchText, string.Empty);
+                    if (SearchMethod == SearchType.ByBand)
+                        RunSearch(CurrentSearchText, string.Empty);
+                    else
+                        RunSearch(string.Empty, CurrentSearchText);
                     RaisePropertyChanged("SearchTabType");
                 }
             }

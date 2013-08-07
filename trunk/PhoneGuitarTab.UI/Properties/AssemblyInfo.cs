@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PhoneGuitarTab")]
-[assembly: AssemblyCopyright("Copyright ©  2011-2013 Ilya Builuk")]
+[assembly: AssemblyCopyright("Copyright ©  2011-2013 Phone guitar tab")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -7,6 +7,10 @@ namespace PhoneGuitarTab.Core
 {
     public static class Container
     {
+        // The current version of the application (need to compare db schemas, can be different from assembly version).
+        // Increase it whenever db schema changes
+        public static int DB_VERSION = 1;
+
         #region Fields
 
         private static readonly Dictionary<Type, Tuple<Type, object[]>> _registration = new Dictionary<Type, Tuple<Type, object[]>>();

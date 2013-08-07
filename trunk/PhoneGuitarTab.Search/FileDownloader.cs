@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Net;
 using System.Windows;
 
@@ -8,9 +9,11 @@ namespace PhoneGuitarTab.Search
     /// <summary>
     /// Downloads files and stores it to destination
     /// </summary>
-    public class FileDownloader: IDisposable
+    public class FileDownloader
     {
-        protected Stream stream;
+        private IsolatedStorageFile storage;
+
+        protected string destination;
 
         public delegate void DownloadEventHandler(object sender, DownloadCompletedEventArgs e);
         public event DownloadEventHandler DownloadComplete;
@@ -18,9 +21,10 @@ namespace PhoneGuitarTab.Search
 
         #region Constructors
 
-        public FileDownloader(Stream writeStream)
+        public FileDownloader(string destination)
         {
-            stream = writeStream;
+            this.destination = destination;
+            storage = IsolatedStorageFile.GetUserStoreForApplication();
         }
 
         protected FileDownloader()
@@ -68,10 +72,14 @@ namespace PhoneGuitarTab.Search
                         // Create a 4K buffer to chunk the file
                         byte[] myBuffer = new byte[4096];
                         int bytesRead;
-                        while (0 <
-                               (bytesRead =
-                                responseStream.Read(myBuffer, 0, myBuffer.Length)))
-                            stream.Write(myBuffer, 0, bytesRead);
+
+                        using (Stream stream = storage.OpenFile(destination, FileMode.CreateNew))
+                        {
+                            while (0 <
+                                   (bytesRead =
+                                    responseStream.Read(myBuffer, 0, myBuffer.Length)))
+                                stream.Write(myBuffer, 0, bytesRead);
+                        }
                     }
                     InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
                 }
@@ -98,11 +106,6 @@ namespace PhoneGuitarTab.Search
                     InvokeDownloadComplete(new DownloadCompletedEventArgs(true));
                 }
             }, null);
-        }
-
-        public void Dispose()
-        {
-            stream.Dispose();
         }
 
         #endregion Public methods

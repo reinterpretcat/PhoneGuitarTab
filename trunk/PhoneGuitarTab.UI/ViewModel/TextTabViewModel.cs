@@ -1,4 +1,5 @@
-﻿using PhoneGuitarTab.Core;
+﻿using Microsoft.Phone.Shell;
+using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 using System;
 using System.IO;
@@ -38,8 +39,8 @@ namespace PhoneGuitarTab.UI.ViewModel
                         document = document.Replace("[/ch]", "</span>");
                     }
 
-                    TabContent = String.Format("<html><head><meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0\" /></head><body style=\"{0}\">{1}</body></html>",
-                        Style, 
+                    TabContent = String.Format("<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0\" /><style>{0}</style></head><body>{1}</body></html>",
+                        "span{font-weight:bold;}", 
                         document);
                 //unfortunately "initial-scale" attribute is not supported in windows phone 7
                 //http://msdn.microsoft.com/en-us/library/ff462082%28VS.92%29.aspx
@@ -50,6 +51,22 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public override void LoadStateFrom(System.Collections.Generic.IDictionary<string, object> state)
+        {
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
+            phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+
+            base.LoadStateFrom(state);
+        }
+
+        public override void SaveStateTo(System.Collections.Generic.IDictionary<string, object> state)
+        {
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
+            phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Enabled;
+
+            base.SaveStateTo(state);
         }
     }
 }

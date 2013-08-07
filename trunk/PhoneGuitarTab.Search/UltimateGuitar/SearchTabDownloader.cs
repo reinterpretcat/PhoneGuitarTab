@@ -10,12 +10,9 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
 
         private SearchTabResultEntry Entry { get; set; }
 
-
-        public SearchTabDownloader(SearchTabResultEntry entry, string destination)
+        public SearchTabDownloader(SearchTabResultEntry entry, string destination) : base(destination)
         {
             Entry = entry;
-            IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
-            stream = store.OpenFile(destination, FileMode.CreateNew);
         }
 
         public override void Download()

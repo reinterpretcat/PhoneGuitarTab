@@ -24,8 +24,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         private string _summary;
         private TabsForBand _tabs;
 
-        private SearchInfoResult result;
-
         private bool isLoading = false;
         private bool infoFound = false;
 
@@ -265,6 +263,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
+            SearchInfoResult result = sender as SearchInfoResult;
+
             try
             {
                 var description = result.Summary;
@@ -280,19 +280,16 @@ namespace PhoneGuitarTab.UI.ViewModel
                     CurrentGroup.Description = Summary;
                     CurrentGroup.Url = result.Url;
 
-                    NothingFound = false;
-
                     Database.SubmitChanges();
                 }
                 else
                 {
                     NothingFound = true;
-                    // TODO: show user that nothing found
                 }
             }
-            catch (Exception) 
+            catch
             {
-                //NothingFound = true;
+                // buried intentionally
             }
             finally
             {
@@ -318,10 +315,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void GetCurrentGroupInfo(Group group)
         {
-            result = new SearchInfoResult(group.Name);
+            SearchInfoResult result = new SearchInfoResult(group.Name);
             result.SearchCompleted += SearchCompleted;
 
             IsLoading = true;
+            NothingFound = false;
             result.Run();
         }
 
