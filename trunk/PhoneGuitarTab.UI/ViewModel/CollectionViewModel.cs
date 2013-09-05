@@ -144,9 +144,9 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoGoToGroup(object sender)
         {
             var selector = sender as Microsoft.Phone.Controls.LongListSelector;
-            if (selector != null && selector.SelectedItem is Tuple<int, Group>)
+            if (selector != null && selector.SelectedItem is ObservableTuple<int, Group>)
             {
-                Group group = (selector.SelectedItem as Tuple<int, Group>).Item2;
+                Group group = (selector.SelectedItem as ObservableTuple<int, Group>).Item2;
                 navigationService.NavigateTo(PageType.Get(ViewType.Group),
                                              new Dictionary<string, object> { { "group", group } });
             }

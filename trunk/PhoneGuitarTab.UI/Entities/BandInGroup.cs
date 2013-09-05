@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    public class BandInGroup : ObservableCollection<Tuple<int, Group>>
+    public class BandInGroup : ObservableCollection<ObservableTuple<int, Group>>
     {
         public BandInGroup(string category)
         {

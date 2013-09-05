@@ -6,9 +6,9 @@ namespace PhoneGuitarTab.Core.Navigation
 {
     public class PageMapping
     {
-        private Dictionary<IPageType, Tuple<Uri, Lazy<ViewModel>>> _pageMapping;
+        private Dictionary<IPageType, ObservableTuple<Uri, Lazy<ViewModel>>> _pageMapping;
 
-        public PageMapping(Dictionary<IPageType, Tuple<Uri, Lazy<ViewModel>>> mapping)
+        public PageMapping(Dictionary<IPageType, ObservableTuple<Uri, Lazy<ViewModel>>> mapping)
         {
             _pageMapping = mapping;
         }

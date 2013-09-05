@@ -62,15 +62,15 @@ namespace PhoneGuitarTab.UI.ViewModel
             //register page mapping
             Container.Register<PageMapping>(new object[]
                                                 {
-                                                     new Dictionary<IPageType,Tuple<Uri, Lazy<Core.ViewModel>>>()
+                                                     new Dictionary<IPageType,ObservableTuple<Uri, Lazy<Core.ViewModel>>>()
                                                          {
-                                                             {PageType.Get(ViewType.Startup), new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/StartupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new StartupViewModel()))},
-                                                             {PageType.Get(ViewType.Collection),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/CollectionView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new CollectionViewModel()))},
-                                                             {PageType.Get(ViewType.Search),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/SearchView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new SearchViewModel()))},
-                                                             {PageType.Get(ViewType.TextTab),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/TextTabView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new TextTabViewModel()))},
-                                                             {PageType.Get(ViewType.Help),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/HelpView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new HelpViewModel()))},
-                                                             {PageType.Get(ViewType.About),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/AboutView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new AboutViewModel()))},
-                                                             {PageType.Get(ViewType.Group),new Tuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/GroupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new GroupViewModel()))}
+                                                             {PageType.Get(ViewType.Startup), new ObservableTuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/StartupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new StartupViewModel()))},
+                                                             {PageType.Get(ViewType.Collection),new ObservableTuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/CollectionView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new CollectionViewModel()))},
+                                                             {PageType.Get(ViewType.Search),new ObservableTuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/SearchView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new SearchViewModel()))},
+                                                             {PageType.Get(ViewType.TextTab),new ObservableTuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/TextTabView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new TextTabViewModel()))},
+                                                             {PageType.Get(ViewType.Help),new ObservableTuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/HelpView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new HelpViewModel()))},
+                                                             {PageType.Get(ViewType.About),new ObservableTuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/AboutView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new AboutViewModel()))},
+                                                             {PageType.Get(ViewType.Group),new ObservableTuple<Uri,Lazy<Core.ViewModel>>(new Uri(@"/View/GroupView.xaml", UriKind.Relative), new Lazy<Core.ViewModel>(()=>new GroupViewModel()))}
                                                          }
                                                 });
             

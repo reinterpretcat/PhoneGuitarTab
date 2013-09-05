@@ -13,7 +13,7 @@ namespace PhoneGuitarTab.Core
 
         #region Fields
 
-        private static readonly Dictionary<Type, Tuple<Type, object[]>> _registration = new Dictionary<Type, Tuple<Type, object[]>>();
+        private static readonly Dictionary<Type, ObservableTuple<Type, object[]>> _registration = new Dictionary<Type, ObservableTuple<Type, object[]>>();
         private static readonly Dictionary<Type, object> _rot = new Dictionary<Type, object>();
         private static readonly object[] _emptyArguments = new object[0];
         private static readonly object _syncLock = new object();
@@ -67,7 +67,7 @@ namespace PhoneGuitarTab.Core
         {
             lock (_syncLock)
             {
-                _registration.Add(typeof(I), new Tuple<Type, object[]>(typeof(C), args));
+                _registration.Add(typeof(I), new ObservableTuple<Type, object[]>(typeof(C), args));
             }
         }
 
@@ -80,7 +80,7 @@ namespace PhoneGuitarTab.Core
         {
             lock (_syncLock)
             {
-                _registration.Add(typeof(C), new Tuple<Type, object[]>(null, args));
+                _registration.Add(typeof(C), new ObservableTuple<Type, object[]>(null, args));
             }
         }
 

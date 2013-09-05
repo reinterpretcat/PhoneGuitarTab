@@ -28,7 +28,7 @@ namespace PhoneGuitarTab.UI.Entities
                              where t.Group.Id == bandGroup.Id
                             select t).Count();
 
-                bandGroupsDictionary[bandGroup.GetNameKey()].Add(new Tuple<int, Group>
+                bandGroupsDictionary[bandGroup.GetNameKey()].Add(new ObservableTuple<int, Group>
                                                (count, bandGroup));
             }
         }

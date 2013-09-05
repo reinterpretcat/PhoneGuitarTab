@@ -3,12 +3,12 @@ using System.ComponentModel;
 
 namespace PhoneGuitarTab.Core
 {
-    public class Tuple<T1, T2>: INotifyPropertyChanged
+    public class ObservableTuple<T1, T2>: INotifyPropertyChanged
     {
         private T1 item1;
 
 
-        public Tuple(T1 item1, T2 item2)
+        public ObservableTuple(T1 item1, T2 item2)
         {
             Item1 = item1;
             Item2 = item2;
