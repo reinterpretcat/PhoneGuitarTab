@@ -313,4 +313,10 @@
         </Setter>
     </Style>
 
+
+    <DataTemplate x:Key="EmptyTitleTemplate">
+        <TextBlock Height="1" />
+    </DataTemplate>
+
+
 </ResourceDictionary>

@@ -17,5 +17,11 @@ namespace PhoneGuitarTab.UI
                         tabWebBrowser.NavigateToString(viewModel.TabContent);
                 };
         }
+
+        private void tabWebBrowser_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            int i = 1;
+            i = i++;
+        }
     }
 }

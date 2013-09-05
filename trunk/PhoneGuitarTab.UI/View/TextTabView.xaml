@@ -6,7 +6,8 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                DataContext="{Binding TextTab,
                                      Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -20,15 +21,14 @@
                mc:Ignorable="d">
 
     <!--  LayoutRoot is the root grid where all page content is placed  -->
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot" Background="Transparent" Hold="tabWebBrowser_Hold">
         <phone:WebBrowser Name="tabWebBrowser"
-                          Background="Transparent"
-                          IsScriptEnabled="True" >
-            <toolkit:ContextMenuService.ContextMenu>
-                <toolkit:ContextMenu>
-                    <toolkit:MenuItem Command="{Binding }" Header="test" />
-                </toolkit:ContextMenu>
-            </toolkit:ContextMenuService.ContextMenu>
+                          IsScriptEnabled="True">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Hold">
+                    <Command:EventToCommand Command="{Binding ShowSettings}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </phone:WebBrowser>
     </Grid>
 

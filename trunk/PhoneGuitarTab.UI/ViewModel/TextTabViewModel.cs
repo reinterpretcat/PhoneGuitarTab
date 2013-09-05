@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Shell;
+﻿using GalaSoft.MvvmLight.Command;
+using Microsoft.Phone.Shell;
 using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 using System;
@@ -9,6 +10,13 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     public class TextTabViewModel : Core.ViewModel
     {
+        public TextTabViewModel()
+        {
+            ShowSettings = new RelayCommand(DoShowSettings);
+        }
+
+        
+
         public string TabContent { get; set; }
 
         public string Style { get; set; }
@@ -67,6 +75,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Enabled;
 
             base.SaveStateTo(state);
+        }
+
+        public RelayCommand ShowSettings
+        {
+            get;
+            private set;
+        }
+
+        private void DoShowSettings()
+        {
+            int someInt = 0;
+            someInt++;
         }
     }
 }

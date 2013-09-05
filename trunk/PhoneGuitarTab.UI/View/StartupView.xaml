@@ -27,7 +27,7 @@
                mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot">
-        <Controls:Pivot Title="phone guitar tab">
+        <Controls:Pivot TitleTemplate="{StaticResource EmptyTitleTemplate}">
             <views:Tabs />
             <views:Bands />
             <views:History />
