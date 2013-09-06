@@ -12,10 +12,8 @@ namespace PhoneGuitarTab.UI.ViewModel
     {
         public TextTabViewModel()
         {
-            ShowSettings = new RelayCommand(DoShowSettings);
+            
         }
-
-        
 
         public string TabContent { get; set; }
 
@@ -75,18 +73,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Enabled;
 
             base.SaveStateTo(state);
-        }
-
-        public RelayCommand ShowSettings
-        {
-            get;
-            private set;
-        }
-
-        private void DoShowSettings()
-        {
-            int someInt = 0;
-            someInt++;
         }
     }
 }

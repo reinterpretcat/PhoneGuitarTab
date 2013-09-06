@@ -32,7 +32,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         private SearchTabResult groupSearch;
 
         private PageMapping pageMapping;
-        private CollectionViewModel collectionViewModel;
 
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
@@ -274,16 +273,6 @@ namespace PhoneGuitarTab.UI.ViewModel
                 if (pageMapping == null)
                     pageMapping = Container.Resolve<PageMapping>();
                 return pageMapping;
-            }
-        }
-
-        private CollectionViewModel CollectionViewModel
-        {
-            get
-            {
-                if (collectionViewModel == null)
-                    collectionViewModel = PageMapping.GetViewModel(PageType.Get(ViewType.Collection)) as CollectionViewModel;
-                return collectionViewModel;
             }
         }
 

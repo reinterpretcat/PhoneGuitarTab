@@ -1,9 +1,9 @@
 ﻿
 namespace PhoneGuitarTab.UI.Notation
 {
-    public partial class SearchView : PhoneGuitarTab.Core.ViewPage
+    public partial class SearchForBandView : PhoneGuitarTab.Core.ViewPage
     {
-        public SearchView()
+        public SearchForBandView()
         {
             InitializeComponent();
         }
