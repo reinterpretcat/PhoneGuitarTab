@@ -68,25 +68,61 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Container.cs" />
+    <Compile Include="Bootstrap\BootstrapperPlugin.cs" />
+    <Compile Include="Bootstrap\IBootstrapperPlugin.cs" />
     <Compile Include="Cryptography\MD5.cs" />
     <Compile Include="Cryptography\MD5Managed.cs" />
-    <Compile Include="Interfaces\IFileSystemService.cs" />
+    <Compile Include="Dependencies\Component.cs" />
+    <Compile Include="Dependencies\ComponentExtensions.cs" />
+    <Compile Include="Dependencies\Container.cs" />
+    <Compile Include="Dependencies\DependencyAttribute.cs" />
+    <Compile Include="Dependencies\IContainer.cs" />
+    <Compile Include="Dependencies\Interception\Behaviors\ExecuteBehavior.cs" />
+    <Compile Include="Dependencies\Interception\Behaviors\IBehavior.cs" />
+    <Compile Include="Dependencies\Interception\IInterceptor.cs" />
+    <Compile Include="Dependencies\Interception\IMethodReturn.cs" />
+    <Compile Include="Dependencies\Interception\InterceptionContext.cs" />
+    <Compile Include="Dependencies\Interception\InterfaceInterceptor.cs" />
+    <Compile Include="Dependencies\Interception\IProxy.cs" />
+    <Compile Include="Dependencies\Interception\MethodInvocation.cs" />
+    <Compile Include="Dependencies\Interception\MethodReturn.cs" />
+    <Compile Include="Dependencies\Interception\ProxyBase.cs" />
+    <Compile Include="Dependencies\Lifetime\ExternalLifetimeManager.cs" />
+    <Compile Include="Dependencies\Lifetime\ILifetimeManager.cs" />
+    <Compile Include="Dependencies\Lifetime\SingletonLifetimeManager.cs" />
+    <Compile Include="Dependencies\Lifetime\TransientLifetimeManager.cs" />
+    <Compile Include="Dependencies\TypeHelper.cs" />
+    <Compile Include="Diagnostic\ITrace.cs" />
+    <Compile Include="Diagnostic\TraceCategory.cs" />
+    <Compile Include="Diagnostic\TraceCategoryManager.cs" />
+    <Compile Include="Diagnostic\TraceRecord.cs" />
+    <Compile Include="IsolatedStorage\IFileSystemService.cs" />
     <Compile Include="Navigation\INavigationService.cs" />
-    <Compile Include="Interfaces\ISettingService.cs" />
-    <Compile Include="IsolatedStorageFileService.cs" />
-    <Compile Include="Utilities\Lazy.cs" />
-    <Compile Include="Navigation\IPageType.cs" />
+    <Compile Include="IsolatedStorage\ISettingService.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageFileService.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
-    <Compile Include="Navigation\PageMapping.cs" />
+    <Compile Include="Primitives\Lazy.cs" />
+    <Compile Include="Primitives\ObservableTuple.cs" />
+    <Compile Include="Primitives\Tuple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IsolatedStorageSettingService.cs" />
-    <Compile Include="Utilities\Tuple.cs" />
+    <Compile Include="IsolatedStorage\IsolatedStorageSettingService.cs" />
+    <Compile Include="Utilities\Guard.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Primitives\.svn\all-wcprops" />
+    <None Include="Primitives\.svn\entries" />
+    <None Include="Primitives\.svn\text-base\Lazy.cs.svn-base" />
+    <None Include="Primitives\.svn\text-base\Tuple.cs.svn-base" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Primitives\.svn\prop-base\" />
+    <Folder Include="Primitives\.svn\props\" />
+    <Folder Include="Primitives\.svn\tmp\prop-base\" />
+    <Folder Include="Primitives\.svn\tmp\props\" />
+    <Folder Include="Primitives\.svn\tmp\text-base\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

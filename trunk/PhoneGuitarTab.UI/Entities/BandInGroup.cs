@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 
 namespace PhoneGuitarTab.UI.Entities
 {
+    using PhoneGuitarTab.Core.Primitives;
+
     public class BandInGroup : ObservableCollection<ObservableTuple<int, Group>>
     {
         public BandInGroup(string category)

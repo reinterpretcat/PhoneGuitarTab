@@ -1,79 +1,98 @@
-﻿using Microsoft.Phone.Controls;
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Navigation;
+﻿
 
 namespace PhoneGuitarTab.Core.Navigation
 {
+    using System.Linq;
+
+    using Microsoft.Phone.Controls;
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Navigation;
+    using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Core.Diagnostic;
+    using PhoneGuitarTab.Core.Primitives;
+
+    /// <summary>
+    /// Default implementation of navigation service
+    /// </summary>
     public class NavigationService : INavigationService
     {
-        #region Fields
+        [Dependency]
+        public IContainer Container { get; set; }
+
+        [Dependency]
+        public ITrace Trace { get; set; }
+
+        [Dependency]
+        public TraceCategory Category { get; set; }
 
         private PhoneApplicationFrame _mainFrame;
-        private PageMapping _pageMapping;
-
-        #endregion Fields
-
-
-        #region Constructor
-
-        public NavigationService()
-        {
-           _pageMapping = Container.Resolve<PageMapping>();
-        }
-
-        #endregion Constructor
-
-
-        #region Events
-
         public event NavigatingCancelEventHandler Navigating;
 
-        #endregion Events
+        private readonly Dictionary<string, Uri> _uriMapping = new Dictionary<string, Uri>();
+        private readonly Dictionary<string, Lazy<ViewModel>> _viewModelMapping = new Dictionary<string, Lazy<ViewModel>>();
 
+        public NavigationService(Dictionary<string, Uri> uriMapping, Dictionary<string, Lazy<ViewModel>> viewModelMapping)
+        {
+            _uriMapping = uriMapping;
+            _viewModelMapping = viewModelMapping;
+        }
 
-        #region Public methods
-
+        /// <summary>
+        /// Navigates to the specific Uri
+        /// </summary>
+        /// <param name="pageUri"></param>
         public void NavigateTo(Uri pageUri)
         {
             if (EnsureMainFrame())
             {
+                Trace.Info(Category, String.Format("Navigate to {0}", pageUri));
                 _mainFrame.Navigate(pageUri);
             }
         }
 
-        public void NavigateTo(IPageType type)
+        /// <summary>
+        /// Navigates to the specific Uri with parameters
+        /// </summary>
+        /// <param name="pageUri"></param>
+        /// <param name="parameters"></param>
+        public void NavigateTo(Uri pageUri, Dictionary<string, object> parameters)
         {
-            Uri pageUri = _pageMapping.GetUri(type);
+            string page = _uriMapping.Keys.Single(m => _uriMapping[m] == pageUri);
+            NavigateTo(page, parameters);
+        }
+
+        /// <summary>
+        /// Navigates to the specific page
+        /// </summary>
+        /// <param name="name"></param>
+        public void NavigateTo(string name)
+        {
+            Uri pageUri = _uriMapping[name];
             NavigateTo(pageUri);
         }
 
-        public void NavigateTo(Uri pageUri, Dictionary<string,object> parameters)
+        /// <summary>
+        /// Navigates to the specific page with parameters
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="parameters"></param>
+        public void NavigateTo(string name, Dictionary<string, object> parameters)
         {
-            IPageType pageType = _pageMapping.GetPageType(pageUri);
-            NavigateTo(pageType, parameters);
-        }
-
-        public void NavigateTo(IPageType type, Dictionary<string, object> parameters)
-        {
-            ViewModel vm = _pageMapping.GetViewModel(type);
+            ViewModel vm = _viewModelMapping[name].Value;
             vm.NavigationParameters = parameters;
-            NavigateTo(type);
+            NavigateTo(name);
         }
 
         public void GoBack()
         {
             if (EnsureMainFrame() && _mainFrame.CanGoBack)
             {
+                Trace.Info(Category, String.Format("Go back from {0}", _mainFrame.CurrentSource));
                 _mainFrame.GoBack();
             }
         }
-
-        #endregion Public methods
-
-
-        #region Helper methods
 
         private bool EnsureMainFrame()
         {
@@ -94,11 +113,13 @@ namespace PhoneGuitarTab.Core.Navigation
                         Navigating(s, e);
                     }
                 };
+
                 return true;
             }
+
             return false;
         }
 
-        #endregion Helper methods
+
     }
 }

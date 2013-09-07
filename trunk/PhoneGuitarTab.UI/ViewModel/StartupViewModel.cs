@@ -3,7 +3,6 @@ using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
-using PhoneGuitarTab.UI.Infrastructure.Enums;
 using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,8 @@ using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
+    using PhoneGuitarTab.Core.Dependencies;
+
     public class StartupViewModel : DataContextViewModel
     {
         #region Fields
@@ -22,7 +23,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Constructors
 
-        public StartupViewModel()
+        [Dependency]
+        public StartupViewModel(IDataContextService database):base(database)
         {
             CreateCommands();
 
@@ -91,7 +93,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoGoTo(string pageName)
         {
-            navigationService.NavigateTo(PageType.Get(pageName));
+            NavigationService.NavigateTo(pageName);
         }
 
         private void DoGoToTabView(object args)
@@ -102,7 +104,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
-                navigationService.NavigateTo(PageType.Get(ViewType.TextTab), new Dictionary<string, object>()
+                NavigationService.NavigateTo(Strings.TextTab, new Dictionary<string, object>()
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
@@ -117,7 +119,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoRemoveTab(int id)
         {
             RemoveTabFromList(id);
-            Deployment.Current.Dispatcher.BeginInvoke(() =>TabDataContextHelper.DeleteTabById(id));
+            Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
 
             MessengerInstance.Send<HistoryTabRemovedMessage>(new HistoryTabRemovedMessage(id));
         }
@@ -129,7 +131,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
-            TabsHistory = new TabsForHistory(5);
+            TabsHistory = new TabsForHistory(5, Database);
         }
 
         public override void LoadStateFrom(IDictionary<string, object> state)

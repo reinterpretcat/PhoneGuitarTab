@@ -1,11 +1,11 @@
-﻿using GalaSoft.MvvmLight.Threading;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows;
 
 namespace PhoneGuitarTab.UI.Entities
 {
+    using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Data;
+
     public abstract class TabsGroupsCollection : ObservableCollection<TabInGroup>
     {
         #region Fields
@@ -15,8 +15,14 @@ namespace PhoneGuitarTab.UI.Entities
 
         #endregion Fields
 
+        protected TabsGroupsCollection(IDataContextService database)
+        {
+            Database = database;
+        }
 
         #region Properties
+
+        protected IDataContextService Database { get; private set; }
 
         public ObservableCollection<TabEntity> Tabs { get; set; }
 

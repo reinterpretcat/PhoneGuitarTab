@@ -1,6 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Microsoft.Phone.Shell;
-using PhoneGuitarTab.Core;
+﻿using Microsoft.Phone.Shell;
 using PhoneGuitarTab.Data;
 using System;
 using System.IO;
@@ -8,16 +6,18 @@ using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class TextTabViewModel : Core.ViewModel
+    using PhoneGuitarTab.Core.Dependencies;
+
+    public class TextTabViewModel : DataContextViewModel
     {
-        public TextTabViewModel()
+        public string TabContent { get; set; }
+        public string Style { get; set; }
+
+        [Dependency]
+        public TextTabViewModel(IDataContextService database):base(database)
         {
             
         }
-
-        public string TabContent { get; set; }
-
-        public string Style { get; set; }
 
         protected override void ReadNavigationParameters()
         {
@@ -28,14 +28,11 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Deployment.Current.Dispatcher.BeginInvoke(
                 () =>
                 {
-                    IDataContextService database = Container.Resolve<IDataContextService>();
                     tab.LastOpened = DateTime.Now;
-                    database.SubmitChanges();
+                    Database.SubmitChanges();
                 });
 
-                IFileSystemService service = Container.Resolve<IFileSystemService>();
-
-                using (var stream = service.OpenFile(tab.Path, FileMode.Open))
+                using (var stream = FileSystem.OpenFile(tab.Path, FileMode.Open))
                 {
                     string document = (new StreamReader(stream)).ReadToEnd();
 

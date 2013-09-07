@@ -1,5 +1,5 @@
 ﻿using PhoneGuitarTab.UI.Entities;
-using PhoneGuitarTab.UI.Infrastructure.Enums;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

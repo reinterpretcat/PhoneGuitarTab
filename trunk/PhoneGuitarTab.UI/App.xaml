@@ -3,12 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
              xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-             xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Entities"
-             xmlns:vm="clr-namespace:PhoneGuitarTab.UI.ViewModel"
-             mc:Ignorable="d">
+             xmlns:core="clr-namespace:PhoneGuitarTab.UI.Bootstrap" mc:Ignorable="d">
     <!--  Application Resources  -->
     <Application.ApplicationLifetimeObjects>
         <!--  Required object that handles lifetime events for the application  -->
@@ -19,8 +15,7 @@
     </Application.ApplicationLifetimeObjects>
     <Application.Resources>
         <ResourceDictionary>
-            <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-
+            <core:ComponentRoot x:Key="Locator" d:IsDataSource="True"  />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CommonResources/Templates.xaml" />
             </ResourceDictionary.MergedDictionaries>

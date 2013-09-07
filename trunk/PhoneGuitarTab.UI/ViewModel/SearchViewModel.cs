@@ -7,7 +7,6 @@ using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
-using PhoneGuitarTab.UI.Infrastructure.Enums;
 using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,9 @@ using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class SearchViewModel : Core.ViewModel
+    using PhoneGuitarTab.Core.Dependencies;
+
+    public class SearchViewModel : DataContextViewModel
     {
         #region Constants
 
@@ -30,8 +31,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Fields
 
         private SearchTabResult groupSearch;
-
-        private PageMapping pageMapping;
 
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
@@ -52,7 +51,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Constructors
 
-        public SearchViewModel()
+        [Dependency]
+        public SearchViewModel(IDataContextService database):base(database)
         {
             CreateCommands();
 
@@ -66,6 +66,9 @@ namespace PhoneGuitarTab.UI.ViewModel
 
 
         #region Properties
+
+        [Dependency]
+        private TabFileStorage TabFileStorage { get; set; }
 
         public SearchTabResultSummary SearchGroupTabsSummary
         {
@@ -266,16 +269,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             return true;
         }
 
-        private PageMapping PageMapping
-        {
-            get
-            {
-                if (pageMapping == null)
-                    pageMapping = Container.Resolve<PageMapping>();
-                return pageMapping;
-            }
-        }
-
         #endregion Private properties
 
 
@@ -411,7 +404,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Type = tab.Description
             };
 
-            var filePath = TabStorageHelper.CreateTabFilePath();
+            var filePath = TabFileStorage.CreateTabFilePath();
 
             //TODO examine IO errors
             SearchTabDownloader downloader = new SearchTabDownloader(entry, filePath);
@@ -446,7 +439,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoHome()
         {
             MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
-            navigationService.NavigateTo(PageType.Get(ViewType.Startup));
+            NavigationService.NavigateTo(Strings.Startup);
         }
 
         #endregion Command handlers
@@ -468,7 +461,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Group = entry.Artist,
                     Rating = entry.Rating,
                     Type = entry.Type,
-                    ImageUrl = TabDataContextHelper.GetTabTypeByName(entry.Type).ImageUrl,
+                    ImageUrl = Database.GetTabTypeByName(entry.Type).ImageUrl,
                     Votes = entry.Votes,
                     Version = entry.Version
                 });
@@ -489,7 +482,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                             groupSearch.Summary.PageCount > 1
                                 ? Visibility.Visible
                                 : Visibility.Collapsed;
-                        SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs));
+                        SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
                         FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
                         SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
                         RaisePropertyChanged("SelectedPage");
@@ -516,13 +509,13 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Tab downloadedTab = new Tab()
                     {
                         Name = tab.Name,
-                        Group = TabDataContextHelper.GetOrCreateGroupByName(tab.Group),
-                        TabType = TabDataContextHelper.GetTabTypeByName(tab.Type),
+                        Group = Database.GetOrCreateGroupByName(tab.Group),
+                        TabType = Database.GetTabTypeByName(tab.Type),
                         Rating = tab.Rating,
                         Path = filePath
                     };
 
-                    TabDataContextHelper.InsertTab(downloadedTab);
+                    Database.InsertTab(downloadedTab);
 
                     MessengerInstance.Send<TabsDownloadedMessage>(new TabsDownloadedMessage());
 
@@ -548,8 +541,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void CreateCommands()
         {
-            CollectionCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Collection)));
-            SettingsCommand = new RelayCommand(() => navigationService.NavigateTo(PageType.Get(ViewType.Settings)));
             HomeCommand = new RelayCommand(DoHome);
             LaunchSearch = new RelayCommand<string>(DoLaunchSearch);
             LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);

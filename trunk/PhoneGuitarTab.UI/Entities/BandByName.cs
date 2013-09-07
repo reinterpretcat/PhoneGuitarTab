@@ -5,15 +5,20 @@ using System.Linq;
 
 namespace PhoneGuitarTab.UI.Entities
 {
+    using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Core.Primitives;
+
     public class BandByName : List<BandInGroup>
     {
         private static readonly string Groups = "#abcdefghijklmnopqrstuvwxyz";
         private Dictionary<string, BandInGroup> bandGroupsDictionary;
 
+        [Dependency]
+        private IDataContextService Database { get; set; }
+
         public BandByName()
         {
-            IDataContextService database = Container.Resolve<IDataContextService>();
-            var allGroups = (from Group g in database.Groups
+            var allGroups = (from Group g in Database.Groups
                              orderby g.Name
                              select g).ToList();
 
@@ -24,7 +29,7 @@ namespace PhoneGuitarTab.UI.Entities
             foreach (Group bandGroup in allGroups)
             {
                 //get count of tab for this group
-                var count = (from Tab t in database.Tabs
+                var count = (from Tab t in Database.Tabs
                              where t.Group.Id == bandGroup.Id
                             select t).Count();
 

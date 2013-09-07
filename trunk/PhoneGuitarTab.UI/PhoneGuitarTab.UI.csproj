@@ -74,12 +74,6 @@
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="system.data.linq" />
-    <Reference Include="System.Runtime">
-      <HintPath>..\packages\Microsoft.Bcl.1.0.19\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.1.0.19\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -100,10 +94,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Bootstrap\ComponentRoot.cs" />
+    <Compile Include="Bootstrap\CoreBootstrapperPlugin.cs" />
+    <Compile Include="Bootstrap\DataBootstrapperPlugin.cs" />
+    <Compile Include="Bootstrap\NavigationBootstrapperPlugin.cs" />
+    <Compile Include="Bootstrap\TabBootstraperPlugin.cs" />
     <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
+    <Compile Include="Infrastructure\DefaultTrace.cs" />
     <Compile Include="Infrastructure\Messages\RefreshTabsMessage.cs" />
     <Compile Include="Infrastructure\Messages\TabsDownloadedMessage.cs" />
-    <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="Data\DataContextService.cs" />
+    <Compile Include="Data\IDataContextService.cs" />
+    <Compile Include="Data\TabDataContext.cs" />
+    <Compile Include="Strings.cs" />
     <Compile Include="View\StartupScreens\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>
@@ -135,23 +138,19 @@
     <Compile Include="Entities\TabEntity.cs" />
     <Compile Include="Entities\TabInGroup.cs" />
     <Compile Include="Infrastructure\Converters.cs" />
-    <Compile Include="Infrastructure\Enums\EnumType.cs" />
     <Compile Include="Infrastructure\Messages\CollectionTabRemovedMessage.cs" />
     <Compile Include="Infrastructure\Messages\GroupTabRemovedMessage.cs" />
-    <Compile Include="Infrastructure\PageType.cs" />
-    <Compile Include="Infrastructure\TabDataContextHelper.cs" />
-    <Compile Include="Infrastructure\TabStorageHelper.cs" />
+    <Compile Include="Infrastructure\TabFileStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\DataContextViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModel.cs" />
-    <Compile Include="Infrastructure\Enums\SearchType.cs" />
+    <Compile Include="Infrastructure\SearchType.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\StartupViewModel.cs" />
     <Compile Include="Infrastructure\Messages\HistoryTabRemovedMessage.cs" />
     <Compile Include="ViewModel\TextTabViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -263,7 +262,6 @@
     <Content Include="Images\light\Find_light.png" />
     <Content Include="Images\light\refresh.png" />
     <Content Include="Images\light\Text-Justify-Align_light.png" />
-    <Content Include="README_FIRST.txt" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
@@ -280,10 +278,6 @@
     <ProjectReference Include="..\PhoneGuitarTab.Controls\PhoneGuitarTab.Controls.csproj">
       <Project>{7396B903-5243-401D-84E5-5102C952ED04}</Project>
       <Name>PhoneGuitarTab.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PhoneGuitarTab.Data\PhoneGuitarTab.Data.csproj">
-      <Project>{7D931B37-264D-4605-89C7-548BF544A22C}</Project>
-      <Name>PhoneGuitarTab.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
       <Project>{06005B3A-BCE2-4B59-95BD-8A697F758F35}</Project>
@@ -316,9 +310,4 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
 </Project>

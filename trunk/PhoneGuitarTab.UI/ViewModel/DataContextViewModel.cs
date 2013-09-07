@@ -6,19 +6,27 @@ using System.Windows;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
+    using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Core.IsolatedStorage;
+    using PhoneGuitarTab.Core.Navigation;
+
     public class DataContextViewModel: Core.ViewModel
     {
+        [Dependency]
+        protected INavigationService NavigationService { get; private set; }
+
+        [Dependency]
+        protected IFileSystemService FileSystem { get; private set; }
+
         protected IDataContextService Database { get; private set; }
+
         protected bool IsRequireBinding { get; set; }
 
-        protected virtual void DataBind()
-        {
-            
-        }
+      
 
-        public DataContextViewModel()
+        public DataContextViewModel(IDataContextService database)
         {
-            Database = Container.Resolve<IDataContextService>();
+            Database = database;
             Database.OnChanged += (o, e) => { IsRequireBinding = true; };
             IsRequireBinding = true;
         }
@@ -39,6 +47,11 @@ namespace PhoneGuitarTab.UI.ViewModel
         public override void SaveStateTo(IDictionary<string, object> state)
         {
             
+        }
+
+        protected virtual void DataBind()
+        {
+
         }
     }
 }

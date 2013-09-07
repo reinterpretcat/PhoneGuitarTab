@@ -1,18 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
-using PhoneGuitarTab.Core.Navigation;
 using System.Collections.Generic;
 
 namespace PhoneGuitarTab.Core
 {
     public class ViewModel : ViewModelBase
     {
-        protected INavigationService navigationService;
- 
-        public ViewModel()
-        {
-            navigationService = Container.Resolve<INavigationService>();
-        }
-
         private Dictionary<string, object> navigationParameters = null;
         public Dictionary<string, object> NavigationParameters
         {

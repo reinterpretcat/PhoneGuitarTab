@@ -1,19 +1,19 @@
-﻿using PhoneGuitarTab.Core;
-using PhoneGuitarTab.Data;
-using System.Collections.ObjectModel;
-using System.Linq;
-
-namespace PhoneGuitarTab.UI.Entities
+﻿namespace PhoneGuitarTab.UI.Entities
 {
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
+    using PhoneGuitarTab.Data;
+    using PhoneGuitarTab.Core.Dependencies;
+
     public class TabsForBand : TabsGroupsCollection
     {
         #region Constructors
 
-        public TabsForBand(int groupId)
+        public TabsForBand(int groupId, IDataContextService database)
+            : base(database)
         {
-            IDataContextService database = Container.Resolve<IDataContextService>();
-            
-            Tabs = new ObservableCollection<TabEntity>((from Tab tab in database.Tabs
+            Tabs = new ObservableCollection<TabEntity>((from Tab tab in Database.Tabs
                        orderby tab.Name
                        select tab).Where(tab => tab.GroupId == groupId).Select(tab => tab.CreateEntity()));
 

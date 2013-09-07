@@ -12,7 +12,7 @@ using System.Windows.Navigation;
 namespace PhoneGuitarTab.UI
 {
     public partial class App : Application
-    {      
+    {
         /// <summary>
         /// Constructor for the Application object.
         /// </summary>
@@ -27,7 +27,6 @@ namespace PhoneGuitarTab.UI
             // Phone-specific initialization
             InitializePhoneApplication();
 
-            CheckDatabaseVesion();
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
@@ -59,8 +58,7 @@ namespace PhoneGuitarTab.UI
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
 
-        public static string dbConnectionString = "Data Source=isostore:/TabData.sdf";
-
+        
         public static string Version
         {
             get
@@ -124,41 +122,7 @@ namespace PhoneGuitarTab.UI
         #endregion Event handlers
 
 
-        private static void CheckDatabaseVesion()
-        {
-
-            TabDataContext dataContext = new TabDataContext(dbConnectionString);
-            DatabaseSchemaUpdater dbUpdater = dataContext.CreateDatabaseSchemaUpdater();
-
-            if (dbUpdater.DatabaseSchemaVersion < Container.DB_VERSION)
-            {
-                UpdateDataBase(dbUpdater);
-            }
-        }
-
-        private static void UpdateDataBase(DatabaseSchemaUpdater dbUpdater)
-        {
-            // Add the new database version.
-            dbUpdater.DatabaseSchemaVersion = Container.DB_VERSION;
-
-            var database = Container.Resolve<IDataContextService>();
-
-            // - changes since db version 0 -
-            if (database.TabTypes.Where(type => type.Name == "chords").Count() == 0)
-                database.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/all/TabText.png" });
-            if (database.TabTypes.Where(type => type.Name == "drums").Count() == 0)
-                database.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/all/TabText.png" });
-            // --
-
-            database.SubmitChanges();
-
-            //here goes schema update if needed
-            //...
-
-            // Perform the database update in a single transaction.
-            dbUpdater.Execute();
-        }
-
+        
 
         #region Phone application initialization
 

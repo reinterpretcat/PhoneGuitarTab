@@ -3,19 +3,18 @@ using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Entities;
-using PhoneGuitarTab.UI.Infrastructure;
-using PhoneGuitarTab.UI.Infrastructure.Enums;
 using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Windows;
+
 using Group = PhoneGuitarTab.Data.Group;
-
-
 namespace PhoneGuitarTab.UI.ViewModel
 {
+    using PhoneGuitarTab.Core.Dependencies;
+
     public class GroupViewModel : DataContextViewModel
     {
         #region  Fields
@@ -32,7 +31,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Constructors
 
-        public GroupViewModel()
+        [Dependency]
+        public GroupViewModel(IDataContextService database):base(database)
         {
             CreateCommands();
         }
@@ -135,7 +135,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             if (CurrentGroup != null)
             {
-                Tabs = new TabsForBand(CurrentGroup.Id);
+                Tabs = new TabsForBand(CurrentGroup.Id, Database);
 
                 NothingFound = false;
 
@@ -226,7 +226,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
-                navigationService.NavigateTo(PageType.Get(ViewType.TextTab), new Dictionary<string, object>()
+                NavigationService.NavigateTo(Strings.TextTab, new Dictionary<string, object>()
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
@@ -236,14 +236,14 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoRemoveTab(int id)
         {
-            Deployment.Current.Dispatcher.BeginInvoke(() => { TabDataContextHelper.DeleteTabById(id); DataBind(); });
+            Deployment.Current.Dispatcher.BeginInvoke(() => { Database.DeleteTabById(id); DataBind(); });
 
             MessengerInstance.Send<GroupTabRemovedMessage>(new GroupTabRemovedMessage(id));
         }
 
         private void DoSearch(Group group)
         {
-            navigationService.NavigateTo(PageType.Get(ViewType.Search), new Dictionary<string, object>() { {"SearchTerm", group.Name} });
+            NavigationService.NavigateTo(Strings.Search, new Dictionary<string, object>() { {"SearchTerm", group.Name} });
         }
 
         private void DoRefreshInfo(Group group)
@@ -253,7 +253,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoHome()
         {
-            navigationService.NavigateTo(PageType.Get(ViewType.Startup));
+            NavigationService.NavigateTo(Strings.Startup);
         }
 
         #endregion Command handlers
