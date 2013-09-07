@@ -112,18 +112,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Primitives\.svn\all-wcprops" />
-    <None Include="Primitives\.svn\entries" />
-    <None Include="Primitives\.svn\text-base\Lazy.cs.svn-base" />
-    <None Include="Primitives\.svn\text-base\Tuple.cs.svn-base" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Primitives\.svn\prop-base\" />
-    <Folder Include="Primitives\.svn\props\" />
-    <Folder Include="Primitives\.svn\tmp\prop-base\" />
-    <Folder Include="Primitives\.svn\tmp\props\" />
-    <Folder Include="Primitives\.svn\tmp\text-base\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
