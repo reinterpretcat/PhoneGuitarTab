@@ -13,11 +13,12 @@ namespace PhoneGuitarTab.UI.Entities
         private static readonly string Groups = "#abcdefghijklmnopqrstuvwxyz";
         private Dictionary<string, BandInGroup> bandGroupsDictionary;
 
-        [Dependency]
         private IDataContextService Database { get; set; }
 
-        public BandByName()
+        public BandByName(IDataContextService database)
         {
+            Database = database;
+
             var allGroups = (from Group g in Database.Groups
                              orderby g.Name
                              select g).ToList();

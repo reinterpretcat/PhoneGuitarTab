@@ -22,8 +22,6 @@
         [Dependency]
         private IContainer Container { get; set; }
 
-        
-
         public bool Run()
         {
             Action<IDataContextService> initialzeDatabase = service =>

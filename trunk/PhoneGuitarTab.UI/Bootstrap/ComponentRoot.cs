@@ -19,13 +19,10 @@
             _container.Register(Component.For<IBootstrapperPlugin>().Use<CoreBootstrapperPlugin>().Named("Core").Singleton());
             _container.Register(Component.For<IBootstrapperPlugin>().Use<DataBootstrapperPlugin>().Named("Data").Singleton());
             _container.Register(Component.For<IBootstrapperPlugin>().Use<NavigationBootstrapperPlugin>().Named("Navigation").Singleton());
-            _container.Register(Component.For<IBootstrapperPlugin>().Use<TabBootstraperPlugin>().Named("Tab").Singleton());
 
             _container.ResolveAll<IBootstrapperPlugin>().ToList()
                 .Aggregate(true, (current, task) => current & task.Run());
         }
-
-
 
         #region View models
 
@@ -95,6 +92,17 @@
             get
             {
                 return _container.Resolve<Core.ViewModel>(Strings.About);
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+          "CA1822:MarkMembersAsStatic",
+          Justification = "This non-static member is needed for data binding purposes.")]
+        public PhoneGuitarTab.Core.ViewModel Collection
+        {
+            get
+            {
+                return _container.Resolve<Core.ViewModel>(Strings.Collection);
             }
         }
 

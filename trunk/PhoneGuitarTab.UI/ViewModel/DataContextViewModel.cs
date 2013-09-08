@@ -27,7 +27,10 @@ namespace PhoneGuitarTab.UI.ViewModel
         public DataContextViewModel(IDataContextService database)
         {
             Database = database;
-            Database.OnChanged += (o, e) => { IsRequireBinding = true; };
+            Database.OnChanged += (o, e) =>
+                {
+                    IsRequireBinding = true;
+                };
             IsRequireBinding = true;
         }
 

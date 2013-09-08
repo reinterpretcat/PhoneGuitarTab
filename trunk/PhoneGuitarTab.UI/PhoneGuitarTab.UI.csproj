@@ -98,7 +98,6 @@
     <Compile Include="Bootstrap\CoreBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\DataBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\NavigationBootstrapperPlugin.cs" />
-    <Compile Include="Bootstrap\TabBootstraperPlugin.cs" />
     <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
     <Compile Include="Infrastructure\DefaultTrace.cs" />
     <Compile Include="Infrastructure\Messages\RefreshTabsMessage.cs" />
@@ -107,6 +106,7 @@
     <Compile Include="Data\IDataContextService.cs" />
     <Compile Include="Data\TabDataContext.cs" />
     <Compile Include="Strings.cs" />
+    <Compile Include="ViewModel\CollectionViewModel.cs" />
     <Compile Include="View\StartupScreens\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>

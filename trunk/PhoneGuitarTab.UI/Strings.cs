@@ -13,5 +13,6 @@ namespace PhoneGuitarTab.UI
         public const string Help = "Help";
         public const string About = "About";
         public const string Group = "Group";
+        public const string Collection = "Collection";
     }
 }
