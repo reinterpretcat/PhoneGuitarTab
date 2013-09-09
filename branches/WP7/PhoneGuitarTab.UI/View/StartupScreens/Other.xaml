@@ -1,0 +1,88 @@
+﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.View.Other"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+                    xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    Header="other"
+                    mc:Ignorable="d">
+    <Controls:PivotItem.Resources>
+        <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
+            <Setter Property="FontSize" Value="36" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="HyperlinkButton">
+                        <Border Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver" />
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0"
+                                                             Storyboard.TargetName="TextElement"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0.5" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TextElement" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border Margin="{StaticResource PhoneHorizontalMargin}"
+                                    Background="{TemplateBinding Background}"
+                                    Padding="20">
+                                <TextBlock x:Name="TextElement"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           Text="{TemplateBinding Content}"
+                                           TextWrapping="Wrap" />
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Controls:PivotItem.Resources>
+
+    <Grid Margin="28,40,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Orientation="Vertical"
+                    toolkit:TiltEffect.IsTiltEnabled="True">
+
+            <HyperlinkButton Content="help" Style="{StaticResource HyperlinkButtonContentStyle}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <Command:EventToCommand x:Name="HelpClick"
+                                                Command="{Binding GoTo}"
+                                                CommandParameterValue="Help" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </HyperlinkButton>
+
+            <HyperlinkButton Content="about" Style="{StaticResource HyperlinkButtonContentStyle}" Margin="0,20">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <Command:EventToCommand x:Name="AboutClick"
+                                                Command="{Binding GoTo}"
+                                                CommandParameterValue="About" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </HyperlinkButton>
+
+        </StackPanel>
+    </Grid>
+
+</Controls:PivotItem>

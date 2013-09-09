@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{79393645-967F-4D71-BB54-5D92858C141E}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PhoneGuitarTab.UI</RootNamespace>
+    <AssemblyName>PhoneGuitarTab.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>PhoneGuitarTab.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>PhoneGuitarTab.UI.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Coding4Fun.Toolkit.Controls">
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.6\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras.WP71">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\GalaSoft.MvvmLight.Extras.WP71.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.WP71">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\GalaSoft.MvvmLight.WP71.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPtoolkit.4.2013.06.11\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="system.data.linq" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\sl4-wp71\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="mscorlib.extensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AppResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Bootstrap\ComponentRoot.cs" />
+    <Compile Include="Bootstrap\CoreBootstrapperPlugin.cs" />
+    <Compile Include="Bootstrap\DataBootstrapperPlugin.cs" />
+    <Compile Include="Bootstrap\NavigationBootstrapperPlugin.cs" />
+    <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
+    <Compile Include="Infrastructure\DefaultTrace.cs" />
+    <Compile Include="Infrastructure\Messages\RefreshTabsMessage.cs" />
+    <Compile Include="Infrastructure\Messages\TabsDownloadedMessage.cs" />
+    <Compile Include="Data\DataContextService.cs" />
+    <Compile Include="Data\IDataContextService.cs" />
+    <Compile Include="Data\TabDataContext.cs" />
+    <Compile Include="Strings.cs" />
+    <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="View\StartupScreens\Bands.xaml.cs">
+      <DependentUpon>Bands.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartupScreens\Other.xaml.cs">
+      <DependentUpon>Other.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartupScreens\Tabs.xaml.cs">
+      <DependentUpon>Tabs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartupScreens\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartupScreens\History.xaml.cs">
+      <DependentUpon>History.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BandByName.cs" />
+    <Compile Include="Entities\BandInGroup.cs" />
+    <Compile Include="Entities\ControlExtentions.cs" />
+    <Compile Include="Entities\TabsForBand.cs" />
+    <Compile Include="Entities\TabsCollection.cs" />
+    <Compile Include="Entities\TabsForHistory.cs" />
+    <Compile Include="Controls\RatingControl\RatingControl.xaml.cs">
+      <DependentUpon>RatingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RatingControl\RatingStar.xaml.cs">
+      <DependentUpon>RatingStar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TabsByName.cs" />
+    <Compile Include="Entities\TabEntity.cs" />
+    <Compile Include="Entities\TabInGroup.cs" />
+    <Compile Include="Infrastructure\Converters.cs" />
+    <Compile Include="Infrastructure\Messages\CollectionTabRemovedMessage.cs" />
+    <Compile Include="Infrastructure\Messages\GroupTabRemovedMessage.cs" />
+    <Compile Include="Infrastructure\TabFileStorage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\AboutViewModel.cs" />
+    <Compile Include="ViewModel\HelpViewModel.cs" />
+    <Compile Include="ViewModel\DataContextViewModel.cs" />
+    <Compile Include="ViewModel\GroupViewModel.cs" />
+    <Compile Include="Infrastructure\SearchType.cs" />
+    <Compile Include="ViewModel\SearchViewModel.cs" />
+    <Compile Include="ViewModel\StartupViewModel.cs" />
+    <Compile Include="Infrastructure\Messages\HistoryTabRemovedMessage.cs" />
+    <Compile Include="ViewModel\TextTabViewModel.cs" />
+    <Compile Include="View\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpView.xaml.cs">
+      <DependentUpon>HelpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GroupView.xaml.cs">
+      <DependentUpon>GroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchForBandView.xaml.cs">
+      <DependentUpon>SearchForBandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartupView.xaml.cs">
+      <DependentUpon>StartupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TextTabView.xaml.cs">
+      <DependentUpon>TextTabView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="CommonResources\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartupScreens\Bands.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StartupScreens\Other.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StartupScreens\Tabs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StartupScreens\Search.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StartupScreens\History.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RatingControl\RatingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RatingControl\RatingStar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\HelpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SearchForBandView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\StartupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TextTabView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\dark\appbar.feature.search.rest.png" />
+    <Content Include="Images\dark\appbar.feature.home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\dark\appbar.folder.rest.png" />
+    <Content Include="Images\dark\Document-Download_dark.png" />
+    <Content Include="Images\dark\Electric-Guitar_dark.png" />
+    <Content Include="Images\dark\Find_dark.png" />
+    <Content Include="Images\dark\refresh.png" />
+    <Content Include="Images\dark\Text-Justify-Align_dark.png" />
+    <Content Include="Images\light\appbar.feature.search.rest.png" />
+    <Content Include="Images\light\appbar.feature.home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\light\appbar.folder.rest.png" />
+    <Content Include="Images\light\Document-Download_light.png" />
+    <Content Include="Images\light\Electric-Guitar_light.png" />
+    <Content Include="Images\light\Find_light.png" />
+    <Content Include="Images\light\refresh.png" />
+    <Content Include="Images\light\Text-Justify-Align_light.png" />
+    <Content Include="SplashScreenImage.jpg" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AppResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhoneGuitarTab.Controls\PhoneGuitarTab.Controls.csproj">
+      <Project>{7396B903-5243-401D-84E5-5102C952ED04}</Project>
+      <Name>PhoneGuitarTab.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
+      <Project>{06005B3A-BCE2-4B59-95BD-8A697F758F35}</Project>
+      <Name>PhoneGuitarTab.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneGuitarTab.Search\PhoneGuitarTab.Search.csproj">
+      <Project>{5CF049D1-5C85-45EE-A481-3D25970141FA}</Project>
+      <Name>PhoneGuitarTab.Search</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

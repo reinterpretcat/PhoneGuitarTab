@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
+  <App xmlns="" ProductID="{9126c4a3-37c3-40d4-961d-dbb4be85bd70}" Title="Phone Guitar Tab" RuntimeType="Silverlight" Version="0.3" Genre="apps.normal"  Author="ILya Builuk" Description="Guitar tabulature viewer" Publisher="Ilya Builuk">
+    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+    <Capabilities>
+      <Capability Name="ID_CAP_NETWORKING"/>
+      <Capability Name="ID_CAP_WEBBROWSERCOMPONENT"/>
+    </Capabilities>
+    <Tasks>
+      <DefaultTask  Name ="_default" NavigationPage="View\StartupView.xaml"/>
+    </Tasks>
+    <Tokens>
+      <PrimaryToken TokenID="PhoneGuitarTab.UIToken" TaskName="_default">
+        <TemplateType5>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+          <Count>0</Count>
+          <Title>PhoneGuitarTab</Title>
+        </TemplateType5>
+      </PrimaryToken>
+    </Tokens>
+  </App>
+</Deployment>

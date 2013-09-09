@@ -1,0 +1,110 @@
+﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.GroupView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
+               xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Entities"
+               x:Name="root"
+               DataContext="{Binding Group,
+                                     Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="True"
+               mc:Ignorable="d">
+
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--  Pivot Control  -->
+        <Grid.Resources>
+            <Infrastructure:UpperStringConverter x:Name="UpperStr" />
+            <Infrastructure:IntToStringConverter x:Name="IntToStr" />
+            <Infrastructure:StringToIntConverter x:Key="stringToInt" />
+            <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+        </Grid.Resources>
+        <controls:Pivot x:Name="PivotControl"
+                        Title="{Binding CurrentGroup.Name,
+                                        Converter={StaticResource UpperStr}}"
+                        SelectionChanged="PivotSelectionChangedHandler">
+            <controls:PivotItem Header="tabs">
+                <ListBox x:Name="TabList"
+                         ItemTemplate="{StaticResource TabItemDataTemplate}"
+                         ItemsSource="{Binding Path=Tabs.Tabs}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Tap">
+                            <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+            </controls:PivotItem>
+
+            <controls:PivotItem x:Name="InfoPivotItem" Header="info">
+                <ScrollViewer>
+                    <StackPanel>
+                        <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"
+                                     TextAlignment="Justify"
+                                     Visibility="{Binding InfoLoaded,
+                                                          Converter={StaticResource boolVisibility}}">
+                            <Paragraph>
+                                <Run Text="{Binding Summary}" />
+                            </Paragraph>
+                        </RichTextBox>
+
+                        <toolkit:PerformanceProgressBar x:Name="loadingBar"
+                                                        VerticalAlignment="Top"
+                                                        IsIndeterminate="{Binding IsLoading}"
+                                                        Visibility="{Binding IsLoading,
+                                                                             Converter={StaticResource boolVisibility}}" />
+                        <TextBlock Margin="0,20"
+                                   HorizontalAlignment="Center"
+                                   FontSize="30"
+                                   Opacity="0.5"
+                                   Text="Sorry, nothing found."
+                                   Visibility="{Binding NothingFound,
+                                                        Converter={StaticResource boolVisibility}}" />
+
+                        <HyperlinkButton Margin="0,0,0,50"
+                                         HorizontalAlignment="Right"
+                                         Content="More.."
+                                         Visibility="{Binding InfoLoaded,
+                                                              Converter={StaticResource boolVisibility}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:EventToCommand Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HyperlinkButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PivotItem>
+        </controls:Pivot>
+
+        <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
+            <!--  IsEnabled for this button is changing from codebehind PivotSelectionChangedHandler()  -->
+            <custom:BindableApplicationBarIconButton x:Name="RefreshButton"
+                                                     Command="{Binding RefreshInfoCommand}"
+                                                     CommandParameter="{Binding CurrentGroup}"
+                                                     IconUri="/Images/dark/refresh.png"
+                                                     Text="refresh" />
+            <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}"
+                                                     CommandParameter="{Binding CurrentGroup}"
+                                                     IconUri="/Images/dark/appbar.feature.search.rest.png"
+                                                     Text="more online" />
+            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}"
+                                                     IconUri="/Images/dark/appbar.feature.home.png"
+                                                     Text="to all tabs" />
+        </custom:BindableApplicationBar>
+    </Grid>
+</Core:ViewPage>
