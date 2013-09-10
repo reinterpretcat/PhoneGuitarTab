@@ -13,12 +13,12 @@ namespace PhoneGuitarTab.UI.ViewModel
     public class DataContextViewModel: Core.ViewModel
     {
         [Dependency]
-        protected INavigationService NavigationService { get; private set; }
+        protected INavigationService NavigationService { get; set; }
 
         [Dependency]
-        protected IFileSystemService FileSystem { get; private set; }
+        protected IFileSystemService FileSystem { get; set; }
 
-        protected IDataContextService Database { get; private set; }
+        protected IDataContextService Database { get; set; }
 
         protected bool IsRequireBinding { get; set; }
 
