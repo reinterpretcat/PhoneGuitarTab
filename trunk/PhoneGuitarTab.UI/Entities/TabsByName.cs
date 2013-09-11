@@ -17,12 +17,18 @@ namespace PhoneGuitarTab.UI.Entities
             Initialize();
         }
 
-        public TabsByName(IDataContextService database): base(database)
+        public TabsByName(IDataContextService database, bool createEmpty = false): base(database)
         {
-            Tabs = new ObservableCollection<TabEntity>((from Tab tab in Database.Tabs
-                       orderby tab.Name
-                       select tab).Select(tab => tab.CreateEntity()));
-
+            if (createEmpty)
+            {
+                Tabs = new ObservableCollection<TabEntity>();
+            }
+            else
+            {
+                Tabs = new ObservableCollection<TabEntity>((from Tab tab in Database.Tabs
+                                                            orderby tab.Name
+                                                            select tab).Select(tab => tab.CreateEntity()));
+            }
             Initialize();
         }
 

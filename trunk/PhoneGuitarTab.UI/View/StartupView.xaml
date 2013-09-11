@@ -1,17 +1,13 @@
 ﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.StartupView"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-               xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+               xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
-               xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
-               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-               xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                xmlns:views="clr-namespace:PhoneGuitarTab.UI.View"
                x:Name="root"
                DataContext="{Binding Startup,
@@ -41,7 +37,7 @@
             </i:Interaction.Triggers>
         </Controls:Pivot>
 
-        <toolkit:PerformanceProgressBar x:Name="performanceBar"
+        <ProgressBar x:Name="performanceBar"
                                         VerticalAlignment="Top"
                                         IsIndeterminate="{Binding Search.IsSearching,
                                                                   Source={StaticResource Locator},

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using PhoneGuitarTab.Core.Primitives;
-using PhoneGuitarTab.Core.Dependencies.Interception;
 using PhoneGuitarTab.Core.Dependencies.Interception.Proxies;
 using PhoneGuitarTab.Core.Dependencies.Lifetime;
 
@@ -15,7 +13,7 @@ namespace PhoneGuitarTab.Core.Dependencies
     public sealed class Container : IContainer
     {
         //TODO use specific type here
-        private readonly Dictionary<Tuple<string, Type>, ILifetimeManager> _typeMapping = new Dictionary<Tuple<string, Type>, ILifetimeManager>();
+        private readonly Dictionary<Primitives.Tuple<string, Type>, ILifetimeManager> _typeMapping = new Dictionary<Primitives.Tuple<string, Type>, ILifetimeManager>();
 
         private readonly object[] _emptyArguments = new object[0];
         private readonly object _syncLock = new object();
@@ -42,7 +40,7 @@ namespace PhoneGuitarTab.Core.Dependencies
             try
             {
                 //try to find value using full key
-                var key = new Tuple<string, Type>(name, type);
+                var key = new Primitives.Tuple<string, Type>(name, type);
                 if(_typeMapping.ContainsKey(key))
                     return ResolveDependencies(ResolveLifetime(_typeMapping[key]).GetInstance());
 
@@ -126,6 +124,9 @@ namespace PhoneGuitarTab.Core.Dependencies
                     }
                     //set value to target property
                     property.SetValue(instance, value, null);
+                   // objectType.InvokeMember(property.Name, BindingFlags.Public | BindingFlags.NonPublic | 
+                   //     BindingFlags.SetProperty | BindingFlags.Instance, 
+                   //     null, instance, new [] { value });
                 }
             }
             return proxy ?? instance;
@@ -357,7 +358,7 @@ namespace PhoneGuitarTab.Core.Dependencies
             lifetimeManager.TargetType = c;
             lifetimeManager.InterfaceType = t;
             lock (_syncLock)
-                _typeMapping.Add(new Tuple<string, Type>(name, t), lifetimeManager);
+                _typeMapping.Add(new Primitives.Tuple<string, Type>(name, t), lifetimeManager);
             return this;
         }
 
@@ -451,7 +452,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         {
             //TODO: check whether the type is already registred
             lock (_syncLock)
-                _typeMapping.Add(new Tuple<string, Type>(name, t), new ExternalLifetimeManager(instance));
+                _typeMapping.Add(new Primitives.Tuple<string, Type>(name, t), new ExternalLifetimeManager(instance));
             return this;
         }
 

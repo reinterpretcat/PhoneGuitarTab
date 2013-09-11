@@ -11,7 +11,6 @@ namespace PhoneGuitarTab.Core.Navigation
     using System.Windows.Navigation;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Diagnostic;
-    using PhoneGuitarTab.Core.Primitives;
 
     /// <summary>
     /// Default implementation of navigation service
@@ -31,9 +30,9 @@ namespace PhoneGuitarTab.Core.Navigation
         public event NavigatingCancelEventHandler Navigating;
 
         private readonly Dictionary<string, Uri> _uriMapping = new Dictionary<string, Uri>();
-        private readonly Dictionary<string, Lazy<ViewModel>> _viewModelMapping = new Dictionary<string, Lazy<ViewModel>>();
+        private readonly Dictionary<string, Primitives.Lazy<ViewModel>> _viewModelMapping = new Dictionary<string, Primitives.Lazy<ViewModel>>();
 
-        public NavigationService(Dictionary<string, Uri> uriMapping, Dictionary<string, Lazy<ViewModel>> viewModelMapping)
+        public NavigationService(Dictionary<string, Uri> uriMapping, Dictionary<string, Primitives.Lazy<ViewModel>> viewModelMapping)
         {
             _uriMapping = uriMapping;
             _viewModelMapping = viewModelMapping;

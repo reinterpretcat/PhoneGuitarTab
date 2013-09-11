@@ -1,20 +1,19 @@
 ﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.Notation.SearchForBandView"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
+               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
                xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
                xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
-               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                x:Name="root"
-               DataContext="{Binding Search,
-                                     Source={StaticResource Locator}}"
+               DataContext="{Binding Search, Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
                Foreground="{StaticResource PhoneForegroundBrush}"
@@ -38,21 +37,15 @@
             <Run Text="online" />
         </TextBlock>
 
-        <toolkit:LongListSelector x:Name="tabsList"
+        <controls:LongListSelector x:Name="tabsList"
                                   Grid.Row="1"
                                   Background="Transparent"
-                                  GroupItemTemplate="{StaticResource SearchListGroupItemTemplate}"
+                                  JumpListStyle="{StaticResource SearchListJumpListStyle}"
                                   ItemTemplate="{StaticResource SearchTabItemTemplate}"
                                   ItemsSource="{Binding SearchGroupTabs}"
                                   Tag="{Binding FirstTabInList}">
 
-            <toolkit:LongListSelector.GroupItemsPanel>
-                <ItemsPanelTemplate>
-                    <toolkit:WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </toolkit:LongListSelector.GroupItemsPanel>
-
-            <toolkit:LongListSelector.GroupHeaderTemplate>
+            <controls:LongListSelector.GroupHeaderTemplate>
                 <DataTemplate>
                     <Border Background="Transparent">
                         <Border Width="75"
@@ -66,9 +59,9 @@
                         </Border>
                     </Border>
                 </DataTemplate>
-            </toolkit:LongListSelector.GroupHeaderTemplate>
+            </controls:LongListSelector.GroupHeaderTemplate>
 
-            <toolkit:LongListSelector.ListHeaderTemplate>
+            <controls:LongListSelector.ListHeaderTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.HeaderPagingVisibility, ElementName=root}">
@@ -101,9 +94,9 @@
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
-            </toolkit:LongListSelector.ListHeaderTemplate>
+            </controls:LongListSelector.ListHeaderTemplate>
 
-            <toolkit:LongListSelector.ListFooterTemplate>
+            <controls:LongListSelector.ListFooterTemplate>
                 <DataTemplate>
                     <Button HorizontalAlignment="Stretch"
                             Background="{StaticResource PhoneAccentBrush}"
@@ -114,11 +107,11 @@
                         to top
                     </Button>
                 </DataTemplate>
-            </toolkit:LongListSelector.ListFooterTemplate>
+            </controls:LongListSelector.ListFooterTemplate>
 
-        </toolkit:LongListSelector>
+        </controls:LongListSelector>
 
-        <toolkit:PerformanceProgressBar x:Name="performanceBar"
+        <ProgressBar x:Name="performanceBar"
                                         VerticalAlignment="Top"
                                         IsIndeterminate="{Binding IsSearching,
                                                                   Mode=TwoWay}"

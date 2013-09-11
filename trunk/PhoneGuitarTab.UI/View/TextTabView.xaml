@@ -6,8 +6,6 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
                DataContext="{Binding TextTab,
                                      Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"

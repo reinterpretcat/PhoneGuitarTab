@@ -1,24 +1,45 @@
-﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.View.Bands"
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.View.Bands"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-                    xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                     xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                    DataContext="{Binding Collection,
-                                          Source={StaticResource Locator}}"
+                    DataContext="{Binding Collection, Source={StaticResource Locator}}"
                     Header="bands"
                     mc:Ignorable="d">
-    <Controls:PivotItem.Resources>
+    <phone:PivotItem.Resources>
         <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush" />
-    </Controls:PivotItem.Resources>
+        <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="GridCellSize"  Value="99,99"/>
+            <Setter Property="LayoutMode" Value="Grid" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Border 
+                            Margin="6"
+                            Background="{Binding Converter={StaticResource groupBrush}}"
+                            IsHitTestVisible="{Binding HasItems}">
+                            <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
+                                   VerticalAlignment="Bottom"
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   FontSize="36"
+                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                   Text="{Binding Key}" />
+                        </Border>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PivotItem.Resources>
 
-    <toolkit:LongListSelector x:Name="GroupList"
+    <phone:LongListSelector x:Name="GroupList"
+                              IsGroupingEnabled="true" HideEmptyGroups ="true"
                               Background="Transparent"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                              JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"  
                               ItemsSource="{Binding Groups}">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Tap">
@@ -26,41 +47,20 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
 
-        <toolkit:LongListSelector.GroupItemsPanel>
-            <ItemsPanelTemplate>
-                <toolkit:WrapPanel Orientation="Horizontal" />
-            </ItemsPanelTemplate>
-        </toolkit:LongListSelector.GroupItemsPanel>
-        <toolkit:LongListSelector.GroupItemTemplate>
+       
+        <phone:LongListSelector.ItemTemplate>
             <DataTemplate>
-                <Border Width="99"
-                        Height="99"
-                        Margin="6"
-                        Background="{Binding Converter={StaticResource groupBrush}}"
-                        IsHitTestVisible="{Binding HasItems}">
-                    <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
-                               VerticalAlignment="Bottom"
-                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                               FontSize="36"
-                               Foreground="{StaticResource PhoneForegroundBrush}"
-                               Text="{Binding Key}" />
-                </Border>
-            </DataTemplate>
-        </toolkit:LongListSelector.GroupItemTemplate>
-
-        <toolkit:LongListSelector.ItemTemplate>
-            <DataTemplate>
-                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" toolkit:TiltEffect.IsTiltEnabled="True">
+                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image VerticalAlignment="Center"
-                           Source="../Images/light/Electric-Guitar_light.png"
+                           Source="/Images/light/Electric-Guitar_light.png"
                            Stretch="None"
                            Visibility="{StaticResource PhoneLightThemeVisibility}" />
                     <Image VerticalAlignment="Center"
-                           Source="../Images/dark/Electric-Guitar_dark.png"
+                           Source="/Images/dark/Electric-Guitar_dark.png"
                            Stretch="None"
                            Visibility="{StaticResource PhoneDarkThemeVisibility}" />
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -78,8 +78,8 @@
 
                 </Grid>
             </DataTemplate>
-        </toolkit:LongListSelector.ItemTemplate>
+        </phone:LongListSelector.ItemTemplate>
 
-    </toolkit:LongListSelector>
+    </phone:LongListSelector>
 
-</Controls:PivotItem>
+</phone:PivotItem>

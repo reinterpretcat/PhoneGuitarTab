@@ -1,15 +1,14 @@
-﻿<Controls:PivotItem x:Class="PhoneGuitarTab.UI.View.Other"
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.View.Other"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP71"
-                    xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                     Header="other"
                     mc:Ignorable="d">
-    <Controls:PivotItem.Resources>
+    <phone:PivotItem.Resources>
         <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
             <Setter Property="FontSize" Value="36" />
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -51,7 +50,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Controls:PivotItem.Resources>
+    </phone:PivotItem.Resources>
 
     <Grid Margin="28,40,0,0">
         <Grid.RowDefinitions>
@@ -59,9 +58,7 @@
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
-                    Orientation="Vertical"
-                    toolkit:TiltEffect.IsTiltEnabled="True">
-
+                    Orientation="Vertical">
             <HyperlinkButton Content="help" Style="{StaticResource HyperlinkButtonContentStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -85,4 +82,4 @@
         </StackPanel>
     </Grid>
 
-</Controls:PivotItem>
+</phone:PivotItem>

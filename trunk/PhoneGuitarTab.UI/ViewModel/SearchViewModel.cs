@@ -60,6 +60,8 @@ namespace PhoneGuitarTab.UI.ViewModel
             CurrentSearchText = String.Empty;
 
             HeaderPagingVisibility = Visibility.Collapsed;
+
+            _searchGroupTabs = new TabsByName(database, true);
         }
 
         #endregion Constructors
