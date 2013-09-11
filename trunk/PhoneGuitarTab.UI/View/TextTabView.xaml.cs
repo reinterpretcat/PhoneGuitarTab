@@ -5,7 +5,9 @@ using Microsoft.Phone.Controls;
 
 namespace PhoneGuitarTab.UI
 {
-    public partial class TextTabView : Core.ViewPage
+    using PhoneGuitarTab.Core.Views;
+
+    public partial class TextTabView : ViewPage
     {
         public TextTabView()
         {

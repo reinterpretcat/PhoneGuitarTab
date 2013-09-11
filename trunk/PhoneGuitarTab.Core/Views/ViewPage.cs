@@ -1,8 +1,9 @@
-﻿using Microsoft.Phone.Controls;
-using System.Windows.Navigation;
-
-namespace PhoneGuitarTab.Core
+﻿namespace PhoneGuitarTab.Core.Views
 {
+    using Microsoft.Phone.Controls;
+
+    using System.Windows.Navigation;
+
     /// <summary>
     /// PhoneApplicationPage with supporting of tombstoning
     /// </summary>
@@ -13,7 +14,7 @@ namespace PhoneGuitarTab.Core
         // Constructor
         public ViewPage()
         {
-            _isNewPageInstance = true;
+            this._isNewPageInstance = true;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -23,7 +24,7 @@ namespace PhoneGuitarTab.Core
             //if (e.NavigationMode != NavigationMode.Back)
            // {
                 // Save view model state in the page's State dictionary.
-                (DataContext as ViewModel).SaveStateTo(State);
+                (this.DataContext as ViewModel).SaveStateTo(this.State);
            // }
         }
 
@@ -35,7 +36,7 @@ namespace PhoneGuitarTab.Core
            // {
                 // restore page state
                 //if (State.Count > 0)
-                    (DataContext as ViewModel).LoadStateFrom(State);
+                    (this.DataContext as ViewModel).LoadStateFrom(this.State);
             //}
 
             // Set _isNewPageInstance to false. If the user navigates back to this page

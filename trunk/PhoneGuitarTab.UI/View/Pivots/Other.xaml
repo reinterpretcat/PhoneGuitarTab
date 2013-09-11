@@ -1,7 +1,7 @@
-﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.View.Other"
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.Pivots.Other"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+                    xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
                     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -62,9 +62,9 @@
             <HyperlinkButton Content="help" Style="{StaticResource HyperlinkButtonContentStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <Command:EventToCommand x:Name="HelpClick"
+                        <Command:ExecuteCommandAction x:Name="HelpClick"
                                                 Command="{Binding GoTo}"
-                                                CommandParameterValue="Help" />
+                                                CommandParameter="Help" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </HyperlinkButton>
@@ -72,9 +72,9 @@
             <HyperlinkButton Content="about" Style="{StaticResource HyperlinkButtonContentStyle}" Margin="0,20">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <Command:EventToCommand x:Name="AboutClick"
+                        <Command:ExecuteCommandAction x:Name="AboutClick"
                                                 Command="{Binding GoTo}"
-                                                CommandParameterValue="About" />
+                                                CommandParameter="About" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </HyperlinkButton>

@@ -1,11 +1,13 @@
 ﻿
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 using Microsoft.Phone.Tasks;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class AboutViewModel: Core.ViewModel
+    using PhoneGuitarTab.Core.Views;
+    using PhoneGuitarTab.Core.Views.Commands;
+
+    public class AboutViewModel: ViewModel
     {
 
         public AboutViewModel()
@@ -33,7 +35,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get
             {
-                return new RelayCommand(() =>
+                return new ExecuteCommand(() =>
                   new WebBrowserTask { URL = CompanyUrl }.Show());
             }
         }
@@ -42,7 +44,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get
             {
-                return new RelayCommand(() =>
+                return new ExecuteCommand(() =>
                 {
                     var emailComposeTask = new EmailComposeTask
                     {

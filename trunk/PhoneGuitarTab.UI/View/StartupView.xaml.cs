@@ -1,6 +1,8 @@
 ﻿namespace PhoneGuitarTab.UI.View
 {
-    public partial class StartupView : PhoneGuitarTab.Core.ViewPage
+    using PhoneGuitarTab.Core.Views;
+
+    public partial class StartupView : ViewPage
     {
         public StartupView()
         {

@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace PhoneGuitarTab.UI.View
+namespace PhoneGuitarTab.UI.Pivots
 {
     public partial class Search : PivotItem
     {

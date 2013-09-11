@@ -9,8 +9,9 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.IsolatedStorage;
     using PhoneGuitarTab.Core.Navigation;
+    using PhoneGuitarTab.Core.Views;
 
-    public class DataContextViewModel: Core.ViewModel
+    public class DataContextViewModel: ViewModel
     {
         [Dependency]
         protected INavigationService NavigationService { get; set; }

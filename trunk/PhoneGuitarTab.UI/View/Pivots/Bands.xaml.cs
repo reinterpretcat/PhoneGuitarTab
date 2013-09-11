@@ -1,6 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 
-namespace PhoneGuitarTab.UI.View
+namespace PhoneGuitarTab.UI.Pivots
 {
     public partial class Bands : PivotItem
     {

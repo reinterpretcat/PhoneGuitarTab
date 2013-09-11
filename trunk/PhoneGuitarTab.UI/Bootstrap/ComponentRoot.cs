@@ -3,6 +3,7 @@
     using System.Linq;
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Core.Views;
 
     /// <summary>
     /// Represents an application bootstrapper.
@@ -32,77 +33,77 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public PhoneGuitarTab.Core.ViewModel Startup
+        public ViewModel Startup
         {
             get
             {
-                return _container.Resolve<Core.ViewModel>(Strings.Startup);
+                return _container.Resolve<ViewModel>(Strings.Startup);
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public PhoneGuitarTab.Core.ViewModel Group
+        public ViewModel Group
         {
             get
             {
-                return _container.Resolve<Core.ViewModel>(Strings.Group);
+                return _container.Resolve<ViewModel>(Strings.Group);
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public PhoneGuitarTab.Core.ViewModel Search
+        public ViewModel Search
         {
             get
             {
-                return _container.Resolve<Core.ViewModel>(Strings.Search);
+                return _container.Resolve<ViewModel>(Strings.Search);
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public PhoneGuitarTab.Core.ViewModel TextTab
+        public ViewModel TextTab
         {
             get
             {
-                return _container.Resolve<Core.ViewModel>(Strings.TextTab);
+                return _container.Resolve<ViewModel>(Strings.TextTab);
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public PhoneGuitarTab.Core.ViewModel Help
+        public ViewModel Help
         {
             get
             {
-                return _container.Resolve<Core.ViewModel>(Strings.Help);
+                return _container.Resolve<ViewModel>(Strings.Help);
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public PhoneGuitarTab.Core.ViewModel About
+        public ViewModel About
         {
             get
             {
-                return _container.Resolve<Core.ViewModel>(Strings.About);
+                return _container.Resolve<ViewModel>(Strings.About);
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public PhoneGuitarTab.Core.ViewModel Collection
+        public ViewModel Collection
         {
             get
             {
-                return _container.Resolve<Core.ViewModel>(Strings.Collection);
+                return _container.Resolve<ViewModel>(Strings.Collection);
             }
         }
 

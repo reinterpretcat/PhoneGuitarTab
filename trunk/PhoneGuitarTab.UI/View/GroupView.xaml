@@ -1,7 +1,7 @@
-﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.GroupView"
+﻿<Views:ViewPage x:Class="PhoneGuitarTab.UI.View.GroupView"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+               xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
                xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
                xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -10,9 +10,8 @@
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Entities"
-               x:Name="root"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" x:Name="root"
                DataContext="{Binding Group,
                                      Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -44,7 +43,7 @@
                          ItemsSource="{Binding Path=Tabs.Tabs}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Tap">
-                            <Command:EventToCommand Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
+                            <Command:ExecuteCommandAction Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ListBox>
@@ -82,7 +81,7 @@
                                                               Converter={StaticResource boolVisibility}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
-                                    <Command:EventToCommand Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}" />
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </HyperlinkButton>
@@ -107,4 +106,4 @@
                                                      Text="to all tabs" />
         </custom:BindableApplicationBar>
     </Grid>
-</Core:ViewPage>
+</Views:ViewPage>

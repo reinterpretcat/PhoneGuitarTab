@@ -1,9 +1,7 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Microsoft.Phone.Tasks;
+﻿using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Entities;
-using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +12,7 @@ using Group = PhoneGuitarTab.Data.Group;
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Core.Views.Commands;
 
     public class GroupViewModel : DataContextViewModel
     {
@@ -128,7 +127,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 int currentGroupId = (int)state["CurrentGroupId"];
             }
 
-            MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
+            //MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
         }
 
         protected override void DataBind()
@@ -162,52 +161,52 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Commands
 
-        public RelayCommand<int> RemoveTab
+        public ExecuteCommand<int> RemoveTab
         {
             get;
             private set;
         }
 
-        public RelayCommand CancelTab
+        public ExecuteCommand CancelTab
         {
             get;
             private set;
         }
 
-        public RelayCommand<object> GoToTabView
+        public ExecuteCommand<object> GoToTabView
         {
             get;
             private set;
         }
 
-        public RelayCommand<Group> SearchCommand
+        public ExecuteCommand<Group> SearchCommand
         {
             get;
             set;
         }
 
-        public RelayCommand SettingsCommand
+        public ExecuteCommand SettingsCommand
         {
             get;
             set;
         }
 
-        public RelayCommand HomeCommand
+        public ExecuteCommand HomeCommand
         {
             get;
             set;
         }
 
-        public RelayCommand GetMoreInfo
+        public ExecuteCommand GetMoreInfo
         {
             get
             {
-                return new RelayCommand(() =>
+                return new ExecuteCommand(() =>
                   new WebBrowserTask { URL = CurrentGroup.Url }.Show());
             }
         }
 
-        public RelayCommand<Group> RefreshInfoCommand
+        public ExecuteCommand<Group> RefreshInfoCommand
         {
             get;
             set;
@@ -230,7 +229,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
-                MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
+                //MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
             }
         }
 
@@ -238,7 +237,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             Deployment.Current.Dispatcher.BeginInvoke(() => { Database.DeleteTabById(id); DataBind(); });
 
-            MessengerInstance.Send<GroupTabRemovedMessage>(new GroupTabRemovedMessage(id));
+            //MessengerInstance.Send<GroupTabRemovedMessage>(new GroupTabRemovedMessage(id));
         }
 
         private void DoSearch(Group group)
@@ -304,13 +303,13 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void CreateCommands()
         {
-            SearchCommand = new RelayCommand<Group>(DoSearch);
-            HomeCommand = new RelayCommand(DoHome);
-            RefreshInfoCommand = new RelayCommand<Group>(DoRefreshInfo);
+            SearchCommand = new ExecuteCommand<Group>(DoSearch);
+            HomeCommand = new ExecuteCommand(DoHome);
+            RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);
 
-            GoToTabView = new RelayCommand<object>(DoGoToTabView);
-            RemoveTab = new RelayCommand<int>(DoRemoveTab);
-            CancelTab = new RelayCommand(() => { });
+            GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
+            RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
+            CancelTab = new ExecuteCommand(() => { });
         }
 
         private void GetCurrentGroupInfo(Group group)

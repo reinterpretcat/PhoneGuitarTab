@@ -4,7 +4,9 @@ using System.Windows.Controls;
 
 namespace PhoneGuitarTab.UI.View
 {
-    public partial class GroupView : PhoneGuitarTab.Core.ViewPage
+    using PhoneGuitarTab.Core.Views;
+
+    public partial class GroupView : ViewPage
     {
         public GroupView()
         {

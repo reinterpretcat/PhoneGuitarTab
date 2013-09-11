@@ -13,7 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace PhoneGuitarTab.UI.View
 {
-    public partial class HelpView : Core.ViewPage 
+    using PhoneGuitarTab.Core.Views;
+
+    public partial class HelpView : ViewPage 
     {
         public HelpView()
         {

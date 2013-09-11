@@ -1,15 +1,14 @@
-﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.View.StartupView"
+﻿<Views:ViewPage x:Class="PhoneGuitarTab.UI.View.StartupView"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+               xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
                xmlns:Controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:views="clr-namespace:PhoneGuitarTab.UI.View"
-               x:Name="root"
+               xmlns:Pivots="clr-namespace:PhoneGuitarTab.UI.Pivots" x:Name="root"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
                DataContext="{Binding Startup,
                                      Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
@@ -24,15 +23,15 @@
 
     <Grid x:Name="LayoutRoot">
         <Controls:Pivot TitleTemplate="{StaticResource EmptyTitleTemplate}">
-            <views:Tabs />
-            <views:Bands />
-            <views:History />
-            <views:Search />
-            <views:Other />
+            <Pivots:Tabs />
+            <Pivots:Bands />
+            <Pivots:History />
+            <Pivots:Search />
+            <Pivots:Other />
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <Command:EventToCommand Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />
+                    <Command:ExecuteCommandAction Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Controls:Pivot>
@@ -47,4 +46,4 @@
                                                              Converter={StaticResource boolVisibility}}" />
     </Grid>
 
-</Core:ViewPage>
+</Views:ViewPage>

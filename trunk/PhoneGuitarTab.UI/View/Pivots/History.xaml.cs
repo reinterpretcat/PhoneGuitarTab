@@ -1,10 +1,10 @@
 ﻿using Microsoft.Phone.Controls;
 
-namespace PhoneGuitarTab.UI.View
+namespace PhoneGuitarTab.UI.Pivots
 {
-    public partial class Other : PivotItem
+    public partial class History : PivotItem
     {
-        public Other()
+        public History()
         {
             InitializeComponent();
         }

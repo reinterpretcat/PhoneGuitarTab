@@ -1,8 +1,6 @@
-﻿using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Threading;
+﻿
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
-using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +10,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Primitives;
+    using PhoneGuitarTab.Core.Views.Commands;
 
     public class CollectionViewModel : DataContextViewModel
     {
@@ -35,7 +34,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             RegisterMessages();
 
-            DispatcherHelper.Initialize();
+            //DispatcherHelper.Initialize();
         }
 
         #endregion Constructor
@@ -74,43 +73,43 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Commands
 
-        public RelayCommand<object> GoToGroup
+        public ExecuteCommand<object> GoToGroup
         {
             get;
             private set;
         }
 
-        public RelayCommand<object> GoToTabView
+        public ExecuteCommand<object> GoToTabView
         {
             get;
             private set;
         }
 
-        public RelayCommand<int> RemoveTab
+        public ExecuteCommand<int> RemoveTab
         {
             get;
             private set;
         }
 
-        public RelayCommand SearchCommand
+        public ExecuteCommand SearchCommand
         {
             get;
             set;
         }
 
-        public RelayCommand SettingsCommand
+        public ExecuteCommand SettingsCommand
         {
             get;
             set;
         }
 
-        public RelayCommand HomeCommand
+        public ExecuteCommand HomeCommand
         {
             get;
             set;
         }
 
-        public RelayCommand RefreshData
+        public ExecuteCommand RefreshData
         {
             get;
             set;
@@ -176,7 +175,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
 
             RemoveTabFromList(id);
-            MessengerInstance.Send<CollectionTabRemovedMessage>(new CollectionTabRemovedMessage(id));
+            //MessengerInstance.Send<CollectionTabRemovedMessage>(new CollectionTabRemovedMessage(id));
         }
 
         private void DoRefreshData()
@@ -198,23 +197,23 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void CreateCommands()
         {
-            SearchCommand = new RelayCommand(() => NavigationService.NavigateTo(Strings.Search));
-            HomeCommand = new RelayCommand(() => NavigationService.NavigateTo(Strings.Startup));
+            SearchCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Search));
+            HomeCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Startup));
 
-            RemoveTab = new RelayCommand<int>(DoRemoveTab);
+            RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
 
-            GoToGroup = new RelayCommand<object>(DoGoToGroup);
-            GoToTabView = new RelayCommand<object>(DoGoToTabView);
+            GoToGroup = new ExecuteCommand<object>(DoGoToGroup);
+            GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
 
-            RefreshData = new RelayCommand(DoRefreshData);
+            RefreshData = new ExecuteCommand(DoRefreshData);
         }
 
         private void RegisterMessages()
         {
-            MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-            MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-            MessengerInstance.Register<TabsDownloadedMessage>(this, (message) => { isPendingChangesOnCollection = true; });
-            MessengerInstance.Register<RefreshTabsMessage>(this, (message) => { DoRefreshData(); });
+           // MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+           // MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+           // MessengerInstance.Register<TabsDownloadedMessage>(this, (message) => { isPendingChangesOnCollection = true; });
+           // MessengerInstance.Register<RefreshTabsMessage>(this, (message) => { DoRefreshData(); });
         }
 
         private void RemoveTabFromList(int id)
@@ -227,7 +226,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void AddDownloadedTabs()
         {
-            DispatcherHelper.CheckBeginInvokeOnUI(new Action(() => DataBind()));
+            //DispatcherHelper.CheckBeginInvokeOnUI(new Action(() => DataBind()));
         }
 
         #endregion Helper methods

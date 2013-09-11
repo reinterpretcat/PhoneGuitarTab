@@ -13,7 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace PhoneGuitarTab.UI.View
 {
-    public partial class AboutView : Core.ViewPage 
+    using PhoneGuitarTab.Core.Views;
+
+    public partial class AboutView : ViewPage 
     {
         public AboutView()
         {

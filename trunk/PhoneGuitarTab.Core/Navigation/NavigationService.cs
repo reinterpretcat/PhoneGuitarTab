@@ -11,6 +11,7 @@ namespace PhoneGuitarTab.Core.Navigation
     using System.Windows.Navigation;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Diagnostic;
+    using PhoneGuitarTab.Core.Views;
 
     /// <summary>
     /// Default implementation of navigation service

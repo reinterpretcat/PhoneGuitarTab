@@ -1,4 +1,4 @@
-﻿<Core:ViewPage x:Class="PhoneGuitarTab.UI.TextTabView"
+﻿<Views:ViewPage x:Class="PhoneGuitarTab.UI.TextTabView"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
@@ -6,6 +6,7 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" x:Name="root"
                DataContext="{Binding TextTab,
                                      Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -25,4 +26,4 @@
         </phone:WebBrowser>
     </Grid>
 
-</Core:ViewPage>
+</Views:ViewPage>

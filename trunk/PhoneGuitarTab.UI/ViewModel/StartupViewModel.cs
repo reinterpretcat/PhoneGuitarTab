@@ -1,9 +1,6 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Microsoft.Phone.Tasks;
+﻿using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
-using PhoneGuitarTab.UI.Infrastructure;
-using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -11,6 +8,7 @@ using System.Windows;
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Core.Views.Commands;
 
     public class StartupViewModel : DataContextViewModel
     {
@@ -28,8 +26,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             CreateCommands();
 
-            MessengerInstance.Register<CollectionTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-            MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+           // MessengerInstance.Register<CollectionTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
+          //  MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
 
             ProductVersion = App.Version;
         }
@@ -56,31 +54,31 @@ namespace PhoneGuitarTab.UI.ViewModel
         
         #region Commands
 
-        public RelayCommand<string> GoTo
+        public ExecuteCommand<string> GoTo
         {
             get;
             private set;
         }
 
-        public RelayCommand<object> GoToTabView
+        public ExecuteCommand<object> GoToTabView
         {
             get;
             private set;
         }
 
-        public RelayCommand Review
+        public ExecuteCommand Review
         {
             get;
             private set;
         }
 
-        public RelayCommand<int> RemoveTab
+        public ExecuteCommand<int> RemoveTab
         {
             get;
             private set;
         }
 
-        public RelayCommand CancelTab
+        public ExecuteCommand CancelTab
         {
             get;
             private set;
@@ -121,7 +119,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             RemoveTabFromList(id);
             Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
 
-            MessengerInstance.Send<HistoryTabRemovedMessage>(new HistoryTabRemovedMessage(id));
+            //MessengerInstance.Send<HistoryTabRemovedMessage>(new HistoryTabRemovedMessage(id));
         }
 
         #endregion Command handlers
@@ -151,10 +149,10 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void CreateCommands()
         {
-            GoTo = new RelayCommand<string>(DoGoTo);
-            GoToTabView = new RelayCommand<object>(DoGoToTabView);
-            Review = new RelayCommand(DoReview);
-            RemoveTab = new RelayCommand<int>(DoRemoveTab);
+            GoTo = new ExecuteCommand<string>(DoGoTo);
+            GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
+            Review = new ExecuteCommand(DoReview);
+            RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
         }
 
         private void RemoveTabFromList(int id)

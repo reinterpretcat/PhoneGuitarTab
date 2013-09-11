@@ -1,13 +1,8 @@
-﻿using Coding4Fun.Toolkit.Controls;
-using GalaSoft.MvvmLight.Command;
-using PhoneGuitarTab.Core;
-using PhoneGuitarTab.Core.Navigation;
-using PhoneGuitarTab.Data;
+﻿using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
-using PhoneGuitarTab.UI.Infrastructure.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +13,7 @@ using System.Windows;
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.Core.Views.Commands;
 
     public class SearchViewModel : DataContextViewModel
     {
@@ -294,49 +290,49 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Commands
 
-        public RelayCommand<string> LaunchSearch
+        public ExecuteCommand<string> LaunchSearch
         {
             get;
             private set;
         }
 
-        public RelayCommand<string> LaunchSearchForBand
+        public ExecuteCommand<string> LaunchSearchForBand
         {
             get;
             private set;
         }
 
-        public RelayCommand<string> SelectPage
+        public ExecuteCommand<string> SelectPage
         {
             get;
             private set;
         }
 
-        public RelayCommand<string> DownloadTab
+        public ExecuteCommand<string> DownloadTab
         {
             get;
             private set;
         }
 
-        public RelayCommand CollectionCommand
+        public ExecuteCommand CollectionCommand
         {
             get;
             set;
         }
 
-        public RelayCommand SettingsCommand
+        public ExecuteCommand SettingsCommand
         {
             get;
             set;
         }
 
-        public RelayCommand HomeCommand
+        public ExecuteCommand HomeCommand
         {
             get;
             set;
         }
 
-        public RelayCommand<TabEntity> ToggleActionArea
+        public ExecuteCommand<TabEntity> ToggleActionArea
         {
             get;
             set;
@@ -440,7 +436,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoHome()
         {
-            MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
+            //MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
             NavigationService.NavigateTo(Strings.Startup);
         }
 
@@ -493,12 +489,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
             else
             {
-                var toast = new ToastPrompt
+                /*var toast = new ToastPrompt
                 {
                     Title = "Sorry,",
                     Message = "can't reach the server right now."
                 };
-                toast.Show();
+                toast.Show();*/
                 IsSearching = false;
             }
         }
@@ -519,20 +515,20 @@ namespace PhoneGuitarTab.UI.ViewModel
 
                     Database.InsertTab(downloadedTab);
 
-                    MessengerInstance.Send<TabsDownloadedMessage>(new TabsDownloadedMessage());
+                    //MessengerInstance.Send<TabsDownloadedMessage>(new TabsDownloadedMessage());
 
                     tab.IsDownloaded = true;
                     IsSearching = false;
 
-                    var toast = new ToastPrompt
+                   /* var toast = new ToastPrompt
                     {
                         Title = "\"" + tab.Name + "\" by " + tab.Group,
                         Message = " was downloaded",
                         TextOrientation = System.Windows.Controls.Orientation.Vertical
                     };
-                    toast.Show();
+                    toast.Show();*/
        
-                    DownloadTab.RaiseCanExecuteChanged(); 
+                    //DownloadTab.RaiseCanExecuteChanged(); 
                 });
         }
 
@@ -543,12 +539,12 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void CreateCommands()
         {
-            HomeCommand = new RelayCommand(DoHome);
-            LaunchSearch = new RelayCommand<string>(DoLaunchSearch);
-            LaunchSearchForBand = new RelayCommand<string>(DoLaunchSearchForBand);
-            SelectPage = new RelayCommand<string>(DoSelectPage);
-            DownloadTab = new RelayCommand<string>(DoDownloadTab);
-            ToggleActionArea = new RelayCommand<TabEntity>(DoToggleActionArea);
+            HomeCommand = new ExecuteCommand(DoHome);
+            LaunchSearch = new ExecuteCommand<string>(DoLaunchSearch);
+            LaunchSearchForBand = new ExecuteCommand<string>(DoLaunchSearchForBand);
+            SelectPage = new ExecuteCommand<string>(DoSelectPage);
+            DownloadTab = new ExecuteCommand<string>(DoDownloadTab);
+            ToggleActionArea = new ExecuteCommand<TabEntity>(DoToggleActionArea);
         }
 
         private void RunSearch(string bandName, string songName)

@@ -1,7 +1,7 @@
-﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.View.Search"
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.Pivots.Search"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WP8"
+                    xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
                     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                     xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -104,9 +104,9 @@
                                  ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
                                  ItemsSource="{Binding Path=DataContext.Pages,ElementName=root}"
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root}">
-                            <i:Interaction.Triggers>
+                           <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
-                                    <Command:EventToCommand Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <ListBox.ItemsPanel>

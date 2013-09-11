@@ -7,6 +7,7 @@
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Navigation;
+    using PhoneGuitarTab.Core.Views;
     using PhoneGuitarTab.UI.ViewModel;
     
     /// <summary>
@@ -35,20 +36,20 @@
         {
             // register view models
             _pageMapping.ToList().ForEach(p => Container.Register(Component
-                            .For<Core.ViewModel>()
+                            .For<ViewModel>()
                             .Use(p.Value, new object[0])
                             .Named(p.Key.Item1)
                             .Singleton()));
 
             //register navigation service
             var uriMapping = new Dictionary<string, Uri>();
-            var viewModelMapping = new Dictionary<string, Core.Primitives.Lazy<Core.ViewModel>>();
+            var viewModelMapping = new Dictionary<string, Core.Primitives.Lazy<ViewModel>>();
             _pageMapping.ToList()
                 .ForEach(p =>
                 {
                     uriMapping.Add(p.Key.Item1, p.Key.Item2);
                     viewModelMapping.Add(p.Key.Item1,
-                        new Core.Primitives.Lazy<Core.ViewModel>(() => Container.Resolve<Core.ViewModel>(p.Key.Item1)));
+                        new Core.Primitives.Lazy<ViewModel>(() => Container.Resolve<ViewModel>(p.Key.Item1)));
                 });
 
             Container.Register(Component.For<INavigationService>().Use<NavigationService>(uriMapping, viewModelMapping).Singleton());
