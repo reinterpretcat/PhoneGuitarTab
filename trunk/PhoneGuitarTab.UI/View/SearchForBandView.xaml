@@ -2,7 +2,7 @@
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
-               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+               xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -34,15 +34,15 @@
             <Run Text="online" />
         </TextBlock>
 
-        <controls:LongListSelector x:Name="tabsList"
-                                  Grid.Row="1"
+        <phone:LongListSelector x:Name="tabsList"
+                                  Grid.Row="1" IsGroupingEnabled="True" HideEmptyGroups="True"
                                   Background="Transparent"
                                   JumpListStyle="{StaticResource SearchListJumpListStyle}"
                                   ItemTemplate="{StaticResource SearchTabItemTemplate}"
                                   ItemsSource="{Binding SearchGroupTabs}"
                                   Tag="{Binding FirstTabInList}">
 
-            <controls:LongListSelector.GroupHeaderTemplate>
+            <phone:LongListSelector.GroupHeaderTemplate>
                 <DataTemplate>
                     <Border Background="Transparent">
                         <Border Width="75"
@@ -56,9 +56,9 @@
                         </Border>
                     </Border>
                 </DataTemplate>
-            </controls:LongListSelector.GroupHeaderTemplate>
+            </phone:LongListSelector.GroupHeaderTemplate>
 
-            <controls:LongListSelector.ListHeaderTemplate>
+            <phone:LongListSelector.ListHeaderTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.HeaderPagingVisibility, ElementName=root}">
@@ -91,9 +91,9 @@
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>
-            </controls:LongListSelector.ListHeaderTemplate>
+            </phone:LongListSelector.ListHeaderTemplate>
 
-            <controls:LongListSelector.ListFooterTemplate>
+            <phone:LongListSelector.ListFooterTemplate>
                 <DataTemplate>
                     <Button HorizontalAlignment="Stretch"
                             Background="{StaticResource PhoneAccentBrush}"
@@ -104,9 +104,9 @@
                         to top
                     </Button>
                 </DataTemplate>
-            </controls:LongListSelector.ListFooterTemplate>
+            </phone:LongListSelector.ListFooterTemplate>
 
-        </controls:LongListSelector>
+        </phone:LongListSelector>
 
         <ProgressBar x:Name="performanceBar"
                                         VerticalAlignment="Top"
