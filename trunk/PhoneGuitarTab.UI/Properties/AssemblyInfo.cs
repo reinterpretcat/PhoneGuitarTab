@@ -7,7 +7,7 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("PhoneGuitarTab")]
-[assembly: AssemblyDescription("Simple text guitar tabulature viewer")]
+[assembly: AssemblyDescription("Simple guitar tabulature viewer")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PhoneGuitarTab")]
@@ -32,5 +32,5 @@ using System.Resources;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.1.*")]
+[assembly: AssemblyVersion("2.0.*")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
