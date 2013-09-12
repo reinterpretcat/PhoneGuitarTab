@@ -26,7 +26,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Fields
 
-        private SearchTabResult groupSearch;
+        private UltimateGuitarTabSearcher groupSearch;
 
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
@@ -229,7 +229,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             get
             {
                 if (searchTabTypeOptions == null)
-                    searchTabTypeOptions = new List<TabulatureType>() { TabulatureType.All, TabulatureType.Guitar, TabulatureType.Bass, TabulatureType.Chords, TabulatureType.Drum};
+                    searchTabTypeOptions = new List<TabulatureType>() { TabulatureType.All, TabulatureType.GuitarPro, TabulatureType.Guitar, TabulatureType.Bass, TabulatureType.Chords, /*TabulatureType.Drum*/ };
                 return searchTabTypeOptions;
             }
         }
@@ -275,7 +275,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void ReadNavigationParameters()
         {
-            if (base.NavigationParameters.ContainsKey("SearchTerm"))
+            if (NavigationParameters.ContainsKey("SearchTerm"))
             {
                 object searchTerm;
                 NavigationParameters.TryGetValue("SearchTerm", out searchTerm);
@@ -400,13 +400,13 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 Id = tab.SearchId,
                 Url = tab.SearchUrl,
-                Type = tab.Description
+                Type = tab.Type
             };
 
             var filePath = TabFileStorage.CreateTabFilePath();
 
             //TODO examine IO errors
-            SearchTabDownloader downloader = new SearchTabDownloader(entry, filePath);
+            UltimateGuitarFileDownloader downloader = new UltimateGuitarFileDownloader(entry, filePath);
             downloader.DownloadComplete += delegate(object sender, DownloadCompletedEventArgs args)
             {
                 if (args.HasErrors)
@@ -556,7 +556,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
 
             SearchGroupTabs = null;
-            groupSearch = new SearchTabResult(bandName, songName);
+            groupSearch = new UltimateGuitarTabSearcher(bandName, songName);
 
             IsHintVisible = false;
             IsNothingFound = false;

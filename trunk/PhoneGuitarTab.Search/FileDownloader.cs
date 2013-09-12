@@ -6,12 +6,14 @@ using System.Windows;
 
 namespace PhoneGuitarTab.Search
 {
+    using System.Text;
+
     /// <summary>
     /// Downloads files and stores it to destination
     /// </summary>
     public class FileDownloader
     {
-        private IsolatedStorageFile storage;
+        protected IsolatedStorageFile storage;
 
         protected string destination;
 
@@ -64,22 +66,9 @@ namespace PhoneGuitarTab.Search
                 try
                 {
                     var response = request.EndGetResponse(r);
-
-                    // Open the response stream
                     using (Stream responseStream = response.GetResponseStream())
                     {
-                        //TODO: catch error here
-                        // Create a 4K buffer to chunk the file
-                        byte[] myBuffer = new byte[4096];
-                        int bytesRead;
-
-                        using (Stream stream = storage.OpenFile(destination, FileMode.CreateNew))
-                        {
-                            while (0 <
-                                   (bytesRead =
-                                    responseStream.Read(myBuffer, 0, myBuffer.Length)))
-                                stream.Write(myBuffer, 0, bytesRead);
-                        }
+                        SaveToFile(responseStream);
                     }
                     InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
                 }
@@ -106,9 +95,28 @@ namespace PhoneGuitarTab.Search
         #endregion Public methods
 
 
+        protected void SaveToFile(string content)
+        {
+            SaveToFile(new MemoryStream(Encoding.UTF8.GetBytes(content)));
+        }
+
+        protected void SaveToFile(Stream content)
+        {
+            //TODO: catch error here
+            // Create a 4K buffer to chunk the file
+            byte[] myBuffer = new byte[4096];
+            int bytesRead;
+
+            using (Stream stream = storage.OpenFile(destination, FileMode.CreateNew))
+            {
+                while (0 < (bytesRead = content.Read(myBuffer, 0, myBuffer.Length)))
+                    stream.Write(myBuffer, 0, bytesRead);
+            }
+        }
+
         #region Helper methods
 
-        private void InvokeDownloadComplete(DownloadCompletedEventArgs e)
+        protected void InvokeDownloadComplete(DownloadCompletedEventArgs e)
         {
             var handler = DownloadComplete;
             if (handler != null) handler(this, e);

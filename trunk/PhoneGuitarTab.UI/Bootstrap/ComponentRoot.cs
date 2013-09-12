@@ -107,6 +107,17 @@
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+         "CA1822:MarkMembersAsStatic",
+         Justification = "This non-static member is needed for data binding purposes.")]
+        public ViewModel StaveTab
+        {
+            get
+            {
+                return _container.Resolve<ViewModel>(Strings.StaveTab);
+            }
+        }
+
         #endregion View models
       
     }

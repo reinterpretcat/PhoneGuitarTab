@@ -134,8 +134,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             if (selector != null && selector.SelectedItem is ObservableTuple<int, Group>)
             {
                 Group group = (selector.SelectedItem as ObservableTuple<int, Group>).Item2;
-                NavigationService.NavigateTo(Strings.Group,
-                                             new Dictionary<string, object> { { "group", group } });
+                NavigationService.NavigateTo(Strings.Group, new Dictionary<string, object> { { "group", group } });
             }
         }
 
@@ -148,10 +147,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
-                NavigationService.NavigateTo(Strings.TextTab, new Dictionary<string, object>()
-                                                                                          {
-                                                                                              {"Tab", tab}
-                                                                                          });
+                NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", tab } });
                 selector.SelectedItem = null;
             }
         }

@@ -14,7 +14,7 @@
     /// </summary>
     public class DataBootstrapperPlugin : IBootstrapperPlugin
     {
-        private const int DbVersion = 1;
+        private const int DbVersion = 2;
         const string DbConnectionString = "Data Source=isostore:/TabData.sdf";
 
         public string Name { get { return "Data"; } }
@@ -26,6 +26,7 @@
         {
             Action<IDataContextService> initialzeDatabase = service =>
                 {
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "guitar pro", ImageUrl = "/Images/all/TabText.png" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/all/TabText.png" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/all/TabText.png" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/all/TabText.png" });
@@ -61,6 +62,10 @@
 
              if (!dbService.TabTypes.Any(type => type.Name == "drums"))
                  dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/all/TabText.png" });
+
+             if (!dbService.TabTypes.Any(type => type.Name == "guitar pro"))
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "guitar pro", ImageUrl = "/Images/all/TabText.png" });
+
              // --
 
              dbService.SubmitChanges();

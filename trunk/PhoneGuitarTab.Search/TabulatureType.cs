@@ -6,6 +6,7 @@
         Bass,
         Chords,
         Drum,
+        GuitarPro,
         All
     }
 }

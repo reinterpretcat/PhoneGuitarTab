@@ -206,7 +206,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 case TabulatureType.Drum:
                     returnString = "drum tabs";
                     break;
-
+                case TabulatureType.GuitarPro:
+                    returnString = "guitar pro";
+                    break;
                 default:
                     break;
             }

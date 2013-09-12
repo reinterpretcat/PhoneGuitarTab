@@ -9,8 +9,7 @@
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:Pivots="clr-namespace:PhoneGuitarTab.UI.Pivots" x:Name="root"
                xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
-               DataContext="{Binding Startup,
-                                     Source={StaticResource Locator}}"
+               DataContext="{Binding Startup,  Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
                Foreground="{StaticResource PhoneForegroundBrush}"

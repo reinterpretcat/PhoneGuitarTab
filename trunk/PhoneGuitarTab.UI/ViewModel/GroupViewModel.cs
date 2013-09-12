@@ -227,10 +227,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
-                NavigationService.NavigateTo(Strings.TextTab, new Dictionary<string, object>()
-                                                                                          {
-                                                                                              {"Tab", tab}
-                                                                                          });
+                NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", tab } });
                 Hub.RaiseTabsRefreshed();
             }
         }

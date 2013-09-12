@@ -9,9 +9,8 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.UI.Infrastructure;
 
-    public class TextTabViewModel : DataContextViewModel
+    public class TextTabViewModel : TabViewModelBase
     {
-        public string TabContent { get; set; }
         public string Style { get; set; }
 
         [Dependency]
@@ -25,20 +24,13 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             try
             {
-                Tab tab = (Tab)NavigationParameters["Tab"];
+                base.ReadNavigationParameters();
 
-                Deployment.Current.Dispatcher.BeginInvoke(
-                () =>
-                {
-                    tab.LastOpened = DateTime.Now;
-                    Database.SubmitChanges();
-                });
-
-                using (var stream = FileSystem.OpenFile(tab.Path, FileMode.Open))
+                using (var stream = FileSystem.OpenFile(Tablature.Path, FileMode.Open))
                 {
                     string document = (new StreamReader(stream)).ReadToEnd();
 
-                    if (tab.TabType.Name == "chords")
+                    if (Tablature.TabType.Name == "chords")
                     {
                         document = document.Replace("[ch]", "<span>");
                         document = document.Replace("[/ch]", "</span>");
@@ -56,22 +48,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        public override void LoadStateFrom(System.Collections.Generic.IDictionary<string, object> state)
-        {
-            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
-            phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Disabled;
-
-            base.LoadStateFrom(state);
-        }
-
-        public override void SaveStateTo(System.Collections.Generic.IDictionary<string, object> state)
-        {
-            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
-            phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Enabled;
-
-            base.SaveStateTo(state);
         }
     }
 }

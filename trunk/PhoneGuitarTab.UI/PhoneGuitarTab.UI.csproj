@@ -131,8 +131,14 @@
     <Compile Include="Data\IDataContextService.cs" />
     <Compile Include="Data\TabDataContext.cs" />
     <Compile Include="Infrastructure\MessageHub.cs" />
+    <Compile Include="Infrastructure\NavigationExtensions.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\StaveTabViewModel.cs" />
+    <Compile Include="ViewModel\TabViewModelBase.cs" />
+    <Compile Include="View\StaveTabView.xaml.cs">
+      <DependentUpon>StaveTabView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pivots\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>
@@ -197,6 +203,10 @@
     <Page Include="CommonResources\Templates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StaveTabView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Pivots\Bands.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -267,8 +277,8 @@
     </Content>
     <Content Include="Html\css\site.css" />
     <Content Include="Html\css\tabdiv.css" />
-    <Content Include="Html\js\sandbox\desktop\jquery-1.10.2.min.js" />
-    <Content Include="Html\js\sandbox\desktop\tabs.js" />
+    <Content Include="Html\js\sandbox\jquery-1.10.2.min.js" />
+    <Content Include="Html\js\sandbox\tabs.js" />
     <Content Include="Html\js\stave\context.js" />
     <Content Include="Html\js\stave\helper.js" />
     <Content Include="Html\js\stave\paginator.js" />
@@ -338,11 +348,17 @@
     <Content Include="Html\js\utils\core.js" />
     <Content Include="Html\js\utils\filereader.js" />
     <Content Include="Html\sandbox.html" />
+    <Content Include="Images\dark\appbar.back.rest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\dark\appbar.feature.search.rest.png" />
     <Content Include="Images\dark\appbar.feature.home.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\dark\appbar.folder.rest.png" />
+    <Content Include="Images\dark\appbar.next.rest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\dark\Document-Download_dark.png" />
     <Content Include="Images\dark\Electric-Guitar_dark.png" />
     <Content Include="Images\dark\Find_dark.png" />

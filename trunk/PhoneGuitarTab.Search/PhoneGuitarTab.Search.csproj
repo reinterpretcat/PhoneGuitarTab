@@ -98,33 +98,31 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Events.cs" />
     <Compile Include="FileDownloader.cs" />
+    <Compile Include="ITabSearcher.cs" />
     <Compile Include="Lastfm\SearchInfoResult.cs" />
     <Compile Include="Lastfm\SearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TabulatureType.cs" />
-    <Compile Include="UltimateGuitar\SearchTabDownloader.cs" />
-    <Compile Include="UltimateGuitar\SearchTabResult.cs" />
-    <Compile Include="UltimateGuitar\SearchTabResultEntry.cs" />
-    <Compile Include="UltimateGuitar\SearchTabResultSummary.cs" />
+    <Compile Include="UltimateGuitar\UltimateGuitarFileDownloader.cs" />
+    <Compile Include="UltimateGuitar\UltimateGuitarTabSearcher.cs" />
+    <Compile Include="SearchTabResultEntry.cs" />
+    <Compile Include="SearchTabResultSummary.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
       <Project>{06005B3A-BCE2-4B59-95BD-8A697F758F35}</Project>
       <Name>PhoneGuitarTab.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SharpGIS.GZipWebClient">
+      <HintPath>..\packages\SharpGIS.GZipWebClient.1.4.0.0\lib\wp71\SharpGIS.GZipWebClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
