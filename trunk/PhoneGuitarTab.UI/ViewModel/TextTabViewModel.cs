@@ -7,6 +7,7 @@ using System.Windows;
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
+    using PhoneGuitarTab.UI.Infrastructure;
 
     public class TextTabViewModel : DataContextViewModel
     {
@@ -14,7 +15,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         public string Style { get; set; }
 
         [Dependency]
-        public TextTabViewModel(IDataContextService database):base(database)
+        public TextTabViewModel(IDataContextService database, MessageHub hub)
+            : base(database, hub)
         {
             
         }

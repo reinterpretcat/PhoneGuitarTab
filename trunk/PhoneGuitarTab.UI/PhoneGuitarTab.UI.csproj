@@ -130,6 +130,7 @@
     <Compile Include="Data\DataContextService.cs" />
     <Compile Include="Data\IDataContextService.cs" />
     <Compile Include="Data\TabDataContext.cs" />
+    <Compile Include="Infrastructure\MessageHub.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
     <Compile Include="View\Pivots\Bands.xaml.cs">

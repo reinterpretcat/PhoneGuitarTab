@@ -13,6 +13,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Views.Commands;
+    using PhoneGuitarTab.UI.Infrastructure;
 
     public class GroupViewModel : DataContextViewModel
     {
@@ -31,7 +32,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Constructors
 
         [Dependency]
-        public GroupViewModel(IDataContextService database):base(database)
+        public GroupViewModel(IDataContextService database, MessageHub hub)
+            : base(database, hub)
         {
             CreateCommands();
         }
@@ -229,15 +231,14 @@ namespace PhoneGuitarTab.UI.ViewModel
                                                                                           {
                                                                                               {"Tab", tab}
                                                                                           });
-                //MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
+                Hub.RaiseTabsRefreshed();
             }
         }
 
         private void DoRemoveTab(int id)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() => { Database.DeleteTabById(id); DataBind(); });
-
-            //MessengerInstance.Send<GroupTabRemovedMessage>(new GroupTabRemovedMessage(id));
+            Hub.RaiseGroupTabRemoved(id);
         }
 
         private void DoSearch(Group group)

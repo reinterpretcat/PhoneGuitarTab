@@ -22,6 +22,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
 
             Container.Register(Component.For<IFileSystemService>().Use<IsolatedStorageFileService>().Singleton());
             Container.Register(Component.For<TabFileStorage>().Use<TabFileStorage>().Singleton());
+
+            Container.Register(Component.For<MessageHub>().Use<MessageHub>().Singleton());
             
             return true;
         }

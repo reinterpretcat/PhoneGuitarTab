@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using PhoneGuitarTab.Core;
 using PhoneGuitarTab.Data;
 using System.Windows;
 
@@ -10,6 +9,7 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.Core.IsolatedStorage;
     using PhoneGuitarTab.Core.Navigation;
     using PhoneGuitarTab.Core.Views;
+    using PhoneGuitarTab.UI.Infrastructure;
 
     public class DataContextViewModel: ViewModel
     {
@@ -19,19 +19,20 @@ namespace PhoneGuitarTab.UI.ViewModel
         [Dependency]
         protected IFileSystemService FileSystem { get; set; }
 
+        protected MessageHub Hub { get; set; }
+
         protected IDataContextService Database { get; set; }
 
-        protected bool IsRequireBinding { get; set; }
+        protected bool IsRequireBinding { get; set; }     
 
-      
-
-        public DataContextViewModel(IDataContextService database)
+        public DataContextViewModel(IDataContextService database, MessageHub hub)
         {
             Database = database;
             Database.OnChanged += (o, e) =>
                 {
                     IsRequireBinding = true;
                 };
+            Hub = hub;
             IsRequireBinding = true;
         }
 

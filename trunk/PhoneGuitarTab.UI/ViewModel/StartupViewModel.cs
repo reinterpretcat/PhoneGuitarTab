@@ -9,6 +9,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Views.Commands;
+    using PhoneGuitarTab.UI.Infrastructure;
 
     public class StartupViewModel : DataContextViewModel
     {
@@ -22,7 +23,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Constructors
 
         [Dependency]
-        public StartupViewModel(IDataContextService database):base(database)
+        public StartupViewModel(IDataContextService database, MessageHub hub)
+            : base(database, hub)
         {
             CreateCommands();
 
@@ -118,8 +120,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             RemoveTabFromList(id);
             Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
-
-            //MessengerInstance.Send<HistoryTabRemovedMessage>(new HistoryTabRemovedMessage(id));
+            Hub.RaiseHistoryTabRemoved(id);
         }
 
         #endregion Command handlers
@@ -130,16 +131,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         protected override void DataBind()
         {
             TabsHistory = new TabsForHistory(5, Database);
-        }
-
-        public override void LoadStateFrom(IDictionary<string, object> state)
-        {
-            base.LoadStateFrom(state);
-        }
-
-        public override void SaveStateTo(IDictionary<string, object> state)
-        {
-            base.SaveStateTo(state);
         }
 
         #endregion Override members

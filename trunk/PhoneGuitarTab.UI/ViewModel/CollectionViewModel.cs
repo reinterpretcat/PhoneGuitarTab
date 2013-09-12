@@ -11,6 +11,7 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Primitives;
     using PhoneGuitarTab.Core.Views.Commands;
+    using PhoneGuitarTab.UI.Infrastructure;
 
     public class CollectionViewModel : DataContextViewModel
     {
@@ -22,19 +23,15 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #endregion Fields
 
-
         #region Constructor
 
         [Dependency]
-        public CollectionViewModel(IDataContextService database)
-            : base(database)
+        public CollectionViewModel(IDataContextService database, MessageHub hub)
+            : base(database, hub)
         {
             CreateCommands();
+            RegisterEvents();
             DataBind();
-
-            RegisterMessages();
-
-            //DispatcherHelper.Initialize();
         }
 
         #endregion Constructor
@@ -120,17 +117,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #region Override methods
 
-        public override void SaveStateTo(IDictionary<string, object> state)
-        {
-            base.SaveStateTo(state);
-            
-        }
-
-        public override void LoadStateFrom(IDictionary<string, object> state)
-        {
-           base.LoadStateFrom(state);
-        }
-
         protected override void DataBind()
         {
             AllTabs = new TabsByName(Database);            
@@ -175,7 +161,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
 
             RemoveTabFromList(id);
-            //MessengerInstance.Send<CollectionTabRemovedMessage>(new CollectionTabRemovedMessage(id));
+            Hub.RaiseCollectionTabRemoved(id);
         }
 
         private void DoRefreshData()
@@ -185,7 +171,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Deployment.Current.Dispatcher.BeginInvoke(
             () =>
             {
-                AddDownloadedTabs();
+                DataBind();
                 isPendingChangesOnCollection = false;
             });
         }
@@ -208,12 +194,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             RefreshData = new ExecuteCommand(DoRefreshData);
         }
 
-        private void RegisterMessages()
+        private void RegisterEvents()
         {
-           // MessengerInstance.Register<HistoryTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-           // MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-           // MessengerInstance.Register<TabsDownloadedMessage>(this, (message) => { isPendingChangesOnCollection = true; });
-           // MessengerInstance.Register<RefreshTabsMessage>(this, (message) => { DoRefreshData(); });
+            Hub.HistoryTabRemoved += (o, id) => RemoveTabFromList(id);
+            Hub.GroupTabRemoved += (o, id) => RemoveTabFromList(id);
+            Hub.TabsDownloaded += (o, args) => isPendingChangesOnCollection = true;
+            Hub.TabsRefreshed += (o, args) => DoRefreshData();
         }
 
         private void RemoveTabFromList(int id)
@@ -222,11 +208,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             AllTabs.RemoveTab(tabToRemove);
             Groups.DecreaseTabCount(tabToRemove.Group);
             RaisePropertyChanged("AllTabs");
-        }
-
-        private void AddDownloadedTabs()
-        {
-            //DispatcherHelper.CheckBeginInvokeOnUI(new Action(() => DataBind()));
         }
 
         #endregion Helper methods

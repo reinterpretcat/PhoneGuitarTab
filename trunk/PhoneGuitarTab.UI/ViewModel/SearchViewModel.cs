@@ -48,7 +48,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Constructors
 
         [Dependency]
-        public SearchViewModel(IDataContextService database):base(database)
+        public SearchViewModel(IDataContextService database, MessageHub hub)
+            : base(database, hub)
         {
             CreateCommands();
 
@@ -514,8 +515,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     };
 
                     Database.InsertTab(downloadedTab);
-
-                    //MessengerInstance.Send<TabsDownloadedMessage>(new TabsDownloadedMessage());
+                    Hub.RaiseTabsDownloaded();
 
                     tab.IsDownloaded = true;
                     IsSearching = false;
@@ -527,7 +527,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                         TextOrientation = System.Windows.Controls.Orientation.Vertical
                     };
                     toast.Show();*/
-       
+                    MessageBox.Show(" was downloaded", "\"" + tab.Name + "\" by " + tab.Group, MessageBoxButton.OK);
                     //DownloadTab.RaiseCanExecuteChanged(); 
                 });
         }
