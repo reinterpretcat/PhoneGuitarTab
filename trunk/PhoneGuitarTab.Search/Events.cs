@@ -4,11 +4,11 @@ namespace PhoneGuitarTab.Search
 {
     public class DownloadCompletedEventArgs : EventArgs
     {
-        public bool HadErrors { get; private set; }
+        public bool HasErrors { get; private set; }
 
-        public DownloadCompletedEventArgs(bool hadErrors)
+        public DownloadCompletedEventArgs(bool hasErrors)
         {
-            HadErrors = hadErrors;
+            HasErrors = hasErrors;
         }
     }
 }

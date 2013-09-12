@@ -409,7 +409,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             SearchTabDownloader downloader = new SearchTabDownloader(entry, filePath);
             downloader.DownloadComplete += delegate(object sender, DownloadCompletedEventArgs args)
             {
-                if (args.HadErrors)
+                if (args.HasErrors)
                     Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {

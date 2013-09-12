@@ -1,9 +1,9 @@
 using System;
-using System.IO;
-using System.IO.IsolatedStorage;
 
 namespace PhoneGuitarTab.Search.UltimateGuitar
 {
+    using System.Net;
+
     public class SearchTabDownloader: FileDownloader
     {
         private const string UrlTemplateFile = "http://ultimate-guitar.com/tab_download.php?tab_id={0}";
@@ -24,7 +24,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             else
                 link = Entry.Url;
 
-            base.Download(new UgHttpWebRequest(link));
+            base.Download(WebRequest.Create(link));
         }
     }
 }

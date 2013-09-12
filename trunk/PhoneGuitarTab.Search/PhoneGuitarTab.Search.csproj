@@ -109,25 +109,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultRequestInspector.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="FileDownloader.cs" />
-    <Compile Include="IRequestInspector.cs" />
-    <Compile Include="ISession.cs" />
     <Compile Include="Lastfm\SearchInfoResult.cs" />
     <Compile Include="Lastfm\SearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchContext.cs" />
-    <Compile Include="SearchExceptions.cs" />
-    <Compile Include="SR.cs" />
     <Compile Include="TabulatureType.cs" />
     <Compile Include="UltimateGuitar\SearchTabDownloader.cs" />
     <Compile Include="UltimateGuitar\SearchTabResult.cs" />
     <Compile Include="UltimateGuitar\SearchTabResultEntry.cs" />
     <Compile Include="UltimateGuitar\SearchTabResultSummary.cs" />
-    <Compile Include="UltimateGuitar\UgHttpWebRequest.cs" />
-    <Compile Include="UltimateGuitar\UgRequestInspector.cs" />
-    <Compile Include="UltimateGuitar\UgSession.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
