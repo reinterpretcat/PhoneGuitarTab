@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PhoneGuitarTab.UI.Bootstrap
+﻿namespace PhoneGuitarTab.UI.Bootstrap
 {
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;

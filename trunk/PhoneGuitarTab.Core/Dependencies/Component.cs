@@ -42,7 +42,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         }
 
         /// <summary>
-        /// true, if we proxy type is defined
+        /// true, if proxy type is defined
         /// </summary>
         internal bool CanCreateProxy
         {
