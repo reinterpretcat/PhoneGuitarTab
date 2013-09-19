@@ -5,28 +5,21 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5CF049D1-5C85-45EE-A481-3D25970141FA}</ProjectGuid>
+    <ProjectGuid>{2240675E-8F3E-45BF-AEAB-650B70BE97D5}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PhoneGuitarTab.Search</RootNamespace>
-    <AssemblyName>PhoneGuitarTab.Search</AssemblyName>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
-    <SilverlightVersion>
-    </SilverlightVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <RootNamespace>PhoneGuitarTab.Tablatures</RootNamespace>
+    <AssemblyName>PhoneGuitarTab.Tablatures</AssemblyName>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +31,6 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,80 +41,86 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
     <OutputPath>Bin\x86\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
-    <DebugType>full</DebugType>
-    <PlatformTarget>
-    </PlatformTarget>
+    <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>Bin\x86\Release</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
-    <Optimize>true</Optimize>
     <NoStdLib>true</NoStdLib>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>
-    </PlatformTarget>
+    <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
     <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
     <OutputPath>Bin\ARM\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
     <NoStdLib>true</NoStdLib>
-    <DebugType>full</DebugType>
-    <PlatformTarget>
-    </PlatformTarget>
+    <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
     <OutputPath>Bin\ARM\Release</OutputPath>
     <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
-    <Optimize>true</Optimize>
     <NoStdLib>true</NoStdLib>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>
-    </PlatformTarget>
+    <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Events.cs" />
-    <Compile Include="FileDownloader.cs" />
-    <Compile Include="ITabSearcher.cs" />
-    <Compile Include="Lastfm\SearchInfoResult.cs" />
-    <Compile Include="Lastfm\SearchResult.cs" />
+    <Compile Include="Helpers\JsonExtensions.cs" />
+    <Compile Include="Models\Beat.cs" />
+    <Compile Include="Models\Channel.cs" />
+    <Compile Include="Models\Chord.cs" />
+    <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\DivisionType.cs" />
+    <Compile Include="Models\Duration.cs" />
+    <Compile Include="Models\Effects\EffectBend.cs" />
+    <Compile Include="Models\Effects\EffectGrace.cs" />
+    <Compile Include="Models\Effects\EffectHarmonic.cs" />
+    <Compile Include="Models\Effects\EffectTremoloBar.cs" />
+    <Compile Include="Models\Effects\EffectTremoloPicking.cs" />
+    <Compile Include="Models\Effects\EffectTrill.cs" />
+    <Compile Include="Models\GuitarString.cs" />
+    <Compile Include="Models\Lyric.cs" />
+    <Compile Include="Models\Marker.cs" />
+    <Compile Include="Models\Measure.cs" />
+    <Compile Include="Models\MeasureHeader.cs" />
+    <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\NoteEffect.cs" />
+    <Compile Include="Models\Song.cs" />
+    <Compile Include="Models\Stroke.cs" />
+    <Compile Include="Models\Tempo.cs" />
+    <Compile Include="Models\Text.cs" />
+    <Compile Include="Models\TimeSignature.cs" />
+    <Compile Include="Models\Track.cs" />
+    <Compile Include="Models\Veloticies.cs" />
+    <Compile Include="Models\Voice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TabulatureType.cs" />
-    <Compile Include="UltimateGuitar\UltimateGuitarFileDownloader.cs" />
-    <Compile Include="UltimateGuitar\UltimateGuitarTabSearcher.cs" />
-    <Compile Include="SearchTabResultEntry.cs" />
-    <Compile Include="SearchTabResultSummary.cs" />
+    <Compile Include="Readers\JsonSongReader.cs" />
+    <Compile Include="Writers\FifthGuitarProSongWriter.cs" />
+    <Compile Include="Writers\GuitarProSongWriter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
-      <Project>{06005B3A-BCE2-4B59-95BD-8A697F758F35}</Project>
-      <Name>PhoneGuitarTab.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PhoneGuitarTab.Tablatures\PhoneGuitarTab.Tablatures.csproj">
-      <Project>{2240675E-8F3E-45BF-AEAB-650B70BE97D5}</Project>
-      <Name>PhoneGuitarTab.Tablatures</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="SharpGIS.GZipWebClient">
-      <HintPath>..\packages\SharpGIS.GZipWebClient.1.4.0.0\lib\wp71\SharpGIS.GZipWebClient.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net45+wp80+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -131,7 +129,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <ProjectExtensions />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

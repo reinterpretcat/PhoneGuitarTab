@@ -23,13 +23,13 @@
             {
                 base.ReadNavigationParameters();
 
-                using (var stream = FileSystem.OpenFile(Tablature.Path, FileMode.Open))
+                /*using (var stream = FileSystem.OpenFile(Tablature.Path, FileMode.Open))
                 {
                     TabContent = (new StreamReader(stream)).ReadToEnd();
-                }
+                }*/
 
-                // TODO use this generic approach instead of ug specific
-                /*using (var stream = FileSystem.OpenFile(Tablature.Path, FileMode.Open))
+                // expect binary format (e.g. gp5)
+                using (var stream = FileSystem.OpenFile(Tablature.Path, FileMode.Open))
                 {
                     var bytes = default(byte[]);
                     using (var memstream = new MemoryStream())
@@ -42,7 +42,7 @@
                     }
 
                     TabContent = Convert.ToBase64String(bytes);
-                }*/
+                }
             }
             catch (Exception ex)
             {

@@ -8,6 +8,9 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
     using System.Threading.Tasks;
     using System.Xml.Linq;
 
+    using PhoneGuitarTab.Tablatures.Readers;
+    using PhoneGuitarTab.Tablatures.Writers;
+
     using SharpGIS;
 
     public class UltimateGuitarFileDownloader: FileDownloader
@@ -56,9 +59,13 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                     client.DownloadStringAsync(new Uri(link));
                     client.DownloadStringCompleted += (o, e) =>
                         { 
-                            // TODO convert from json to guitar pro format
+                            // convert from json to guitar pro format
+                            var songReader = new JsonSongReader(e.Result);
+                            var song = songReader.ReadSong();
 
-                            SaveToFile(e.Result);
+                            var songWriter = new FifthGuitarProSongWriter(new BinaryWriter(GetOutputStream()));
+                            songWriter.WriteSong(song);
+
                             InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
                         };
                 });

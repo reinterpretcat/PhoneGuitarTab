@@ -52,7 +52,7 @@
                 string[] parameters = new [] { (DataContext as StaveTabViewModel).TabContent };
 
                 // TODO json tab is specific for ug. Convert it to gp through download step 
-                Browser.InvokeScript("readJson", parameters);
+                Browser.InvokeScript("readBase64", parameters);
                 OrientationChanged += (_, __) => Browser.InvokeScript("showTab");
 
             }

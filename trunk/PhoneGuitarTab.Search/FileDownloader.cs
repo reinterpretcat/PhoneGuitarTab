@@ -95,6 +95,12 @@ namespace PhoneGuitarTab.Search
         #endregion Public methods
 
 
+        protected Stream GetOutputStream()
+        {
+            return storage.OpenFile(destination, FileMode.CreateNew);
+        }
+
+
         protected void SaveToFile(string content)
         {
             SaveToFile(new MemoryStream(Encoding.UTF8.GetBytes(content)));
