@@ -437,7 +437,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoHome()
         {
-            //MessengerInstance.Send<RefreshTabsMessage>(new RefreshTabsMessage());
+            Hub.RaiseTabsRefreshed();
             NavigationService.NavigateTo(Strings.Startup);
         }
 
@@ -465,7 +465,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Version = entry.Version
                 });
 
-                if (groupTabs.Count() == 0)
+                if (!groupTabs.Any())
                 {
                     IsNothingFound = true;
                     IsSearching = false;
@@ -528,7 +528,8 @@ namespace PhoneGuitarTab.UI.ViewModel
                     };
                     toast.Show();*/
                     MessageBox.Show(" was downloaded", "\"" + tab.Name + "\" by " + tab.Group, MessageBoxButton.OK);
-                    //DownloadTab.RaiseCanExecuteChanged(); 
+
+                    DownloadTab.RaiseCanExecuteChanged(); 
                 });
         }
 

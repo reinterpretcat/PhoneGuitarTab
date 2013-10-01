@@ -103,7 +103,7 @@
                         <ListBox x:Name="pagesList"
                                  ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
                                  ItemsSource="{Binding Path=DataContext.Pages,ElementName=root}"
-                                 SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root}">
+                                 SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
                            <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
