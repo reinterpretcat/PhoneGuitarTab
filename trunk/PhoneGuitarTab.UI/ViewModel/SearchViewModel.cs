@@ -466,14 +466,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Version = entry.Version
                 });
 
-                if (!groupTabs.Any())
-                {
-                    IsNothingFound = true;
-                    IsSearching = false;
-                    HeaderPagingVisibility = Visibility.Collapsed;
-                    return;
-                }
-
+                IsNothingFound = !groupTabs.Any();
                 Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {
@@ -484,7 +477,8 @@ namespace PhoneGuitarTab.UI.ViewModel
                                 : Visibility.Collapsed;
                         SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
                         FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
-                        SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
+                        if(Pages.Any())
+                            SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
                         RaisePropertyChanged("SelectedPage");
                         IsSearching = false;
                     });
