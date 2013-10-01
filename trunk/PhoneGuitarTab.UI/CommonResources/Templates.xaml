@@ -273,7 +273,7 @@
                            Foreground="{StaticResource PhoneAccentBrush}"
                            Style="{StaticResource PhoneTextNormalStyle}"
                            Text="Downloaded"
-                           Visibility="{Binding IsDownloaded,
+                           Visibility="{Binding IsDownloaded,Mode=TwoWay,
                                                 Converter={StaticResource boolVisibility}}" />
 
             </Grid>

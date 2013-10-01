@@ -33,6 +33,12 @@
             Browser.InvokeScript("nextTrack");
         }
 
+        // Navigates forward in the web browser's navigation stack, not the applications.
+        private void ScaleApplicationBar_Click(object sender, EventArgs e)
+        {
+            Browser.InvokeScript("scaleChange");
+        }
+
         // Navigates to the initial "home" page.
         private void HomeMenuItem_Click(object sender, EventArgs e)
         {

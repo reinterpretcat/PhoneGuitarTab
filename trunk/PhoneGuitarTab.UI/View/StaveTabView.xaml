@@ -27,9 +27,10 @@
 
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized">
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized" Opacity="0.2">
             <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.back.rest.png" IsEnabled="True" Text="back" Click="BackApplicationBar_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.next.rest.png" IsEnabled="True" Text="forward" Click="ForwardApplicationBar_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.feature.search.rest.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="home" Click="HomeMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>

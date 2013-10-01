@@ -3,8 +3,12 @@
   font-size: 18px;
   /*padding: 0 10px 10px 0;*/
   padding: 0px;
+  margin: 0px;
   color: #554;
   white-space: pre;
+}
+div#body {
+    margin-left: -10px;
 }
 
 div.vex-tabdiv .vex-canvas {

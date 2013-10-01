@@ -117,7 +117,7 @@ MusicTab.Stave.View = klass(null, {
         
         if (this.message) {
             this.ctx.setFont("Times", 12, "italic");
-            this.ctx.fillText(this.message, (this.width / (2 * this.scale)) - 10 * this.scale, this.height / this.scale - 15);
+            this.ctx.fillText(this.message, (this.width / (2 * this.scale)) - 10 * this.scale, this.height / this.scale - 8);
         }
 
         return this;
