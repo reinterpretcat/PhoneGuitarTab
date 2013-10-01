@@ -22,6 +22,8 @@
             Container.Register(Component.For<TabFileStorage>().Use<TabFileStorage>().Singleton());
 
             Container.Register(Component.For<MessageHub>().Use<MessageHub>().Singleton());
+
+            Container.Register(Component.For<IDialogController>().Use<DefaultDialogController>().Singleton());
             
             return true;
         }

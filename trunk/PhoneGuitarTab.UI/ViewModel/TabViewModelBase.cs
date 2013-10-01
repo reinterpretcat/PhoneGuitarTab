@@ -15,6 +15,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         public string TabContent { get; set; }
         protected Tab Tablature { get; set; }
 
+        protected IDialogController Dialog { get; set; }
+
         [Dependency]
         protected TabViewModelBase(IDataContextService database, MessageHub hub)
             : base(database, hub)

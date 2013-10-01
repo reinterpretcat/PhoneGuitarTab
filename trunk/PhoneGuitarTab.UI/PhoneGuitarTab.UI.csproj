@@ -130,6 +130,7 @@
     <Compile Include="Data\DataContextService.cs" />
     <Compile Include="Data\IDataContextService.cs" />
     <Compile Include="Data\TabDataContext.cs" />
+    <Compile Include="Infrastructure\DialogController.cs" />
     <Compile Include="Infrastructure\MessageHub.cs" />
     <Compile Include="Infrastructure\NavigationExtensions.cs" />
     <Compile Include="Strings.cs" />

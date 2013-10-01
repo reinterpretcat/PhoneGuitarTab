@@ -63,8 +63,10 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         #endregion Constructors
 
-
         #region Properties
+
+        [Dependency]
+        private IDialogController Dialog { get; set; }
 
         [Dependency]
         private TabFileStorage TabFileStorage { get; set; }
@@ -391,7 +393,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             if (IsSearching)
             {
-                MessageBox.Show("Sorry, you cannot download the tab right now.");
+                Dialog.Show("Sorry, you cannot download the tab right now.");
                 return;
             }
             TabEntity tab = SearchGroupTabs.Tabs.Where(t => t.SearchId == arg).FirstOrDefault();
@@ -426,7 +428,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(String.Format("Error: {0}", ex));
+                Dialog.Show(String.Format("Error: {0}", ex));
                 IsSearching = false;
             }
         }
@@ -485,12 +487,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
             else
             {
-                /*var toast = new ToastPrompt
-                {
-                    Title = "Sorry,",
-                    Message = "can't reach the server right now."
-                };
-                toast.Show();*/
+                Dialog.Show("Sorry,", "can't reach the server right now.");
                 IsSearching = false;
             }
         }
@@ -515,14 +512,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     tab.IsDownloaded = true;
                     IsSearching = false;
 
-                   /* var toast = new ToastPrompt
-                    {
-                        Title = "\"" + tab.Name + "\" by " + tab.Group,
-                        Message = " was downloaded",
-                        TextOrientation = System.Windows.Controls.Orientation.Vertical
-                    };
-                    toast.Show();*/
-                    MessageBox.Show(" was downloaded", "\"" + tab.Name + "\" by " + tab.Group, MessageBoxButton.OK);
+                    Dialog.Show(" was downloaded", "\"" + tab.Name + "\" by " + tab.Group);
 
                     DownloadTab.RaiseCanExecuteChanged(); 
                 });
@@ -547,7 +537,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
-                MessageBox.Show("No internet connection available.", "Can not perform operation", MessageBoxButton.OK);
+                Dialog.Show("No internet connection available.", "Can not perform operation");
                 return;
             }
 

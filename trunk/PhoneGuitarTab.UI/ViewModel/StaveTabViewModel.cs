@@ -46,7 +46,7 @@
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Dialog.Show(ex.Message);
             }
         }
     }
