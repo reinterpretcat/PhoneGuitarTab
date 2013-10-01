@@ -199,8 +199,9 @@ namespace PhoneGuitarTab.UI.ViewModel
             { 
                 return searchTabType; 
             }
-            set 
+            set
             {
+                CurrentPageIndex = 1;
                 if (searchTabType != value)
                 {
                     searchTabType = value;
