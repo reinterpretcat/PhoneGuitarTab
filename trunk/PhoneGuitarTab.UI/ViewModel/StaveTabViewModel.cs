@@ -17,6 +17,11 @@
             
         }
 
+        public void NavigateToHome()
+        {
+            NavigationService.NavigateTo(Strings.Startup);
+        }
+
         protected override void ReadNavigationParameters()
         {
             try

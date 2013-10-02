@@ -5,6 +5,7 @@
     using Microsoft.Phone.Controls;
     using PhoneGuitarTab.UI.ViewModel;
 
+    // TODO move code-behind to viewmodel
     public partial class StaveTabView : PhoneApplicationPage
     {
         // Url of Home page
@@ -42,9 +43,9 @@
         // Navigates to the initial "home" page.
         private void HomeMenuItem_Click(object sender, EventArgs e)
         {
-            Browser.Navigate(new Uri(this.SandboxUri, UriKind.Relative));
+            (DataContext as StaveTabViewModel).NavigateToHome();
         }
-
+        
         // Handle navigation failures.
         private void Browser_NavigationFailed(object sender, System.Windows.Navigation.NavigationFailedEventArgs e)
         {
