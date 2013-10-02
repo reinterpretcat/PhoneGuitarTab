@@ -20,9 +20,10 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         #region Fields
 
-        public string Url { get; set; }
-        public string Summary { get; set; }
-        public string BandName { get; set; }
+        public string Url { get; private set; }
+        public string ImageUrl { get; private set; }
+        public string Summary { get; private set; }
+        public string BandName { get; private set; }
 
         #endregion Fields
 
@@ -31,10 +32,15 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         protected override void CreateEntries(XElement root)
         {
-            Url = root.Element("artist").Element("url").Value;
-            BandName = root.Element("artist").Element("name").Value;
-            var bio = root.Element("artist").Element("bio");
-            Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));
+            var artist = root.Element("artist");
+            if (artist != null)
+            {
+                Url = GetSafeValue(artist.Element("url"));
+                ImageUrl = GetImageUrl(artist);
+                BandName = GetSafeValue(artist.Element("name"));
+                var bio = artist.Element("bio");
+                Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));
+            }
         }
 
         protected override string GetRequestTemplate()
@@ -46,6 +52,23 @@ namespace PhoneGuitarTab.Search.Lastfm
 
 
         #region Helper methods
+
+
+        private string GetSafeValue(XElement element)
+        {
+            return element != null ? element.Value : "";
+        }
+
+        private string GetImageUrl(XElement artist)
+        {
+            // small, medium, large, extralarge, mega..
+            var image = artist.Elements("image").ToList().FirstOrDefault(i =>
+                {
+                    var xAttribute = i.Attribute("size");
+                    return xAttribute != null && xAttribute.Value == "extralarge";
+                });
+            return image != null ? image.Value : "";
+        }
 
         /// <summary>
         /// Remove HTML tags from string using char array.
