@@ -6,13 +6,26 @@ using System.Xml.Linq;
 
 namespace PhoneGuitarTab.Search.Lastfm
 {
-    public class SearchInfoResult : SearchResult
+    using System.IO;
+    using System.Net;
+
+    public class SearchInfoResult
     {
+        public string Artist;
+
+        public event DownloadStringCompletedEventHandler SearchCompleted;
+
+        private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
+        {
+            DownloadStringCompletedEventHandler handler = SearchCompleted;
+            if (handler != null) handler(this, e);
+        }
+
         #region Constructors
 
         public SearchInfoResult(string artist)
-            : base(artist)
         {
+            Artist = artist;
         }
 
         #endregion Constructors
@@ -30,7 +43,7 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         #region Override methods
 
-        protected override void CreateEntries(XElement root)
+        protected void CreateEntries(XElement root)
         {
             var artist = root.Element("artist");
             if (artist != null)
@@ -43,12 +56,45 @@ namespace PhoneGuitarTab.Search.Lastfm
             }
         }
 
-        protected override string GetRequestTemplate()
+        protected string GetRequestTemplate()
         {
             return "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&api_key=dee2df7c96b013246bba7fe491be1f40";
         }
 
         #endregion Override methods
+
+        public void Run()
+        {
+
+            WebClient client = new WebClient();
+            client.DownloadStringCompleted += (s, e) =>
+            {
+                try
+                {
+                    if (e.Error == null)
+                    {
+
+                        byte[] byteArray = Encoding.UTF8.GetBytes(e.Result);
+                        MemoryStream stream = new MemoryStream(byteArray);
+                        XDocument document = XDocument.Load(stream);
+                        XElement root = document.Root;
+                        if (root.Attribute("status").Value == "ok")
+                        {
+                            CreateEntries(root);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //xml parse exceptions. buried intentionally
+                }
+                finally
+                {
+                    InvokeSearchComplete(e);
+                }
+            };
+            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(), Artist)));
+        }
 
 
         #region Helper methods

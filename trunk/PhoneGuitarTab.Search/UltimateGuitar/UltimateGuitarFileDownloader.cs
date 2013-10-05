@@ -43,7 +43,6 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             
         }
 
-
         public override void Download()
         {
             // NOTE ultimate guitar service prohibits unauthorized users to download raw gp files

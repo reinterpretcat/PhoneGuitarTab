@@ -8,6 +8,9 @@ namespace PhoneGuitarTab.Tablatures.Readers
     using PhoneGuitarTab.Tablatures.Helpers;
     using PhoneGuitarTab.Tablatures.Models.Effects;
 
+    /// <summary>
+    /// Converts json tab representation to tab domain model
+    /// </summary>
     public class JsonSongReader
     {
         private const int DefaultTemp = 120;
@@ -33,7 +36,6 @@ namespace PhoneGuitarTab.Tablatures.Readers
             ParseTracks(json);
 
             _song.MeasureHeaders = _song.Tracks.First().Measures.Select(m => m.Header).ToList();
-
 
             return _song;
         }

@@ -48,7 +48,7 @@ namespace PhoneGuitarTab.Search
         /// Download via HttpWebRequest
         /// </summary>
         /// <param name="url"></param>
-        public void Download(string url)
+        protected void Download(string url)
         {
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
             Download(request);
@@ -59,7 +59,7 @@ namespace PhoneGuitarTab.Search
         /// </summary>
         /// <typeparam name="T">type of WebRequest</typeparam>
         /// <param name="request">decorated WebRequest</param>
-        public void Download<T>(T request) where T: WebRequest
+        protected void Download<T>(T request) where T: WebRequest
         {
             request.BeginGetResponse(r =>
             {

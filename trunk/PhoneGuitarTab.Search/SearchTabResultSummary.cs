@@ -1,7 +1,4 @@
-using System;
-using System.Xml;
-
-namespace PhoneGuitarTab.Search.UltimateGuitar
+namespace PhoneGuitarTab.Search
 {
     public class SearchTabResultSummary
     {

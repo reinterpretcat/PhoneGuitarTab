@@ -1,5 +1,4 @@
-
-namespace PhoneGuitarTab.Search.UltimateGuitar
+namespace PhoneGuitarTab.Search
 {
     public class SearchTabResultEntry
     {

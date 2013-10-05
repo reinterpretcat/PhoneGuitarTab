@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D98AF82F-E8C5-4BC6-A756-D995449A7F54}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PhoneGuitarTab.UnitTests</RootNamespace>
+    <AssemblyName>PhoneGuitarTab.UnitTests</AssemblyName>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <WPTestProject>true</WPTestProject>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>PhoneGuitarTab.UnitTests_$(Configuration)_$(Platform).xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>PhoneGuitarTab.UnitTests.App</SilverlightAppEntry>
+    <ValidateXaml>false</ValidateXaml>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\InterceptionTests.cs" />
+    <Compile Include="Core\Proxies\ClassAProxy.cs" />
+    <Compile Include="Core\Proxies\ClassBProxy.cs" />
+    <Compile Include="Core\Proxies\ClassCProxy.cs" />
+    <Compile Include="Core\Proxies\FileSystemServiceProxy.cs" />
+    <Compile Include="Core\Proxies\SettingServiceProxy.cs" />
+    <Compile Include="Core\Stubs\ClassA.cs" />
+    <Compile Include="Core\Stubs\ClassB.cs" />
+    <Compile Include="Core\Stubs\ClassC.cs" />
+    <Compile Include="Core\Stubs\ClassD.cs" />
+    <Compile Include="Core\Stubs\ClassE.cs" />
+    <Compile Include="Core\Stubs\IClassA.cs" />
+    <Compile Include="Core\Stubs\IClassB.cs" />
+    <Compile Include="Core\Stubs\IClassC.cs" />
+    <Compile Include="Core\Stubs\IClassD.cs" />
+    <Compile Include="Core\Stubs\IClassE.cs" />
+    <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Core\ContainerTests.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AppResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Search\LastfmSearchTests.cs" />
+    <Compile Include="Search\SearchContext.cs" />
+    <Compile Include="Search\UltimateGuitarDownloadTests.cs" />
+    <Compile Include="Search\UltimateGuitarSearchTests.cs" />
+    <Compile Include="Tablature\JsonSongReaderTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="MSTestFramework, Version=11.0" />
+    <SDKReference Include="TestPlatform, Version=11.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\AlignmentGrid.png" />
+    <Content Include="Assets\ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileMedium.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\opeth_requiem.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
+      <Project>{06005B3A-BCE2-4B59-95BD-8A697F758F35}</Project>
+      <Name>PhoneGuitarTab.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneGuitarTab.Search\PhoneGuitarTab.Search.csproj">
+      <Project>{5CF049D1-5C85-45EE-A481-3D25970141FA}</Project>
+      <Name>PhoneGuitarTab.Search</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhoneGuitarTab.Tablatures\PhoneGuitarTab.Tablatures.csproj">
+      <Project>{2240675E-8F3E-45BF-AEAB-650B70BE97D5}</Project>
+      <Name>PhoneGuitarTab.Tablatures</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+</Project>

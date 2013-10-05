@@ -102,7 +102,6 @@
     <Compile Include="FileDownloader.cs" />
     <Compile Include="ITabSearcher.cs" />
     <Compile Include="Lastfm\SearchInfoResult.cs" />
-    <Compile Include="Lastfm\SearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TabulatureType.cs" />
     <Compile Include="UltimateGuitar\UltimateGuitarFileDownloader.cs" />
