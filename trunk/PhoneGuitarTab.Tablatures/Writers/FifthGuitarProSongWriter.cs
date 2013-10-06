@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-
+﻿
 namespace PhoneGuitarTab.Tablatures.Writers
 {
     using System;
@@ -10,17 +9,19 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
     public class FifthGuitarProSongWriter : GuitarProSongWriter
     {
-        private static string GP5_FORMAT_EXTENSION = ".gp5";
-        private static string GP5_VERSION = "FICHIER GUITAR PRO v5.00";
-        private static int GP_BEND_SEMITONE = 25;
-        private static int GP_BEND_POSITION = 60;
-        private static string[] PAGE_SETUP_LINES =
+        private const string Gp5Version = "FICHIER GUITAR PRO v5.00";
+
+        private const int GpBendSemitone = 25;
+
+        private const int GpBendPosition = 60;
+
+        private static readonly string[] PageSetupLines =
             {
                 "%TITLE%", "%SUBTITLE%", "%ARTIST%", "%ALBUM%", "Words by %WORDS%",
                 "Music by %MUSIC%", "Words & Music by %WORDSMUSIC%",
                 "Copyright %COPYRIGHT%",
                 "All Rights Reserved - International Copyright Secured",
-                "Page %N%/%P%", "Moderate",
+                "Page %N%/%P%", "Moderate"
             };
 
         public FifthGuitarProSongWriter(BinaryWriter sw)
@@ -36,7 +37,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
                 throw new ArgumentException("Empty song");
 
             MeasureHeader header = song.MeasureHeaders[0];
-            WriteStringByte(GP5_VERSION, 30);
+            WriteStringByte(Gp5Version, 30);
             WriteInfo(song);
             WriteLyrics(song);
             WritePageSetup();
@@ -130,10 +131,10 @@ namespace PhoneGuitarTab.Tablatures.Writers
             WriteByte((byte)0xff); // View flags
             WriteByte((byte)0x01); // View flags
 
-            for (int i = 0; i < PAGE_SETUP_LINES.Length; i++)
+            for (int i = 0; i < PageSetupLines.Length; i++)
             {
-                WriteInt((PAGE_SETUP_LINES[i].Length + 1));
-                WriteStringByte(PAGE_SETUP_LINES[i], 0);
+                WriteInt((PageSetupLines[i].Length + 1));
+                WriteStringByte(PageSetupLines[i], 0);
             }
         }
 
@@ -702,8 +703,8 @@ namespace PhoneGuitarTab.Tablatures.Writers
             for (int i = 0; i < points; i++)
             {
                 EffectBend.BendPoint point = (EffectBend.BendPoint)bend.Points[i];
-                WriteInt((point.Position * GP_BEND_POSITION / EffectBend.MaxPositionLength));
-                WriteInt((point.Value * GP_BEND_SEMITONE / EffectBend.SemitoneLength));
+                WriteInt((point.Position * GpBendPosition / EffectBend.MaxPositionLength));
+                WriteInt((point.Value * GpBendSemitone / EffectBend.SemitoneLength));
                 WriteByte((byte)0);
             }
         }
@@ -717,8 +718,8 @@ namespace PhoneGuitarTab.Tablatures.Writers
             for (int i = 0; i < points; i++)
             {
                 EffectTremoloBar.TremoloBarPoint point = (EffectTremoloBar.TremoloBarPoint)tremoloBar.Points[i];
-                WriteInt((point.Position * GP_BEND_POSITION / EffectBend.MaxPositionLength));
-                WriteInt((point.Value * (GP_BEND_SEMITONE * 2)));
+                WriteInt((point.Position * GpBendPosition / EffectBend.MaxPositionLength));
+                WriteInt((point.Value * (GpBendSemitone * 2)));
                 WriteByte((byte)0);
             }
         }
