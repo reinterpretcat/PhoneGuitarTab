@@ -68,11 +68,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
-        public ExecuteCommand Review
+       /* public ExecuteCommand Review
         {
             get;
             private set;
-        }
+        }*/
 
         public ExecuteCommand<int> RemoveTab
         {
@@ -80,11 +80,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
-        public ExecuteCommand CancelTab
+       /* public ExecuteCommand CancelTab
         {
             get;
             private set;
-        }
+        }*/
 
         #endregion Commands
 
@@ -108,10 +108,10 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        private void DoReview()
-        {
-            new MarketplaceReviewTask().Show();
-        }
+        //private void DoReview()
+        //{
+        //    new MarketplaceReviewTask().Show();
+        //}
 
         private void DoRemoveTab(int id)
         {
@@ -139,7 +139,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             GoTo = new ExecuteCommand<string>(DoGoTo);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
-            Review = new ExecuteCommand(DoReview);
+            //Review = new ExecuteCommand(DoReview);
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
         }
 

@@ -318,17 +318,17 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
-        public ExecuteCommand CollectionCommand
+        /*public ExecuteCommand CollectionCommand
         {
             get;
             set;
-        }
+        }*/
 
-        public ExecuteCommand SettingsCommand
+       /* public ExecuteCommand SettingsCommand
         {
             get;
             set;
-        }
+        }*/
 
         public ExecuteCommand HomeCommand
         {

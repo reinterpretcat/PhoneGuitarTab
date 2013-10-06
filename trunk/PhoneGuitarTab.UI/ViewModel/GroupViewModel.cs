@@ -187,11 +187,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             set;
         }
 
-        public ExecuteCommand SettingsCommand
+        /*public ExecuteCommand SettingsCommand
         {
             get;
             set;
-        }
+        }*/
 
         public ExecuteCommand HomeCommand
         {
@@ -307,7 +307,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
-            CancelTab = new ExecuteCommand(() => { });
+            //CancelTab = new ExecuteCommand(() => { });
         }
 
         private void GetCurrentGroupInfo(Group group)

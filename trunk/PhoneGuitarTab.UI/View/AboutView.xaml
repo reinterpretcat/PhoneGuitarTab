@@ -73,7 +73,7 @@
 
 
             <TextBlock Margin="0,58,0,6"
-                       Text="Phone Guitar Tab is an open source project and is licensed under Microsoft Public License (Ms-PL). You can visit project page at CodePlex:"
+                       Text="Phone Guitar Tab is an open source project and is licensed under Microsoft Public License (Ms-PL). Our team invites developers to join us to create the best guitar tab app under WP platform. See project page at CodePlex:"
                        TextWrapping="Wrap" />
             <HyperlinkButton Grid.Row="1" Content="{Binding CompanyUrl}">
                 <i:Interaction.Triggers>

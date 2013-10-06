@@ -94,17 +94,17 @@ namespace PhoneGuitarTab.UI.ViewModel
             set;
         }
 
-        public ExecuteCommand SettingsCommand
+       /* public ExecuteCommand SettingsCommand
         {
             get;
             set;
-        }
+        }*/
 
-        public ExecuteCommand HomeCommand
+        /*public ExecuteCommand HomeCommand
         {
             get;
             set;
-        }
+        }*/
 
         public ExecuteCommand RefreshData
         {
@@ -180,7 +180,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void CreateCommands()
         {
             SearchCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Search));
-            HomeCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Startup));
+            //HomeCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Startup));
 
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
 
@@ -200,7 +200,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RemoveTabFromList(int id)
         {
-            var tabToRemove = AllTabs.Tabs.Where(tab => tab.Id == id).Single();
+            var tabToRemove = AllTabs.Tabs.Single(tab => tab.Id == id);
             AllTabs.RemoveTab(tabToRemove);
             Groups.DecreaseTabCount(tabToRemove.Group);
             RaisePropertyChanged("AllTabs");
