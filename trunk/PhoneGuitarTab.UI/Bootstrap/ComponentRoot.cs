@@ -4,6 +4,7 @@
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Views;
+    using PhoneGuitarTab.UI.ViewModel;
 
     /// <summary>
     /// Represents an application bootstrapper.
@@ -33,88 +34,88 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel Startup
+        public StartupViewModel Startup
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.Startup);
+                return _container.Resolve<ViewModel>(Strings.Startup) as StartupViewModel;
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel Group
+        public GroupViewModel Group
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.Group);
+                return _container.Resolve<ViewModel>(Strings.Group) as GroupViewModel;
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel Search
+        public SearchViewModel Search
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.Search);
+                return _container.Resolve<ViewModel>(Strings.Search) as SearchViewModel;
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel TextTab
+        public TextTabViewModel TextTab
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.TextTab);
+                return _container.Resolve<ViewModel>(Strings.TextTab) as TextTabViewModel;
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel Help
+        public HelpViewModel Help
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.Help);
+                return _container.Resolve<ViewModel>(Strings.Help) as HelpViewModel;
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel About
+        public AboutViewModel About
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.About);
+                return _container.Resolve<ViewModel>(Strings.About) as AboutViewModel;
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
           "CA1822:MarkMembersAsStatic",
           Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel Collection
+        public CollectionViewModel Collection
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.Collection);
+                return _container.Resolve<ViewModel>(Strings.Collection) as CollectionViewModel;
             }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
          "CA1822:MarkMembersAsStatic",
          Justification = "This non-static member is needed for data binding purposes.")]
-        public ViewModel StaveTab
+        public StaveTabViewModel StaveTab
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.StaveTab);
+                return _container.Resolve<ViewModel>(Strings.StaveTab) as StaveTabViewModel;
             }
         }
 

@@ -67,7 +67,7 @@
                                      ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
                                      ItemsSource="{Binding Path=DataContext.Pages,
                                                            ElementName=root}"
-                                     SelectedItem="{Binding Path=DataContext.SelectedPage,
+                                     SelectedItem="{Binding Path=DataContext.SelectedPage, Mode=TwoWay,
                                                             ElementName=root}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
