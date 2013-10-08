@@ -4,14 +4,14 @@ pushd
 :: CD to script's directory
 cd /D %~dp0
 
-if '%1'=='' ( 
-	Set Mode=Debug
+if '%1'=='Release' ( 
+	Set Mode=BuildReleaseAndRunUnitTests
 ) else (
-	Set Mode=%1
+	Set Mode=BuildDebugAndRunUnitTests
 )
 set doPause=1
 if not "%2" == "" set doPause=0
-%systemroot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe build.xml /t:BuildDebugAndRunUnitTests /p:Revision=1
+%systemroot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe build.xml /t:%Mode% /p:Revision=1
 
 @if ERRORLEVEL 1 goto fail
 

@@ -7,7 +7,7 @@
         <Revision>x</Revision>
         <OutputPath>Build\</OutputPath>
         <OutputPathDebug>..\Build\Debug\</OutputPathDebug>
-        <OutputPathRelease>..\Build\</OutputPathRelease>
+        <OutputPathRelease>..\Build\Release\</OutputPathRelease>
     </PropertyGroup>
 	 <Target Name="BuildDebug" DependsOnTargets="Clean; Version">
 		 <PropertyGroup>
@@ -16,6 +16,7 @@
         <msbuild Projects="PhoneGuitarTab.sln" Properties="Configuration=$(Configuration);OutputPath=$(OutputPathDebug)"/>
     </Target>
 	<Target Name="BuildDebugAndRunUnitTests" DependsOnTargets="BuildDebug;UnitTests"></Target>
+	<Target Name="BuildReleaseAndRunUnitTests" DependsOnTargets="BuildRelease;UnitTests"></Target>
 	<Target Name="BuildRelease" DependsOnTargets="Clean; Version">
 		 <PropertyGroup>
 			<Configuration>Release</Configuration>
