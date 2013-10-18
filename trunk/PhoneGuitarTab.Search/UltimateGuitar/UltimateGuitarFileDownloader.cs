@@ -33,11 +33,18 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             return Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null).ContinueWith(t =>
                 {
                     // TODO handle errors
-                    var response = t.Result;
-                    using (var responseStream = response.GetResponseStream())
+                    try
                     {
-                        var xDoc = XDocument.Load(responseStream);
-                        return xDoc.Root.Attribute("gp_url").Value;
+                        var response = t.Result;
+                        using (var responseStream = response.GetResponseStream())
+                        {
+                            var xDoc = XDocument.Load(responseStream);
+                            return xDoc.Root.Attribute("gp_url").Value;
+                        }
+                    }
+                    catch (AggregateException ex)
+                    {
+                        return String.Empty;
                     }
                 });
             
@@ -53,20 +60,27 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                 GetGuitarProDownloadUrl(this.Entry.Id).ContinueWith(task =>
                 {
                     var link = task.Result;
-                    GZipWebClient client = new GZipWebClient();
+                    if (link != string.Empty)
+                    {
+                        GZipWebClient client = new GZipWebClient();
 
-                    client.DownloadStringAsync(new Uri(link));
-                    client.DownloadStringCompleted += (o, e) =>
-                        { 
-                            // convert from json to guitar pro format
-                            var songReader = new JsonSongReader(e.Result);
-                            var song = songReader.ReadSong();
+                        client.DownloadStringAsync(new Uri(link));
+                        client.DownloadStringCompleted += (o, e) =>
+                            {
+                                // convert from json to guitar pro format
+                                var songReader = new JsonSongReader(e.Result);
+                                var song = songReader.ReadSong();
 
-                            var songWriter = new FifthGuitarProSongWriter(new BinaryWriter(GetOutputStream()));
-                            songWriter.WriteSong(song);
+                                var songWriter = new FifthGuitarProSongWriter(new BinaryWriter(GetOutputStream()));
+                                songWriter.WriteSong(song);
 
-                            InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
-                        };
+                                InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
+                            };
+                    }
+                    else
+                    {
+                        //**it happened, TODO: handle appropriately
+                    }
                 });
             }
             else

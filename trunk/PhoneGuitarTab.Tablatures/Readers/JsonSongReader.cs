@@ -169,9 +169,13 @@ namespace PhoneGuitarTab.Tablatures.Readers
                     IsEmpty = jVoice["empty"].SafeValue<bool>(),
                     Beat = beat,
                     Duration = ParseDuration(jVoice),
-                    Notes = ParseNotes(jVoice["notes"].Value<JArray>()),
-                    Direction = jVoice["direction"].SafeValue<int>() // TODO not sure
                 };
+            // (cent) no 'direction' or/and 'notes' in jVoice causes unhandled exception, 
+            // so I'am moving it out of init block
+            if (jVoice ["notes"] != null)
+                voice.Notes = ParseNotes(jVoice["notes"].Value<JArray>());
+            if (jVoice["direction"] != null)
+                voice.Direction = jVoice["direction"].SafeValue<int>(); // TODO not sure
 
             return voice;
         }

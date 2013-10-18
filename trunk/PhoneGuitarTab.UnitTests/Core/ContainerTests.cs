@@ -1,11 +1,9 @@
 ﻿namespace PhoneGuitarTab.UnitTests.Core
 {
-    using System.Linq;
-
     using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.UnitTests.Core.Stubs;
+    using System.Linq;
 
     [TestClass]
     public class ContainerTests

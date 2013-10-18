@@ -21,6 +21,31 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.UnitTests", "PhoneGuitarTab.UnitTests\PhoneGuitarTab.UnitTests.csproj", "{D98AF82F-E8C5-4BC6-A756-D995449A7F54}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs30
+		SccProjectUniqueName0 = PhoneGuitarTab.Core\\PhoneGuitarTab.Core.csproj
+		SccProjectName0 = PhoneGuitarTab.Core
+		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath0 = PhoneGuitarTab.Core
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = PhoneGuitarTab.Search\\PhoneGuitarTab.Search.csproj
+		SccProjectName1 = PhoneGuitarTab.Search
+		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath1 = PhoneGuitarTab.Search
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = PhoneGuitarTab.Controls\\PhoneGuitarTab.Controls.csproj
+		SccProjectName2 = PhoneGuitarTab.Controls
+		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath2 = PhoneGuitarTab.Controls
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = PhoneGuitarTab.UI\\PhoneGuitarTab.UI.csproj
+		SccProjectName3 = PhoneGuitarTab.UI
+		SccAuxPath3 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath3 = PhoneGuitarTab.UI
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM

@@ -41,6 +41,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private List<SearchType> searchMethodOptions;
         private List<TabulatureType> searchTabTypeOptions;
         private TabEntity firstTabInList;
+        private bool downloadButtonClicked = false;
 
         #endregion Fields
 
@@ -391,6 +392,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoDownloadTab(string arg)
         {
+            downloadButtonClicked = true;
+
             if (IsSearching)
             {
                 Dialog.Show("Sorry, you cannot download the tab right now.");
@@ -435,7 +438,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoToggleActionArea(TabEntity tab)
         {
-            tab.ActionAreaVisible = !tab.ActionAreaVisible;
+            if (!downloadButtonClicked)
+            {
+                tab.ActionAreaVisible = !tab.ActionAreaVisible;
+            }
+            downloadButtonClicked = false;
         }
 
         private void DoHome()
