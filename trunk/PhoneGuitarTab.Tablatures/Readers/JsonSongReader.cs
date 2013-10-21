@@ -281,12 +281,14 @@ namespace PhoneGuitarTab.Tablatures.Readers
             {
                 effect.IsSlide = true;
             }
+
             
-            //if (note.harmonic) {
-               // effects.harmonic = {};
-               // effects.harmonic.type = note.harmonic.type == 1 ? "" : note.harmonic.type;
-               // effect.Harmonic = new EffectHarmonic();
-            //}
+            if (jNote["harmonic"]!= null)
+            {
+                effect.Harmonic = new EffectHarmonic();
+                effect.Harmonic.Type = jNote["harmonic"]["type"].SafeValue<int>();
+                effect.Harmonic.Data = jNote["harmonic"]["data"].SafeValue<int>();
+            }
 
             if (flag == 32768)
             {
