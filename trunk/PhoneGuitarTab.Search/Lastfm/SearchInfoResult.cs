@@ -84,7 +84,7 @@ namespace PhoneGuitarTab.Search.Lastfm
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //xml parse exceptions. buried intentionally
                 }

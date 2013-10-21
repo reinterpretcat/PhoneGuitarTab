@@ -42,7 +42,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                             return xDoc.Root.Attribute("gp_url").Value;
                         }
                     }
-                    catch (AggregateException ex)
+                    catch (AggregateException)
                     {
                         return String.Empty;
                     }

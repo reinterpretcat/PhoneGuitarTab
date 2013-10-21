@@ -19,6 +19,7 @@ MusicTab.Stave.Paginator = klass(null, {
 		var views = [];
         pages.forEach(function(page) {
             var id = "vex-page" + pageNumber;
+            $("#" + id).remove(); // remove previos controls during rescaling
             var div = document.createElement("div");
             div.setAttribute("class", context.tabDivClass);
             div.setAttribute("id", id);
