@@ -98,6 +98,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfoBase.cs">
+      <Link>Properties\AssemblyInfoBase.cs</Link>
+    </Compile>
     <Compile Include="Events.cs" />
     <Compile Include="FileDownloader.cs" />
     <Compile Include="ITabSearcher.cs" />

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Core", "PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj", "{06005B3A-BCE2-4B59-95BD-8A697F758F35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.UI", "PhoneGuitarTab.UI\PhoneGuitarTab.UI.csproj", "{79393645-967F-4D71-BB54-5D92858C141E}"
@@ -19,6 +21,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Tablatures", "PhoneGuitarTab.Tablatures\PhoneGuitarTab.Tablatures.csproj", "{2240675E-8F3E-45BF-AEAB-650B70BE97D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.UnitTests", "PhoneGuitarTab.UnitTests\PhoneGuitarTab.UnitTests.csproj", "{D98AF82F-E8C5-4BC6-A756-D995449A7F54}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{E2F8ECBB-6480-43CC-B46A-2049699E01F5}"
+	ProjectSection(SolutionItems) = preProject
+		AssemblyInfoBase.cs = AssemblyInfoBase.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution

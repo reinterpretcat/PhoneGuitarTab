@@ -1,4 +1,5 @@
-﻿using PhoneGuitarTab.Data;
+﻿using System.Windows.Input;
+using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Entities;
@@ -518,8 +519,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
                     tab.IsDownloaded = true;
                     IsSearching = false;
-
-                    Dialog.Show(" was downloaded", "\"" + tab.Name + "\" by " + tab.Group);
+                    
+                    Dialog.Show(" was downloaded", "\"" + tab.Name + "\" by " + tab.Group, new DialogActionContainer()
+                    {
+                        OnTapAction = (o, e) => NavigationService.NavigateToTab(downloadedTab)
+                    });
 
                     DownloadTab.RaiseCanExecuteChanged(); 
                 });

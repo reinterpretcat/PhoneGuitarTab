@@ -7,6 +7,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
     public static class NavigationExtensions
     {
+        public static void NavigateToTab(this INavigationService navService, Tab tab)
+        {
+            NavigateToTab(navService, new Dictionary<string, object>() {{"Tab", tab}});
+        }
         public static void NavigateToTab(this INavigationService navService, Dictionary<string, object> parameters)
         {
             Tab tab = (Tab)parameters["Tab"];
