@@ -23,7 +23,7 @@
 
             Container.Register(Component.For<MessageHub>().Use<MessageHub>().Singleton());
 
-            Container.Register(Component.For<IDialogController>().Use<DefaultDialogController>().Singleton());
+            Container.Register(Component.For<IDialogController>().Use<ToastDialogController>().Singleton());
             
             return true;
         }
