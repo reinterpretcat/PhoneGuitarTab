@@ -10,9 +10,9 @@ using Microsoft.Phone.Shell;
 
 namespace PhoneGuitarTab.UI.View
 {
-    public partial class Settings : PhoneApplicationPage
+    public partial class SettingsView : PhoneApplicationPage
     {
-        public Settings()
+        public SettingsView()
         {
             InitializeComponent();
         }

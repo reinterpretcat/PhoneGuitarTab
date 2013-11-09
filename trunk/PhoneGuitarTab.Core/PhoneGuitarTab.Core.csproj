@@ -103,6 +103,8 @@
     </Compile>
     <Compile Include="Bootstrap\BootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\IBootstrapperPlugin.cs" />
+    <Compile Include="Cloud\ICloudService.cs" />
+    <Compile Include="Cloud\SkyDriveService.cs" />
     <Compile Include="Cryptography\MD5.cs" />
     <Compile Include="Cryptography\MD5Managed.cs" />
     <Compile Include="Dependencies\Component.cs" />
@@ -147,7 +149,17 @@
     <Compile Include="Views\ViewPage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Live">
+      <HintPath>..\packages\LiveSDK.5.5\lib\WindowsPhone8\Microsoft.Live.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Live.Controls">
+      <HintPath>..\packages\LiveSDK.5.5\lib\WindowsPhone8\Microsoft.Live.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Fonts\LiveSymbol.ttf" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

@@ -127,6 +127,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Bootstrap\CloudBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\ComponentRoot.cs" />
     <Compile Include="Bootstrap\CoreBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\DataBootstrapperPlugin.cs" />
@@ -141,8 +142,12 @@
     <Compile Include="Infrastructure\NavigationExtensions.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\StaveTabViewModel.cs" />
     <Compile Include="ViewModel\TabViewModelBase.cs" />
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\StaveTabView.xaml.cs">
       <DependentUpon>StaveTabView.xaml</DependentUpon>
     </Compile>
@@ -208,6 +213,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommonResources\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

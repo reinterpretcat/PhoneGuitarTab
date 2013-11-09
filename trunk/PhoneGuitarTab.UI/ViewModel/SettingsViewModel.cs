@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Text;
+﻿
+using PhoneGuitarTab.Core.Cloud;
+using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class SettingsViewModel
+    public class SettingsViewModel: DataContextViewModel
     {
-        IsolatedStorageSettings settings;
+        [Dependency]
+        public ICloudService CloudService { get; set; }
 
-        public SettingsViewModel()
+        public SettingsViewModel(IDataContextService database, MessageHub hub)
+            : base(database, hub)
         {
-            settings = IsolatedStorageSettings.ApplicationSettings;
         }
     }
 }
