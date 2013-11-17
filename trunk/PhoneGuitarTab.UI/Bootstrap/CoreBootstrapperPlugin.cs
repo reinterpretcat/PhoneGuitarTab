@@ -1,9 +1,10 @@
-﻿namespace PhoneGuitarTab.UI.Bootstrap
+﻿using PhoneGuitarTab.Core.Services;
+
+namespace PhoneGuitarTab.UI.Bootstrap
 {
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Diagnostic;
-    using PhoneGuitarTab.Core.IsolatedStorage;
     using PhoneGuitarTab.UI.Infrastructure;
 
     public class CoreBootstrapperPlugin : IBootstrapperPlugin

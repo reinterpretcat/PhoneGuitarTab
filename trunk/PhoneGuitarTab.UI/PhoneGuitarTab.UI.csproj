@@ -140,6 +140,7 @@
     <Compile Include="Infrastructure\DialogController.cs" />
     <Compile Include="Infrastructure\MessageHub.cs" />
     <Compile Include="Infrastructure\NavigationExtensions.cs" />
+    <Compile Include="Infrastructure\TabSyncService.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />

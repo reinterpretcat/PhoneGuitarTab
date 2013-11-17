@@ -103,8 +103,8 @@
     </Compile>
     <Compile Include="Bootstrap\BootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\IBootstrapperPlugin.cs" />
-    <Compile Include="Cloud\ICloudService.cs" />
-    <Compile Include="Cloud\SkyDriveService.cs" />
+    <Compile Include="Services\ICloudService.cs" />
+    <Compile Include="Services\SkyDriveService.cs" />
     <Compile Include="Cryptography\MD5.cs" />
     <Compile Include="Cryptography\MD5Managed.cs" />
     <Compile Include="Dependencies\Component.cs" />
@@ -131,16 +131,16 @@
     <Compile Include="Diagnostic\TraceCategory.cs" />
     <Compile Include="Diagnostic\TraceCategoryManager.cs" />
     <Compile Include="Diagnostic\TraceRecord.cs" />
-    <Compile Include="IsolatedStorage\IFileSystemService.cs" />
-    <Compile Include="Navigation\INavigationService.cs" />
-    <Compile Include="IsolatedStorage\ISettingService.cs" />
-    <Compile Include="IsolatedStorage\IsolatedStorageFileService.cs" />
-    <Compile Include="Navigation\NavigationService.cs" />
+    <Compile Include="Services\IFileSystemService.cs" />
+    <Compile Include="Services\INavigationService.cs" />
+    <Compile Include="Services\ISettingService.cs" />
+    <Compile Include="Services\IsolatedStorageFileService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Primitives\Lazy.cs" />
     <Compile Include="Primitives\ObservableTuple.cs" />
     <Compile Include="Primitives\Tuple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IsolatedStorage\IsolatedStorageSettingService.cs" />
+    <Compile Include="Services\IsolatedStorageSettingService.cs" />
     <Compile Include="Utilities\Guard.cs" />
     <Compile Include="Views\Commands\ExecuteCommandAction.cs" />
     <Compile Include="Views\Commands\ExecuteCommand.cs" />
@@ -160,6 +160,10 @@
   <ItemGroup>
     <None Include="Fonts\LiveSymbol.ttf" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Cloud\" />
+    <Folder Include="IsolatedStorage\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

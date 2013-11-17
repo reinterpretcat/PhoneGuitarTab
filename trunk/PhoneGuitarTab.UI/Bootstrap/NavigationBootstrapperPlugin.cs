@@ -1,4 +1,6 @@
-﻿namespace PhoneGuitarTab.UI.Bootstrap
+﻿using PhoneGuitarTab.Core.Services;
+
+namespace PhoneGuitarTab.UI.Bootstrap
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +8,6 @@
 
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
-    using PhoneGuitarTab.Core.Navigation;
     using PhoneGuitarTab.Core.Views;
     using PhoneGuitarTab.UI.ViewModel;
     

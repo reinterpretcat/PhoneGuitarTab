@@ -21,6 +21,7 @@
             _container.Register(Component.For<IBootstrapperPlugin>().Use<CoreBootstrapperPlugin>().Named("Core").Singleton());
             _container.Register(Component.For<IBootstrapperPlugin>().Use<DataBootstrapperPlugin>().Named("Data").Singleton());
             _container.Register(Component.For<IBootstrapperPlugin>().Use<NavigationBootstrapperPlugin>().Named("Navigation").Singleton());
+            _container.Register(Component.For<IBootstrapperPlugin>().Use<CloudBootstrapperPlugin>().Named("Cloud").Singleton());
 
             _container.ResolveAll<IBootstrapperPlugin>().ToList()
                 .Aggregate(true, (current, task) => current & task.Run());
@@ -116,6 +117,17 @@
             get
             {
                 return _container.Resolve<ViewModel>(Strings.StaveTab) as StaveTabViewModel;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+        "CA1822:MarkMembersAsStatic",
+        Justification = "This non-static member is needed for data binding purposes.")]
+        public SettingsViewModel Settings
+        {
+            get
+            {
+                return _container.Resolve<ViewModel>(Strings.Settings) as SettingsViewModel;
             }
         }
 

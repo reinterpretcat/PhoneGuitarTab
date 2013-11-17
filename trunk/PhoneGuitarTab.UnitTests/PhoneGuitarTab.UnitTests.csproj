@@ -26,6 +26,8 @@
     <ValidateXaml>false</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,6 +78,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Cloud\SkyDriveServiceTests.cs" />
     <Compile Include="Core\InterceptionTests.cs" />
     <Compile Include="Core\Proxies\ClassAProxy.cs" />
     <Compile Include="Core\Proxies\ClassBProxy.cs" />
@@ -164,6 +167,10 @@
       <Project>{2240675E-8F3E-45BF-AEAB-650B70BE97D5}</Project>
       <Name>PhoneGuitarTab.Tablatures</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PhoneGuitarTab.UI\PhoneGuitarTab.UI.csproj">
+      <Project>{79393645-967F-4D71-BB54-5D92858C141E}</Project>
+      <Name>PhoneGuitarTab.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
@@ -175,4 +182,5 @@
   </Target>
   -->
   <ProjectExtensions />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

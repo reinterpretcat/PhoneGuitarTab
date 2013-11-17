@@ -1,9 +1,10 @@
+using PhoneGuitarTab.Core.Services;
+
 namespace PhoneGuitarTab.UnitTests.Core.Proxies
 {
     using System.Reflection;
 
     using PhoneGuitarTab.Core.Dependencies.Interception.Proxies;
-    using PhoneGuitarTab.Core.IsolatedStorage;
 
     public class SettingServiceProxy : ProxyBase, ISettingService
     {

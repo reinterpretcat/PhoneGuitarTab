@@ -400,7 +400,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Dialog.Show("Sorry, you cannot download the tab right now.");
                 return;
             }
-            TabEntity tab = SearchGroupTabs.Tabs.Where(t => t.SearchId == arg).FirstOrDefault();
+            TabEntity tab = SearchGroupTabs.Tabs.FirstOrDefault(t => t.SearchId == arg);
 
             //TODO create converter
             SearchTabResultEntry entry = new SearchTabResultEntry()

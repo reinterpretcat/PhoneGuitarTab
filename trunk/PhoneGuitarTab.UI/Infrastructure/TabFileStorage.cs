@@ -1,10 +1,11 @@
-﻿namespace PhoneGuitarTab.UI.Infrastructure
+﻿using PhoneGuitarTab.Core.Services;
+
+namespace PhoneGuitarTab.UI.Infrastructure
 {
     using System;
     using System.IO;
 
     using PhoneGuitarTab.Core.Dependencies;
-    using PhoneGuitarTab.Core.IsolatedStorage;
 
     public class TabFileStorage
     {

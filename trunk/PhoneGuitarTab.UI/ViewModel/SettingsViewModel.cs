@@ -1,19 +1,23 @@
 ﻿
-using PhoneGuitarTab.Core.Cloud;
+using System.Windows.Input;
 using PhoneGuitarTab.Core.Dependencies;
-using PhoneGuitarTab.Data;
+using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class SettingsViewModel: DataContextViewModel
+    public class SettingsViewModel : PhoneGuitarTab.Core.Views.ViewModel
     {
         [Dependency]
-        public ICloudService CloudService { get; set; }
+        public TabSyncService SyncService { get; set; }
 
-        public SettingsViewModel(IDataContextService database, MessageHub hub)
-            : base(database, hub)
+        public ICommand LaunchSync
         {
+            get
+            {
+                return new ExecuteCommand(() =>
+                  SyncService.Synchronize());
+            }
         }
     }
 }

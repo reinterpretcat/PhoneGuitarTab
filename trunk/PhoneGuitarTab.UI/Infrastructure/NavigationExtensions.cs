@@ -1,8 +1,9 @@
 ﻿
+using PhoneGuitarTab.Core.Services;
+
 namespace PhoneGuitarTab.UI.Infrastructure
 {
     using System.Collections.Generic;
-    using PhoneGuitarTab.Core.Navigation;
     using PhoneGuitarTab.Data;
 
     public static class NavigationExtensions

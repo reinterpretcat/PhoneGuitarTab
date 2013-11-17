@@ -59,6 +59,17 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     Orientation="Vertical">
+
+            <HyperlinkButton Content="settings" Style="{StaticResource HyperlinkButtonContentStyle}" Margin="0,20">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <Command:ExecuteCommandAction x:Name="SettingsClick"
+                                                Command="{Binding GoTo}"
+                                                CommandParameter="Settings" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </HyperlinkButton>
+
             <HyperlinkButton Content="help" Style="{StaticResource HyperlinkButtonContentStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">

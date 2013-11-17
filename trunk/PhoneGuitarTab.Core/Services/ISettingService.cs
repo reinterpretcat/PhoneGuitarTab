@@ -1,4 +1,4 @@
-﻿namespace PhoneGuitarTab.Core.IsolatedStorage
+﻿namespace PhoneGuitarTab.Core.Services
 {
     public interface ISettingService
     {

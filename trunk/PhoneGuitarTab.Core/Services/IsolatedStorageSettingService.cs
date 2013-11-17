@@ -1,7 +1,7 @@
-﻿namespace PhoneGuitarTab.Core.IsolatedStorage
-{
-    using System.IO.IsolatedStorage;
+﻿using System.IO.IsolatedStorage;
 
+namespace PhoneGuitarTab.Core.Services
+{
     public class IsolatedStorageSettingService : ISettingService
     {
         private IsolatedStorageSettings _settings;
