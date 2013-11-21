@@ -2,7 +2,7 @@
 
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US"/>
-  <App xmlns="" ProductID="{d98af82f-e8c5-4bc6-a756-d995449a7f54}" Title="PhoneGuitarTab.UnitTests" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneGuitarTab.UnitTests author" Description="Sample description" Publisher="PhoneGuitarTab.UnitTests" PublisherID="{a2ae67e8-6dd4-4d84-a95f-78b8742ed0cc}">
+  <App xmlns="" ProductID="{fc2ec1ac-8734-4e63-860f-2046d60ca0c7}" Title="PhoneGuitarTab.UnitTests" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal"  Author="PhoneGuitarTab.UnitTests author" Description="Sample description" Publisher="PhoneGuitarTab.UnitTests" PublisherID="{cd0c542b-e3e4-43c0-871e-328fd7a9ebd7}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING"/>

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D98AF82F-E8C5-4BC6-A756-D995449A7F54}</ProjectGuid>
+    <ProjectGuid>{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -26,8 +26,6 @@
     <ValidateXaml>false</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,6 +77,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cloud\SkyDriveServiceTests.cs" />
+    <Compile Include="Core\ContainerTests.cs" />
     <Compile Include="Core\InterceptionTests.cs" />
     <Compile Include="Core\Proxies\ClassAProxy.cs" />
     <Compile Include="Core\Proxies\ClassBProxy.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="Core\Stubs\IClassD.cs" />
     <Compile Include="Core\Stubs\IClassE.cs" />
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="Core\ContainerTests.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -127,6 +125,7 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="Resources\opeth_requiem.json" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="MSTestFramework, Version=11.0" />
@@ -146,7 +145,6 @@
     <Content Include="Assets\Tiles\FlipCycleTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\opeth_requiem.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">
@@ -155,6 +153,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PhoneGuitarTab.Controls\PhoneGuitarTab.Controls.csproj">
+      <Project>{7396B903-5243-401D-84E5-5102C952ED04}</Project>
+      <Name>PhoneGuitarTab.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">
       <Project>{06005B3A-BCE2-4B59-95BD-8A697F758F35}</Project>
       <Name>PhoneGuitarTab.Core</Name>
@@ -173,6 +175,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Moq.Silverlight">
       <HintPath>..\packages\Moq.Silverlight.dll</HintPath>
     </Reference>
@@ -187,5 +195,4 @@
   </Target>
   -->
   <ProjectExtensions />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

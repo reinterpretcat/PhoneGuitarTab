@@ -5,9 +5,9 @@ pushd
 cd /D %~dp0
 
 if '%1'=='Release' ( 
-	Set Mode=BuildReleaseAndRunUnitTests
+	Set Mode=BuildRelease
 ) else (
-	Set Mode=BuildDebugAndRunUnitTests
+	Set Mode=BuildDebug
 )
 set doPause=1
 if not "%2" == "" set doPause=0

@@ -230,7 +230,7 @@ namespace PhoneGuitarTab.Data
         }
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Group", Storage="_Tabs", ThisKey="Id", OtherKey="GroupId", DeleteRule="CASCADE")]
-		public EntitySet<Tab> Tabs
+		public virtual EntitySet<Tab> Tabs
 		{
 			get
 			{
@@ -241,7 +241,7 @@ namespace PhoneGuitarTab.Data
 				this._Tabs.Assign(value);
 			}
 		}
-		
+	
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -331,7 +331,7 @@ namespace PhoneGuitarTab.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		public virtual int Id
 		{
 			get
 			{
@@ -351,7 +351,7 @@ namespace PhoneGuitarTab.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
-		public string Name
+		public virtual string Name
 		{
 			get
 			{
@@ -640,7 +640,7 @@ namespace PhoneGuitarTab.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
-		public string Name
+		public virtual string Name
 		{
 			get
 			{

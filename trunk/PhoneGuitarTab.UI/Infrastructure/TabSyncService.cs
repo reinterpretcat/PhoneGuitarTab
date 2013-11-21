@@ -9,7 +9,7 @@ using PhoneGuitarTab.Data;
 namespace PhoneGuitarTab.UI.Infrastructure
 {
     /// <summary>
-    /// Synchronizes tab collection with cloud storage
+    /// Synchronizes tab collection with cloud storage.
     /// </summary>
     public class TabSyncService
     {
@@ -79,7 +79,6 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 foreach (var tab in group.Tabs)
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", tab.Path));
-                    //await CloudService.CreateDirectory(string.Format("{0}/{1}/", CloudRootPath, group.Name));
                     await  CloudService.SynchronizeFile(tab.Path, GetCloudNameFromIso(tab));
                 }
             }
@@ -99,9 +98,20 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 var localFileNamesMapped = group.Tabs.Select(GetCloudNameFromIso);
                 var cloudFileNames = await CloudService.GetFileNames(String.Format("{0}/{1}", CloudRootPath, groupName));
 
+                // get tabs which aren't present in iso
+                var newTabs = cloudFileNames.Except(localFileNamesMapped).ToList();
+
+                // these tabs was synchronized, but deleted then.
+                var deletedTabs = newTabs.Where(IsMappedPath).ToList();
+                foreach (var deletedTab in deletedTabs)
+                {
+                    await CloudService.DeleteFile(deletedTab);
+                }
+
                 // all these tabs should be downloaded from skydrive to iso
-                var newTabs = cloudFileNames.Intersect(localFileNamesMapped);
-                foreach (var newTab in newTabs)
+                var downloadList = newTabs.Except(deletedTabs);
+
+                foreach (var newTab in downloadList)
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", newTab));
                     var localPath = TabFileStorage.CreateTabFilePath();
@@ -111,6 +121,12 @@ namespace PhoneGuitarTab.UI.Infrastructure
             }
         }
 
+
+        private bool IsMappedPath(string name)
+        {
+            // TODO
+            return false;
+        }
 
         private Tab GetTabFromName(string cloudName, string localPath, Group group)
         {          

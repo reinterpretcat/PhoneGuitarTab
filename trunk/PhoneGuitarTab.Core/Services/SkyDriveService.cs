@@ -297,7 +297,14 @@ namespace PhoneGuitarTab.Core.Services
                 }
             }
             return OperationStatus.Failed;
-        } //DownloadFile
+        }
+
+        public Task<OperationStatus> DeleteFile(string cloudPath)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         /// <summary>
         /// Compares files in the local storage and SkyDrive folder

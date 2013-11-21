@@ -20,39 +20,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A18B5B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Tablatures", "PhoneGuitarTab.Tablatures\PhoneGuitarTab.Tablatures.csproj", "{2240675E-8F3E-45BF-AEAB-650B70BE97D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.UnitTests", "PhoneGuitarTab.UnitTests\PhoneGuitarTab.UnitTests.csproj", "{D98AF82F-E8C5-4BC6-A756-D995449A7F54}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{E2F8ECBB-6480-43CC-B46A-2049699E01F5}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfoBase.cs = AssemblyInfoBase.cs
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.UnitTests", "PhoneGuitarTab.UnitTests\PhoneGuitarTab.UnitTests.csproj", "{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs30
-		SccProjectUniqueName0 = PhoneGuitarTab.Core\\PhoneGuitarTab.Core.csproj
-		SccProjectName0 = PhoneGuitarTab.Core
-		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs30
-		SccLocalPath0 = PhoneGuitarTab.Core
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName1 = PhoneGuitarTab.Search\\PhoneGuitarTab.Search.csproj
-		SccProjectName1 = PhoneGuitarTab.Search
-		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs30
-		SccLocalPath1 = PhoneGuitarTab.Search
-		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName2 = PhoneGuitarTab.Controls\\PhoneGuitarTab.Controls.csproj
-		SccProjectName2 = PhoneGuitarTab.Controls
-		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs30
-		SccLocalPath2 = PhoneGuitarTab.Controls
-		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName3 = PhoneGuitarTab.UI\\PhoneGuitarTab.UI.csproj
-		SccProjectName3 = PhoneGuitarTab.UI
-		SccAuxPath3 = https://tfs.codeplex.com/tfs/tfs30
-		SccLocalPath3 = PhoneGuitarTab.UI
-		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -79,9 +54,9 @@ Global
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.ActiveCfg = Debug|ARM
-		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Build.0 = Debug|ARM
-		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Deploy.0 = Debug|ARM
+		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Build.0 = Debug|Any CPU
+		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Deploy.0 = Debug|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
@@ -126,8 +101,8 @@ Global
 		{5CF049D1-5C85-45EE-A481-3D25970141FA}.Release|x86.ActiveCfg = Release|Any CPU
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|ARM.ActiveCfg = Debug|ARM
-		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|ARM.Build.0 = Debug|ARM
+		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|ARM.Build.0 = Debug|Any CPU
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Debug|x86.ActiveCfg = Debug|x86
@@ -140,26 +115,26 @@ Global
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Release|Mixed Platforms.Build.0 = Release|x86
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Release|x86.ActiveCfg = Release|x86
 		{2240675E-8F3E-45BF-AEAB-650B70BE97D5}.Release|x86.Build.0 = Release|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|ARM.ActiveCfg = Debug|ARM
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|ARM.Build.0 = Debug|ARM
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|ARM.Deploy.0 = Debug|ARM
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|x86.ActiveCfg = Debug|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|x86.Build.0 = Debug|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Debug|x86.Deploy.0 = Debug|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|Any CPU.ActiveCfg = Release|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|ARM.ActiveCfg = Release|ARM
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|ARM.Build.0 = Release|ARM
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|ARM.Deploy.0 = Release|ARM
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|Mixed Platforms.Build.0 = Release|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|Mixed Platforms.Deploy.0 = Release|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|x86.ActiveCfg = Release|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|x86.Build.0 = Release|x86
-		{D98AF82F-E8C5-4BC6-A756-D995449A7F54}.Release|x86.Deploy.0 = Release|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|ARM.Build.0 = Debug|ARM
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|ARM.Deploy.0 = Debug|ARM
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|x86.ActiveCfg = Debug|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|x86.Build.0 = Debug|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|x86.Deploy.0 = Debug|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|Any CPU.ActiveCfg = Release|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|ARM.ActiveCfg = Release|ARM
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|ARM.Build.0 = Release|ARM
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|ARM.Deploy.0 = Release|ARM
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|Mixed Platforms.Build.0 = Release|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|Mixed Platforms.Deploy.0 = Release|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|x86.ActiveCfg = Release|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|x86.Build.0 = Release|x86
+		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
