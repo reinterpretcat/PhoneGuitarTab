@@ -4,7 +4,6 @@ using System.Data.Linq;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Moq;
 using PhoneGuitarTab.Core.Dependencies;
