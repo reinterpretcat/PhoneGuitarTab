@@ -14,7 +14,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         private const string TabDirectory = "Tabs";
 
-        public string CreateTabFilePath()
+        public virtual string CreateTabFilePath()
         {
             if (!this.FileSystemService.DirectoryExists(TabDirectory))
                 this.FileSystemService.CreateDirectory(TabDirectory);
@@ -22,7 +22,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             return String.Format("{0}\\{1}.tab", TabDirectory, Guid.NewGuid().ToString());
         }
 
-        public Stream CreateTabFile(string filePath)
+        public virtual Stream CreateTabFile(string filePath)
         {
             return this.FileSystemService.OpenFile(filePath, FileMode.CreateNew);
         }

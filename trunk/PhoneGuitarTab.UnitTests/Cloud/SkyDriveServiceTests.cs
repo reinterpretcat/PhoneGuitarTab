@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Moq;
+using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Infrastructure;
@@ -14,24 +17,39 @@ namespace PhoneGuitarTab.UnitTests.Cloud
     [TestClass]
     public class SkyDriveServiceTests
     {
-        private ICloudService _cloudService;
-        private IDataContextService _dataService;
-
         private TestContext _testContext;
 
         [TestInitialize]
         public void SetUp()
         {
-            //_dataService = CreateDataContext();
-            //_cloudService = CreateCloudService();
-
             _testContext = new TestContext();
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void CanSynchronize()
         {
+            // assign
+            var syncService = CreateTabSyncService();
+
+            // act
+            ManualResetEvent mre = new ManualResetEvent(false);
+            syncService.Complete += (sender, args) => mre.Set();
+            syncService.Synchronize();
+            mre.WaitOne(5000);
+
+            // assert
+
             // TODO
+        }
+
+        private TabSyncService CreateTabSyncService()
+        {
+           return (new Container())
+            .RegisterInstance(CreateDataContext())
+            .RegisterInstance(CreateCloudService())
+            .RegisterInstance(CreateTabFileStorage())
+            .Register(Component.For<TabSyncService>().Use<TabSyncService>())
+            .Resolve<TabSyncService>();
         }
 
 
@@ -102,10 +120,19 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             cloudMock.Setup(c => c.SynchronizeFile(It.IsAny<string>(), It.IsAny<string>()))
               .Callback((string path) => _testContext.CloudCreatedPath.Add(path));
 
+            // NOTE not used by sync service directly
             //cloudMock.Setup(c => c.UploadFile(It.IsAny<string>(), It.IsAny<string>()))
-            // .Callback((string path) => _testContext.CloudCreatedPath.Add(path));
+            // .Callback((string path) => ...);
 
             return cloudMock.Object;
+        }
+
+        private TabFileStorage CreateTabFileStorage()
+        {
+            var storageMock = new Mock<TabFileStorage>();
+            storageMock.Setup(s => s.CreateTabFilePath()).Returns(() => Guid.NewGuid().ToString());
+            // TODO
+            return storageMock.Object;
         }
 
 
@@ -120,6 +147,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
         {
             public List<string> CloudCreatedPath { get; set; }
             public List<string> CloudDeletedFile { get; set; } 
+
             public List<Tab> IsoInsertedTabs { get; set; }
 
             public Dictionary<string, string> DownloadedFiles { get; set; }
