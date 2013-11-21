@@ -47,6 +47,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             .RegisterInstance(CreateDataContext())
             .RegisterInstance(CreateCloudService())
             .RegisterInstance(CreateTabFileStorage())
+            .RegisterInstance(new DefaultTrace())
             .Register(Component.For<TabSyncService>().Use<TabSyncService>())
             .Resolve<TabSyncService>();
         }
@@ -114,7 +115,17 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                }));
 
             cloudMock.Setup(c => c.GetFileNames(It.IsAny<string>()))
-              .Returns((string path) => GetTask(Enumerable.Range(1, 4).Select(i => string.Format("Cloud_{0}", path, i))));
+              .Returns((string path) =>
+              {
+                  // new tabs
+                  var list = Enumerable.Range(1, 4).Select(i => string.Format("Cloud_{0}{1}.gp5", path, i)).ToList();
+
+                  // deleted tabs (there is the following convention to store files in cloud: <name>_<id>.<extension>)
+                  // where name - tab.Name, id - tab.Id from iso
+                  list.Add("deleted_1.gp5");
+                  list.Add("deleted_2.gp5");
+                  return GetTask(list.AsEnumerable());
+              });
 
             cloudMock.Setup(c => c.SynchronizeFile(It.IsAny<string>(), It.IsAny<string>()))
               .Callback((string path) => _testContext.CloudCreatedPath.Add(path));
