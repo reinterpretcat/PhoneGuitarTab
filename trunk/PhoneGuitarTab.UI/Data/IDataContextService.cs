@@ -10,17 +10,17 @@
         /// <summary>
         /// Specify a table for the songs.
         /// </summary>
-        Table<Tab> Tabs { get; }
+        ITable<Tab> Tabs { get; }
 
         /// <summary>
         /// Specify a table for the song types.
         /// </summary>
-        Table<TabType> TabTypes { get; }
+        ITable<TabType> TabTypes { get; }
 
         /// <summary>
         /// Specify a table for the groups.
         /// </summary>
-        Table<Group> Groups { get; }
+        ITable<Group> Groups { get; }
 
         void SubmitChanges();
 

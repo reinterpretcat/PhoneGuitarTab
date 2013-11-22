@@ -37,17 +37,17 @@
             {
                 this._database = database;
             }
-            public Table<Tab> Tabs
+            public ITable<Tab> Tabs
             {
                 get { return this._database.Tabs; }
             }
 
-            public Table<TabType> TabTypes
+            public ITable<TabType> TabTypes
             {
                 get { return this._database.TabTypes; }
             }
 
-            public Table<Group> Groups
+            public ITable<Group> Groups
             {
                 get { return this._database.Groups; }
             }
@@ -81,22 +81,22 @@
         }
 
 
-        #region ITabDataContextService memnbers
+        #region ITabDataContextService members
 
         // Specify a table for the tabs.
-        public Table<Tab> Tabs
+        public ITable<Tab> Tabs
         {
             get { return this._database.Tabs; }
         }
 
         // Specify a table for the tab types.
-        public Table<TabType> TabTypes
+        public ITable<TabType> TabTypes
         {
             get { return this._database.TabTypes; }
         }
 
         // Specify a table for the groups.
-        public Table<Group> Groups
+        public ITable<Group> Groups
         {
             get { return this._database.Groups; }
         }

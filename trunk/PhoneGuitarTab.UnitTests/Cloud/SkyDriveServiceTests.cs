@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Moq;
 using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Infrastructure;
@@ -18,13 +19,17 @@ namespace PhoneGuitarTab.UnitTests.Cloud
     {
         private TestContext _testContext;
 
+        private IEnumerable<string> _groups;
+    
+            
         [TestInitialize]
         public void SetUp()
         {
             _testContext = new TestContext();
+            _groups = new[] {"Opeth", "Metallica"};
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void CanSynchronize()
         {
             // assign
@@ -34,7 +39,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             ManualResetEvent mre = new ManualResetEvent(false);
             syncService.Complete += (sender, args) => mre.Set();
             syncService.Synchronize();
-            mre.WaitOne(5000);
+            mre.WaitOne();
 
             // assert
 
@@ -47,7 +52,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             .RegisterInstance(CreateDataContext())
             .RegisterInstance(CreateCloudService())
             .RegisterInstance(CreateTabFileStorage())
-            .RegisterInstance(new DefaultTrace())
+            .RegisterInstance(CreateFileSystemService())
+            .RegisterInstance<ITrace>(new DefaultTrace())
             .Register(Component.For<TabSyncService>().Use<TabSyncService>())
             .Resolve<TabSyncService>();
         }
@@ -57,39 +63,56 @@ namespace PhoneGuitarTab.UnitTests.Cloud
         {
             var dataMock = new Mock<IDataContextService>();
 
-            dataMock.Setup(ds => ds.GetOrCreateGroupByName(It.IsAny<string>())).Returns((string s) =>
+            // creates mock for group in iso
+            Func<string, Group> createGroupMock = s =>
             {
                 var groupMock = new Mock<Group>();
+                groupMock.SetupGet(g => g.Name).Returns(() => s);
                 groupMock.SetupGet(g => g.Tabs).Returns(() =>
                 {
                     var tabs = new EntitySet<Tab>();
-                    tabs.AddRange(Enumerable.Range(1, 3).Select(i =>
-                    {
-                        var tabMock = new Mock<Tab>();
-                        tabMock.SetupGet(t => t.Id).Returns(i);
-                        tabMock.SetupGet(t => t.Name).Returns(string.Format("Iso_{0}{1}.txt", s, i));
-                        return tabMock.Object;
-                    }));
-                    return tabs;
+                    if(_groups.Contains(s))
+                        tabs.AddRange(Enumerable.Range(1, 3).Select(i =>
+                        {
+                            var nameTemplate = string.Format("Iso_{0}{1}", s, i);
+                            var tabMock = new Mock<Tab>();
+                            tabMock.SetupGet(t => t.Id).Returns(i);
+                            tabMock.SetupGet(t => t.Name).Returns(nameTemplate);
+                            tabMock.SetupGet(t => t.Path).Returns(nameTemplate + ".txt");
+                            tabMock.SetupGet(t => t.Group).Returns(groupMock.Object);
+                            return tabMock.Object;
+                        }));
+                        return tabs;
                 });
 
                 return groupMock.Object;
-            });
+            };
 
-            dataMock.Setup(ds => ds.InsertTab(It.IsAny<Tab>())).Callback((Tab tab) => _testContext.IsoInsertedTabs.Add(tab));
+            dataMock.Setup(ds => ds.GetOrCreateGroupByName(It.IsAny<string>()))
+                .Returns(createGroupMock);
 
-            dataMock.SetupGet(ds => ds.TabTypes).Returns(() =>
+            dataMock.SetupGet(ds => ds.Groups).Returns(() =>
             {
-                var tabTypes = new Mock<Table<TabType>>();
-                tabTypes.Setup(t => t.Single()).Returns(() =>
-                {
-                    var tabTypeMock = new Mock<TabType>();
-                    tabTypeMock.SetupGet(tt => tt.Name).Returns(() => "tab");
-                    return tabTypeMock.Object;
-                });
-
-                return tabTypes.Object;
+                var groupsMock = new Mock<ITable<Group>>();
+                groupsMock.Setup(g => g.GetEnumerator())
+                    .Returns(() => _groups.Select(createGroupMock).GetEnumerator());
+                return groupsMock.Object;
             });
+
+            dataMock.Setup(ds => ds.InsertTab(It.IsAny<Tab>()))
+                .Callback((Tab tab) => _testContext.IsoInsertedTabs.Add(tab));
+
+            
+            // tab types
+            var tabTypeMock = new Mock<TabType>();
+            tabTypeMock.SetupGet(tt => tt.Name).Returns(() => "guitar pro");
+            var queryable = (new List<TabType> {tabTypeMock.Object}).AsQueryable();
+
+            var tabTypes = new Mock<ITable<TabType>>();
+            tabTypes.Setup(t => t.Provider).Returns(() => queryable.Provider);
+            tabTypes.Setup(t => t.Expression).Returns(() => queryable.Expression);
+
+            dataMock.SetupGet(ds => ds.TabTypes).Returns(() => tabTypes.Object);
 
             return dataMock.Object;
         }
@@ -99,20 +122,29 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             var cloudMock = new Mock<ICloudService>();
 
             cloudMock.Setup(c => c.CreateDirectory(It.IsAny<string>()))
-                .Callback((string path) => _testContext.CloudCreatedPath.Add(path));
+                .Returns((string path) =>
+                {
+                    _testContext.CloudCreatedPath.Add(path);
+                    return GetTask(OperationStatus.Completed);
+                });
 
             cloudMock.Setup(c => c.DeleteFile(It.IsAny<string>()))
-                .Callback((string path) => _testContext.CloudDeletedFile.Add(path));
+                .Returns((string path) =>
+                {
+                    _testContext.CloudDeletedFile.Add(path);
+                     return GetTask(OperationStatus.Completed);
+                });
 
             cloudMock.Setup(c => c.DownloadFile(It.IsAny<string>(), It.IsAny<string>()))
-               .Callback((string p1,string p2) => _testContext.DownloadedFiles.Add(p1,p2));
+               .Returns((string p1, string p2) =>
+               {
+                   _testContext.DownloadedFiles.Add(p1, p2);
+                   return GetTask(OperationStatus.Completed);
+               });
 
             //called once on root
             cloudMock.Setup(c => c.GetDirectoryNames(It.IsAny<string>()))
-               .Returns((string path) => GetTask<IEnumerable<string>>(new []
-               {
-                   "Opeth","Metallica"
-               }));
+               .Returns((string path) => GetTask(_groups));
 
             cloudMock.Setup(c => c.GetFileNames(It.IsAny<string>()))
               .Returns((string path) =>
@@ -128,11 +160,11 @@ namespace PhoneGuitarTab.UnitTests.Cloud
               });
 
             cloudMock.Setup(c => c.SynchronizeFile(It.IsAny<string>(), It.IsAny<string>()))
-              .Callback((string path) => _testContext.CloudCreatedPath.Add(path));
-
-            // NOTE not used by sync service directly
-            //cloudMock.Setup(c => c.UploadFile(It.IsAny<string>(), It.IsAny<string>()))
-            // .Callback((string path) => ...);
+              .Returns((string p1, string p2) =>
+              {
+                  _testContext.SynchronizedFiles.Add(p1, p2);
+                  return GetTask(OperationStatus.Completed);
+              });
 
             return cloudMock.Object;
         }
@@ -143,6 +175,13 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             storageMock.Setup(s => s.CreateTabFilePath()).Returns(() => Guid.NewGuid().ToString());
             // TODO
             return storageMock.Object;
+        }
+
+        private IFileSystemService CreateFileSystemService()
+        {
+            var fileSystemMock = new Mock<IFileSystemService>();
+
+            return fileSystemMock.Object;
         }
 
 
@@ -161,12 +200,15 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             public List<Tab> IsoInsertedTabs { get; set; }
 
             public Dictionary<string, string> DownloadedFiles { get; set; }
+            public Dictionary<string, string> SynchronizedFiles { get; set; }
 
             public TestContext()
             {
                 IsoInsertedTabs = new List<Tab>();
                 CloudCreatedPath = new List<string>();
                 CloudDeletedFile = new List<string>();
+                DownloadedFiles = new Dictionary<string, string>();
+                SynchronizedFiles = new Dictionary<string, string>();
             }
 
         }

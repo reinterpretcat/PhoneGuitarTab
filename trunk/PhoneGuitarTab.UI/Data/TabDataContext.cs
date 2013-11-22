@@ -130,7 +130,7 @@ namespace PhoneGuitarTab.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
-		public string Name
+		public virtual string Name
 		{
 			get
 			{
@@ -439,7 +439,7 @@ namespace PhoneGuitarTab.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="NVarChar(256)")]
-		public string Path
+		public virtual string Path
 		{
 			get
 			{
@@ -499,7 +499,7 @@ namespace PhoneGuitarTab.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Group", Storage="_Group", ThisKey="GroupId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true)]
-		public Group Group
+		public virtual Group Group
 		{
 			get
 			{
