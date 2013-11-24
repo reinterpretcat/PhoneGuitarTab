@@ -131,17 +131,23 @@ namespace PhoneGuitarTab.Core.Services
             return ListContent(c => c["type"].ToString() == "folder");
         }
 
-        public Task<IEnumerable<string>> GetFileNames(string relativePath)
+        public async Task<IEnumerable<string>> GetFileNames(string relativePath)
         {
-            return ListContent(c => c["type"].ToString() != "folder");
+            
+            var folderId = (await GetFolderIdAndFileName(relativePath + "/")).Item1;
+
+            return await ListContent(c => c["type"].ToString() != "folder", folderId);
         }
 
-        private async  Task<IEnumerable<string>> ListContent(Func<IDictionary<string,object>, bool> func)
+        private async  Task<IEnumerable<string>> ListContent(Func<IDictionary<string,object>, bool> func, string folderId = null)
         {
             if (_liveClient == null)
                 await SignIn();
 
-            LiveOperationResult fileResult = await _liveClient.GetAsync(_folderId + "/files");
+            if (folderId == null)
+                folderId = _folderId;
+
+            LiveOperationResult fileResult = await _liveClient.GetAsync(folderId + "/files");
             List<object> fileData = (List<object>)fileResult.Result["data"];
             List<string> data = new List<string>();
             foreach (IDictionary<string, object> content in fileData)
@@ -283,12 +289,14 @@ namespace PhoneGuitarTab.Core.Services
             if (_liveClient == null)
                 await GetSkyDriveFolder();
 
+            var fileInfo = await GetFolderIdAndFileName(cloudPath);
+
             //looking for the file
-            LiveOperationResult fileResult = await _liveClient.GetAsync(_folderId + "/files");
+            LiveOperationResult fileResult = await _liveClient.GetAsync(fileInfo.Item1 + "/files");
             List<object> fileData = (List<object>)fileResult.Result["data"];
             foreach (IDictionary<string, object> content in fileData)
             {
-                if (content["name"].ToString() == cloudPath)
+                if (content["name"].ToString() == fileInfo.Item2)
                 {
                     //The file has been found!
                     fileID = content["id"].ToString();

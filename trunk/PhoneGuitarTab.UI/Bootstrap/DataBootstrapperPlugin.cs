@@ -63,7 +63,7 @@
              if (!dbService.TabTypes.Any(type => type.Name == "guitar pro"))
                  dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "guitar pro", ImageUrl = "/Images/all/TabText.png" });
 
-            if(dbUpdater.DatabaseSchemaVersion < 3)
+            if(dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
                 dbUpdater.AddColumn<Tab>("CloudName");
           
              // --

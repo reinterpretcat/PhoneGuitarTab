@@ -63,7 +63,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return Int32.Parse(value.ToString());
+            return value == null ? 0 : Int32.Parse(value.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

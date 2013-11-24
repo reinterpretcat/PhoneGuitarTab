@@ -129,10 +129,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", newTab));
                     var localPath = TabFileStorage.CreateTabFilePath();
-                    await CloudService.DownloadFile(localPath, newTab);
+                    await CloudService.DownloadFile(localPath, string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
                     DataService.InsertTab(GetTabFromName(newTab, localPath, group));
                 }
             }
+            DataService.SubmitChanges();
         }
 
 
@@ -170,8 +171,8 @@ namespace PhoneGuitarTab.UI.Infrastructure
             // NOTE Hardcoded file extension
             return tab.CloudName??
                 // NOTE this signature should prevent name collisions
-                 String.Format("{0}_sync_{1}.gp5", tab.Name, tab.Id);
-                //String.Format("{0}/{1}/{2}_{3}.gp5", CloudRootPath, tab.Group.Name, tab.Name, tab.Id);
+                // String.Format("{0}_sync_{1}.gp5", tab.Name, tab.Id);
+                String.Format("{0}/{1}/{2}_sync_{3}.gp5", CloudRootPath, tab.Group.Name, tab.Name, tab.Id);
         }
     }
 }

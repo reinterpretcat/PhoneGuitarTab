@@ -139,7 +139,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                     Assert.IsTrue(_testContext.SynchronizedFiles.ContainsKey(key));
 
                     var suffix = name.Contains("old") ? "" : "_sync_" + id++;
-                    var @value = string.Format("{1}{2}.gp5", g, name, suffix);
+                    var @value = string.Format("PhoneGuitarTab/{0}/{1}{2}.gp5", g, name, suffix);
                     Assert.AreEqual(@value, _testContext.SynchronizedFiles[key]);
                 });
             });
@@ -196,8 +196,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                         var cloudName = string.Format("Cloud_old_{0}", s);
                         var tabMock = createTabMock(cloudName, 4);
                         tabMock.SetupGet(t => t.CloudName)
-                            .Returns(string.Format("{0}.gp5", cloudName));
-                            //.Returns(string.Format("PhoneGuitarTab/{0}/{1}.gp5", s, cloudName));
+                            //.Returns(string.Format("{0}.gp5", cloudName));
+                            .Returns(string.Format("PhoneGuitarTab/{0}/{1}.gp5", s, cloudName));
                         tabs.Add(tabMock.Object);
                     }
 
@@ -277,18 +277,18 @@ namespace PhoneGuitarTab.UnitTests.Cloud
 
                   // special case
                   if (groupName == _newGroup)
-                      return GetTask(new[] { string.Format("Cloud_group_new_{1}.gp5", path, groupName) }.AsEnumerable());
+                      return GetTask(new[] { string.Format("{0}/Cloud_group_new_{1}.gp5", path, groupName) }.AsEnumerable());
 
                   // new tabs
-                  var list = Enumerable.Range(1, 2).Select(i => string.Format("Cloud_new_{1}{2}.gp5", path, groupName, i)).ToList();
+                  var list = Enumerable.Range(1, 2).Select(i => string.Format("{0}/Cloud_new_{1}{2}.gp5", path, groupName, i)).ToList();
 
                   // deleted tabs (there is the following convention to store files in cloud: <name>_<id>.<extension>)
                   // where name - tab.Name, id - tab.Id from iso
-                  list.Add(string.Format("deleted_sync_1.gp5", path));
-                  list.Add(string.Format("deleted_sync_2.gp5", path));
-                  list.Add(string.Format("Cloud_old_{1}.gp5", path, groupName));
+                  list.Add(string.Format("{0}/deleted_sync_1.gp5", path));
+                  list.Add(string.Format("{0}/deleted_sync_2.gp5", path));
+                  list.Add(string.Format("{0}/Cloud_old_{1}.gp5", path, groupName));
 
-                  list.Add(string.Format("Iso_{1}1_sync_1.gp5",  path, groupName));
+                  list.Add(string.Format("{0}/Iso_{1}1_sync_1.gp5", path, groupName));
 
                   return GetTask(list.AsEnumerable());
               });
