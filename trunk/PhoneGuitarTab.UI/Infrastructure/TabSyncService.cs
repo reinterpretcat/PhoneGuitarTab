@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Data;
+using Group = PhoneGuitarTab.Data.Group;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
@@ -25,13 +27,21 @@ namespace PhoneGuitarTab.UI.Infrastructure
         [Dependency]
         private ITrace Trace { get; set; }
 
+
+        public bool DownloadSyncFiles { get; set; }
+
+        private Regex _syncSignatureRegex;
+
         private TraceCategory _traceCategory;
 
         private const string CloudRootPath = "PhoneGuitarTab";
 
         public TabSyncService()
         {
+            _syncSignatureRegex = new Regex(@".*_sync_\d\.", RegexOptions.Compiled);
             _traceCategory = new TraceCategory("TabSyncService");
+
+            DownloadSyncFiles = false;
         }
 
         public async void Synchronize()
@@ -102,16 +112,20 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 var newTabs = cloudFileNames.Except(localFileNamesMapped).ToList();
 
                 // these tabs was synchronized, but deleted then.
+                // NOTE it's possible that user reinstalled application, but had already synchronized files
+                // just handle this situation using special option
                 var deletedTabs = newTabs.Where(IsMappedPath).ToList();
-                foreach (var deletedTab in deletedTabs)
-                {
-                    await CloudService.DeleteFile(deletedTab);
-                }
+               // foreach (var deletedTab in deletedTabs)
+               //{
+               //     await CloudService.DeleteFile(deletedTab);
+               // }
+
+                
+                if (!DownloadSyncFiles)
+                    newTabs = newTabs.Except(deletedTabs).ToList();
 
                 // all these tabs should be downloaded from skydrive to iso
-                var downloadList = newTabs.Except(deletedTabs);
-
-                foreach (var newTab in downloadList)
+                foreach (var newTab in newTabs)
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", newTab));
                     var localPath = TabFileStorage.CreateTabFilePath();
@@ -124,8 +138,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         private bool IsMappedPath(string name)
         {
-            // TODO
-            return false;
+            return _syncSignatureRegex.IsMatch(name);
         }
 
         private Tab GetTabFromName(string cloudName, string localPath, Group group)
@@ -139,12 +152,15 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (fileExtPos >= 0)
                 name = name.Substring(0, fileExtPos);
 
+            // TODO remove _sync_ suffix
+
             var tab = new Tab()
             {
                 Group = group,
                 TabType = tabType,
                 Name = name,
-                Path = localPath
+                Path = localPath,
+                CloudName = cloudName
             };
             return tab;
         }
@@ -152,7 +168,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private string GetCloudNameFromIso(Tab tab)
         {
             // NOTE Hardcoded file extension
-            return String.Format("{0}/{1}/{2}_{3}.gp5", CloudRootPath, tab.Group.Name, tab.Name, tab.Id);
+            return tab.CloudName??
+                // NOTE this signature should prevent name collisions
+                 String.Format("{0}_sync_{1}.gp5", tab.Name, tab.Id);
+                //String.Format("{0}/{1}/{2}_{3}.gp5", CloudRootPath, tab.Group.Name, tab.Name, tab.Id);
         }
     }
 }

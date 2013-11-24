@@ -4,6 +4,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Castle.Core;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Moq;
 using PhoneGuitarTab.Core.Dependencies;
@@ -29,21 +30,116 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             _groups = new[] {"Opeth", "Metallica"};
         }
 
+        #region Test description
+        /*
+        Initial state:
+	    Iso:
+		    -Opeth
+			    Iso_Opeth1
+			    Iso_Opeth2
+			    Iso_Opeth3
+			    Cloud_old_Opeth // CloudName isn't null
+		    -Metallica
+			    Iso_Metallica1
+			    Iso_Metallica2
+			    Iso_Metallica3
+			    Cloud_old_Metallica // CloudName isn't null
+	    Cloud:
+		    -Opeth
+			    Cloud_new_Opeth1.gp5 // new
+			    Cloud_new_Opeth2.gp5 // new
+			    deleted_sync_1.gp5 // already synchronized, but deleted on phone
+			    deleted_sync_2.gp5 // already synchronized, but deleted on phone
+			    Iso_Opeth1_sync_1.gp5 // already synchronized; uploaded from phone
+			    Cloud_old_Opeth.gp5 // already synchronized; downloaded to phone
+		    -Metallica
+			    Cloud_new_Metallica1.gp5 // new 
+			    Cloud_new_Metallica2.gp5 // new
+			    deleted_sync_1.gp5 // already synchronized, but deleted on phone
+			    deleted_sync_2.gp5 // already synchronized, but deleted on phone
+			    Iso_Metallica1_sync_1.gp5 // already synchronized; uploaded from phone
+			    Cloud_old_Metallica.gp5 // already synchronized; downloaded to phone
+
+        Expected state:
+		        Iso:
+		        -Opeth
+			        Iso_Opeth1 //old
+			        Iso_Opeth2 // old
+			        Iso_Opeth3 // old
+			        Cloud_old_Opeth // old
+			        Cloud_new_Opeth1 //new
+			        Cloud_new_Opeth2 //new
+		        -Metallica
+			        Iso_Metallica1 // old
+			        Iso_Metallica2 // old
+			        Iso_Metallica3 // old
+			        Cloud_old_Metallica // old
+			        Cloud_new_Metallica1.gp5 // new
+			        Cloud_new_Metallica2.gp5 // new
+			
+	        Cloud:
+		        -Opeth
+			        Iso_Opeth1_sync_1.gp5 // new
+			        Iso_Opeth2_sync_2.gp5 // new
+			        Iso_Opeth3_sync_3.gp5 // new
+			        Cloud_new_Opeth1.gp5 // old
+			        Cloud_new_Opeth2.gp5 // old
+			        Cloud_old_Opeth // old
+			        Iso_Opeth1_sync_1.gp5 // synchronized
+		        -Metallica
+			        Iso_Metallica1_sync_1.gp5 // new
+			        Iso_Metallica2_sync_2.gp5 // new
+			        Iso_Metallica3_sync_3.gp5 // new
+			        Cloud_new_Metallica1.gp5 // old
+			        Cloud_new_Metallica2.gp5 // old
+			        Cloud_old_Metallica // old
+			        Iso_Metallica1_sync_1.gp5 // synchronized
+         * 
+         * */
+        #endregion
+
         [TestMethod]
         public void CanSynchronize()
         {
+
             // assign
             var syncService = CreateTabSyncService();
 
             // act
-            ManualResetEvent mre = new ManualResetEvent(false);
-            syncService.Complete += (sender, args) => mre.Set();
-            syncService.Synchronize();
-            mre.WaitOne();
 
+            Action syncAction = () =>
+            {
+                ManualResetEvent mre = new ManualResetEvent(false);
+                syncService.Complete += (sender, args) => mre.Set();
+                syncService.Synchronize();
+                mre.WaitOne();
+            };
+
+
+            syncAction();
             // assert
 
+            // Synchronized files
+            Assert.AreEqual(8, _testContext.SynchronizedFiles.Count);
+            _groups.ForEach(g =>
+            {
+                var nameTemplate = string.Format("Iso_{0}{1}", g, "{0}");
+                var tabs = Enumerable.Range(1, 3).Select(i => string.Format(nameTemplate, i)).ToList();
+                tabs.Add(string.Format("Cloud_old_{0}", g));
+                var id = 1;
+                tabs.ForEach(name =>
+                {
+                    var key = name + ".gp5";
+                    Assert.IsTrue(_testContext.SynchronizedFiles.ContainsKey(key));
+
+                    var suffix = name.Contains("old") ? "" : "_sync_" + id++;
+                    var @value = string.Format("{1}{2}.gp5", g, name, suffix);
+                    Assert.AreEqual(@value, _testContext.SynchronizedFiles[key]);
+                });
+            });
+           
             // TODO
+            Assert.AreEqual(4, _testContext.IsoInsertedTabs.Count);
         }
 
         private TabSyncService CreateTabSyncService()
@@ -71,18 +167,34 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                 groupMock.SetupGet(g => g.Tabs).Returns(() =>
                 {
                     var tabs = new EntitySet<Tab>();
-                    if(_groups.Contains(s))
-                        tabs.AddRange(Enumerable.Range(1, 3).Select(i =>
-                        {
-                            var nameTemplate = string.Format("Iso_{0}{1}", s, i);
-                            var tabMock = new Mock<Tab>();
-                            tabMock.SetupGet(t => t.Id).Returns(i);
-                            tabMock.SetupGet(t => t.Name).Returns(nameTemplate);
-                            tabMock.SetupGet(t => t.Path).Returns(nameTemplate + ".txt");
-                            tabMock.SetupGet(t => t.Group).Returns(groupMock.Object);
-                            return tabMock.Object;
-                        }));
-                        return tabs;
+
+                    Func<string, int, Mock<Tab>> createTabMock = (template, i) =>
+                    {
+                        var tabMock = new Mock<Tab>();
+                        tabMock.SetupGet(t => t.Id).Returns(i);
+                        tabMock.SetupGet(t => t.Name).Returns(string.Format(template,i));
+                        tabMock.SetupGet(t => t.Path).Returns(string.Format(template,i) + ".gp5");
+                        tabMock.SetupGet(t => t.Group).Returns(groupMock.Object);
+                        return tabMock;
+                    };
+                    if (_groups.Contains(s))
+                    {
+                        // regular tabs, should be synchronized
+                        var nameTemplate = string.Format("Iso_{0}{1}", s, "{0}");
+                        tabs.AddRange(Enumerable.Range(1, 3)
+                            .Select(i => createTabMock(nameTemplate, i))
+                            .Select(t => t.Object));
+
+                        // sync before by downloading from cloud
+                        var cloudName = string.Format("Cloud_old_{0}", s);
+                        var tabMock = createTabMock(cloudName, 4);
+                        tabMock.SetupGet(t => t.CloudName)
+                            .Returns(string.Format("{0}.gp5", cloudName));
+                            //.Returns(string.Format("PhoneGuitarTab/{0}/{1}.gp5", s, cloudName));
+                        tabs.Add(tabMock.Object);
+                    }
+
+                    return tabs;
                 });
 
                 return groupMock.Object;
@@ -149,13 +261,18 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             cloudMock.Setup(c => c.GetFileNames(It.IsAny<string>()))
               .Returns((string path) =>
               {
+                  var groupName = path.Split('/')[1];
                   // new tabs
-                  var list = Enumerable.Range(1, 4).Select(i => string.Format("Cloud_{0}{1}.gp5", path, i)).ToList();
+                  var list = Enumerable.Range(1, 2).Select(i => string.Format("Cloud_new_{1}{2}.gp5", path, groupName, i)).ToList();
 
                   // deleted tabs (there is the following convention to store files in cloud: <name>_<id>.<extension>)
                   // where name - tab.Name, id - tab.Id from iso
-                  list.Add("deleted_1.gp5");
-                  list.Add("deleted_2.gp5");
+                  list.Add(string.Format("deleted_sync_1.gp5", path));
+                  list.Add(string.Format("deleted_sync_2.gp5", path));
+                  list.Add(string.Format("Cloud_old_{1}.gp5", path, groupName));
+
+                  list.Add(string.Format("Iso_{1}1_sync_1.gp5",  path, groupName));
+
                   return GetTask(list.AsEnumerable());
               });
 

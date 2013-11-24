@@ -294,6 +294,8 @@ namespace PhoneGuitarTab.Data
 		private string _Path;
 
         private string _Description;
+
+	    private string _cloudName;
 		
 		private Nullable<DateTime> _LastOpened;
 			
@@ -457,6 +459,26 @@ namespace PhoneGuitarTab.Data
 				}
 			}
 		}
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_cloudName", DbType = "NVarChar(256)")]
+        public virtual string CloudName
+        {
+            get
+            {
+                return this._cloudName;
+            }
+            set
+            {
+                if ((this._cloudName != value))
+                {
+                    this.OnPathChanging(value);
+                    this.SendPropertyChanging();
+                    this._cloudName = value;
+                    this.SendPropertyChanged("CloudName");
+                    this.OnPathChanged();
+                }
+            }
+        }
 
         [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Description", DbType = "NVarChar(256)")]
         public string Description
