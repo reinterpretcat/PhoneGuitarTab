@@ -195,12 +195,13 @@ namespace PhoneGuitarTab.Core.Services
         {
             try
             {
+                var tempName = Guid.NewGuid().ToString();
                 LiveOperationResult res = await _liveClient.BackgroundDownloadAsync(fileID + "/content",
-                            new Uri("/shared/transfers/" + fileName, UriKind.Relative));
+                            new Uri("/shared/transfers/" + tempName, UriKind.Relative));
 
                 if (FileSystemService.FileExists(fileName))
                     FileSystemService.DeleteFile(fileName);
-                FileSystemService.MoveFile("/shared/transfers/" + fileName, fileName);
+                FileSystemService.MoveFile("/shared/transfers/" + tempName, fileName);
                 
             }
             catch (Exception ex)
@@ -326,8 +327,10 @@ namespace PhoneGuitarTab.Core.Services
 
             string fileID = null;
 
+            var fileInfo = await GetFolderIdAndFileName(cloudPath);
+
             //looking for the file in skydrive folder
-            LiveOperationResult fileResult = await _liveClient.GetAsync(_folderId + "/files");
+            LiveOperationResult fileResult = await _liveClient.GetAsync(fileInfo.Item1 + "/files");
             List<object> fileData = (List<object>)fileResult.Result["data"];
             foreach (IDictionary<string, object> content in fileData)
             {

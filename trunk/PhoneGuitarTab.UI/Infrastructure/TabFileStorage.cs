@@ -19,7 +19,12 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (!this.FileSystemService.DirectoryExists(TabDirectory))
                 this.FileSystemService.CreateDirectory(TabDirectory);
 
-            return String.Format("{0}\\{1}.tab", TabDirectory, Guid.NewGuid().ToString());
+            return String.Format("{0}\\{1}", TabDirectory, CreateTabFileName());
+        }
+
+        public virtual string CreateTabFileName()
+        {
+            return String.Format("{0}.tab", Guid.NewGuid());
         }
 
         public virtual Stream CreateTabFile(string filePath)

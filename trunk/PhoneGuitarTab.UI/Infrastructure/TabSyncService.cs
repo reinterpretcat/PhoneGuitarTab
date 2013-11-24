@@ -128,9 +128,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 foreach (var newTab in newTabs)
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", newTab));
-                    var localPath = TabFileStorage.CreateTabFilePath();
-                    await CloudService.DownloadFile(localPath, string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
-                    DataService.InsertTab(GetTabFromName(newTab, localPath, group));
+                    var localName = TabFileStorage.CreateTabFilePath();
+                    await CloudService.DownloadFile(localName, string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
+                    DataService.InsertTab(GetTabFromName(newTab, localName, group));
                 }
             }
             DataService.SubmitChanges();
@@ -142,7 +142,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             return _syncSignatureRegex.IsMatch(name);
         }
 
-        private Tab GetTabFromName(string cloudName, string localPath, Group group)
+        private Tab GetTabFromName(string cloudName, string localName, Group group)
         {          
             var tabType = cloudName.Contains(".gp") ?
                 DataService.TabTypes.Single(t => t.Name == Strings.GuitarPro) : 
@@ -160,7 +160,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 Group = group,
                 TabType = tabType,
                 Name = name,
-                Path = localPath,
+                Path = localName,
                 CloudName = cloudName
             };
             return tab;
