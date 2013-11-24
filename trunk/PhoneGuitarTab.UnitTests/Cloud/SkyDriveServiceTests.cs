@@ -21,7 +21,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
         private TestContext _testContext;
 
         private IEnumerable<string> _groups;
-    
+        private string _newGroup = "Summoning";
             
         [TestInitialize]
         public void SetUp()
@@ -59,6 +59,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
 			    deleted_sync_2.gp5 // already synchronized, but deleted on phone
 			    Iso_Metallica1_sync_1.gp5 // already synchronized; uploaded from phone
 			    Cloud_old_Metallica.gp5 // already synchronized; downloaded to phone
+            - Summoning
+                Cloud_group_new_Summoning.gp5
 
         Expected state:
 		        Iso:
@@ -76,6 +78,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
 			        Cloud_old_Metallica // old
 			        Cloud_new_Metallica1.gp5 // new
 			        Cloud_new_Metallica2.gp5 // new
+                -Summoning
+                    Cloud_group_new_Summoning.gp5 // new
 			
 	        Cloud:
 		        -Opeth
@@ -94,6 +98,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
 			        Cloud_new_Metallica2.gp5 // old
 			        Cloud_old_Metallica // old
 			        Iso_Metallica1_sync_1.gp5 // synchronized
+                - Summoning
+                    Cloud_group_new_Summoning.gp5
          * 
          * */
         #endregion
@@ -139,7 +145,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             });
            
             // TODO
-            Assert.AreEqual(4, _testContext.IsoInsertedTabs.Count);
+            Assert.AreEqual(5, _testContext.IsoInsertedTabs.Distinct().Count());
+            Assert.IsTrue(_testContext.IsoInsertedTabs.TrueForAll(t => t.Name.Contains("new")));
         }
 
         private TabSyncService CreateTabSyncService()
@@ -256,12 +263,22 @@ namespace PhoneGuitarTab.UnitTests.Cloud
 
             //called once on root
             cloudMock.Setup(c => c.GetDirectoryNames(It.IsAny<string>()))
-               .Returns((string path) => GetTask(_groups));
+               .Returns((string path) =>
+               {
+                   var list = new List<string>(_groups);
+                   list.Add(_newGroup);
+                   return GetTask(list.AsEnumerable());
+               });
 
             cloudMock.Setup(c => c.GetFileNames(It.IsAny<string>()))
               .Returns((string path) =>
               {
                   var groupName = path.Split('/')[1];
+
+                  // special case
+                  if (groupName == _newGroup)
+                      return GetTask(new[] { string.Format("Cloud_group_new_{1}.gp5", path, groupName) }.AsEnumerable());
+
                   // new tabs
                   var list = Enumerable.Range(1, 2).Select(i => string.Format("Cloud_new_{1}{2}.gp5", path, groupName, i)).ToList();
 

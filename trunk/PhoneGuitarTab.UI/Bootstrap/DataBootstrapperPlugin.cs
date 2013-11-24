@@ -14,7 +14,7 @@
     /// </summary>
     public class DataBootstrapperPlugin : IBootstrapperPlugin
     {
-        private const int DbVersion = 2;
+        private const int DbVersion = 3;
         const string DbConnectionString = "Data Source=isostore:/TabData.sdf";
 
         public string Name { get { return "Data"; } }
@@ -52,9 +52,6 @@
 
         private void UpdateDataBase(IDataContextService dbService, DatabaseSchemaUpdater dbUpdater)
         {
-          
-            // Add the new database version.
-             dbUpdater.DatabaseSchemaVersion = DbVersion;
 
              // - changes since db version 0 -
              if (!dbService.TabTypes.Any(type => type.Name == "chords"))
@@ -66,13 +63,17 @@
              if (!dbService.TabTypes.Any(type => type.Name == "guitar pro"))
                  dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "guitar pro", ImageUrl = "/Images/all/TabText.png" });
 
+            if(dbUpdater.DatabaseSchemaVersion < 3)
+                dbUpdater.AddColumn<Tab>("CloudName");
+          
              // --
 
              dbService.SubmitChanges();
 
-             //here goes schema update if needed
-             //...
-             
+
+             // Add the new database version.
+             dbUpdater.DatabaseSchemaVersion = DbVersion;
+
             // Perform the database update in a single transaction.
             dbUpdater.Execute();
         }
