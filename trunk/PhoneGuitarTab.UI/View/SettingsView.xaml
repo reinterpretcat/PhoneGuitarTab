@@ -31,16 +31,26 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Button HorizontalAlignment="Stretch" 
+            <StackPanel Orientation="Vertical">
+                <Button HorizontalAlignment="Stretch" 
                     VerticalAlignment="Top" 
+                    IsEnabled="{Binding IsSyncNotRunning}"
                     Height="80"
                     Content="Sync">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <commands:ExecuteCommandAction Command="{Binding LaunchSync, Mode=OneWay}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <commands:ExecuteCommandAction Command="{Binding LaunchSync, Mode=OneWay}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <ProgressBar
+                     Minimum="0"
+                     Value="{Binding Progress}"
+                     Maximum="100"
+                     IsIndeterminate="False" />
+            </StackPanel>
+            
         </Grid>
     </Grid>
 

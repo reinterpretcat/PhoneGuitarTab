@@ -27,12 +27,27 @@ namespace PhoneGuitarTab.UI.Infrastructure
         [Dependency]
         private ITrace Trace { get; set; }
 
+        private const int HalfOfProgress = 50;
 
         public bool DownloadSyncFiles { get; set; }
 
         private Regex _syncSignatureRegex;
 
         private TraceCategory _traceCategory;
+
+        private int _progressValue;
+        private int ProgressValue
+        {
+            get
+            {
+                return _progressValue;
+            }
+            set
+            {
+                _progressValue = value;
+                OnProgress(_progressValue);
+            }
+        }
 
         private const string CloudRootPath = "PhoneGuitarTab";
 
@@ -48,10 +63,13 @@ namespace PhoneGuitarTab.UI.Infrastructure
         {
             Trace.Info(_traceCategory, "start synchronization");
 
+            ProgressValue = 0;
             await IsoToCloudSync();
 
+            ProgressValue = HalfOfProgress;
             await CloudToIsoSync();
 
+            ProgressValue = HalfOfProgress * 2;
             Trace.Info(_traceCategory, "synchronize complete");
             OnComplete();
         }
@@ -83,14 +101,17 @@ namespace PhoneGuitarTab.UI.Infrastructure
         /// </summary>
         private async Task IsoToCloudSync()
         {
+            var groupsCount = DataService.Groups.Count();
+            var progressIncrement = HalfOfProgress / (groupsCount == 0 ? 1 : groupsCount); // just to prevent arithmetic error
             foreach (var group in DataService.Groups)
             {
                 Trace.Info(_traceCategory, String.Format("synchronize group {0}", group.Name));
                 foreach (var tab in group.Tabs)
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", tab.Path));
-                    await  CloudService.SynchronizeFile(tab.Path, GetCloudNameFromIso(tab));
+                    await  CloudService.SynchronizeFile(tab.Path, GetCloudName(tab));
                 }
+                ProgressValue += progressIncrement;
             }
         }
 
@@ -99,13 +120,15 @@ namespace PhoneGuitarTab.UI.Infrastructure
         /// </summary>
         private async Task CloudToIsoSync()
         {
-            var groupNames = await CloudService.GetDirectoryNames(CloudRootPath);
+            var groupNames = (await CloudService.GetDirectoryNames(CloudRootPath)).ToList();
+            var groupsCount = groupNames.Count();
+            var progressIncrement = HalfOfProgress / (groupsCount == 0 ? 1 : groupsCount);
             foreach (var groupName in groupNames)
             {
                 Trace.Info(_traceCategory, String.Format("synchronize group {0}", groupName));
                
                 var group = DataService.GetOrCreateGroupByName(groupName);
-                var localFileNamesMapped = group.Tabs.Select(GetCloudNameFromIso);
+                var localFileNamesMapped = group.Tabs.Select(GetCloudName);
                 var cloudFileNames = await CloudService.GetFileNames(String.Format("{0}/{1}", CloudRootPath, groupName));
 
                 // get tabs which aren't present in iso
@@ -115,11 +138,6 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 // NOTE it's possible that user reinstalled application, but had already synchronized files
                 // just handle this situation using special option
                 var deletedTabs = newTabs.Where(IsMappedPath).ToList();
-               // foreach (var deletedTab in deletedTabs)
-               //{
-               //     await CloudService.DeleteFile(deletedTab);
-               // }
-
                 
                 if (!DownloadSyncFiles)
                     newTabs = newTabs.Except(deletedTabs).ToList();
@@ -130,8 +148,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", newTab));
                     var localName = TabFileStorage.CreateTabFilePath();
                     await CloudService.DownloadFile(localName, string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
-                    DataService.InsertTab(GetTabFromName(newTab, localName, group));
+                    DataService.InsertTab(GetTab(newTab, localName, group));
                 }
+
+                ProgressValue += progressIncrement;
             }
             DataService.SubmitChanges();
         }
@@ -142,7 +162,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             return _syncSignatureRegex.IsMatch(name);
         }
 
-        private Tab GetTabFromName(string cloudName, string localName, Group group)
+        private Tab GetTab(string cloudName, string localName, Group group)
         {          
             var tabType = cloudName.Contains(".gp") ?
                 DataService.TabTypes.Single(t => t.Name == Strings.GuitarPro) : 
@@ -166,7 +186,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             return tab;
         }
 
-        private string GetCloudNameFromIso(Tab tab)
+        private string GetCloudName(Tab tab)
         {
             // NOTE Hardcoded file extension
             return tab.CloudName??
