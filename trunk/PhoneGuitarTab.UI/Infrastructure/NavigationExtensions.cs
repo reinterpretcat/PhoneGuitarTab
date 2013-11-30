@@ -16,15 +16,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
         {
             Tab tab = (Tab)parameters["Tab"];
 
-            if(tab.TabType.Name == Strings.GuitarPro)
-            {
-                navService.NavigateTo(Strings.StaveTab, parameters);
-            }
-            else
-            {
-                navService.NavigateTo(Strings.TextTab, parameters);
-            }
-            
+            navService.NavigateTo(tab.TabType.Name == Strings.GuitarPro ? 
+                Strings.StaveTab : 
+                Strings.TextTab, parameters);
         }
     }
 }

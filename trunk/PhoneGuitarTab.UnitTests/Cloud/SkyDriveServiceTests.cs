@@ -126,7 +126,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             // assert
 
             // Synchronized files
-            Assert.AreEqual(8, _testContext.SynchronizedFiles.Count);
+            Assert.AreEqual(8, _testContext.UploadedFiles.Count);
             _groups.ForEach(g =>
             {
                 var nameTemplate = string.Format("Iso_{0}{1}", g, "{0}");
@@ -136,11 +136,11 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                 tabs.ForEach(name =>
                 {
                     var key = name + ".gp5";
-                    Assert.IsTrue(_testContext.SynchronizedFiles.ContainsKey(key));
+                    Assert.IsTrue(_testContext.UploadedFiles.ContainsKey(key));
 
                     var suffix = name.Contains("old") ? "" : "_sync_" + id++;
                     var @value = string.Format("PhoneGuitarTab/{0}/{1}{2}.gp5", g, name, suffix);
-                    Assert.AreEqual(@value, _testContext.SynchronizedFiles[key]);
+                    Assert.AreEqual(@value, _testContext.UploadedFiles[key]);
                 });
             });
            
@@ -196,8 +196,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                         var cloudName = string.Format("Cloud_old_{0}", s);
                         var tabMock = createTabMock(cloudName, 4);
                         tabMock.SetupGet(t => t.CloudName)
-                            //.Returns(string.Format("{0}.gp5", cloudName));
-                            .Returns(string.Format("PhoneGuitarTab/{0}/{1}.gp5", s, cloudName));
+                            .Returns(string.Format("{0}.gp5", cloudName));
+                            //.Returns(string.Format("PhoneGuitarTab/{0}/{1}.gp5", s, cloudName));
                         tabs.Add(tabMock.Object);
                     }
 
@@ -213,10 +213,15 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             dataMock.SetupGet(ds => ds.Groups).Returns(() =>
             {
                 var groupsMock = new Mock<ITable<Group>>();
-                groupsMock.Setup(g => g.GetEnumerator())
-                    .Returns(() => _groups.Select(createGroupMock).GetEnumerator());
+                var gQueryable = _groups.Select(createGroupMock).AsQueryable();
+
+                groupsMock.Setup(t => t.Provider).Returns(() => gQueryable.Provider);
+                groupsMock.Setup(t => t.Expression).Returns(() => gQueryable.Expression);
+                groupsMock.Setup(g => g.GetEnumerator()).Returns(gQueryable.GetEnumerator);
                 return groupsMock.Object;
             });
+
+
 
             dataMock.Setup(ds => ds.InsertTab(It.IsAny<Tab>()))
                 .Callback((Tab tab) => _testContext.IsoInsertedTabs.Add(tab));
@@ -225,11 +230,11 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             // tab types
             var tabTypeMock = new Mock<TabType>();
             tabTypeMock.SetupGet(tt => tt.Name).Returns(() => "guitar pro");
-            var queryable = (new List<TabType> {tabTypeMock.Object}).AsQueryable();
+            var ttQueryable = (new List<TabType> {tabTypeMock.Object}).AsQueryable();
 
             var tabTypes = new Mock<ITable<TabType>>();
-            tabTypes.Setup(t => t.Provider).Returns(() => queryable.Provider);
-            tabTypes.Setup(t => t.Expression).Returns(() => queryable.Expression);
+            tabTypes.Setup(t => t.Provider).Returns(() => ttQueryable.Provider);
+            tabTypes.Setup(t => t.Expression).Returns(() => ttQueryable.Expression);
 
             dataMock.SetupGet(ds => ds.TabTypes).Returns(() => tabTypes.Object);
 
@@ -245,13 +250,6 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                 {
                     _testContext.CloudCreatedPath.Add(path);
                     return GetTask(OperationStatus.Completed);
-                });
-
-            cloudMock.Setup(c => c.DeleteFile(It.IsAny<string>()))
-                .Returns((string path) =>
-                {
-                    _testContext.CloudDeletedFile.Add(path);
-                     return GetTask(OperationStatus.Completed);
                 });
 
             cloudMock.Setup(c => c.DownloadFile(It.IsAny<string>(), It.IsAny<string>()))
@@ -293,10 +291,16 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                   return GetTask(list.AsEnumerable());
               });
 
-            cloudMock.Setup(c => c.SynchronizeFile(It.IsAny<string>(), It.IsAny<string>()))
+            cloudMock.Setup(c => c.FileExists(It.IsAny<string>()))
+             .Returns((string p1) =>
+             {
+                 return GetTask(false);
+             });
+
+            cloudMock.Setup(c => c.UploadFile(It.IsAny<string>(), It.IsAny<string>()))
               .Returns((string p1, string p2) =>
               {
-                  _testContext.SynchronizedFiles.Add(p1, p2);
+                  _testContext.UploadedFiles.Add(p1, p2);
                   return GetTask(OperationStatus.Completed);
               });
 
@@ -334,7 +338,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
             public List<Tab> IsoInsertedTabs { get; set; }
 
             public Dictionary<string, string> DownloadedFiles { get; set; }
-            public Dictionary<string, string> SynchronizedFiles { get; set; }
+            public Dictionary<string, string> UploadedFiles { get; set; }
 
             public TestContext()
             {
@@ -342,7 +346,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                 CloudCreatedPath = new List<string>();
                 CloudDeletedFile = new List<string>();
                 DownloadedFiles = new Dictionary<string, string>();
-                SynchronizedFiles = new Dictionary<string, string>();
+                UploadedFiles = new Dictionary<string, string>();
             }
 
         }

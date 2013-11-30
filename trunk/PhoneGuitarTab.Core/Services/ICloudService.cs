@@ -11,8 +11,8 @@ namespace PhoneGuitarTab.Core.Services
        
         Task<OperationStatus> UploadFile(string localPath, string cloudPath);
         Task<OperationStatus> DownloadFile(string localPath, string cloudPath);
-        Task<OperationStatus> DeleteFile(string cloudPath);
-        Task<OperationStatus> SynchronizeFile(string localPath, string cloudPath);
+
+        Task<bool> FileExists(string fileName);
     }
 
     public enum OperationStatus

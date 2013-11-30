@@ -19,7 +19,8 @@ namespace PhoneGuitarTab.Core.Services
         private string _folderId; //folder's id in skydrive
         private readonly string _clientId; //skydrive application client id
         private readonly string _folderName;
-
+        private readonly string[] _requiredScopes;
+        
         [Dependency]
         private IFileSystemService FileSystemService { get; set; }
 
@@ -28,7 +29,9 @@ namespace PhoneGuitarTab.Core.Services
         private LiveAuthClient _liveAuth;
         private LiveLoginResult _liveResult;
         private LiveConnectSession _liveSession; // NOTE refactor class to get existing session from outside if it's necessary
-        private readonly string[] _requiredScopes;
+
+        private SkyDriveService.Cache _cache = new SkyDriveService.Cache();
+
         #endregion
 
         #region Ctor's
@@ -38,7 +41,7 @@ namespace PhoneGuitarTab.Core.Services
         [Dependency]
         public SkyDriveService(SkyDriveAppContext context)
         {
-            this._clientId = context.ClientId;
+            _clientId = context.ClientId;
             _folderName = context.AppFolder;
 
             if (context.Scopes == null)
@@ -82,7 +85,7 @@ namespace PhoneGuitarTab.Core.Services
             if (_liveClient == null)
                 await SignIn();
 
-            _folderId = await GetFolderId("me/skydrive/files/", _folderName);
+            _folderId = await GetFolderId("me/skydrive", _folderName);
            
             //the folder hasn't been found, so let's create a new one
             if (_folderId == null && createIfNonExist)
@@ -93,30 +96,20 @@ namespace PhoneGuitarTab.Core.Services
 
         private async Task<string> GetFolderId(string parent, string path)
         {
-            LiveOperationResult result = await _liveClient.GetAsync(parent);
+            var data = await GetFolderData(parent);
 
-            //if (result.Result.ContainsKey("id"))
-            //    return result.Result["id"].ToString();
-
-            List<object> data = (List<object>)result.Result["data"];
-            foreach (IDictionary<string, object> content in data)
-            {
-                if (content["name"].ToString() == path)
-                {
-                    return content["id"].ToString();
-                }
-            }
-            return null;
+            return (from IDictionary<string, object> content in data 
+                    where content["name"].ToString() == path 
+                    select content["id"].ToString()).FirstOrDefault();
         }
 
         public async Task<OperationStatus> CreateDirectory(string relativePath)
         {
             try
             {
-                if (_liveClient == null)
-                    await SignIn();
+                if (_liveClient == null) await SignIn();
+
                 await GetFolderIdAndFileName(relativePath);
-                //var fold = await CreateSkydriveFolder(relativePath);
             }
             catch
             {
@@ -141,21 +134,15 @@ namespace PhoneGuitarTab.Core.Services
 
         private async  Task<IEnumerable<string>> ListContent(Func<IDictionary<string,object>, bool> func, string folderId = null)
         {
-            if (_liveClient == null)
-                await SignIn();
+            if (_liveClient == null) await SignIn();
 
-            if (folderId == null)
-                folderId = _folderId;
+            if (folderId == null) folderId = _folderId;
 
-            LiveOperationResult fileResult = await _liveClient.GetAsync(folderId + "/files");
-            List<object> fileData = (List<object>)fileResult.Result["data"];
-            List<string> data = new List<string>();
-            foreach (IDictionary<string, object> content in fileData)
-            {
-                if (func(content))
-                    data.Add(content["name"].ToString());
-            }
-            return data;
+            var folderData = await GetFolderData(folderId);
+
+            return (from IDictionary<string, object> content in folderData 
+                    where func(content) 
+                    select content["name"].ToString()).ToList();
         }
 
         /// <summary>
@@ -169,20 +156,11 @@ namespace PhoneGuitarTab.Core.Services
 
         private async Task<string> CreateSkydriveFolder(string rootPath, string path)
         {
-            string id = null;
-            try
-            {
-                var folderData = new Dictionary<string, object>();
-                folderData.Add("name", path);
-                LiveOperationResult operationResult = await _liveClient.PostAsync(rootPath, folderData);
-                dynamic result = operationResult.Result;
-                id = string.Format("{0}", result.id);
-            }
-            catch(Exception ex)
-            {
-                //...something is wrong...
-            }
-            return id;
+            var folderData = new Dictionary<string, object>();
+            folderData.Add("name", path);
+            LiveOperationResult operationResult = await _liveClient.PostAsync(rootPath, folderData);
+            dynamic result = operationResult.Result;
+            return string.Format("{0}", result.id);
         }
 
         /// <summary>
@@ -213,38 +191,6 @@ namespace PhoneGuitarTab.Core.Services
         }
         #endregion
 
-        #region
-
-        /// <summary>
-        /// Build recursivly path and returns folder id and filename
-        /// </summary>
-        public async Task<Tuple<string,string>> GetFolderIdAndFileName(string path)
-        {
-            var p = path.Substring(_folderName.Length, path.Length - _folderName.Length);
-            var id = _folderId;
-            int index = 0;
-            var directory = "";
-            while (p.StartsWith("/"))
-            {
-                p = p.Substring(1, p.Length - 1);
-                index = p.IndexOf("/");
-                if (index >= 0)
-                {
-                    directory = p.Substring(0, index);
-                    id = await GetFolderId(string.Format("{0}/files?filter=folders", _folderId), directory) ??
-                        await CreateSkydriveFolder(_folderId, directory);
-                    p = p.Substring(index, p.Length - index);
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return new Tuple<string, string>(id, p);
-        }
-
-        #endregion
 
         #region Public Methods
         /// <summary>
@@ -258,16 +204,14 @@ namespace PhoneGuitarTab.Core.Services
             {
                 try
                 {
-                    if (_liveClient == null)
-                        await GetSkyDriveFolder();
+                    if (_liveClient == null) await GetSkyDriveFolder();
 
                     var tuple = await GetFolderIdAndFileName(cloudPath);
 
                     LiveOperationResult res = await _liveClient.UploadAsync(tuple.Item1,
                                                 tuple.Item2,
                                                 fileStream,
-                                                OverwriteOption.Overwrite
-                                                );
+                                                OverwriteOption.Overwrite);
                     return OperationStatus.Completed;
                 }
                 catch(Exception ex)
@@ -290,12 +234,10 @@ namespace PhoneGuitarTab.Core.Services
             if (_liveClient == null)
                 await GetSkyDriveFolder();
 
-            var fileInfo = await GetFolderIdAndFileName(cloudPath);
-
-            //looking for the file
-            LiveOperationResult fileResult = await _liveClient.GetAsync(fileInfo.Item1 + "/files");
-            List<object> fileData = (List<object>)fileResult.Result["data"];
-            foreach (IDictionary<string, object> content in fileData)
+            var fileInfo = await GetFolderIdAndFileName(cloudPath);           
+            var folderData = await GetFolderData(fileInfo.Item1);
+        
+            foreach (IDictionary<string, object> content in folderData)
             {
                 if (content["name"].ToString() == fileInfo.Item2)
                 {
@@ -307,82 +249,114 @@ namespace PhoneGuitarTab.Core.Services
             }
             return OperationStatus.Failed;
         }
-
-        public Task<OperationStatus> DeleteFile(string cloudPath)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        /// <summary>
-        /// Compares files in the local storage and SkyDrive folder
-        /// Gets the newest file and updates the older one
-        /// </summary>
-        /// <returns></returns>
-        public async Task<OperationStatus> SynchronizeFile(string localPath, string cloudPath)
+ 
+        public async Task<bool> FileExists(string fileName)
         {
             if (_liveClient == null)
                 await GetSkyDriveFolder();
 
-            string fileID = null;
+            var fileInfo = await GetFolderIdAndFileName(fileName);
+            var folderData = await GetFolderData(fileInfo.Item1);
 
-            var fileInfo = await GetFolderIdAndFileName(cloudPath);
-
-            //looking for the file in skydrive folder
-            LiveOperationResult fileResult = await _liveClient.GetAsync(fileInfo.Item1 + "/files");
-            List<object> fileData = (List<object>)fileResult.Result["data"];
-            foreach (IDictionary<string, object> content in fileData)
-            {
-                 if (content["name"].ToString() == localPath)
-                 {
-                     //The file has been found!
-                     fileID = content["id"].ToString();
-                     DateTime fileUpdatedTime = new DateTime();
-                     if (DateTime.TryParse(content["updated_time"].ToString(), out fileUpdatedTime))
-                     {
-                             if (FileSystemService.FileExists(localPath))
-                             {
-                                 //the file already exists in the local storage. let's compare dates
-                                 if (fileUpdatedTime > FileSystemService.GetLastWriteTime(localPath).DateTime)
-                                 {
-                                     await MoveToLocalStorage(localPath, fileID);
-                                 }
-                                 else if (fileUpdatedTime < FileSystemService.GetLastWriteTime(localPath).DateTime)
-                                 {
-                                     //local file is newer than skydrive file
-                                     //updating skydrive file
-                                     await UploadFile(localPath, cloudPath);
-                                 }                                 
-                             }
-                             else
-                             {
-                                 //the file hasn't been found in LocalStorage
-                                 //so we're downloading it and move into app's localstorage
-                                 await MoveToLocalStorage(cloudPath, fileID);
-                             }
-                             return OperationStatus.Completed;
-                          
-                      }
-                }                
-            }
-            //upload the file to skydrive if file hasn't been found there 
-            if (fileID == null)
-            {
-
-                if (FileSystemService.FileExists(localPath))
-                    {
-                        await UploadFile(localPath, cloudPath);
-                        return OperationStatus.Completed;
-                    }
-                               
-            }
-
-            return OperationStatus.Failed;
-
+            return folderData.Cast<IDictionary<string, object>>()
+                .Any(content => content["name"].ToString() == fileInfo.Item2);
         }
 
-        #endregion       
+        #endregion
+
+        /// <summary>
+        ///  Gets folder content
+        /// </summary>
+        private async Task<List<object>> GetFolderData(string directory)
+        {
+            var path = directory + "/files";
+            return await _cache.GetOrExecuteAsync(path, async () =>
+            {
+                LiveOperationResult fr = await _liveClient.GetAsync(path);
+                return (List<object>)fr.Result["data"];
+            });
+        }
+
+        /// <summary>
+        /// Build recursivly path and returns folder id and filename
+        /// </summary>
+        private async Task<Tuple<string, string>> GetFolderIdAndFileName(string path)
+        {
+            var p = path.Substring(_folderName.Length, path.Length - _folderName.Length);
+            var id = _folderId;
+            int index = 0;
+            var directory = "";
+            while (p.StartsWith("/"))
+            {
+                p = p.Substring(1, p.Length - 1);
+                index = p.IndexOf("/");
+                if (index >= 0)
+                {
+                    directory = p.Substring(0, index);
+                    id = await GetFolderId(_folderId, directory) ??
+                        //await GetFolderId(string.Format("{0}/files?filter=folders", _folderId), directory) ??
+                        await CreateSkydriveFolder(_folderId, directory);
+                    p = p.Substring(index, p.Length - index);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return new Tuple<string, string>(id, p);
+        }
+
+        #region Nested classes
+
+        private class Cache
+        {
+            private int _cleanCounter;
+
+            private Dictionary<string, Tuple<DateTime, object>> _cacheMap = new Dictionary<string, Tuple<DateTime, object>>();
+
+            public async Task<T> GetOrExecuteAsync<T>(string key, Func<Task<T>> func) where T : class
+            {
+                var @value = Get<T>(key);
+                if (@value == null)
+                {
+                    @value = await func();
+                    Set(key, @value);
+                }
+                return @value;
+            }
+           
+            public T Get<T>(string key) where T: class
+            {
+                CheckAndClear();
+                Tuple<DateTime, object> tuple  = null;
+                if(_cacheMap.TryGetValue(key, out tuple))
+                {
+                    if ((DateTime.Now - tuple.Item1).Seconds < 5*60)
+                    {
+                        return (T) tuple.Item2;
+                    }
+
+                    _cacheMap.Remove(key);
+                }
+
+                return null;
+            }
+
+            public void Set(string key, object @value)
+            {
+                _cacheMap.Add(key, new Tuple<DateTime, object>(DateTime.Now, @value));
+            }
+
+            private void CheckAndClear()
+            {
+                // clear cache to prevent memory leaks
+                if (_cleanCounter++ == 100)
+                {
+                    _cacheMap = new Dictionary<string, Tuple<DateTime, object>>();
+                }
+            }
+        }
 
         public class SkyDriveAppContext
         {
@@ -391,5 +365,6 @@ namespace PhoneGuitarTab.Core.Services
             public string[] Scopes { get; set; }
         }
 
+        #endregion
     }
 }

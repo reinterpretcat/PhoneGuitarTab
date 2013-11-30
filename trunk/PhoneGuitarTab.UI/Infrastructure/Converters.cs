@@ -23,11 +23,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
             {
                 if (group.Count == 0)
                 {
-                    result = (SolidColorBrush)Application.Current.Resources["PhoneChromeBrush"];
+                    result = Application.Current.Resources["PhoneChromeBrush"];
                 }
                 else
                 {
-                    result = (SolidColorBrush)Application.Current.Resources["PhoneAccentBrush"];
+                    result = Application.Current.Resources["PhoneAccentBrush"];
                 }
             }
 
@@ -85,11 +85,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
             {
                 if (group.Count == 0)
                 {
-                    result = (SolidColorBrush)Application.Current.Resources["PhoneChromeBrush"];
+                    result = Application.Current.Resources["PhoneChromeBrush"];
                 }
                 else
                 {
-                    result = (SolidColorBrush)Application.Current.Resources["PhoneAccentBrush"];
+                    result = Application.Current.Resources["PhoneAccentBrush"];
                 }
             }
 

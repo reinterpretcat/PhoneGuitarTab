@@ -109,7 +109,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 foreach (var tab in group.Tabs)
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", tab.Path));
-                    await  CloudService.SynchronizeFile(tab.Path, GetCloudName(tab));
+                    var cloudName = GetCloudName(tab);
+                    if(!await CloudService.FileExists(cloudName))
+                        await CloudService.UploadFile(tab.Path, cloudName);
+
                 }
                 ProgressValue += progressIncrement;
             }
@@ -139,8 +142,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 // just handle this situation using special option
                 var deletedTabs = newTabs.Where(IsMappedPath).ToList();
                 
-                if (!DownloadSyncFiles)
-                    newTabs = newTabs.Except(deletedTabs).ToList();
+                //if (!DownloadSyncFiles)
+                newTabs = newTabs.Except(deletedTabs).ToList();
+
+                // filter cloud synchronized files without _sync_
+                newTabs = newTabs.Where( name => !IsCloudName(name, group)).ToList();
 
                 // all these tabs should be downloaded from skydrive to iso
                 foreach (var newTab in newTabs)
@@ -154,6 +160,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 ProgressValue += progressIncrement;
             }
             DataService.SubmitChanges();
+        }
+
+        private bool IsCloudName(string name, Group @group)
+        {
+            return @group.Tabs.Any(tab => tab.CloudName == name);
         }
 
 
@@ -188,11 +199,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         private string GetCloudName(Tab tab)
         {
-            // NOTE Hardcoded file extension
-            return tab.CloudName??
+            return string.IsNullOrEmpty(tab.CloudName)?
                 // NOTE this signature should prevent name collisions
-                // String.Format("{0}_sync_{1}.gp5", tab.Name, tab.Id);
-                String.Format("{0}/{1}/{2}_sync_{3}.gp5", CloudRootPath, tab.Group.Name, tab.Name, tab.Id);
+                // and acts as marker of already synchronized tabs
+                String.Format("{0}/{1}/{2}_sync_{3}.gp5", CloudRootPath, tab.Group.Name, tab.Name, tab.Id): // NOTE hardcoded file extension to gp5
+                String.Format("{0}/{1}/{2}", CloudRootPath, tab.Group.Name, tab.CloudName);
         }
     }
 }

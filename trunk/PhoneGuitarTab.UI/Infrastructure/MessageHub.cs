@@ -2,6 +2,10 @@
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
+    /// <summary>
+    /// Provides the way to subscribe and/or publish events globally
+    /// Not sure that it's the best approach from architecture point of view
+    /// </summary>
     public sealed class MessageHub
     {
         public event EventHandler<int> CollectionTabRemoved;

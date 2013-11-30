@@ -45,6 +45,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             SyncService.Complete += (o, e) =>
             {
                 IsSyncNotRunning = true;
+                hub.RaiseTabsDownloaded();
                 hub.RaiseTabsRefreshed();
             };
             IsSyncNotRunning = true;

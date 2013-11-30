@@ -16,7 +16,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
             ClientId = "000000004807241A"
         };
 
-        public string Name { get { return "Core"; } }
+        public string Name { get { return "Cloud"; } }
 
         [Dependency]
         private IContainer Container { get; set; }
