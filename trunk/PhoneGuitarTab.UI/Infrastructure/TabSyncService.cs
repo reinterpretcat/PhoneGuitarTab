@@ -53,7 +53,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public TabSyncService()
         {
-            _syncSignatureRegex = new Regex(@".*_sync_\d\.", RegexOptions.Compiled);
+            _syncSignatureRegex = new Regex(@".*_sync_\d+\.", RegexOptions.Compiled);
             _traceCategory = new TraceCategory("TabSyncService");
 
             DownloadSyncFiles = false;
