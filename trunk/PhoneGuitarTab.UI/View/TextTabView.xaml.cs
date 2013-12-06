@@ -12,12 +12,37 @@ namespace PhoneGuitarTab.UI
         public TextTabView()
         {
             InitializeComponent();
+          
             tabWebBrowser.Loaded += delegate
                 {
                     var viewModel = DataContext as TextTabViewModel;
                     if (viewModel.TabContent != null)
                         tabWebBrowser.NavigateToString(viewModel.TabContent);
+                  
                 };
+            
         }
+
+        private void slideControl_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
+        {
+            tabWebBrowser.InvokeScript("stopSlide");
+            if (slideControl.Value != 0)
+                tabWebBrowser.InvokeScript("slide", ((10 - System.Convert.ToInt16(slideControl.Value)) * 10 ).ToString());         
+        }
+
+        private void slideControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.slideControl.Opacity = 1;
+        }
+
+        private void slideControl_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.slideControl.Opacity = 0.1;
+        }
+
+       
+     
+
+       
     }
 }

@@ -36,9 +36,13 @@ namespace PhoneGuitarTab.UI.ViewModel
                         document = document.Replace("[/ch]", "</span>");
                     }
 
-                    TabContent = String.Format("<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0\" /><style>{0}</style></head><body>{1}</body></html>",
-                        "span{font-weight:bold;}", 
-                        document);
+                    string ScrollerScript = " <script> var delay; function slide(interval) {clearInterval(delay); delay =  setInterval(function() {window.scrollBy(0,1)}, interval); }" +
+                                    " function stopSlide(){clearInterval(delay);}  </script>";
+                   
+                   
+                    TabContent = String.Format("<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0\" /><style>{0}</style></head><body>{1}{2}</body></html>",
+                        "span{font-weight:bold;}",
+                        document, ScrollerScript);
                 //unfortunately "initial-scale" attribute is not supported in windows phone 7
                 //http://msdn.microsoft.com/en-us/library/ff462082%28VS.92%29.aspx
                 //so user need to double tap browser to adjust viewport

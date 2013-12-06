@@ -21,9 +21,34 @@
 
     <!--  LayoutRoot is the root grid where all page content is placed  -->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="314*"/>
+            <RowDefinition Height="43*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
         <phone:WebBrowser Name="tabWebBrowser"
-                          IsScriptEnabled="True">
-        </phone:WebBrowser>
+                          IsScriptEnabled="True" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+        <Slider x:Name="slideControl" Margin="15,12,19,0" Height="186"
+                ValueChanged="slideControl_ValueChanged" 
+              
+                Orientation="Vertical" Maximum="9" 
+                FlowDirection="LeftToRight" 
+                VerticalContentAlignment="Top" 
+                BorderBrush="#FF746666" 
+                RenderTransformOrigin="0.524,0.495" 
+                BorderThickness="0" SmallChange="0.1" 
+                Opacity="0.1" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                Width="50" Grid.RowSpan="2" Grid.Column="1" MouseEnter="slideControl_MouseEnter" LostMouseCapture="slideControl_LostMouseCapture">
+            <Slider.RenderTransform>
+                <CompositeTransform Rotation="-180" TranslateX="-3.18" TranslateY="1.86"/>
+            </Slider.RenderTransform>
+        </Slider>
     </Grid>
 
 </Views:ViewPage>
