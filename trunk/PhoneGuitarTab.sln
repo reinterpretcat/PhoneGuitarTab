@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.20827.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.Core", "PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj", "{06005B3A-BCE2-4B59-95BD-8A697F758F35}"
 EndProject
@@ -28,6 +28,31 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneGuitarTab.UnitTests", "PhoneGuitarTab.UnitTests\PhoneGuitarTab.UnitTests.csproj", "{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs30
+		SccProjectUniqueName0 = PhoneGuitarTab.Controls\\PhoneGuitarTab.Controls.csproj
+		SccProjectName0 = PhoneGuitarTab.Controls
+		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath0 = PhoneGuitarTab.Controls
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = PhoneGuitarTab.Core\\PhoneGuitarTab.Core.csproj
+		SccProjectName1 = PhoneGuitarTab.Core
+		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath1 = PhoneGuitarTab.Core
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = PhoneGuitarTab.Search\\PhoneGuitarTab.Search.csproj
+		SccProjectName2 = PhoneGuitarTab.Search
+		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath2 = PhoneGuitarTab.Search
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = PhoneGuitarTab.UI\\PhoneGuitarTab.UI.csproj
+		SccProjectName3 = PhoneGuitarTab.UI
+		SccAuxPath3 = https://tfs.codeplex.com/tfs/tfs30
+		SccLocalPath3 = PhoneGuitarTab.UI
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -55,9 +80,9 @@ Global
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Build.0 = Debug|Any CPU
-		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Deploy.0 = Debug|Any CPU
+		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Build.0 = Debug|ARM
+		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|ARM.Deploy.0 = Debug|ARM
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{79393645-967F-4D71-BB54-5D92858C141E}.Debug|Mixed Platforms.Deploy.0 = Debug|x86
@@ -123,7 +148,6 @@ Global
 		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|ARM.ActiveCfg = Debug|ARM
 		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|ARM.Build.0 = Debug|ARM
-		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|ARM.Deploy.0 = Debug|ARM
 		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{FC2EC1AC-8734-4E63-860F-2046D60CA0C7}.Debug|Mixed Platforms.Deploy.0 = Debug|x86

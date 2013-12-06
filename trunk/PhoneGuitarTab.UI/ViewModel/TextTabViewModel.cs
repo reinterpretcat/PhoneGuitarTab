@@ -36,7 +36,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                         document = document.Replace("[/ch]", "</span>");
                     }
 
-                    string ScrollerScript = " <script> var delay; function slide(interval) {clearInterval(delay); delay =  setInterval(function() {window.scrollBy(0,1)}, interval); }" +
+                    string ScrollerScript = " <script> var delay; function slide(interval) {clearInterval(delay); delay =  setInterval(function() {window.scrollBy(0,2)}, interval); }" +
                                     " function stopSlide(){clearInterval(delay);}  </script>";
                    
                    
