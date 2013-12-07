@@ -199,10 +199,13 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         private string GetCloudName(Tab tab)
         {
+            // get tablature extension
+            var extension = tab.TabType.Name == Strings.GuitarPro ? "gp5" : "tab";
+
             return string.IsNullOrEmpty(tab.CloudName)?
                 // NOTE this signature should prevent name collisions
                 // and acts as marker of already synchronized tabs
-                String.Format("{0}/{1}/{2}_sync_{3}.gp5", CloudRootPath, tab.Group.Name, tab.Name, tab.Id): // NOTE hardcoded file extension to gp5
+                String.Format("{0}/{1}/{2}_sync_{3}.{4}", CloudRootPath, tab.Group.Name, tab.Name, tab.Id, extension) : 
                 String.Format("{0}/{1}/{2}", CloudRootPath, tab.Group.Name, tab.CloudName);
         }
     }
