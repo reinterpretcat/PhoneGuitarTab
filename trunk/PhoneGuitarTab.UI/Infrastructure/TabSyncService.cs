@@ -200,7 +200,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private string GetCloudName(Tab tab)
         {
             // get tablature extension
-            var extension = tab.TabType.Name == Strings.GuitarPro ? "gp5" : "tab";
+            var extension = tab.TabType.Name == Strings.GuitarPro ? "gp5" : "txt";
 
             return string.IsNullOrEmpty(tab.CloudName)?
                 // NOTE this signature should prevent name collisions

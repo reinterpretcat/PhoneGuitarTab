@@ -11,6 +11,7 @@ namespace PhoneGuitarTab.Core.Services
 {
     /// <summary>
     /// SkyDrive file manager
+    /// TODO refactor this class
     /// </summary>
     public class SkyDriveService : ICloudService
     {
@@ -108,7 +109,6 @@ namespace PhoneGuitarTab.Core.Services
             try
             {
                 if (_liveClient == null) await SignIn();
-
                 await GetFolderIdAndFileName(relativePath);
             }
             catch
@@ -125,10 +125,8 @@ namespace PhoneGuitarTab.Core.Services
         }
 
         public async Task<IEnumerable<string>> GetFileNames(string relativePath)
-        {
-            
+        { 
             var folderId = (await GetFolderIdAndFileName(relativePath + "/")).Item1;
-
             return await ListContent(c => c["type"].ToString() != "folder", folderId);
         }
 
@@ -148,7 +146,6 @@ namespace PhoneGuitarTab.Core.Services
         /// <summary>
         /// Creates a new skydrive folder and returns its id
         /// </summary>
-        /// <returns></returns>
         private async Task<string> CreateSkydriveFolder(string relativePath)
         {
             return await CreateSkydriveFolder("me/skydrive", relativePath);
@@ -168,7 +165,6 @@ namespace PhoneGuitarTab.Core.Services
         /// </summary>
         /// <param name="fileName">Name of a downloaded file</param>
         /// <param name="fileID">File's ID in SkyDrive</param>
-        /// <returns></returns>
         private async Task MoveToLocalStorage(string fileName, string fileID)
         {
             try
@@ -196,8 +192,6 @@ namespace PhoneGuitarTab.Core.Services
         /// <summary>
         /// Upload a file from local storage to a SkyDrive's folder
         /// </summary>
-        /// <param name="fileName">Name of a file in LocalStorage</param>
-        /// <returns></returns>
         public async Task<OperationStatus> UploadFile(string localPath, string cloudPath)
         {
             using (var fileStream = FileSystemService.OpenFile(localPath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -225,8 +219,6 @@ namespace PhoneGuitarTab.Core.Services
         /// Downloads a file from SkyDrive and saves it in LocalStorage
         /// If the file exists it will be overwritten
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
         public async Task<OperationStatus> DownloadFile(string localPath, string cloudPath)
         {
             string fileID = null;
@@ -318,11 +310,10 @@ namespace PhoneGuitarTab.Core.Services
             public async Task<T> GetOrExecuteAsync<T>(string key, Func<Task<T>> func) where T : class
             {
                 var @value = Get<T>(key);
-                if (@value == null)
-                {
-                    @value = await func();
-                    Set(key, @value);
-                }
+                if (@value != null) return @value;
+
+                @value = await func();
+                Set(key, @value);
                 return @value;
             }
            
@@ -330,15 +321,14 @@ namespace PhoneGuitarTab.Core.Services
             {
                 CheckAndClear();
                 Tuple<DateTime, object> tuple  = null;
-                if(_cacheMap.TryGetValue(key, out tuple))
-                {
-                    if ((DateTime.Now - tuple.Item1).Seconds < 5*60)
-                    {
-                        return (T) tuple.Item2;
-                    }
+                if (!_cacheMap.TryGetValue(key, out tuple)) return null;
 
-                    _cacheMap.Remove(key);
+                if ((DateTime.Now - tuple.Item1).Seconds < 5*60)
+                {
+                    return (T) tuple.Item2;
                 }
+
+                _cacheMap.Remove(key);
 
                 return null;
             }

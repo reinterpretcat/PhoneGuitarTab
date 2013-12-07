@@ -12,12 +12,13 @@ namespace PhoneGuitarTab.UI.ViewModel
     public class TextTabViewModel : TabViewModelBase
     {
         public string Style { get; set; }
+        private TextTabAdapter _textTabAdapter;
 
         [Dependency]
         public TextTabViewModel(IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
-            
+            _textTabAdapter = new TextTabAdapter();
         }
 
         protected override void ReadNavigationParameters()
@@ -28,7 +29,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
                 using (var stream = FileSystem.OpenFile(Tablature.Path, FileMode.Open))
                 {
-                    string document = (new StreamReader(stream)).ReadToEnd();
+                    string document = _textTabAdapter.Adapt(new StreamReader(stream).ReadToEnd());
 
                     if (Tablature.TabType.Name == "chords")
                     {
