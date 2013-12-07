@@ -174,11 +174,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
         }
 
         private Tab GetTab(string cloudName, string localName, Group group)
-        {          
-            var tabType = cloudName.Contains(".gp") ?
-                DataService.TabTypes.Single(t => t.Name == Strings.GuitarPro) : 
-                DataService.TabTypes.Single(t => t.Name == "tab");
-
+        {
             var name = cloudName;
             int fileExtPos = name.LastIndexOf(".");
             if (fileExtPos >= 0)
@@ -189,7 +185,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             var tab = new Tab()
             {
                 Group = group,
-                TabType = tabType,
+                TabType = GetTabTypeByName(cloudName),
                 Name = name,
                 Path = localName,
                 CloudName = cloudName
@@ -200,13 +196,37 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private string GetCloudName(Tab tab)
         {
             // get tablature extension
-            var extension = tab.TabType.Name == Strings.GuitarPro ? "gp5" : "txt";
+            var extension = GetExtensionByType(tab.TabType);
 
             return string.IsNullOrEmpty(tab.CloudName)?
                 // NOTE this signature should prevent name collisions
                 // and acts as marker of already synchronized tabs
                 String.Format("{0}/{1}/{2}_sync_{3}.{4}", CloudRootPath, tab.Group.Name, tab.Name, tab.Id, extension) : 
                 String.Format("{0}/{1}/{2}", CloudRootPath, tab.Group.Name, tab.CloudName);
+        }
+
+        private string GetExtensionByType(TabType type)
+        {
+            switch (type.Name)
+            {
+                case Strings.GuitarPro:
+                    return "gp5";
+                case Strings.MusicXml:
+                    return "xml";
+                default:
+                    return "txt";
+            }
+        }
+
+        private TabType GetTabTypeByName(string name)
+        {
+            if (name.Contains(".gp"))
+                return DataService.TabTypes.Single(t => t.Name == Strings.GuitarPro);
+
+            if(name.Contains(".xml"))
+                return DataService.TabTypes.Single(t => t.Name == Strings.MusicXml);
+
+            return DataService.TabTypes.Single(t => t.Name == "tab");
         }
     }
 }

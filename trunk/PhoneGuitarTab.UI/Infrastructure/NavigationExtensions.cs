@@ -14,9 +14,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
         }
         public static void NavigateToTab(this INavigationService navService, Dictionary<string, object> parameters)
         {
-            Tab tab = (Tab)parameters["Tab"];
+            var tab = (Tab)parameters["Tab"];
 
-            navService.NavigateTo(tab.TabType.Name == Strings.GuitarPro ? 
+            navService.NavigateTo(tab.TabType.Name == Strings.GuitarPro || tab.TabType.Name == Strings.MusicXml ? 
                 Strings.StaveTab : 
                 Strings.TextTab, parameters);
         }

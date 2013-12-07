@@ -26,7 +26,9 @@
         {
             Action<IDataContextService> initialzeDatabase = service =>
                 {
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "guitar pro", ImageUrl = "/Images/all/TabText.png" });
+                    // TODO change pictures
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/all/TabText.png" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/all/TabText.png" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/all/TabText.png" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/all/TabText.png" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/all/TabText.png" });
@@ -52,24 +54,27 @@
 
         private void UpdateDataBase(IDataContextService dbService, DatabaseSchemaUpdater dbUpdater)
         {
+             // Db schema changes
 
-             // - changes since db version 0 -
+            // Release 1.1
              if (!dbService.TabTypes.Any(type => type.Name == "chords"))
                  dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/all/TabText.png" });
 
              if (!dbService.TabTypes.Any(type => type.Name == "drums"))
                  dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/all/TabText.png" });
 
-             if (!dbService.TabTypes.Any(type => type.Name == "guitar pro"))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "guitar pro", ImageUrl = "/Images/all/TabText.png" });
+            // Release 2.0
+             if (!dbService.TabTypes.Any(type => type.Name == Strings.GuitarPro))
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/all/TabText.png" });
 
-            if(dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
+            // Release 3.0
+            if (dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
+            {
                 dbUpdater.AddColumn<Tab>("CloudName");
-          
-             // --
+                dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/all/TabText.png" });
+            }
 
              dbService.SubmitChanges();
-
 
              // Add the new database version.
              dbUpdater.DatabaseSchemaVersion = DbVersion;

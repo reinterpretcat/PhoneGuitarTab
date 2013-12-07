@@ -18,5 +18,6 @@ namespace PhoneGuitarTab.UI
         public const string Settings = "Settings";
 
         public const string GuitarPro = "guitar pro";
+        public const string MusicXml = "musicxml";
     }
 }
