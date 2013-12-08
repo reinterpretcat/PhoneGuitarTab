@@ -20,32 +20,25 @@ namespace PhoneGuitarTab.UI
                         tabWebBrowser.NavigateToString(viewModel.TabContent);
                   
                 };
-            
-        }
 
-        private void slideControl_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
-        {
-            this.invokeAutoScroll();
+            this.slider.Browser = tabWebBrowser; 
         }
-
-        private void slideControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            this.slideControl.Opacity = 1;
-        }
-
-        private void slideControl_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            this.slideControl.Opacity = 0.1;
-        }
-
-       private void invokeAutoScroll()
-        {
-            tabWebBrowser.InvokeScript("stopSlide");
-            if (slideControl.Value != 0)
-                tabWebBrowser.InvokeScript("slide", ((10 - System.Convert.ToInt16(slideControl.Value)) * 8).ToString());       
-        }
-
 
        
+        /// <summary>
+        /// Event to Stop / Resume the scrolling when tapped.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabWebBrowser_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (this.slider.isScrolling)
+                this.slider.stopAutoScroll();
+            else
+                this.slider.invokeAutoScroll();
+        }
+
+
+      
     }
 }

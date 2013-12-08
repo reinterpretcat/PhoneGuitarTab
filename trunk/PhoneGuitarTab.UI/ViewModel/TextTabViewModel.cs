@@ -38,7 +38,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     }
 
                     string ScrollerScript = " <script> var delay; function slide(interval) {clearInterval(delay); delay =  setInterval(function() {window.scrollBy(0,2)}, interval); }" +
-                                    " function stopSlide(){clearInterval(delay);}  </script>";
+                                    " function stopSlide(){clearInterval(delay);} </script>";
                    
                    
                     TabContent = String.Format("<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0\" /><style>{0}</style></head><body>{1}{2}</body></html>",

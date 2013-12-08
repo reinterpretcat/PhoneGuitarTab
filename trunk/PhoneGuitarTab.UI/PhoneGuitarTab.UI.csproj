@@ -132,6 +132,9 @@
     <Compile Include="Bootstrap\CoreBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\DataBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\NavigationBootstrapperPlugin.cs" />
+    <Compile Include="Controls\AutoScroll.xaml.cs">
+      <DependentUpon>AutoScroll.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
     <Compile Include="Infrastructure\DefaultTrace.cs" />
     <Compile Include="Data\DataContextService.cs" />
@@ -215,6 +218,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommonResources\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AutoScroll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
