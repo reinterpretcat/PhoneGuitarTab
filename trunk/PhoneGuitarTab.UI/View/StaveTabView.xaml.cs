@@ -14,7 +14,7 @@
         public StaveTabView()
         {
             this.InitializeComponent();
-           
+            this.slider.Browser = this.Browser; 
         }
 
         private void Browser_Loaded(object sender, RoutedEventArgs e)
@@ -64,5 +64,17 @@
 
             }
         }
+
+     
+      
+        //Autoscroll - Tap to slide/stop.
+        private void Browser_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (this.slider.isScrolling)
+                this.slider.stopAutoScroll();
+            else
+                this.slider.invokeAutoScroll();
+        }
+
     }
 }

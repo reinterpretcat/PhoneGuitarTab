@@ -55,7 +55,7 @@ namespace PhoneGuitarTab.UI.Controls
 
         private void slideControl_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            this.slideControl.Opacity = 0.1;
+            this.slideControl.Opacity = 0.07;
         }
         #endregion
 
