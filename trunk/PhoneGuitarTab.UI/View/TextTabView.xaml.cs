@@ -9,19 +9,12 @@ namespace PhoneGuitarTab.UI
 
     public partial class TextTabView : ViewPage
     {
+        private string TextTabUri = "/Html/texttab.html";
         public TextTabView()
         {
             InitializeComponent();
-          
-            tabWebBrowser.Loaded += delegate
-                {
-                    var viewModel = DataContext as TextTabViewModel;
-                    if (viewModel.TabContent != null)
-                        tabWebBrowser.NavigateToString(viewModel.TabContent);
-                  
-                };
-
-            this.slider.Browser = tabWebBrowser; 
+           
+            this.slider.Browser = this.tabWebBrowser; 
         }
 
        
@@ -36,6 +29,23 @@ namespace PhoneGuitarTab.UI
                 this.slider.stopAutoScroll();
             else
                 this.slider.invokeAutoScroll();
+        }
+
+        private void tabWebBrowser_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+             if (e.Value.StartsWith("onReady"))
+             {
+                 var viewModel = DataContext as TextTabViewModel;
+
+                 if (viewModel.TabContent != null)
+                     tabWebBrowser.InvokeScript("pullTabContent", viewModel.TabContent);
+
+             }
+        }
+
+        private void tabWebBrowser_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            tabWebBrowser.Navigate(new Uri(this.TextTabUri, UriKind.Relative));
         }
 
 

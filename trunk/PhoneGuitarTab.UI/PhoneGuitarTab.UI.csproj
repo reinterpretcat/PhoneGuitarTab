@@ -372,9 +372,11 @@
     <Content Include="Html\js\tablatures\tabfactory.js" />
     <Content Include="Html\js\tablatures\title.js" />
     <Content Include="Html\js\tablatures\track.js" />
+    <Content Include="Html\js\texttab\interaction.js" />
     <Content Include="Html\js\utils\core.js" />
     <Content Include="Html\js\utils\filereader.js" />
     <Content Include="Html\sandbox.html" />
+    <Content Include="Html\texttab.html" />
     <Content Include="Images\dark\appbar.back.rest.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
