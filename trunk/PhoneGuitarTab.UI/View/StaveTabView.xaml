@@ -13,7 +13,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     DataContext="{Binding StaveTab, Source={StaticResource Locator}}"
-    shell:SystemTray.IsVisible="False">
+    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
 
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
@@ -30,23 +30,25 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="34*"/>
-            <RowDefinition Height="321*"/>
-            <RowDefinition Height="45*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="643*"/>
+            <RowDefinition Height="82*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="17*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="67*"/>
+            <ColumnDefinition Width="13*"/>
         </Grid.ColumnDefinitions>
         <phone:WebBrowser x:Name="Browser"
 			IsScriptEnabled="True"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
 			Loaded="Browser_Loaded"
+            LoadCompleted="Browser_LoadCompleted"
             MouseLeftButtonUp="Browser_MouseLeftButtonUp"
 			ScriptNotify="Browser_ScriptNotify"
 			NavigationFailed="Browser_NavigationFailed" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
-        <Controls:AutoScroll x:Name="slider" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2" Height="176" Width="58"/>
+        <Controls:AutoScroll x:Name="slider" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2" Height="176" Width="58"/>
     </Grid>
 
+   
 </phone:PhoneApplicationPage>
