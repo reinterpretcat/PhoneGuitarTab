@@ -103,7 +103,7 @@
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             //Set Progress Indicator on PageLoad.
-            SystemTray.SetOpacity(this, 0.1);
+            SystemTray.SetOpacity(this, 0.7);
             var progressIndicator = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, progressIndicator);
             SetProgressIndicator(true, "Loading guitar pro content...");
