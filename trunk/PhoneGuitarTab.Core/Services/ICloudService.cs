@@ -13,6 +13,8 @@ namespace PhoneGuitarTab.Core.Services
         Task<OperationStatus> DownloadFile(string localPath, string cloudPath);
 
         Task<bool> FileExists(string fileName);
+
+        void Release();
     }
 
     public enum OperationStatus

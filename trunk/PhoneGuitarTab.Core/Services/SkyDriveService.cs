@@ -11,7 +11,7 @@ namespace PhoneGuitarTab.Core.Services
 {
     /// <summary>
     /// SkyDrive file manager
-    /// TODO refactor this class
+    /// TODO refactor this class or switch to usage of better livesdk wrapper
     /// </summary>
     public class SkyDriveService : ICloudService
     {
@@ -74,7 +74,7 @@ namespace PhoneGuitarTab.Core.Services
 
             }
 
-            await GetSkyDriveFolder();
+            //await GetSkyDriveFolder();
         }
 
         /// <summary>
@@ -97,7 +97,8 @@ namespace PhoneGuitarTab.Core.Services
 
         private async Task<string> GetFolderId(string parent, string path)
         {
-            var data = await GetFolderData(parent);
+            // Filter only directories
+            var data = await GetFolderFiles(parent);
 
             return (from IDictionary<string, object> content in data 
                     where content["name"].ToString() == path 
@@ -136,7 +137,7 @@ namespace PhoneGuitarTab.Core.Services
 
             if (folderId == null) folderId = _folderId;
 
-            var folderData = await GetFolderData(folderId);
+            var folderData = await GetFolderFiles(folderId);
 
             return (from IDictionary<string, object> content in folderData 
                     where func(content) 
@@ -153,11 +154,26 @@ namespace PhoneGuitarTab.Core.Services
 
         private async Task<string> CreateSkydriveFolder(string rootPath, string path)
         {
-            var folderData = new Dictionary<string, object>();
-            folderData.Add("name", path);
-            LiveOperationResult operationResult = await _liveClient.PostAsync(rootPath, folderData);
-            dynamic result = operationResult.Result;
-            return string.Format("{0}", result.id);
+            try
+            {
+                var folderData = new Dictionary<string, object>();
+                folderData.Add("name", path);
+                LiveOperationResult operationResult = await _liveClient.PostAsync(rootPath, folderData);
+                
+                dynamic result = operationResult.Result;
+                InvalidateDirectoryInCache(result.id);
+
+                return string.Format("{0}", result.id);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        private void InvalidateDirectoryInCache(string directory)
+        {
+            _cache.Remove(directory + "/files");
         }
 
         /// <summary>
@@ -227,7 +243,7 @@ namespace PhoneGuitarTab.Core.Services
                 await GetSkyDriveFolder();
 
             var fileInfo = await GetFolderIdAndFileName(cloudPath);           
-            var folderData = await GetFolderData(fileInfo.Item1);
+            var folderData = await GetFolderFiles(fileInfo.Item1);
         
             foreach (IDictionary<string, object> content in folderData)
             {
@@ -247,11 +263,19 @@ namespace PhoneGuitarTab.Core.Services
             if (_liveClient == null)
                 await GetSkyDriveFolder();
 
-            var fileInfo = await GetFolderIdAndFileName(fileName);
-            var folderData = await GetFolderData(fileInfo.Item1);
+            var fileInfo = await GetFolderIdAndFileName(fileName, false);
+
+            if (fileInfo == null) return false;
+
+            var folderData = await GetFolderFiles(fileInfo.Item1);
 
             return folderData.Cast<IDictionary<string, object>>()
                 .Any(content => content["name"].ToString() == fileInfo.Item2);
+        }
+
+        public void Release()
+        {
+            _cache.Clear();
         }
 
         #endregion
@@ -259,7 +283,7 @@ namespace PhoneGuitarTab.Core.Services
         /// <summary>
         ///  Gets folder content
         /// </summary>
-        private async Task<List<object>> GetFolderData(string directory)
+        private async Task<List<object>> GetFolderFiles(string directory)
         {
             var path = directory + "/files";
             return await _cache.GetOrExecuteAsync(path, async () =>
@@ -269,10 +293,25 @@ namespace PhoneGuitarTab.Core.Services
             });
         }
 
+
+       /* /// <summary>
+        ///  Gets folder content
+        /// </summary>
+        private async Task<List<object>> GetChildFolders(string directory)
+        {
+            var path = directory + "/files?filter=folders";
+            return await _cache.GetOrExecuteAsync(path, async () =>
+            {
+                LiveOperationResult fr = await _liveClient.GetAsync(path);
+                return (List<object>)fr.Result["data"];
+            });
+        }*/
+
+
         /// <summary>
         /// Build recursivly path and returns folder id and filename
         /// </summary>
-        private async Task<Tuple<string, string>> GetFolderIdAndFileName(string path)
+        private async Task<Tuple<string, string>> GetFolderIdAndFileName(string path, bool createFolderIfNonExist = true)
         {
             var p = path.Substring(_folderName.Length, path.Length - _folderName.Length);
             var id = _folderId;
@@ -285,9 +324,15 @@ namespace PhoneGuitarTab.Core.Services
                 if (index >= 0)
                 {
                     directory = p.Substring(0, index);
+                    
                     id = await GetFolderId(_folderId, directory) ??
-                        //await GetFolderId(string.Format("{0}/files?filter=folders", _folderId), directory) ??
-                        await CreateSkydriveFolder(_folderId, directory);
+                        (createFolderIfNonExist ? await CreateSkydriveFolder(_folderId, directory): null);
+
+                    // NOTE this situation is definetly possible, if createFolderIfNonExist is set to false
+                    // so return null as result
+                    if (id == null)
+                        return null;
+                    
                     p = p.Substring(index, p.Length - index);
                 }
                 else
@@ -310,7 +355,8 @@ namespace PhoneGuitarTab.Core.Services
             public async Task<T> GetOrExecuteAsync<T>(string key, Func<Task<T>> func) where T : class
             {
                 var @value = Get<T>(key);
-                if (@value != null) return @value;
+                if (@value != null) 
+                    return @value;
 
                 @value = await func();
                 Set(key, @value);
@@ -338,6 +384,12 @@ namespace PhoneGuitarTab.Core.Services
                 _cacheMap.Add(key, new Tuple<DateTime, object>(DateTime.Now, @value));
             }
 
+            public void Remove(string key)
+            {
+                if (_cacheMap.ContainsKey(key))
+                    _cacheMap.Remove(key);
+            }
+
             private void CheckAndClear()
             {
                 // clear cache to prevent memory leaks
@@ -345,6 +397,11 @@ namespace PhoneGuitarTab.Core.Services
                 {
                     _cacheMap = new Dictionary<string, Tuple<DateTime, object>>();
                 }
+            }
+
+            public void Clear()
+            {
+                _cacheMap.Clear();
             }
         }
 

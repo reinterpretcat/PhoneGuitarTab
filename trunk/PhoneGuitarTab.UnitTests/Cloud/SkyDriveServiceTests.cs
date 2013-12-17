@@ -179,6 +179,12 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                     {
                         var tabMock = new Mock<Tab>();
                         tabMock.SetupGet(t => t.Id).Returns(i);
+                        tabMock.SetupGet(t => t.TabType).Returns(() =>
+                        {
+                            var ttMock = new Mock<TabType>();
+                            ttMock.SetupGet(tt => tt.Name).Returns(() => "guitar pro");
+                            return ttMock.Object;
+                        });
                         tabMock.SetupGet(t => t.Name).Returns(string.Format(template,i));
                         tabMock.SetupGet(t => t.Path).Returns(string.Format(template,i) + ".gp5");
                         tabMock.SetupGet(t => t.Group).Returns(groupMock.Object);
@@ -303,6 +309,8 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                   _testContext.UploadedFiles.Add(p1, p2);
                   return GetTask(OperationStatus.Completed);
               });
+
+            cloudMock.Setup(c => c.Release()).Callback(() => { });
 
             return cloudMock.Object;
         }

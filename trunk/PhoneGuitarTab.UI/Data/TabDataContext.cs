@@ -555,7 +555,7 @@ namespace PhoneGuitarTab.Data
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Type", Storage="_TabType", ThisKey="TypeTypeId", OtherKey="Id", IsForeignKey=true)]
-		public TabType TabType
+		public virtual TabType TabType
 		{
 			get
 			{

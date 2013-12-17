@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
@@ -61,17 +62,32 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public async void Synchronize()
         {
-            Trace.Info(_traceCategory, "start synchronization");
+            try
+            {
+                Trace.Info(_traceCategory, "start synchronization");
 
-            ProgressValue = 0;
-            await IsoToCloudSync();
+                ProgressValue = 0;
+                await IsoToCloudSync();
 
-            ProgressValue = HalfOfProgress;
-            await CloudToIsoSync();
+                ProgressValue = HalfOfProgress;
+                await CloudToIsoSync();
 
-            ProgressValue = HalfOfProgress * 2;
-            Trace.Info(_traceCategory, "synchronize complete");
-            OnComplete();
+                ProgressValue = HalfOfProgress*2;
+                Trace.Info(_traceCategory, "synchronize complete");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Error occurred during synchronization: {0}", ex.Message));
+            }
+            finally
+            {
+                // NOTE seems to be workaround: need to clear underlying cache to prevent attempts to 
+                // upload files several times in case of serial synchronize button clicks
+                // Defenitely need to replace implementation of CloudService!
+                CloudService.Release();
+
+                OnComplete();
+            }
         }
 
         /// <summary>
