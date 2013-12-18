@@ -60,12 +60,12 @@
         <StackPanel Grid.Row="0"
                     Orientation="Vertical">
 
-            <HyperlinkButton Content="settings" Style="{StaticResource HyperlinkButtonContentStyle}" Margin="0,20">
+            <HyperlinkButton Content="synchronize" Style="{StaticResource HyperlinkButtonContentStyle}" Margin="0,20">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <Command:ExecuteCommandAction x:Name="SettingsClick"
+                        <Command:ExecuteCommandAction x:Name="SynchronizeClick"
                                                 Command="{Binding GoTo}"
-                                                CommandParameter="Settings" />
+                                                CommandParameter="Synchronize" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </HyperlinkButton>

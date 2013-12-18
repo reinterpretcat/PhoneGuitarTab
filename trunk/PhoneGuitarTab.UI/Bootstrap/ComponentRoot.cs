@@ -123,11 +123,11 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
         "CA1822:MarkMembersAsStatic",
         Justification = "This non-static member is needed for data binding purposes.")]
-        public SettingsViewModel Settings
+        public SynchronizeViewModel Synchronize
         {
             get
             {
-                return _container.Resolve<ViewModel>(Strings.Settings) as SettingsViewModel;
+                return _container.Resolve<ViewModel>(Strings.Synchronize) as SynchronizeViewModel;
             }
         }
 

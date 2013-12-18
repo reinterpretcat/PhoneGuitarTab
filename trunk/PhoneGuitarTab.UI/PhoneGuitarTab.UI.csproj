@@ -147,11 +147,11 @@
     <Compile Include="Infrastructure\TextTabAdapter.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModel\CollectionViewModel.cs" />
-    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\SynchronizeViewModel.cs" />
     <Compile Include="ViewModel\StaveTabViewModel.cs" />
     <Compile Include="ViewModel\TabViewModelBase.cs" />
-    <Compile Include="View\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
+    <Compile Include="View\SynchronizeView.xaml.cs">
+      <DependentUpon>SynchronizeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StaveTabView.xaml.cs">
       <DependentUpon>StaveTabView.xaml</DependentUpon>
@@ -225,7 +225,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SettingsView.xaml">
+    <Page Include="View\SynchronizeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

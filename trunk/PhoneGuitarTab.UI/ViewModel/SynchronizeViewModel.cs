@@ -8,7 +8,7 @@ using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
-    public class SettingsViewModel : PhoneGuitarTab.Core.Views.ViewModel
+    public class SynchronizeViewModel : PhoneGuitarTab.Core.Views.ViewModel
     {
         public TabSyncService SyncService { get; set; }
 
@@ -34,13 +34,37 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        private int _downloadedTabs;
+        public int DownloadedTabs
+        {
+            get { return _downloadedTabs; }
+            set
+            {
+                _downloadedTabs = value;
+                RaisePropertyChanged("DownloadedTabs");
+            }
+        }
+
+        private int _uploadedTabs;
+        public int UploadedTabs
+        {
+            get { return _uploadedTabs; }
+            set
+            {
+                _uploadedTabs = value;
+                RaisePropertyChanged("UploadedTabs");
+            }
+        } 
+
         [Dependency]
-        public SettingsViewModel(TabSyncService syncService, MessageHub hub)
+        public SynchronizeViewModel(TabSyncService syncService, MessageHub hub)
         {
             SyncService = syncService;
             SyncService.Progress += (sender, i) =>
             {
                 Progress = i;
+                DownloadedTabs = SyncService.Downloaded;
+                UploadedTabs = SyncService.Uploaded;
             };
             SyncService.Complete += (o, e) =>
             {

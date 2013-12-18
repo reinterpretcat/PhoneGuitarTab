@@ -15,7 +15,7 @@ namespace PhoneGuitarTab.UI
         public const string About = "About";
         public const string Group = "Group";
         public const string Collection = "Collection";
-        public const string Settings = "Settings";
+        public const string Synchronize = "Synchronize";
 
         public const string GuitarPro = "guitar pro";
         public const string MusicXml = "musicxml";

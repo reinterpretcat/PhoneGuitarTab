@@ -50,6 +50,37 @@ namespace PhoneGuitarTab.UI.Infrastructure
             }
         }
 
+        private int _uploaded;
+
+        public int Uploaded
+        {
+            get
+            {
+                return _uploaded;
+            }
+            set
+            {
+                _uploaded = value;
+                OnProgress(_progressValue);
+            }
+        }
+
+        private int _downloaded;
+        public int Downloaded
+        {
+            get
+            {
+                return _downloaded;
+            }
+            set
+            {
+                _downloaded = value;
+                OnProgress(_progressValue);
+            }
+        }
+
+
+
         private const string CloudRootPath = "PhoneGuitarTab";
 
         public TabSyncService()
@@ -64,6 +95,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
         {
             try
             {
+
+                Uploaded = 0;
+                Downloaded = 0;
+
                 Trace.Info(_traceCategory, "start synchronization");
 
                 ProgressValue = 0;
@@ -126,8 +161,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", tab.Path));
                     var cloudName = GetCloudName(tab);
-                    if(!await CloudService.FileExists(cloudName))
+                    if (!await CloudService.FileExists(cloudName))
+                    {
                         await CloudService.UploadFile(tab.Path, cloudName);
+                        Uploaded++;
+                    }
 
                 }
                 ProgressValue += progressIncrement;
@@ -171,6 +209,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                     var localName = TabFileStorage.CreateTabFilePath();
                     await CloudService.DownloadFile(localName, string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
                     DataService.InsertTab(GetTab(newTab, localName, group));
+                    Downloaded++;
                 }
 
                 ProgressValue += progressIncrement;

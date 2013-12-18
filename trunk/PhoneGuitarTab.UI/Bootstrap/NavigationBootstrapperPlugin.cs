@@ -25,7 +25,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
                 {new Tuple<string, Uri>(Strings.Help, new Uri(@"/View/HelpView.xaml", UriKind.Relative)), typeof(HelpViewModel)},
                 {new Tuple<string, Uri>(Strings.About, new Uri(@"/View/AboutView.xaml", UriKind.Relative)), typeof(AboutViewModel)},
                 {new Tuple<string, Uri>(Strings.Group, new Uri(@"/View/GroupView.xaml", UriKind.Relative)), typeof(GroupViewModel)},
-                {new Tuple<string, Uri>(Strings.Settings, new Uri(@"/View/SettingsView.xaml", UriKind.Relative)), typeof(SettingsViewModel)},
+                {new Tuple<string, Uri>(Strings.Synchronize, new Uri(@"/View/SynchronizeView.xaml", UriKind.Relative)), typeof(SynchronizeViewModel)},
                 // TODO restyling artefact?
                 {new Tuple<string, Uri>(Strings.Collection, new Uri(@"/View/CollectionView.xaml", UriKind.Relative)), typeof(CollectionViewModel)},
             };
