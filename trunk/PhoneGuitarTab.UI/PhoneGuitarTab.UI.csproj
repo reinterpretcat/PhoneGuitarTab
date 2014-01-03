@@ -288,6 +288,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="PhoneGuitarTab.UI_2014_01_03_19_37_37.sap" />
     <None Include="Properties\AppManifest.xml">
       <SubType>Designer</SubType>
     </None>

@@ -75,10 +75,22 @@
             <TextBlock Margin="0,58,0,6"
                        Text="Phone Guitar Tab is an open source project and is licensed under Microsoft Public License (Ms-PL). Our team invites developers to join us to create the best guitar tab app under WP platform. See project page at CodePlex:"
                        TextWrapping="Wrap" />
-            <HyperlinkButton Grid.Row="1" Content="{Binding CompanyUrl}">
+            <HyperlinkButton Content="{Binding CompanyUrl}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}" />
+                        <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
+                                                      CommandParameter="{Binding CompanyUrl}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </HyperlinkButton>
+            <TextBlock Margin="0,18,0,6"
+                       Text="Have questions? Let's discuss at Facebook:"
+                       TextWrapping="Wrap" />
+            <HyperlinkButton  Content="{Binding FacebookUrl}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
+                                                      CommandParameter="{Binding FacebookUrl}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </HyperlinkButton>

@@ -126,6 +126,9 @@
   <data name="Copyright" xml:space="preserve">
     <value>Copyright © 2011-2013 Phone guitar tab</value>
   </data>
+  <data name="FacebookUrl" xml:space="preserve">
+    <value>http://www.facebook.com/PhoneGuitarTab</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>about</value>
   </data>

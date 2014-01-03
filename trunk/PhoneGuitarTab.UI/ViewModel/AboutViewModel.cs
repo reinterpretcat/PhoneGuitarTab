@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Windows.Input;
 using Microsoft.Phone.Tasks;
 
@@ -15,6 +16,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Help = AppResources.Help;
             AppTitle = AppResources.AppTitle;
             CompanyUrl = AppResources.CompanyUrl;
+            FacebookUrl = AppResources.FacebookUrl;
             Copyright = AppResources.Copyright;
             SupportEmail = AppResources.SupportEmail;
             Support = AppResources.Support;
@@ -24,6 +26,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public string Help { get; set; }
         public string CompanyUrl { get; set; }
+        public string FacebookUrl { get; set; }
         public string Copyright { get; set; }
         public string SupportEmail { get; set; }
         public string Support { get; set; }
@@ -35,8 +38,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get
             {
-                return new ExecuteCommand(() =>
-                  new WebBrowserTask { URL = CompanyUrl }.Show());
+                return new ExecuteCommand<string>( url =>
+                  new WebBrowserTask { Uri = new Uri(url) }.Show());
             }
         }
 
