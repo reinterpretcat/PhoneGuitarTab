@@ -74,7 +74,7 @@ namespace PhoneGuitarTab.Core.Services
 
             }
 
-            //await GetSkyDriveFolder();
+            if(_folderId == null) await GetSkyDriveFolder();
         }
 
         /// <summary>
