@@ -50,22 +50,28 @@
                      Maximum="100"
                      IsIndeterminate="False" />
 
-                <TextBlock Margin="48,0"
+                <TextBlock Margin="56,0"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextNormalStyle}">
+                                   Style="{StaticResource PhoneTextSmallStyle}">
                             <Run Text="Uploaded:      " />
                             <Run Text="{Binding UploadedTabs, Mode=OneWay}" />
                 </TextBlock>
-                <TextBlock Margin="48,0"
+                <TextBlock Margin="56,0"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextNormalStyle}">
+                                   Style="{StaticResource PhoneTextSmallStyle}">
                             <Run Text="Downloaded: " />
                             <Run Text="{Binding DownloadedTabs, Mode=OneWay}" />
                 </TextBlock>
-               
+                <CheckBox IsChecked="{Binding DownloadAll, Mode=TwoWay}" Content="Restore all tabs" />
+                <TextBlock Margin="56,-12,12,0" Text="This option is useful if you removed all tabs from your phone and want to get them back from skydrive"
+                           TextWrapping="Wrap"        
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   Style="{StaticResource PhoneTextSmallStyle}">
+                </TextBlock>
             </StackPanel>
             
+            
         </Grid>
+        
     </Grid>
-
 </phone:PhoneApplicationPage>

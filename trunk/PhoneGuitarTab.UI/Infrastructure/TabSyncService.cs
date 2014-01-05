@@ -91,7 +91,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             DownloadSyncFiles = false;
         }
 
-        public async void Synchronize()
+        public async void Synchronize(bool downloadAll = false)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 await IsoToCloudSync();
 
                 ProgressValue = HalfOfProgress;
-                await CloudToIsoSync();
+                await CloudToIsoSync(downloadAll);
 
                 ProgressValue = HalfOfProgress*2;
                 Trace.Info(_traceCategory, "synchronize complete");
@@ -175,7 +175,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
         /// <summary>
         /// Synchronization: Cloud -> Iso
         /// </summary>
-        private async Task CloudToIsoSync()
+        private async Task CloudToIsoSync(bool downloadAll = false)
         {
             var groupNames = (await CloudService.GetDirectoryNames(CloudRootPath)).ToList();
             var groupsCount = groupNames.Count();
@@ -194,7 +194,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 // these tabs was synchronized, but deleted then.
                 // NOTE it's possible that user reinstalled application, but had already synchronized files
                 // just handle this situation using special option
-                var deletedTabs = newTabs.Where(IsMappedPath).ToList();
+                var deletedTabs = newTabs.Where(t => !downloadAll & IsMappedPath(t)).ToList();
                 
                 //if (!DownloadSyncFiles)
                 newTabs = newTabs.Except(deletedTabs).ToList();
@@ -235,7 +235,12 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (fileExtPos >= 0)
                 name = name.Substring(0, fileExtPos);
 
-            // TODO remove _sync_ suffix
+            // TODO remove _sync_ suffix if present (executed only for downloadAll option)
+            if (IsMappedPath(name))
+            {
+                var index = name.LastIndexOf("_sync_");
+                name = name.Substring(0, index);
+            }
 
             var tab = new Tab()
             {

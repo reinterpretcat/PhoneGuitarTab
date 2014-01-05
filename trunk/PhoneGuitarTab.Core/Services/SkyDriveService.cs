@@ -71,10 +71,10 @@ namespace PhoneGuitarTab.Core.Services
 
                 _liveSession = _liveResult.Session;
                 _liveClient = new LiveConnectClient(_liveSession);
-
             }
 
-            if(_folderId == null) await GetSkyDriveFolder();
+            if (_folderId == null) await GetSkyDriveFolder();
+
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace PhoneGuitarTab.Core.Services
         private async Task<string> GetSkyDriveFolder(bool createIfNonExist = true)
         {
             if (_liveClient == null)
-                await SignIn();
+                throw new InvalidOperationException("Unable to initialize liveSession");
 
             _folderId = await GetFolderId("me/skydrive", _folderName);
            
@@ -214,7 +214,7 @@ namespace PhoneGuitarTab.Core.Services
             {
                 try
                 {
-                    if (_liveClient == null) await GetSkyDriveFolder();
+                    if (_liveClient == null) await SignIn();
 
                     var tuple = await GetFolderIdAndFileName(cloudPath);
 
@@ -240,7 +240,7 @@ namespace PhoneGuitarTab.Core.Services
             string fileID = null;
 
             if (_liveClient == null)
-                await GetSkyDriveFolder();
+                await SignIn();
 
             var fileInfo = await GetFolderIdAndFileName(cloudPath);           
             var folderData = await GetFolderFiles(fileInfo.Item1);
@@ -261,7 +261,7 @@ namespace PhoneGuitarTab.Core.Services
         public async Task<bool> FileExists(string fileName)
         {
             if (_liveClient == null)
-                await GetSkyDriveFolder();
+                await SignIn();
 
             var fileInfo = await GetFolderIdAndFileName(fileName, false);
 

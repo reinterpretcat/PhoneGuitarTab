@@ -45,6 +45,17 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        private bool _downloadAll;
+        public bool DownloadAll
+        {
+            get { return _downloadAll; }
+            set
+            {
+                _downloadAll = value;
+                RaisePropertyChanged("DownloadAll");
+            }
+        } 
+
         private int _uploadedTabs;
         public int UploadedTabs
         {
@@ -82,7 +93,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 return new ExecuteCommand(() =>
                 {
                     IsSyncNotRunning = false;
-                    SyncService.Synchronize();
+                    SyncService.Synchronize(DownloadAll);
                 });
             }
         }
