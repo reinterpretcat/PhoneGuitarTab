@@ -1,4 +1,8 @@
-﻿namespace PhoneGuitarTab.UI.View
+﻿using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using StaveTabViewModel = PhoneGuitarTab.UI.ViewModel.StaveTabViewModel;
+
+namespace PhoneGuitarTab.UI.View
 {
     using System;
     using System.Windows;
@@ -6,65 +10,59 @@
     using Microsoft.Phone.Controls;
     using PhoneGuitarTab.UI.ViewModel;
     using Microsoft.Phone.Shell;
+  
 
     // TODO move code-behind to viewmodel
     public partial class StaveTabView : PhoneApplicationPage
     {
-
+        //Generic List for ListPicker data binding.
+        public ObservableCollection<StaveTabViewModel.Track> Tracks;
+        
+        private bool isFirstLoad = true;
+       
         // Url of Home page
-        private string SandboxUri = "/Html/sandbox.html";
+        private const string SandboxUri = "/Html/sandbox.html";
 
         public StaveTabView()
         {
             this.InitializeComponent();
-           
+
+            //Generic list that keeps track data - binded to the listpicker.
+            this.Tracks = new ObservableCollection<StaveTabViewModel.Track>();
+            this.ListPickerInstrument.DataContext = this.Tracks;
+            
+           //set slider's Browser property to current.
             this.slider.Browser = this.Browser; 
+         
         }
 
         private void Browser_Loaded(object sender, RoutedEventArgs e)
         {
             Browser.IsScriptEnabled = true;
-         
-            Browser.Navigate(new Uri(SandboxUri, UriKind.Relative));
+            //Navigate only for the first load (to prevent renavigation while switching back and forth from listpicker's fullmode)
+            if (isFirstLoad)
+                Browser.Navigate(new Uri(SandboxUri, UriKind.Relative));
+           
         }
 
-        /// <summary>
-        /// Helper Method to set the progress indicator.
-        /// </summary>
-        /// <param name="isVisible"></param>
-        /// <param name="indicatorText"></param>
-        private void SetProgressIndicator(bool isVisible, [Optional]string indicatorText)
-        {
-            SystemTray.IsVisible = isVisible;
-            SystemTray.ProgressIndicator.Text = indicatorText;
-            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
-            SystemTray.ProgressIndicator.IsVisible = isVisible;
-        }
-
-        private void BackApplicationBar_Click(object sender, EventArgs e)
-        {
-            Browser.InvokeScript("prevTrack");
-        }
-
-        // Navigates forward in the web browser's navigation stack, not the applications.
-        private void ForwardApplicationBar_Click(object sender, EventArgs e)
-        { 
-            Browser.InvokeScript("nextTrack");
-        }
-
-        // Navigates forward in the web browser's navigation stack, not the applications.
         private void ScaleApplicationBar_Click(object sender, EventArgs e)
         {
             Browser.InvokeScript("scaleChange");  
         }
 
-      
-        // Navigates to the initial "home" page.
-        private void HomeMenuItem_Click(object sender, EventArgs e)
+
+        //Appbar button to visible / hide for listpicker.
+        private void InstrumentApplicationBar_Click(object sender, EventArgs e)
         {
-           
-            (DataContext as StaveTabViewModel).NavigateToHome();
+            this.ListPickerInstrument.Visibility = this.ListPickerInstrument.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        //Event that is fired after picking an instrument (latebinding after ListPicker populated)
+        private void ListPickerInstrument_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Browser.InvokeScript("changeInstrument", ListPickerInstrument.SelectedIndex.ToString());
+        }
+
         
         // Handle navigation failures.
         private void Browser_NavigationFailed(object sender, System.Windows.Navigation.NavigationFailedEventArgs e)
@@ -89,6 +87,7 @@
              
         }
 
+
         private void Browser_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {   
            
@@ -97,24 +96,70 @@
                 this.slider.stopAutoScroll();
             else
                 this.slider.invokeAutoScroll();
+
+            //Collapse ListPicker.
+            this.ListPickerInstrument.Visibility = Visibility.Collapsed;
+
+        }
+
+
+        /// <summary>
+        /// Helper Method to set the progress indicator.
+        /// </summary>
+        /// <param name="isVisible"></param>
+        /// <param name="indicatorText"></param>
+        private void SetProgressIndicator(bool isVisible, [Optional]string indicatorText)
+        {
+            SystemTray.IsVisible = isVisible;
+            SystemTray.ProgressIndicator.Text = indicatorText;
+            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+            SystemTray.ProgressIndicator.IsVisible = isVisible;
+        }
+
+        //Helper method to populate the list with track data.
+        public void FillTrackList(ObservableCollection<StaveTabViewModel.Track> trackList )
+        {
+            string trackLenght = (string)Browser.InvokeScript("getTrackCount");
+
+            //for some strange reason track count returns as multiplied by 2 from JS side. Therefore here is a division by 2 for counter.
+            for (int i = 0; i < Convert.ToInt16(trackLenght) / 2; i++)
+            {
+                trackList.Add(new StaveTabViewModel.Track((string)Browser.InvokeScript("getInstrumentName", i.ToString()), i, ""));
+            }
+          
         }
 
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             //Set Progress Indicator on PageLoad.
-            SystemTray.SetOpacity(this, 0.7);
-            var progressIndicator = new ProgressIndicator();
-            SystemTray.SetProgressIndicator(this, progressIndicator);
-            SetProgressIndicator(true, "Loading guitar pro content...");
+            if (isFirstLoad)
+            {
+                SystemTray.SetOpacity(this, 0.7);
+                var progressIndicator = new ProgressIndicator();
+                SystemTray.SetProgressIndicator(this, progressIndicator);
+                SetProgressIndicator(true, "Loading guitar pro content...");
+            }
+           
         }
 
         private void Browser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
-        {
+        {   
+            //stop progress indicator
             SetProgressIndicator(false);
+
+            //Fill the tracklist just once in the first load.
+            if (isFirstLoad)
+            {
+                this.FillTrackList(this.Tracks);
+                this.ListPickerInstrument.SelectionChanged += this.ListPickerInstrument_SelectionChanged;
+                this.ListPickerInstrument.Visibility = Visibility.Visible;
+                this.isFirstLoad = false;
+            }
+           
         }
-        
-       
+
+
        
     }
 }

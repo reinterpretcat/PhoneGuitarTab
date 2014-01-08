@@ -1,9 +1,11 @@
-﻿namespace PhoneGuitarTab.UI.ViewModel
+﻿using System.Collections.ObjectModel;
+using Microsoft.Phone.Controls;
+
+namespace PhoneGuitarTab.UI.ViewModel
 {
     using System;
     using System.IO;
     using System.Windows;
-
     using PhoneGuitarTab.Data;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.UI.Infrastructure;
@@ -54,5 +56,24 @@
                 Dialog.Show(ex.Message);
             }
         }
+
+       
+        //Container Class for Tracks
+        public class Track
+        {
+            public string InstrumentName { get; set; }
+            public int TrackIndex { get; set; }
+            public string Scale { get; set; }
+
+            public Track() { }
+
+            public Track(string instrumenName, int trackIndex, string scale)
+            {
+                InstrumentName = instrumenName;
+                TrackIndex = trackIndex;
+                Scale = scale;
+            }
+        }
+
     }
 }

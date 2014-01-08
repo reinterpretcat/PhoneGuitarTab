@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     x:Class="PhoneGuitarTab.UI.View.StaveTabView"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -14,30 +15,29 @@
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     DataContext="{Binding StaveTab, Source={StaticResource Locator}}"
     shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
-
+    
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default" Opacity="0.05">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="home" Click="HomeMenuItem_Click" />
-            </shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.back.rest.png" IsEnabled="True" Text="back" Click="BackApplicationBar_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.next.rest.png" IsEnabled="True" Text="forward" Click="ForwardApplicationBar_Click"/>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized" Opacity="0.2">
             <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.feature.search.rest.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/dark/Electric-Guitar_dark.png" IsEnabled="True" Text="instrument" Click="InstrumentApplicationBar_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="75*"/>
-            <RowDefinition Height="643*"/>
-            <RowDefinition Height="82*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="323*"/>
+            <RowDefinition Height="87*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="67*"/>
-            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="563*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="142*"/>
         </Grid.ColumnDefinitions>
+
         <phone:WebBrowser x:Name="Browser"
 			IsScriptEnabled="True"
 			HorizontalAlignment="Stretch"
@@ -46,9 +46,33 @@
             LoadCompleted="Browser_LoadCompleted"
             MouseLeftButtonUp="Browser_MouseLeftButtonUp"
 			ScriptNotify="Browser_ScriptNotify"
-			NavigationFailed="Browser_NavigationFailed" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
-        <Controls:AutoScroll x:Name="slider" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.RowSpan="2" Height="176" Width="58"/>
+			NavigationFailed="Browser_NavigationFailed" Grid.ColumnSpan="4" Grid.RowSpan="3" RenderTransformOrigin="0.504,0.578"/>
+        <Controls:AutoScroll x:Name="slider" 
+                             HorizontalAlignment="Left" 
+                             Margin="24,22,0,0" 
+                             VerticalAlignment="Top" 
+                             Height="176" 
+                             Width="51" Grid.Column="3" Grid.RowSpan="2"/>
+        <toolkit:ListPicker x:Name="ListPickerInstrument" FullModeHeader="Instruments"
+                            Margin="6,4,3,120"
+                            Visibility="Collapsed" Opacity="0.5"
+                            ItemsSource="{Binding}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="2" Background="{StaticResource PhoneBackgroundBrush}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+
+            <toolkit:ListPicker.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding InstrumentName}" />
+                </DataTemplate>
+            </toolkit:ListPicker.ItemTemplate>
+
+            <toolkit:ListPicker.FullModeItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding InstrumentName}" Margin="16 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                </DataTemplate>
+            </toolkit:ListPicker.FullModeItemTemplate>
+        </toolkit:ListPicker>
+
+
     </Grid>
 
-   
+
 </phone:PhoneApplicationPage>
