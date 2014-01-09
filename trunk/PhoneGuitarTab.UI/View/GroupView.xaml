@@ -5,6 +5,7 @@
                xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
                xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -38,7 +39,7 @@
                                         Converter={StaticResource UpperStr}}"
                         SelectionChanged="PivotSelectionChangedHandler">
             <controls:PivotItem Header="tabs">
-                <ListBox x:Name="TabList"
+                <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
                          ItemTemplate="{StaticResource TabItemDataTemplate}"
                          ItemsSource="{Binding Path=Tabs.Tabs}">
                     <i:Interaction.Triggers>

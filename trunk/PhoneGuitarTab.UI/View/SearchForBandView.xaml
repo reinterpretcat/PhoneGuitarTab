@@ -35,6 +35,7 @@
         </TextBlock>
 
         <phone:LongListSelector x:Name="tabsList"
+                                toolkit:TiltEffect.IsTiltEnabled="True"
                                   Grid.Row="1" IsGroupingEnabled="True" HideEmptyGroups="True"
                                   Background="Transparent"
                                   JumpListStyle="{StaticResource SearchListJumpListStyle}"

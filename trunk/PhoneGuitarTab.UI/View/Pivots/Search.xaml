@@ -147,6 +147,7 @@
         </DataTemplate>
     </phone:PivotItem.Resources>
     <phone:LongListSelector x:Name="tabsList"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="True" HideEmptyGroups="True"
                               ListHeaderTemplate="{StaticResource SearchHeaderTemplate}"
                               ListFooterTemplate="{StaticResource SearchFooterTemplate}"

@@ -70,7 +70,7 @@ namespace PhoneGuitarTab.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://phoneguitartab.codeplex.com/.
+        ///   Looks up a localized string similar to http://phoneguitartab.codeplex.com.
         /// </summary>
         internal static string CompanyUrl {
             get {
@@ -88,7 +88,7 @@ namespace PhoneGuitarTab.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://www.facebook.com/PhoneGuitarTab.
+        ///   Looks up a localized string similar to http://facebook.com/PhoneGuitarTab.
         /// </summary>
         internal static string FacebookUrl {
             get {
