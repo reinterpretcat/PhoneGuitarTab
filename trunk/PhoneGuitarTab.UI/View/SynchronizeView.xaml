@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:commands="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     DataContext="{Binding Synchronize, Source={StaticResource Locator}}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -33,6 +34,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel Orientation="Vertical">
                 <Button HorizontalAlignment="Stretch" 
+                    toolkit:TiltEffect.IsTiltEnabled="True"
                     VerticalAlignment="Top" 
                     IsEnabled="{Binding IsSyncNotRunning}"
                     Height="80"
@@ -62,9 +64,12 @@
                             <Run Text="Downloaded: " />
                             <Run Text="{Binding DownloadedTabs, Mode=OneWay}" />
                 </TextBlock>
-                <CheckBox IsChecked="{Binding DownloadAll, Mode=TwoWay}" Content="Restore all tabs" />
+                <CheckBox IsChecked="{Binding DownloadAll, Mode=TwoWay}" 
+                          IsEnabled="{Binding IsSyncNotRunning}"
+                          toolkit:TiltEffect.IsTiltEnabled="True"
+                          Content="Restore all tabs" />
                 <TextBlock Margin="56,-12,12,0" Text="This option is useful if you removed all tabs from your phone and want to get them back from skydrive"
-                           TextWrapping="Wrap"        
+                           TextWrapping="Wrap"  
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    Style="{StaticResource PhoneTextSmallStyle}">
                 </TextBlock>
