@@ -120,7 +120,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 // upload files several times in case of serial synchronize button clicks
                 // Defenitely need to replace implementation of CloudService!
                 CloudService.Release();
-
+                ProgressValue = 0;
                 OnComplete();
             }
         }
