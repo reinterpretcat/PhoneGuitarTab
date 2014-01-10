@@ -17,7 +17,8 @@ namespace PhoneGuitarTab.UI.View
     {
         //Generic List for ListPicker data binding.
         public ObservableCollection<StaveTabViewModel.Track> Tracks;
-        
+
+        //flag to prevent renavigation of browser while switching back and forth from listpicker's fullmode
         private bool isFirstLoad = true;
        
         // Url of Home page
@@ -33,16 +34,22 @@ namespace PhoneGuitarTab.UI.View
             
            //set slider's Browser property to current.
             this.slider.Browser = this.Browser; 
+
          
         }
 
         private void Browser_Loaded(object sender, RoutedEventArgs e)
         {
             Browser.IsScriptEnabled = true;
+
             //Navigate only for the first load (to prevent renavigation while switching back and forth from listpicker's fullmode)
+            //For all other Loads (after navigating back from instrument selection) become visible.
             if (isFirstLoad)
                 Browser.Navigate(new Uri(SandboxUri, UriKind.Relative));
-           
+            else
+                this.ListPickerInstrument.Visibility = Visibility.Visible;
+
+          
         }
 
         private void ScaleApplicationBar_Click(object sender, EventArgs e)
@@ -51,10 +58,10 @@ namespace PhoneGuitarTab.UI.View
         }
 
 
-        //Appbar button to visible / hide for listpicker.
+        ////Appbar button to visible / hide for listpicker.
         private void InstrumentApplicationBar_Click(object sender, EventArgs e)
         {
-            this.ListPickerInstrument.Visibility = this.ListPickerInstrument.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            this.ListPickerInstrument.Open();
         }
 
         //Event that is fired after picking an instrument (latebinding after ListPicker populated)
@@ -117,7 +124,7 @@ namespace PhoneGuitarTab.UI.View
         }
 
         //Helper method to populate the list with track data.
-        public void FillTrackList(ObservableCollection<StaveTabViewModel.Track> trackList )
+        private void FillTrackList(ObservableCollection<StaveTabViewModel.Track> trackList )
         {
             string trackLenght = (string)Browser.InvokeScript("getTrackCount");
 
@@ -147,19 +154,29 @@ namespace PhoneGuitarTab.UI.View
         {   
             //stop progress indicator
             SetProgressIndicator(false);
-
+           
             //Fill the tracklist just once in the first load.
             if (isFirstLoad)
             {
-                this.FillTrackList(this.Tracks);
+                this.FillTrackList(this.Tracks);  
                 this.ListPickerInstrument.SelectionChanged += this.ListPickerInstrument_SelectionChanged;
                 this.ListPickerInstrument.Visibility = Visibility.Visible;
+                this.slider.MouseLeftButtonUp += Slider_Clicked;
                 this.isFirstLoad = false;
+              
             }
            
         }
 
+        
+        private void Slider_Clicked(object sender, System.Windows.Input.MouseButtonEventArgs e )
+        {
+            //Hide listpicker when slider is clicked.
+            this.ListPickerInstrument.Visibility=Visibility.Collapsed;
+            
+        }
 
-       
+
+     
     }
 }

@@ -20,7 +20,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized" Opacity="0.2">
             <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.feature.search.rest.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/dark/Electric-Guitar_dark.png" IsEnabled="True" Text="instrument" Click="InstrumentApplicationBar_Click"/>
+            <shell:ApplicationBarIconButton x:Name ="InstrumentApplicationBarIconButton" IconUri="/Images/dark/Electric-Guitar_dark.png" IsEnabled="True" Text="instrument" Click="InstrumentApplicationBar_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
@@ -56,7 +56,9 @@
         <toolkit:ListPicker x:Name="ListPickerInstrument" FullModeHeader="Instruments"
                             Margin="6,4,3,120"
                             Visibility="Collapsed" Opacity="0.5"
-                            ItemsSource="{Binding}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="2" Background="{StaticResource PhoneBackgroundBrush}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+                            ItemsSource="{Binding}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="2" 
+                            Background="{StaticResource PhoneBackgroundBrush}" 
+                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
 
             <toolkit:ListPicker.ItemTemplate>
                 <DataTemplate>
