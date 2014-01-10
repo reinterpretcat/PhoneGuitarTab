@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -18,11 +19,12 @@ namespace PhoneGuitarTab.UI.Controls
         }
 
         public WebBrowser Browser { get; set; }
-        
+      
+
         /// <summary>
         /// Flag to resume/stop scrolling when tapped.
         /// </summary>
-        public bool isScrolling = false;
+        public bool isScrolling { get; set; }
 
 
         public void invokeAutoScroll()
@@ -55,7 +57,7 @@ namespace PhoneGuitarTab.UI.Controls
 
         private void slideControl_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            this.slideControl.Opacity = 0.07;
+            this.slideControl.Opacity = 0.15;
         }
         #endregion
 

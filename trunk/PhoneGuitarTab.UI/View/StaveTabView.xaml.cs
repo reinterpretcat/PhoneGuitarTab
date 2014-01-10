@@ -99,10 +99,13 @@ namespace PhoneGuitarTab.UI.View
         {   
            
             //Autoscroll - Tap to slide/stop.
-            if (this.slider.isScrolling)
-                this.slider.stopAutoScroll();
-            else
-                this.slider.invokeAutoScroll();
+            if (this.slider.Visibility == Visibility.Visible)
+            {
+                if (this.slider.isScrolling == true)
+                    this.slider.stopAutoScroll();
+                else
+                    this.slider.invokeAutoScroll();
+            }
 
             //Collapse ListPicker.
             this.ListPickerInstrument.Visibility = Visibility.Collapsed;
@@ -177,6 +180,19 @@ namespace PhoneGuitarTab.UI.View
         }
 
 
-     
+        private void AutoScrollApplicationBarIconButton_OnClick(object sender, EventArgs e)
+        {
+            //Control Autoscroll behaviour
+            if (this.slider.Visibility == Visibility.Visible)
+            {
+                this.slider.Visibility = Visibility.Collapsed;
+                this.slider.stopAutoScroll();
+            }
+              else
+            {
+                this.slider.Visibility = Visibility.Visible;
+                this.slider.invokeAutoScroll();
+            }
+        }
     }
 }

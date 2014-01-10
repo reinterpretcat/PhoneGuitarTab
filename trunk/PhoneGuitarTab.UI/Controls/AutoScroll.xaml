@@ -9,11 +9,15 @@
     Foreground="{StaticResource PhoneForegroundBrush}" Height="175.957" Width="57.725">
     <Slider x:Name="slideControl" Margin="1,-9,-1,-1"
 		ValueChanged="slideControl_ValueChanged" 
+        
 		Orientation="Vertical" Maximum="9" 
 		FlowDirection="LeftToRight" 
 		RenderTransformOrigin="0.48,0.493" 
 		BorderThickness="0" SmallChange="0.1" 
-		Opacity="0.15" MouseEnter="slideControl_MouseEnter" LostMouseCapture="slideControl_LostMouseCapture" Background="{StaticResource PhoneBackgroundBrush}" BorderBrush="Black">
+		Opacity="0.15" 
+            MouseEnter="slideControl_MouseEnter" 
+            LostMouseCapture="slideControl_LostMouseCapture" 
+            Background="{StaticResource PhoneBackgroundBrush}" BorderBrush="Black">
         <Slider.RenderTransform>
             <CompositeTransform Rotation="-180" TranslateX="2" TranslateY="2.604" />
         </Slider.RenderTransform>

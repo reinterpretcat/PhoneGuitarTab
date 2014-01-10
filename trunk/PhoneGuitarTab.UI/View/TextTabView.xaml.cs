@@ -6,6 +6,7 @@ using Microsoft.Phone.Controls;
 namespace PhoneGuitarTab.UI
 {
     using PhoneGuitarTab.Core.Views;
+    using System.Windows;
 
     public partial class TextTabView : ViewPage
     {
@@ -25,10 +26,13 @@ namespace PhoneGuitarTab.UI
         /// <param name="e"></param>
         private void tabWebBrowser_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (this.slider.isScrolling)
-                this.slider.stopAutoScroll();
-            else
-                this.slider.invokeAutoScroll();
+            if (this.slider.Visibility == Visibility.Visible)
+            {
+                if (this.slider.isScrolling == true)
+                    this.slider.stopAutoScroll();
+                else
+                    this.slider.invokeAutoScroll(); 
+            }
         }
 
         private void tabWebBrowser_ScriptNotify(object sender, NotifyEventArgs e)
@@ -49,6 +53,19 @@ namespace PhoneGuitarTab.UI
         }
 
 
-      
+        private void AutoScrollApplicationBarIconButton_OnClick(object sender, EventArgs e)
+        {
+            //Control Autoscroll behaviour
+            if (this.slider.Visibility == Visibility.Visible)
+            {
+                this.slider.Visibility = Visibility.Collapsed;
+                this.slider.stopAutoScroll();
+            }
+            else
+            {
+                this.slider.Visibility = Visibility.Visible;
+                this.slider.invokeAutoScroll();
+            }
+        }
     }
 }
