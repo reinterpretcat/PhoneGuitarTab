@@ -61,6 +61,7 @@ namespace PhoneGuitarTab.UI.View
         ////Appbar button to visible / hide for listpicker.
         private void InstrumentApplicationBar_Click(object sender, EventArgs e)
         {
+            this.ListPickerInstrument.Visibility = Visibility.Visible;
             this.ListPickerInstrument.Open();
         }
 
