@@ -27,12 +27,12 @@
             Action<IDataContextService> initialzeDatabase = service =>
                 {
                     // TODO change pictures
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/all/TabText.png" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/all/TabText.png" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/all/TabText.png" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/all/TabText.png" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/all/TabText.png" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/all/TabText.png" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/instrument/Electric-Guitar" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/instrument/Bass" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums" });
                 };
             
             Container.Register(Component.For<IDataContextService>().Use<DataContextService>(DbConnectionString, initialzeDatabase).Singleton());
@@ -58,20 +58,20 @@
 
             // Release 1.1
              if (!dbService.TabTypes.Any(type => type.Name == "chords"))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/all/TabText.png" });
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords.png" });
 
              if (!dbService.TabTypes.Any(type => type.Name == "drums"))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/all/TabText.png" });
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums.png" });
 
             // Release 2.0
              if (!dbService.TabTypes.Any(type => type.Name == Strings.GuitarPro))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/all/TabText.png" });
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro.png" });
 
             // Release 3.0
             if (dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
             {
                 dbUpdater.AddColumn<Tab>("CloudName");
-                dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/all/TabText.png" });
+                dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML.png" });
             }
 
              dbService.SubmitChanges();

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -393,6 +394,19 @@
     <Content Include="Images\dark\Find_dark.png" />
     <Content Include="Images\dark\refresh.png" />
     <Content Include="Images\dark\Text-Justify-Align_dark.png" />
+    <Content Include="Images\instrument\Bass_light.png" />
+    <Content Include="Images\instrument\Chords_light.png" />
+    <Content Include="Images\instrument\Drums_light.png" />
+    <Content Include="Images\instrument\Electric-Guitar_light.png" />
+    <Content Include="Images\instrument\Drums.png" />
+    <Content Include="Images\instrument\Chords.png" />
+    <Content Include="Images\instrument\Electric-Guitar.png" />
+    <Content Include="Images\instrument\electric1.png" />
+    <Content Include="Images\instrument\Guitarpro_light.png" />
+    <Content Include="Images\instrument\Guitarpro.png" />
+    <Content Include="Images\instrument\MusicXML_light.png" />
+    <Content Include="Images\instrument\MusicXML.png" />
+    <Content Include="Images\instrument\Bass.png" />
     <Content Include="Images\light\appbar.feature.search.rest.png" />
     <Content Include="Images\light\appbar.feature.home.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -434,7 +448,6 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

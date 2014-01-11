@@ -1,15 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 
 namespace PhoneGuitarTab.UI.Entities
 {
+
     public class TabEntity : INotifyPropertyChanged
     {
+      
         #region Fields
-
+        //Flag to get theme [to set RelativeimageUri depending on the phone theme]
+        private bool dark = ((Visibility) Application.Current.Resources["PhoneDarkThemeVisibility"] ==
+                             Visibility.Visible);
         private bool actionAreaVisible = false;
         private bool isDownloaded = false;
-
+        private Uri relativeImageUri;
+        private string imageUrl;
         #endregion Fields
 
 
@@ -21,7 +27,22 @@ namespace PhoneGuitarTab.UI.Entities
         public string Type { get; set; }
         public string Rating { get; set; }
         public string Path { get; set; }
-        public string ImageUrl { get; set; }
+        public string ImageUrl 
+        { get { return imageUrl; }
+            set
+            {   this.OnImageUrlChanging(value);
+                imageUrl = value;
+            } 
+        }
+        public Uri RelativeImageUri 
+        { 
+            get { return relativeImageUri; }
+            set
+            {
+                relativeImageUri = value;
+                RaisePropertyChanged("RelativeImageUri");
+            } 
+        }
         public string Description { get; set; }
         public DateTime LastOpened { get; set; }
 
@@ -80,5 +101,17 @@ namespace PhoneGuitarTab.UI.Entities
         }
 
         #endregion INotifyPropertyChanged members
+
+
+        #region ExtensibilityMethods
+        private void OnImageUrlChanging(string value)
+        {
+            if (dark)
+            this.RelativeImageUri = new Uri(value + "_light.png", UriKind.Relative);
+            else
+            this.relativeImageUri = new Uri(value + ".png", UriKind.Relative);
+        }
+
+        #endregion
     }
 }
