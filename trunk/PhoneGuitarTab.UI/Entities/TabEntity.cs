@@ -107,9 +107,9 @@ namespace PhoneGuitarTab.UI.Entities
         private void OnImageUrlChanging(string value)
         {
             if (dark)
-            this.RelativeImageUri = new Uri(value + "_light.png", UriKind.Relative);
+            this.RelativeImageUri = new Uri(value + "_dark.png", UriKind.Relative);
             else
-            this.relativeImageUri = new Uri(value + ".png", UriKind.Relative);
+            this.relativeImageUri = new Uri(value + "_light.png", UriKind.Relative);
         }
 
         #endregion

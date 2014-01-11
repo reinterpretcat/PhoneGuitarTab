@@ -82,13 +82,9 @@
             </Grid.ColumnDefinitions>
 
             <Image VerticalAlignment="Center"
-                   Source="../Images/light/Text-Justify-Align_light.png"
-                   Stretch="None"
-                   Visibility="{StaticResource PhoneLightThemeVisibility}" />
-            <Image VerticalAlignment="Center"
-                   Source="../Images/dark/Text-Justify-Align_dark.png"
-                   Stretch="None"
-                   Visibility="{StaticResource PhoneDarkThemeVisibility}" />
+                   Source="{Binding RelativeImageUri}"
+                   Stretch="None" 
+                   Visibility ="Visible" />
 
             <StackPanel Grid.Column="1" VerticalAlignment="Top">
                 <TextBlock Margin="12,0"
