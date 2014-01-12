@@ -53,11 +53,15 @@ namespace PhoneGuitarTab.UI.Controls
         private void slideControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             this.slideControl.Opacity = 1;
+            this.slow.Opacity = 1;
+            this.fast.Opacity = 1;
         }
 
         private void slideControl_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            this.slideControl.Opacity = 0.15;
+            this.slideControl.Opacity = 0.05;
+            this.slow.Opacity = 0.001;
+            this.fast.Opacity = 0.001;
         }
         #endregion
 

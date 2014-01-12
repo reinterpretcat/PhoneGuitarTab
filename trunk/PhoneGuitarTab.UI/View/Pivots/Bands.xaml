@@ -58,11 +58,11 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image VerticalAlignment="Center"
-                           Source="/Images/light/Electric-Guitar_light.png"
+                           Source="/Images/light/band_light.png"
                            Stretch="None"
                            Visibility="{StaticResource PhoneLightThemeVisibility}" />
                     <Image VerticalAlignment="Center"
-                           Source="/Images/dark/Electric-Guitar_dark.png"
+                           Source="/Images/dark/band_dark.png"
                            Stretch="None"
                            Visibility="{StaticResource PhoneDarkThemeVisibility}" />
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">

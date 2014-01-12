@@ -389,17 +389,19 @@
     <Content Include="Images\dark\appbar.next.rest.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\dark\band_dark.png" />
     <Content Include="Images\dark\Document-Download_dark.png" />
     <Content Include="Images\dark\Electric-Guitar_dark.png" />
-    <Content Include="Images\dark\Find_dark.png" />
     <Content Include="Images\dark\refresh.png" />
     <Content Include="Images\dark\Text-Justify-Align_dark.png" />
+    <Content Include="Images\light\band_light.png" />
     <Content Include="Images\instrument\Bass_dark.png" />
     <Content Include="Images\instrument\Chords_dark.png" />
     <Content Include="Images\instrument\Drums_dark.png" />
     <Content Include="Images\instrument\Drums_light.png" />
     <Content Include="Images\instrument\Chords_light.png" />
     <Content Include="Images\instrument\Electric-Guitar_dark.png" />
+    <Content Include="Images\instrument\instruments.png" />
     <Content Include="Images\instrument\Electric-Guitar_light.png" />
     <Content Include="Images\instrument\Guitarpro_dark.png" />
     <Content Include="Images\instrument\Guitarpro_light.png" />
@@ -414,7 +416,6 @@
     <Content Include="Images\light\AutoScroll_Light.png" />
     <Content Include="Images\light\Document-Download_light.png" />
     <Content Include="Images\light\Electric-Guitar_light.png" />
-    <Content Include="Images\light\Find_light.png" />
     <Content Include="Images\light\refresh.png" />
     <Content Include="Images\light\Text-Justify-Align_light.png" />
     <Content Include="SplashScreenImage.jpg" />
