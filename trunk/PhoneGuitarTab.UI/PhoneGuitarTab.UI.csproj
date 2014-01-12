@@ -381,6 +381,7 @@
     <Content Include="Images\dark\appbar.back.rest.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\dark\scale.png" />
     <Content Include="Images\dark\appbar.feature.search.rest.png" />
     <Content Include="Images\dark\appbar.feature.home.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

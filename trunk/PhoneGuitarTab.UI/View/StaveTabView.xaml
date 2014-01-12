@@ -20,7 +20,7 @@
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized" Opacity="0.2">
-            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.feature.search.rest.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/dark/scale.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
             <shell:ApplicationBarIconButton x:Name ="InstrumentApplicationBarIconButton" IconUri="/Images/instrument/instruments.png" IsEnabled="True" Text="instruments" Click="InstrumentApplicationBar_Click"/>
             <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
         </shell:ApplicationBar>
