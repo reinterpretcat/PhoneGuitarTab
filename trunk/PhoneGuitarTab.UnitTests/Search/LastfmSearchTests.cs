@@ -12,7 +12,7 @@
         [TestMethod]
         public void CanSearchInfo()
         {
-            var r = new SearchInfoResult(SearchContext.DefaulGroupName);
+            var r = new LastFmSearch(SearchContext.DefaulGroupName);
             var mre = new ManualResetEvent(false);
             r.SearchCompleted += (sender, args) => mre.Set();
             r.Run();

@@ -294,7 +294,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            SearchInfoResult result = sender as SearchInfoResult;
+            LastFmSearch result = sender as LastFmSearch;
 
             try
             {
@@ -348,7 +348,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void GetCurrentGroupInfo(Group group)
         {
-            SearchInfoResult result = new SearchInfoResult(group.Name);
+            LastFmSearch result = new LastFmSearch(group.Name);
             result.SearchCompleted += SearchCompleted;
 
             IsLoading = true;

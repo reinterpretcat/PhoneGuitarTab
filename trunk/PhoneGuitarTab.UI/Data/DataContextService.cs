@@ -3,8 +3,9 @@
     using System;
     using System.Data.Linq;
     using System.Linq;
-
+    using PhoneGuitarTab.Search.Lastfm;
     using PhoneGuitarTab.Data;
+    using System.Net;
 
     /// <summary>
     /// Unit of works over data context
@@ -13,6 +14,7 @@
     {
         private readonly TabDataContext _database;
 
+        private Group currentGroup;
         public DataContextService(string connectionString, Action<IDataContextService> initialize)
         {
             this._database = new TabDataContext(connectionString);
@@ -151,9 +153,11 @@
             if (group == null)
             {
                 group = new Group() { Name = name, ImageUrl = defaultGroupImageUrl, LargeImageUrl = "", ExtraLargeImageUrl = "" };
-               
+                this.currentGroup = group;
                 this.Groups.InsertOnSubmit(group);
                 this.SubmitChanges();
+
+                this.GetImageUrlOnline(this.currentGroup);
                 //NOTE: g should be tracked automatically
             }
             else if (String.IsNullOrEmpty(group.ImageUrl))
@@ -161,6 +165,24 @@
                 group.ImageUrl = defaultGroupImageUrl;
             }
             return group;
+        }
+
+        private void GetImageUrlOnline(Group band)
+        {
+            LastFmSearch result = new LastFmSearch(band.Name);
+            result.SearchCompleted += SearchCompleted;
+
+            result.Run();
+        }
+
+        private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e) 
+        {
+            LastFmSearch result = sender as LastFmSearch;
+
+            currentGroup.ImageUrl = result.ImageUrl;
+            currentGroup.LargeImageUrl = result.LargeImageUrl;
+            currentGroup.ExtraLargeImageUrl = result.ExtraLargeImageUrl;
+            this.SubmitChanges();
         }
 
         public TabType GetTabTypeByName(string name)

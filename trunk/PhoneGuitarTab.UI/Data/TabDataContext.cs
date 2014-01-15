@@ -92,8 +92,7 @@ namespace PhoneGuitarTab.Data
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(ChangeAction action);
-
-	  
+    partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
     partial void OnNameChanging(string value);
@@ -322,11 +321,6 @@ namespace PhoneGuitarTab.Data
 			this.SendPropertyChanging();
 			entity.Group = null;
 		}
-
-        private void OnCreated()
-        {
-
-        }
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute()]

@@ -10,18 +10,27 @@ namespace PhoneGuitarTab.Search.Lastfm
     using System.IO;
     using System.Net;
 
-    public class SearchInfoResult
+    public class LastFmSearch
     {
         public string Artist;
+        public string Track;
+
+        private LastFmSearchType searchType;
 
         public event DownloadStringCompletedEventHandler SearchCompleted;
 
-        private enum ImageSize
+        public enum ImageSize
         {
             Small,
             Large,
             ExtraLarge
-        }; 
+        };
+
+        public enum LastFmSearchType 
+        { 
+            Artist,
+            Track
+        };
 
         private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
         {
@@ -31,11 +40,18 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         #region Constructors
 
-        public SearchInfoResult(string artist)
+        public LastFmSearch(string artist)
         {
             Artist = artist;
+            this.SearchType = LastFmSearchType.Artist;
         }
 
+        public LastFmSearch(string artist, string track)
+        {
+            Artist = artist;
+            Track = track;
+            this.SearchType = LastFmSearchType.Track;
+        }
         #endregion Constructors
 
 
@@ -47,7 +63,9 @@ namespace PhoneGuitarTab.Search.Lastfm
         public string ExtraLargeImageUrl { get; private set; }
         public string Summary { get; private set; }
         public string BandName { get; private set; }
-
+     
+        public LastFmSearchType SearchType
+        { get { return this.searchType; } private set { this.searchType = value; } }
         #endregion Fields
 
 
@@ -55,22 +73,36 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         protected void CreateEntries(XElement root)
         {
-            var artist = root.Element("artist");
-            if (artist != null)
+            var XMLroot = (this.SearchType == LastFmSearchType.Artist) ? root.Element("artist") : root.Element("track");
+           
+            if (XMLroot != null)
             {
-                Url = GetSafeValue(artist.Element("url"));
-                ImageUrl = GetImageUrl(artist, ImageSize.Small);
-                LargeImageUrl = GetImageUrl(artist, ImageSize.Large);
-                ExtraLargeImageUrl = GetImageUrl(artist, ImageSize.ExtraLarge);
-                BandName = GetSafeValue(artist.Element("name"));
-                var bio = artist.Element("bio");
-                Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));
+                this.Url = GetSafeValue(XMLroot.Element("url"));
+                this.ImageUrl = GetImageUrl(XMLroot, ImageSize.Small);
+                this.LargeImageUrl = GetImageUrl(XMLroot, ImageSize.Large);
+                this.ExtraLargeImageUrl = GetImageUrl(XMLroot, ImageSize.ExtraLarge);
+
+                if (this.SearchType == LastFmSearchType.Artist)
+                { 
+                   this.BandName = GetSafeValue(XMLroot.Element("name"));
+                   var bio = XMLroot.Element("bio");
+                   this.Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));   
+                }
+               
             }
         }
 
-        protected string GetRequestTemplate()
+        protected string GetRequestTemplate(LastFmSearchType type)
         {
-            return "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&api_key=dee2df7c96b013246bba7fe491be1f40";
+            switch (type)
+            {
+                case LastFmSearchType.Artist:
+                    return "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
+                case LastFmSearchType.Track:
+                    return "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&track={0}&artist={1}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
+                default:
+                    return "Search Type not provided";
+            }
         }
 
         #endregion Override methods
@@ -105,7 +137,7 @@ namespace PhoneGuitarTab.Search.Lastfm
                     InvokeSearchComplete(e);
                 }
             };
-            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(), Artist)));
+            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(this.SearchType), this.Artist, this.Track)));
         }
 
 
@@ -117,10 +149,14 @@ namespace PhoneGuitarTab.Search.Lastfm
             return element != null ? element.Value : "";
         }
 
-        private string GetImageUrl(XElement artist, ImageSize imageSize)
+        private string GetImageUrl(XElement element, ImageSize imageSize)
         {
+         
+            if (this.SearchType == LastFmSearchType.Track)
+                element = element.Element("album");
+
             // small, medium, large, extralarge, mega..
-            var image = artist.Elements("image").ToList().FirstOrDefault(i =>
+            var image = element.Elements("image").ToList().FirstOrDefault(i =>
                 {
                     var xAttribute = i.Attribute("size");
 
@@ -136,6 +172,8 @@ namespace PhoneGuitarTab.Search.Lastfm
                             return xAttribute != null && xAttribute.Value == "extralarge";
                     }
                 });
+
+
             return image != null ? image.Value : "";
         }
 
