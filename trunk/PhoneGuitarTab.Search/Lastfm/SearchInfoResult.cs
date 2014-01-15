@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using System.Xml.Linq;
 
 namespace PhoneGuitarTab.Search.Lastfm
@@ -14,6 +15,13 @@ namespace PhoneGuitarTab.Search.Lastfm
         public string Artist;
 
         public event DownloadStringCompletedEventHandler SearchCompleted;
+
+        private enum ImageSize
+        {
+            Small,
+            Large,
+            ExtraLarge
+        }; 
 
         private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
         {
@@ -35,6 +43,8 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         public string Url { get; private set; }
         public string ImageUrl { get; private set; }
+        public string LargeImageUrl { get; private set; }
+        public string ExtraLargeImageUrl { get; private set; }
         public string Summary { get; private set; }
         public string BandName { get; private set; }
 
@@ -49,7 +59,9 @@ namespace PhoneGuitarTab.Search.Lastfm
             if (artist != null)
             {
                 Url = GetSafeValue(artist.Element("url"));
-                ImageUrl = GetImageUrl(artist);
+                ImageUrl = GetImageUrl(artist, ImageSize.Small);
+                LargeImageUrl = GetImageUrl(artist, ImageSize.Large);
+                ExtraLargeImageUrl = GetImageUrl(artist, ImageSize.ExtraLarge);
                 BandName = GetSafeValue(artist.Element("name"));
                 var bio = artist.Element("bio");
                 Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));
@@ -105,13 +117,24 @@ namespace PhoneGuitarTab.Search.Lastfm
             return element != null ? element.Value : "";
         }
 
-        private string GetImageUrl(XElement artist)
+        private string GetImageUrl(XElement artist, ImageSize imageSize)
         {
             // small, medium, large, extralarge, mega..
             var image = artist.Elements("image").ToList().FirstOrDefault(i =>
                 {
                     var xAttribute = i.Attribute("size");
-                    return xAttribute != null && xAttribute.Value == "extralarge";
+
+                    switch (imageSize)
+                    {
+                        case ImageSize.Small:
+                            return xAttribute != null && xAttribute.Value == "large";
+                        case ImageSize.Large:
+                            return xAttribute != null && xAttribute.Value == "large";
+                        case ImageSize.ExtraLarge:
+                            return xAttribute != null && xAttribute.Value == "extralarge";      
+                        default:
+                            return xAttribute != null && xAttribute.Value == "extralarge";
+                    }
                 });
             return image != null ? image.Value : "";
         }

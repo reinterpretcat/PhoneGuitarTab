@@ -186,7 +186,13 @@
                     <Command:ExecuteCommandAction Command="{Binding ElementName=tabsList, Path=DataContext.ToggleActionArea}" CommandParameter="{Binding}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            
+            <Image VerticalAlignment="Center"
+                   Source="{Binding RelativeImageUri}"
+                   Stretch="None" 
+                   Visibility ="Visible" />
 
+            <!--
             <Image VerticalAlignment="Center"
                    Source="../Images/light/Document-Download_light.png"
                    Stretch="None"
@@ -194,7 +200,7 @@
             <Image VerticalAlignment="Center"
                    Source="../Images/dark/Document-Download_dark.png"
                    Stretch="None"
-                   Visibility="{StaticResource PhoneDarkThemeVisibility}" />
+                   Visibility="{StaticResource PhoneDarkThemeVisibility}" /> -->
 
             <StackPanel Grid.Column="1" VerticalAlignment="Top">
                 <TextBlock Margin="12,0"
