@@ -21,6 +21,9 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private Group _currentGroup;
         private string _summary;
+        private string _imageUrl;
+        private string _largeImageUrl;
+        private string _extraLargeImageUrl;
         private TabsForBand _tabs;
 
         private bool isLoading = false;
@@ -61,6 +64,34 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 _summary = value;
                 RaisePropertyChanged("Summary");
+            }
+        }
+
+        public string ImageUrl
+        {
+            get { return _imageUrl; }
+            set
+            {
+                _imageUrl = value;
+                RaisePropertyChanged("ImageUrl");
+            }
+        }
+        public string LargeImageUrl
+        {
+            get { return _largeImageUrl; }
+            set
+            {
+                _largeImageUrl = value;
+                RaisePropertyChanged("LargeImageUrl");
+            }
+        }
+        public string ExtraLargeImageUrl
+        {
+            get { return _extraLargeImageUrl; }
+            set
+            {
+                _extraLargeImageUrl = value;
+                RaisePropertyChanged("ExtraLargeImageUrl");
             }
         }
 
@@ -147,6 +178,9 @@ namespace PhoneGuitarTab.UI.ViewModel
                 else
                 {
                     Summary = CurrentGroup.Description;
+                    ImageUrl = CurrentGroup.ImageUrl;
+                    LargeImageUrl = CurrentGroup.LargeImageUrl;
+                    ExtraLargeImageUrl = CurrentGroup.ExtraLargeImageUrl;
                 }
             }
         }
@@ -276,7 +310,9 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Summary = description;
                     CurrentGroup.Description = Summary;
                     CurrentGroup.Url = result.Url;
-
+                    CurrentGroup.ImageUrl = result.ImageUrl;
+                    CurrentGroup.LargeImageUrl = result.LargeImageUrl;
+                    CurrentGroup.ExtraLargeImageUrl = result.ExtraLargeImageUrl;
                     Database.SubmitChanges();
                 }
                 else

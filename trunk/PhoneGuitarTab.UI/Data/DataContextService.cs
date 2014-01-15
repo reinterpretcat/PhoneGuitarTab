@@ -143,15 +143,22 @@
 
         public Group GetOrCreateGroupByName(string name)
         {
+            string defaultGroupImageUrl = "/Images/light/band_light.png";
+
             Group group = (from Group g in this.Groups
                            where g.Name == name
                            select g).SingleOrDefault();
             if (group == null)
             {
-                group = new Group() { Name = name, ImageUrl = "/Images/all/Group.png" };
+                group = new Group() { Name = name, ImageUrl = defaultGroupImageUrl, LargeImageUrl = "", ExtraLargeImageUrl = "" };
+               
                 this.Groups.InsertOnSubmit(group);
                 this.SubmitChanges();
                 //NOTE: g should be tracked automatically
+            }
+            else if (String.IsNullOrEmpty(group.ImageUrl))
+            {
+                group.ImageUrl = defaultGroupImageUrl;
             }
             return group;
         }

@@ -77,6 +77,10 @@ namespace PhoneGuitarTab.Data
 		
 		private string _ImageUrl;
 
+	    private string _LargeImageUrl;
+
+	    private string _ExtraLargeImageUrl;
+
         private string _Url;
 		
 		private string _BackgroundUrl;
@@ -88,13 +92,18 @@ namespace PhoneGuitarTab.Data
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(ChangeAction action);
-    partial void OnCreated();
+
+	  
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
     partial void OnImageUrlChanging(string value);
     partial void OnImageUrlChanged();
+    partial void OnLargeImageUrlChanging(string value);
+    partial void OnLargeImageUrlChanged();
+    partial void OnExtraLargeImageUrlChanging(string value);
+    partial void OnExtraLargeImageUrlChanged();
     partial void OnUrlChanging(string value);
     partial void OnUrlChanged();
     partial void OnBackgroundUrlChanging(string value);
@@ -168,6 +177,46 @@ namespace PhoneGuitarTab.Data
 				}
 			}
 		}
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_LargeImageUrl", DbType = "NVarChar(256)")]
+        public string LargeImageUrl
+        {
+            get
+            {
+                return this._LargeImageUrl;
+            }
+            set
+            {
+                if ((this._LargeImageUrl != value))
+                {
+                    this.OnLargeImageUrlChanging(value);
+                    this.SendPropertyChanging();
+                    this._LargeImageUrl = value;
+                    this.SendPropertyChanged("LargeImageUrl");
+                    this.OnLargeImageUrlChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_ExtraLargeImageUrl", DbType = "NVarChar(256)")]
+        public string ExtraLargeImageUrl
+        {
+            get
+            {
+                return this._ExtraLargeImageUrl;
+            }
+            set
+            {
+                if ((this._ExtraLargeImageUrl != value))
+                {
+                    this.OnExtraLargeImageUrlChanging(value);
+                    this.SendPropertyChanging();
+                    this._ExtraLargeImageUrl = value;
+                    this.SendPropertyChanged("ExtraLargeImageUrl");
+                    this.OnExtraLargeImageUrlChanged();
+                }
+            }
+        }
 
         [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Url", DbType = "NVarChar(256)")]
         public string Url
@@ -273,6 +322,11 @@ namespace PhoneGuitarTab.Data
 			this.SendPropertyChanging();
 			entity.Group = null;
 		}
+
+        private void OnCreated()
+        {
+
+        }
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute()]

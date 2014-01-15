@@ -1,4 +1,5 @@
-﻿using PhoneGuitarTab.UI.Entities;
+﻿using System.Windows.Controls;
+using PhoneGuitarTab.UI.Entities;
 
 using System;
 using System.Collections.Generic;
@@ -270,6 +271,26 @@ namespace PhoneGuitarTab.UI.Infrastructure
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
+        }
+    }
+
+    public class ImageUrlToUriConverter : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {       
+            if (!String.IsNullOrEmpty(value.ToString()))
+            return new Uri(value.ToString(), UriKind.RelativeOrAbsolute);
+            else
+            return new Uri("", UriKind.RelativeOrAbsolute);
+                
+          
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var imageUrl = (Uri)value;
+            return imageUrl.OriginalString;
         }
     }
 }

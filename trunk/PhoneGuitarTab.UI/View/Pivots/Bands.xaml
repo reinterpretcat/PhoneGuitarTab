@@ -12,7 +12,8 @@
                     Header="bands"
                     mc:Ignorable="d">
     <phone:PivotItem.Resources>
-        <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush" />
+        <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush"/>
+        <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
         <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
             <Setter Property="GridCellSize"  Value="99,99"/>
             <Setter Property="LayoutMode" Value="Grid" />
@@ -58,13 +59,13 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Image VerticalAlignment="Center"
-                           Source="/Images/light/band_light.png"
-                           Stretch="None"
-                           Visibility="{StaticResource PhoneLightThemeVisibility}" />
-                    <Image VerticalAlignment="Center"
-                           Source="/Images/dark/band_dark.png"
-                           Stretch="None"
-                           Visibility="{StaticResource PhoneDarkThemeVisibility}" />
+                           Stretch="UniformToFill"
+                           Visibility="Visible" MaxHeight="130" MaxWidth="130">
+                      <Image.Source >
+                            <BitmapImage UriSource="{Binding Item2.ImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
+                        </Image.Source>
+                    </Image>
+
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                         <TextBlock Margin="20,-10,8,6"
                                    FontFamily="{StaticResource PhoneFontFamilyNormal}"

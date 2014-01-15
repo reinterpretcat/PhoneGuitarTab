@@ -396,6 +396,7 @@
     <Content Include="Images\dark\Find_dark.png" />
     <Content Include="Images\dark\refresh.png" />
     <Content Include="Images\dark\Text-Justify-Align_dark.png" />
+    <Content Include="Images\light\band.png" />
     <Content Include="Images\light\band_light.png" />
     <Content Include="Images\instrument\Bass_dark.png" />
     <Content Include="Images\instrument\Chords_dark.png" />

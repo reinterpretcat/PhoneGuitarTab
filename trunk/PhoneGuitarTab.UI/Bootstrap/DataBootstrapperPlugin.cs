@@ -33,6 +33,8 @@
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/instrument/Bass" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords" });
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums" });
+
+                    //TODO update existing Band Pictures
                 };
             
             Container.Register(Component.For<IDataContextService>().Use<DataContextService>(DbConnectionString, initialzeDatabase).Singleton());
@@ -58,20 +60,22 @@
 
             // Release 1.1
              if (!dbService.TabTypes.Any(type => type.Name == "chords"))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords.png" });
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords" });
 
              if (!dbService.TabTypes.Any(type => type.Name == "drums"))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums.png" });
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums" });
 
             // Release 2.0
              if (!dbService.TabTypes.Any(type => type.Name == Strings.GuitarPro))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro.png" });
+                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro" });
 
             // Release 3.0
             if (dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
             {
                 dbUpdater.AddColumn<Tab>("CloudName");
-                dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML.png" });
+                dbUpdater.AddColumn<Group>("LargeImageUrl");
+                dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
+                dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
             }
 
              dbService.SubmitChanges();
