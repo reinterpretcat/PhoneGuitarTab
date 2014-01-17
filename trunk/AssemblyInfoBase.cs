@@ -5,7 +5,7 @@ using System.Resources;
 
 [assembly: AssemblyCompany("PhoneGuitarTab Software")]
 [assembly: AssemblyProduct("PhoneGuitarTab")]
-[assembly: AssemblyCopyright("Copyright ©  2011-2013 PhoneGuitarTab Software")]
+[assembly: AssemblyCopyright("Copyright ©  2011-2014 PhoneGuitarTab Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

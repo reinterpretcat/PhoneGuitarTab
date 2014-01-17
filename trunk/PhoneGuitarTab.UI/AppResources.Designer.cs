@@ -79,7 +79,7 @@ namespace PhoneGuitarTab.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright © 2011-2013 Phone guitar tab.
+        ///   Looks up a localized string similar to Copyright © 2011-2014 Phone guitar tab.
         /// </summary>
         internal static string Copyright {
             get {
