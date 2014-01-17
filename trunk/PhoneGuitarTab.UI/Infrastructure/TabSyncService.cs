@@ -95,9 +95,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
         {
             try
             {
-
                 Uploaded = 0;
                 Downloaded = 0;
+
+                Trace.Info(_traceCategory, "sign in");
+                await CloudService.SignIn();
 
                 Trace.Info(_traceCategory, "start synchronization");
 

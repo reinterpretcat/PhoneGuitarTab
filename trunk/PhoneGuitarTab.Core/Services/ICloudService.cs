@@ -3,8 +3,11 @@ using System.Threading.Tasks;
 
 namespace PhoneGuitarTab.Core.Services
 {
+    // TODO refactor interface - get rid of operation status
     public interface ICloudService
     {
+        Task SignIn();
+
         Task<OperationStatus> CreateDirectory(string relativePath);
         Task<IEnumerable<string>> GetDirectoryNames(string relativePath);
         Task<IEnumerable<string>> GetFileNames(string relativePath);

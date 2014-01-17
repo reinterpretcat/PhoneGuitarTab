@@ -55,28 +55,6 @@ namespace PhoneGuitarTab.Core.Services
 
         #region Private Methods
 
-
-        private async Task SignIn()
-        {
-            // you should call this from UI thread
-            if (_liveSession == null)
-            {
-                _liveAuth = new LiveAuthClient(_clientId);
-                _liveResult = await _liveAuth.InitializeAsync(_requiredScopes);
-
-                if (_liveResult.Status != LiveConnectSessionStatus.Connected)
-                {
-                    _liveResult = await _liveAuth.LoginAsync(_requiredScopes);
-                }
-
-                _liveSession = _liveResult.Session;
-                _liveClient = new LiveConnectClient(_liveSession);
-            }
-
-            if (_folderId == null) await GetSkyDriveFolder();
-
-        }
-
         /// <summary>
         /// Gets the id for a existing skydrive folder or creates a new one and gets an id for it
         /// </summary>
@@ -205,6 +183,29 @@ namespace PhoneGuitarTab.Core.Services
 
 
         #region Public Methods
+
+        public async Task SignIn()
+        {
+            // you should call this from UI thread
+            if (_liveSession == null)
+            {
+                _liveAuth = new LiveAuthClient(_clientId);
+                _liveResult = await _liveAuth.InitializeAsync(_requiredScopes);
+
+                if (_liveResult.Status != LiveConnectSessionStatus.Connected)
+                {
+                    _liveResult = await _liveAuth.LoginAsync(_requiredScopes);
+                }
+
+                _liveSession = _liveResult.Session;
+                _liveClient = new LiveConnectClient(_liveSession);
+            }
+
+            if (_folderId == null) await GetSkyDriveFolder();
+
+        }
+
+
         /// <summary>
         /// Upload a file from local storage to a SkyDrive's folder
         /// </summary>
