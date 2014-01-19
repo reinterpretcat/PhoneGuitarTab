@@ -133,6 +133,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
         public event EventHandler<int> Progress;
 
         /// <summary>
+        /// Provides information about current action
+        /// </summary>
+        public event EventHandler<IProgressMessage> ProgressMessage;
+
+        /// <summary>
         /// Raised when sync is completed
         /// </summary>
         public event EventHandler Complete;
@@ -147,6 +152,12 @@ namespace PhoneGuitarTab.UI.Infrastructure
         {
             EventHandler<int> handler = Progress;
             if (handler != null) handler(this, e);
+        }
+
+        protected virtual void OnProgressMessage(IProgressMessage progressMessage)
+        {
+            EventHandler<IProgressMessage> handler = ProgressMessage;
+            if (handler != null) handler(this, progressMessage);
         }
 
         /// <summary>
@@ -165,6 +176,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                     var cloudName = GetCloudName(tab);
                     if (!await CloudService.FileExists(cloudName))
                     {
+                        OnProgressMessage(new UploadProgressMessage(group.Name, tab.Name));
                         await CloudService.UploadFile(tab.Path, cloudName);
                         Uploaded++;
                     }
@@ -209,6 +221,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 {
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", newTab));
                     var localName = TabFileStorage.CreateTabFilePath();
+                    OnProgressMessage(new DownloadProgressMessage(groupName, newTab));
                     await CloudService.DownloadFile(localName, string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
                     DataService.InsertTab(GetTab(newTab, localName, group));
                     Downloaded++;
@@ -289,6 +302,66 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 return DataService.TabTypes.Single(t => t.Name == Strings.MusicXml);
 
             return DataService.TabTypes.Single(t => t.Name == "tab");
+        }
+
+        #region Progress info
+
+        // NOTE maybe seems like overengineering but will be useful if we want to log all other actions (e.g., getting list of tabs)
+
+        public interface IProgressMessage
+        {
+            string GetMessage();
+        }
+
+        // TODO support info about size of tab
+        public abstract class TabProgressMessage : IProgressMessage
+        {
+            public string Group { get; set; }
+            public string Tab { get; set; }
+            public int Size { get; set; }
+
+            protected TabProgressMessage(string group, string tab, int size)
+            {
+                Group = group;
+                Tab = tab;
+                Size = size;
+            }
+
+            protected abstract string GetAction();
+
+            public string GetMessage()
+            {
+                return string.Format("{0} {1} {2}", GetAction(), Group, Tab);
+            }
+        }
+
+        public class DownloadProgressMessage : TabProgressMessage
+        {
+            public DownloadProgressMessage(string group, string tab) : base(group, tab, 0) { }
+
+            protected override string GetAction()
+            {
+                return "Downloading";
+            }
+        }
+
+        public class UploadProgressMessage : TabProgressMessage
+        {
+            public UploadProgressMessage(string group, string tab) : base(group, tab, 0) { }
+
+            protected override string GetAction()
+            {
+                return "Uploading";
+            }
+        }
+
+        #endregion
+
+
+        public enum ProgressAction
+        {
+            Download,
+            Upload
         }
     }
 }
