@@ -11,6 +11,10 @@ namespace PhoneGuitarTab.UI.Entities
     {
         private static FlipTileData GetSecondaryTileData(Tab tab)
         {
+
+            if (tab.AlbumCoverImageUrl == "")
+                tab.AlbumCoverImageUrl = tab.Group.ImageUrl;
+           
             FlipTileData tileData = new FlipTileData
             {
                 Title = tab.Name,
@@ -20,7 +24,7 @@ namespace PhoneGuitarTab.UI.Entities
                 BackBackgroundImage = new Uri(GetTabTypeTileImageUrl(tab.TabType.Name), UriKind.Relative),
                 BackContent = tab.Name
             };
-
+            
             return tileData;
         }
 
