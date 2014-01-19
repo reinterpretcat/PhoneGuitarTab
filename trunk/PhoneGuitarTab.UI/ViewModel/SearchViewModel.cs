@@ -2,6 +2,7 @@
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.UltimateGuitar;
+using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 using System;
@@ -28,7 +29,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Fields
 
         private UltimateGuitarTabSearcher groupSearch;
-
+        private  LastFmSearch tabSearch;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
         private IEnumerable<string> _pages;
@@ -43,7 +44,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         private List<TabulatureType> searchTabTypeOptions;
         private TabEntity firstTabInList;
         private bool downloadButtonClicked = false;
-
+        private Tab currentTab;
+        private TabEntity currentTabEntity;
         #endregion Fields
 
 
@@ -263,6 +265,32 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+
+        public Tab CurrentTab
+        {
+            get
+            {
+                return currentTab;
+            }
+            set
+            {
+                currentTab = value;
+                RaisePropertyChanged("CurrentTab");
+            }
+        }
+
+        public TabEntity CurrentTabEntity
+        {
+            get
+            {
+                return currentTabEntity;
+            }
+            set
+            {
+                currentTabEntity = value;
+                RaisePropertyChanged("CurrentTabEntity");
+            }
+        }
         #endregion Properties
 
 
@@ -414,6 +442,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             //TODO examine IO errors
             UltimateGuitarFileDownloader downloader = new UltimateGuitarFileDownloader(entry, filePath);
+
             downloader.DownloadComplete += delegate(object sender, DownloadCompletedEventArgs args)
             {
                 if (args.HasErrors)
@@ -502,33 +531,37 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DownloadTabComplete(TabEntity tab, string filePath)
         {
+            this.CurrentTabEntity = tab;
             Deployment.Current.Dispatcher.BeginInvoke(
-                () =>
-                {
-                    Tab downloadedTab = new Tab()
-                    {
-                        Name = tab.Name,
-                        Group = Database.GetOrCreateGroupByName(tab.Group),
-                        TabType = Database.GetTabTypeByName(tab.Type),
-                        Rating = tab.Rating,
-                        Path = filePath
-                    };
+              () =>
+              {
+                  this.CurrentTab = new Tab()
+                  {
+                      Name = tab.Name,
+                      Group = Database.GetOrCreateGroupByName(tab.Group),
+                      TabType = Database.GetTabTypeByName(tab.Type),
+                      Rating = tab.Rating,
+                      Path = filePath,
+                  };
+                  Database.InsertTab(this.CurrentTab);
+                  Hub.RaiseTabsDownloaded();
 
-                    Database.InsertTab(downloadedTab);
-                    Hub.RaiseTabsDownloaded();
+                  this.CurrentTabEntity.IsDownloaded = true;
+                  IsSearching = false;
 
-                    tab.IsDownloaded = true;
-                    IsSearching = false;
-                    
-                    Dialog.Show(" was downloaded", "\"" + tab.Name + "\" by " + tab.Group, new DialogActionContainer()
-                    {
-                        OnTapAction = (o, e) => NavigationService.NavigateToTab(downloadedTab)
-                    });
+                  Dialog.Show(" was downloaded", "\"" + this.CurrentTabEntity.Name + "\" by " + this.CurrentTabEntity.Group, new DialogActionContainer()
+                  {
+                      OnTapAction = (o, e) => NavigationService.NavigateToTab(this.CurrentTab)
+                  });
+                
 
-                    DownloadTab.RaiseCanExecuteChanged(); 
-                });
+                  DownloadTab.RaiseCanExecuteChanged();
+
+              });
         }
 
+       
+            
         #endregion Event handlers
 
 
@@ -566,6 +599,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             groupSearch.Run(CurrentPageIndex, SearchTabType);
         }
 
+      
         #endregion Helper methods
     }
 }

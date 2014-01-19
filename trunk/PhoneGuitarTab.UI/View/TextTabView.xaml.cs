@@ -1,22 +1,25 @@
 ﻿using System;
 using PhoneGuitarTab.UI.ViewModel;
 using Microsoft.Phone.Controls;
-
+using System.Windows.Navigation;
 
 namespace PhoneGuitarTab.UI
 {
     using PhoneGuitarTab.Core.Views;
+    using PhoneGuitarTab.UI.Entities;
     using System.Windows;
 
     public partial class TextTabView : ViewPage
     {
         private string TextTabUri = "/Html/texttab.html";
+       
         public TextTabView()
         {
             InitializeComponent();
-           
-            this.slider.Browser = this.tabWebBrowser; 
+            this.slider.Browser = this.tabWebBrowser;
+            
         }
+     
 
        
         /// <summary>
@@ -39,11 +42,12 @@ namespace PhoneGuitarTab.UI
         {
              if (e.Value.StartsWith("onReady"))
              {
-                 var viewModel = DataContext as TextTabViewModel;
+                var viewModel = DataContext as TextTabViewModel;
 
                  if (viewModel.TabContent != null)
+                 {
                      tabWebBrowser.InvokeScript("pullTabContent", viewModel.TabContent);
-
+                 }
              }
         }
 
@@ -52,6 +56,7 @@ namespace PhoneGuitarTab.UI
             tabWebBrowser.Navigate(new Uri(this.TextTabUri, UriKind.Relative));
         }
 
+       
 
         private void AutoScrollApplicationBarIconButton_OnClick(object sender, EventArgs e)
         {
@@ -67,5 +72,15 @@ namespace PhoneGuitarTab.UI
                 this.slider.invokeAutoScroll();
             }
         }
+
+        private void PinToStartIconButton_Click(object sender, EventArgs e)
+        {
+            var viewModel = DataContext as TextTabViewModel;
+            viewModel.PinTabToStart();
+        }
+
+
+       
+       
     }
 }

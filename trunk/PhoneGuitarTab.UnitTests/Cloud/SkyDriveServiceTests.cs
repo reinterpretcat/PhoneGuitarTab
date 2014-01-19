@@ -201,7 +201,7 @@ namespace PhoneGuitarTab.UnitTests.Cloud
                         // sync before by downloading from cloud
                         var cloudName = string.Format("Cloud_old_{0}", s);
                         var tabMock = createTabMock(cloudName, 4);
-                        tabMock.SetupGet(t => t.CloudName)
+                        tabMock.SetupGet(t => t.AlbumCoverImageUrl)
                             .Returns(string.Format("{0}.gp5", cloudName));
                             //.Returns(string.Format("PhoneGuitarTab/{0}/{1}.gp5", s, cloudName));
                         tabs.Add(tabMock.Object);

@@ -13,6 +13,7 @@
                FontSize="{StaticResource PhoneFontSizeNormal}"
                Foreground="{StaticResource PhoneForegroundBrush}"
                Orientation="Portrait"
+               
                SupportedOrientations="PortraitOrLandscape"
                d:DesignHeight="768"
                d:DesignWidth="480"
@@ -22,7 +23,8 @@
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized" Opacity="0.2">
-             <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
+            <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
+            <shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" Text="pin to start" Click="PinToStartIconButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     <!--  LayoutRoot is the root grid where all page content is placed  -->
@@ -37,7 +39,7 @@
             <ColumnDefinition Width="17*"/>
         </Grid.ColumnDefinitions>
         <phone:WebBrowser x:Name="tabWebBrowser"
-			IsScriptEnabled="True" Grid.ColumnSpan="2" Grid.RowSpan="3"  Margin="0,-10,0,10" MouseLeftButtonUp="tabWebBrowser_MouseLeftButtonUp" ScriptNotify="tabWebBrowser_ScriptNotify" Loaded="tabWebBrowser_Loaded" />
+			IsScriptEnabled="True" Grid.ColumnSpan="2" Grid.RowSpan="3"  Margin="0,-10,0,10" MouseLeftButtonUp="tabWebBrowser_MouseLeftButtonUp" ScriptNotify="tabWebBrowser_ScriptNotify" Loaded="tabWebBrowser_Loaded"  />
         <Controls:AutoScroll x:Name="slider" Grid.Column="1" HorizontalAlignment="Right" Margin="0,18,4,0" VerticalAlignment="Top" Grid.RowSpan="2" Height="176" Width="58" Visibility="Collapsed"/>
     </Grid>
 

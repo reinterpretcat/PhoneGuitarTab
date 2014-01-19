@@ -1,8 +1,10 @@
 ﻿namespace PhoneGuitarTab.Core.Views
 {
     using System.ComponentModel;
+    using System.Runtime.Serialization;
     using System.Collections.Generic;
 
+    [DataContract]
     public class ViewModel : INotifyPropertyChanged
     {
         private Dictionary<string, object> _navigationParameters = null;
@@ -28,7 +30,7 @@
         /// </summary>
         public virtual void SaveStateTo(IDictionary<string, object> state)
         {
-
+          
         }
 
         /// <summary>

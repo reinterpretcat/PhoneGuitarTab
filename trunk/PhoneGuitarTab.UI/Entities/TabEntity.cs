@@ -16,6 +16,7 @@ namespace PhoneGuitarTab.UI.Entities
         private bool isDownloaded = false;
         private Uri relativeImageUri;
         private string imageUrl;
+        private string albumCoverImageUrl;
         #endregion Fields
 
 
@@ -42,6 +43,14 @@ namespace PhoneGuitarTab.UI.Entities
                 relativeImageUri = value;
                 RaisePropertyChanged("RelativeImageUri");
             } 
+        }
+        public string AlbumCoverImageUrl 
+        {
+            get { return this.albumCoverImageUrl; } 
+            set {
+                albumCoverImageUrl = value;
+                RaisePropertyChanged("AlbumCoverImageUrl");
+                }
         }
         public string Description { get; set; }
         public DateTime LastOpened { get; set; }
@@ -106,7 +115,7 @@ namespace PhoneGuitarTab.UI.Entities
         #region ExtensibilityMethods
         private void OnImageUrlChanging(string value)
         {
-            if (dark)
+            if (this.dark)
             this.RelativeImageUri = new Uri(value + "_dark.png", UriKind.Relative);
             else
             this.relativeImageUri = new Uri(value + "_light.png", UriKind.Relative);

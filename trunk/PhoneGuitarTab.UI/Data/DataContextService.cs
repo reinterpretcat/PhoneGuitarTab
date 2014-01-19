@@ -15,6 +15,7 @@
         private readonly TabDataContext _database;
 
         private Group currentGroup;
+        private Tab currentTab;
         public DataContextService(string connectionString, Action<IDataContextService> initialize)
         {
             this._database = new TabDataContext(connectionString);
@@ -80,6 +81,11 @@
             {
                 throw new NotImplementedException();
             }
+
+            public Tab GetTabById(int id)
+            {
+                throw new NotImplementedException();
+            }
         }
 
 
@@ -126,8 +132,10 @@
 
         public void InsertTab(Tab tab)
         {
+            this.currentTab = tab;
             this.Tabs.InsertOnSubmit(tab);
             this.SubmitChanges();
+            this.GetTabCover(this.currentTab);
         }
 
         public void DeleteTabById(int id)
@@ -167,12 +175,47 @@
             return group;
         }
 
+        private void GetTabCover(Tab tab)
+        {
+            LastFmSearch tabSearch = new LastFmSearch(tab.Group.Name, tab.Name);
+            tabSearch.SearchCompleted += TabAlbumSearchCompleted;
+            tabSearch.Run();
+        }
+
         private void GetImageUrlOnline(Group band)
         {
             LastFmSearch result = new LastFmSearch(band.Name);
             result.SearchCompleted += SearchCompleted;
 
             result.Run();
+        }
+
+        private void TabAlbumSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        {
+            LastFmSearch result = sender as LastFmSearch;
+
+            try
+            {
+                var albumCover = result.ImageUrl;
+
+                if (!string.IsNullOrEmpty(albumCover))
+                {
+                    currentTab.AlbumCoverImageUrl = result.LargeImageUrl;
+                    this.SubmitChanges();
+                }
+                else
+                {
+                    currentTab.AlbumCoverImageUrl = "";
+                    //handle other conditions
+                }
+            }
+            catch
+            {
+
+                //handle catch
+            }
+
+
         }
 
         private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e) 
@@ -191,5 +234,14 @@
                     where t.Name == name
                     select t).Single();
         }
+
+        public Tab GetTabById(int id) 
+        {
+            return (from Tab t in this.Tabs
+                    where t.Id == id
+                    select t).Single();
+        }
+
+
     }
 }

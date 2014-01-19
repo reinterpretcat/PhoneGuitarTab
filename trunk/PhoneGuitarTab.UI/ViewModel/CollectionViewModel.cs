@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
+
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
@@ -77,6 +78,12 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         public ExecuteCommand<object> GoToTabView
+        {
+            get;
+            private set;
+        }
+
+        public ExecuteCommand<int> PinTabToStart
         {
             get;
             private set;
@@ -155,10 +162,21 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void DoRemoveTab(int id)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
-
+            
             RemoveTabFromList(id);
             Hub.RaiseCollectionTabRemoved(id);
         }
+
+        private void DoPinTabToStart(int id)
+        {
+            
+            Tab tab = (from Tab t in Database.Tabs
+                       where t.Id == id
+                       select t).Single();
+
+            TilesForTabs.PinTabToStart(tab);
+        }
+
 
         private void DoRefreshData()
         {
@@ -183,7 +201,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             //HomeCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Startup));
 
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
-
+            PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
             GoToGroup = new ExecuteCommand<object>(DoGoToGroup);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
 

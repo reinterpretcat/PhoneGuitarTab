@@ -65,7 +65,12 @@
                                                         ElementName=TabList}"
                                       CommandParameter="{Binding Id}"
                                       Header="remove tab" />
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.PinTabToStart, ElementName=TabList}"
+                                                     
+                                      CommandParameter="{Binding Id}"
+                                      Header="pin to start" />
                 </toolkit:ContextMenu>
+                
             </toolkit:ContextMenuService.ContextMenu>
         </Grid>
     </DataTemplate>

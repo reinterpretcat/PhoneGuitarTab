@@ -1,13 +1,12 @@
-﻿<phone:PhoneApplicationPage
+﻿<Views:ViewPage
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    x:Class="PhoneGuitarTab.UI.View.StaveTabView"
+    xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls" x:Class="PhoneGuitarTab.UI.View.StaveTabView"  
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -23,6 +22,7 @@
             <shell:ApplicationBarIconButton IconUri="/Images/dark/scale.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
             <shell:ApplicationBarIconButton x:Name ="InstrumentApplicationBarIconButton" IconUri="/Images/instrument/instruments.png" IsEnabled="True" Text="instruments" Click="InstrumentApplicationBar_Click"/>
             <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
+            <shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" Text="pin to start" Click="PinToStartIconButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
@@ -79,5 +79,4 @@
 
     </Grid>
 
-
-</phone:PhoneApplicationPage>
+</Views:ViewPage>

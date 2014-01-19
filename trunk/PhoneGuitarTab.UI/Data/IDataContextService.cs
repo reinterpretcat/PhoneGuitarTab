@@ -33,5 +33,7 @@
         Group GetOrCreateGroupByName(string name);
 
         TabType GetTabTypeByName(string name);
+
+        Tab GetTabById(int id);
     }
 }

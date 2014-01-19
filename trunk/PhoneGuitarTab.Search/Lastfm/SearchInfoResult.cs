@@ -99,7 +99,7 @@ namespace PhoneGuitarTab.Search.Lastfm
                 case LastFmSearchType.Artist:
                     return "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
                 case LastFmSearchType.Track:
-                    return "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&track={0}&artist={1}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
+                    return "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&track={1}&artist={0}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
                 default:
                     return "Search Type not provided";
             }
@@ -165,9 +165,9 @@ namespace PhoneGuitarTab.Search.Lastfm
                         case ImageSize.Small:
                             return xAttribute != null && xAttribute.Value == "large";
                         case ImageSize.Large:
-                            return xAttribute != null && xAttribute.Value == "large";
+                            return xAttribute != null && xAttribute.Value == "medium";
                         case ImageSize.ExtraLarge:
-                            return xAttribute != null && xAttribute.Value == "extralarge";      
+                            return xAttribute != null && xAttribute.Value == "mega";      
                         default:
                             return xAttribute != null && xAttribute.Value == "extralarge";
                     }

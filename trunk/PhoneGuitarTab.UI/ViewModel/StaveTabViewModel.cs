@@ -16,7 +16,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         public StaveTabViewModel(IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
-            
+           
         }
 
         public void NavigateToHome()

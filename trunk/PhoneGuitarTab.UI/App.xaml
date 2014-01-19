@@ -11,7 +11,8 @@
         <shell:PhoneApplicationService Activated="Application_Activated"
                                        Closing="Application_Closing"
                                        Deactivated="Application_Deactivated"
-                                       Launching="Application_Launching" />
+                                       Launching="Application_Launching"
+                                       />
     </Application.ApplicationLifetimeObjects>
     <Application.Resources>
         <ResourceDictionary>

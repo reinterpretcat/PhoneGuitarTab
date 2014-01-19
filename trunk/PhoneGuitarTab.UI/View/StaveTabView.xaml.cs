@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using StaveTabViewModel = PhoneGuitarTab.UI.ViewModel.StaveTabViewModel;
-
+using PhoneGuitarTab.UI.Entities;
 namespace PhoneGuitarTab.UI.View
 {
     using System;
@@ -10,14 +10,15 @@ namespace PhoneGuitarTab.UI.View
     using Microsoft.Phone.Controls;
     using PhoneGuitarTab.UI.ViewModel;
     using Microsoft.Phone.Shell;
-  
+    using PhoneGuitarTab.Core.Views;
+    using System.Windows.Navigation;
 
     // TODO move code-behind to viewmodel
-    public partial class StaveTabView : PhoneApplicationPage
+    public partial class StaveTabView : ViewPage
     {
         //Generic List for ListPicker data binding.
         public ObservableCollection<StaveTabViewModel.Track> Tracks;
-
+        public bool _isNewPageInstance = false;
         //flag to prevent renavigation of browser while switching back and forth from listpicker's fullmode
         private bool isFirstLoad = true;
        
@@ -27,7 +28,7 @@ namespace PhoneGuitarTab.UI.View
         public StaveTabView()
         {
             this.InitializeComponent();
-
+            this._isNewPageInstance = true;
             //Generic list that keeps track data - binded to the listpicker.
             this.Tracks = new ObservableCollection<StaveTabViewModel.Track>();
             this.ListPickerInstrument.DataContext = this.Tracks;
@@ -89,7 +90,6 @@ namespace PhoneGuitarTab.UI.View
 
                 Browser.InvokeScript("readBase64", parameters);
                 OrientationChanged += (_, __) => Browser.InvokeScript("showTab");
-               
             }
 
              
@@ -195,5 +195,14 @@ namespace PhoneGuitarTab.UI.View
                 this.slider.invokeAutoScroll();
             }
         }
+
+        private void PinToStartIconButton_Click(object sender, EventArgs e)
+        {
+            var viewModel = DataContext as StaveTabViewModel;
+            viewModel.PinTabToStart();
+        }
+
+
+      
     }
 }

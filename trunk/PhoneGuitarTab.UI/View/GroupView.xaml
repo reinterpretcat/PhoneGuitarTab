@@ -40,18 +40,16 @@
                         Title="{Binding CurrentGroup.Name,
                                         Converter={StaticResource UpperStr}}"
                         SelectionChanged="PivotSelectionChangedHandler">
-           
             <controls:PivotItem Header="tabs">
-           <controls:PivotItem.Background>
+                <controls:PivotItem.Background>
                     <ImageBrush Stretch="UniformToFill" Opacity="0.4">
                         <ImageBrush.ImageSource>
                             <BitmapImage UriSource="{Binding CurrentGroup.ExtraLargeImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
                         </ImageBrush.ImageSource>
 
                     </ImageBrush>
-                    </controls:PivotItem.Background> 
-
-                    <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
+                </controls:PivotItem.Background>
+                <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
                          ItemTemplate="{StaticResource TabItemDataTemplate}"
                          ItemsSource="{Binding Path=Tabs.Tabs}">
                     <i:Interaction.Triggers>

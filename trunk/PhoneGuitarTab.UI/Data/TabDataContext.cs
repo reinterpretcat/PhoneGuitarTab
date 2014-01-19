@@ -344,6 +344,8 @@ namespace PhoneGuitarTab.Data
         private string _Description;
 
 	    private string _cloudName;
+
+        private string _AlbumCoverImageUrl;
 		
 		private Nullable<DateTime> _LastOpened;
 			
@@ -359,6 +361,10 @@ namespace PhoneGuitarTab.Data
     partial void OnIdChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
+    partial void OnAlbumCoverImageUrlChanging(string value);
+    partial void OnAlbumCoverImageUrlChanged();
+    partial void OnCloudNameChanging(string value);
+    partial void OnCloudNameChanged();
     partial void OnGroupIdChanging(int value);
     partial void OnGroupIdChanged();
     partial void OnTypeTypeIdChanging(int value);
@@ -519,11 +525,31 @@ namespace PhoneGuitarTab.Data
             {
                 if ((this._cloudName != value))
                 {
-                    this.OnPathChanging(value);
+                    this.OnCloudNameChanging(value);
                     this.SendPropertyChanging();
                     this._cloudName = value;
                     this.SendPropertyChanged("CloudName");
-                    this.OnPathChanged();
+                    this.OnCloudNameChanged();
+                }
+            }
+        }
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_AlbumCoverImageUrl", DbType = "NVarChar(256)")]
+        public string AlbumCoverImageUrl
+        {
+            get
+            {
+                return this._AlbumCoverImageUrl;
+            }
+            set
+            {
+                if ((this._AlbumCoverImageUrl != value))
+                {
+                   this.OnAlbumCoverImageUrlChanging(value);
+                    this.SendPropertyChanging();
+                    this._AlbumCoverImageUrl = value;
+                    this.SendPropertyChanged("AlbumCoverImageUrl");
+                    this.OnAlbumCoverImageUrlChanged();
                 }
             }
         }
@@ -668,6 +694,8 @@ namespace PhoneGuitarTab.Data
 		private string _Name;
 
         private string _ImageUrl;
+
+        private string _TileUrl;
 		
 		private EntitySet<Tab> _Tabs;
 		
@@ -681,6 +709,8 @@ namespace PhoneGuitarTab.Data
     partial void OnNameChanged();
     partial void OnImageUrlChanging(string value);
     partial void OnImageUrlChanged();
+    partial void OnTileUrlChanging(string value);
+    partial void OnTileUrlChanged();
     #endregion
 		
 		public TabType()
@@ -748,7 +778,27 @@ namespace PhoneGuitarTab.Data
                 }
             }
         }
-		
+
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_TileUrl", DbType = "NVarChar(256)")]
+        public string TileUrl
+        {
+            get
+            {
+                return this._TileUrl;
+            }
+            set
+            {
+                if ((this._TileUrl != value))
+                {
+                    this.OnTileUrlChanging(value);
+                    this.SendPropertyChanging();
+                    this._TileUrl = value;
+                    this.SendPropertyChanged("TileUrl");
+                    this.OnTileUrlChanged();
+                }
+            }
+        }
+
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Type", Storage="_Tabs", ThisKey="Id", OtherKey="TypeTypeId", DeleteRule="NO ACTION")]
 		public EntitySet<Tab> Tabs
 		{

@@ -42,6 +42,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Deployment.Current.Dispatcher.BeginInvoke(
                 () =>
                 {
+                    //restore back the ViewModel here.
                     DataBind();
                     IsRequireBinding = false;
                 });

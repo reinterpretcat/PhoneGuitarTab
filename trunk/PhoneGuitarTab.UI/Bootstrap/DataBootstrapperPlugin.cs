@@ -2,9 +2,7 @@
 {
     using System;
     using System.Linq;
-
     using Microsoft.Phone.Data.Linq;
-
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Data;
@@ -27,12 +25,12 @@
             Action<IDataContextService> initialzeDatabase = service =>
                 {
                     // TODO change pictures
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/instrument/Electric-Guitar" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/instrument/Bass" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords" });
-                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML", TileUrl="/View/TextTabView.xaml?" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro", TileUrl="/View/StaveTabView.xaml?" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/instrument/Electric-Guitar", TileUrl = "/View/TextTabView.xaml?" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/instrument/Bass", TileUrl = "/View/TextTabView.xaml?" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords", TileUrl = "/View/TextTabView.xaml?" });
+                    service.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums", TileUrl = "/View/TextTabView.xaml?" });
 
                     //TODO update existing Band Pictures
                 };
@@ -73,9 +71,14 @@
             if (dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
             {
                 dbUpdater.AddColumn<Tab>("CloudName");
+                dbUpdater.AddColumn<Tab>("AlbumCoverImageUrl");
+      
                 dbUpdater.AddColumn<Group>("LargeImageUrl");
                 dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
+
+                dbUpdater.AddColumn<TabType>("TileUrl");
                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
+               
             }
 
              dbService.SubmitChanges();

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -136,6 +135,7 @@
     <Compile Include="Controls\AutoScroll.xaml.cs">
       <DependentUpon>AutoScroll.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TilesForTabs.cs" />
     <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
     <Compile Include="Infrastructure\DefaultTrace.cs" />
     <Compile Include="Data\DataContextService.cs" />
@@ -396,6 +396,13 @@
     <Content Include="Images\dark\Find_dark.png" />
     <Content Include="Images\dark\refresh.png" />
     <Content Include="Images\dark\Text-Justify-Align_dark.png" />
+    <Content Include="Images\instrument\bass_tile.png" />
+    <Content Include="Images\instrument\chords_tile.png" />
+    <Content Include="Images\instrument\default.png" />
+    <Content Include="Images\instrument\drums_tile.png" />
+    <Content Include="Images\instrument\guitarpro_tile.png" />
+    <Content Include="Images\instrument\guitar_tile.png" />
+    <Content Include="Images\instrument\musicxml_tile.png" />
     <Content Include="Images\light\band.png" />
     <Content Include="Images\light\band_light.png" />
     <Content Include="Images\instrument\Bass_dark.png" />
@@ -420,6 +427,7 @@
     <Content Include="Images\light\Document-Download_light.png" />
     <Content Include="Images\light\Electric-Guitar_light.png" />
     <Content Include="Images\light\Find_light.png" />
+    <Content Include="Images\light\pinTab.png" />
     <Content Include="Images\light\refresh.png" />
     <Content Include="Images\light\Text-Justify-Align_light.png" />
     <Content Include="SplashScreenImage.jpg" />

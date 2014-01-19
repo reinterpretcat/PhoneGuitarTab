@@ -13,6 +13,7 @@ namespace PhoneGuitarTab.UI.Entities
                            Name = tab.Name,
                            Type = tab.TabType.Name,
                            ImageUrl = tab.TabType.ImageUrl,
+                           AlbumCoverImageUrl = tab.AlbumCoverImageUrl,
                            Path = tab.Path,
                            Description = tab.Description,
                            Group = tab.Group.Name,

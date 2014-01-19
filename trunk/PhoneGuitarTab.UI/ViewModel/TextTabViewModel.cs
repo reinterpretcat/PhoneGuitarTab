@@ -21,6 +21,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             : base(database, hub)
         {
             _textTabAdapter = new TextTabAdapter();
+           
         }
 
         protected override void ReadNavigationParameters()
