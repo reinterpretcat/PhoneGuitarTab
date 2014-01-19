@@ -356,12 +356,5 @@ namespace PhoneGuitarTab.UI.Infrastructure
         }
 
         #endregion
-
-
-        public enum ProgressAction
-        {
-            Download,
-            Upload
-        }
     }
 }
