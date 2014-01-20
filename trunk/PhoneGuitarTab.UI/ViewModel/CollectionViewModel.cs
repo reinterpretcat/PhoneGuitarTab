@@ -161,8 +161,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoRemoveTab(int id)
         {
+            TilesForTabs.RemoveTabFromStart(Database.GetTabById(id));
             Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
-            
             RemoveTabFromList(id);
             Hub.RaiseCollectionTabRemoved(id);
         }

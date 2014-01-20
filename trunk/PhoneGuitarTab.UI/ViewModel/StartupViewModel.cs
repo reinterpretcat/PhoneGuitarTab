@@ -4,7 +4,8 @@ using PhoneGuitarTab.UI.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-
+using Microsoft.Phone.Shell;
+using System;
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Dependencies;
@@ -128,6 +129,34 @@ namespace PhoneGuitarTab.UI.ViewModel
         protected override void DataBind()
         {
             TabsHistory = new TabsForHistory(5, Database);
+        }
+
+        public override void LoadStateFrom(IDictionary<string, object> state)
+        {
+            base.LoadStateFrom(state);
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
+            phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+            if (state.ContainsKey("TabUrl"))
+            {
+                String tabUrl = (String)state["TabUrl"];
+                string[] parsed = tabUrl.Split('?');
+                if (parsed.Length > 1) //If Url contains a tab ID array lenght will be 2.
+                {
+                    var tabId = System.Convert.ToInt16(parsed[1]);
+                    NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", this.Database.GetTabById(tabId) } });
+
+                }
+
+            }
+
+        }
+
+        public override void SaveStateTo(IDictionary<string, object> state)
+        {
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
+            phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Enabled;
+
+            base.SaveStateTo(state);
         }
 
         #endregion Override members

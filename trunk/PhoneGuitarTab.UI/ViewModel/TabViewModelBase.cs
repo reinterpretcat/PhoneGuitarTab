@@ -41,21 +41,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         public override void LoadStateFrom(IDictionary<string, object> state)
         {
             base.LoadStateFrom(state);
-            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
-            phoneAppService.UserIdleDetectionMode = IdleDetectionMode.Disabled;
-            if (state.ContainsKey("TabUrl"))
-            {
-                String tabUrl  = (String)state["TabUrl"];
-                string[] parsed = tabUrl.Split('?');
-                if (!String.IsNullOrEmpty(parsed[1]))
-                {
-                    var tabId = System.Convert.ToInt16(parsed[1]);
-                    NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", this.Database.GetTabById(tabId) } }); 
-                    this.ReadNavigationParameters();
-                }
-              
-            }     
-           
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;   
         }
 
         public override void SaveStateTo(IDictionary<string, object> state)

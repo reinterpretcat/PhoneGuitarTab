@@ -70,8 +70,15 @@ namespace PhoneGuitarTab.UI.Entities
             if (!tileExists)
             {
                 StandardTileData tileData = GetSecondaryTileData(tab);
-                ShellTile.Create(new Uri(tab.TabType.TileUrl + tab.Id, UriKind.Relative), tileData, false);
+                ShellTile.Create(new Uri(tab.TabType.TileUrl+ tab.Id.ToString(), UriKind.Relative), tileData, false);
             }        
+        }
+
+        public static void RemoveTabFromStart(Tab tab)
+        { 
+            ShellTile TileToDelete = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains(tab.TabType.TileUrl + tab.Id.ToString()));
+        if (!(TileToDelete == null))
+            TileToDelete.Delete();
         }
     }
 }
