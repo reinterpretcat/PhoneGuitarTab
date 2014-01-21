@@ -46,24 +46,8 @@
                     </i:Interaction.Triggers>
                 </Button>
 
-                <ProgressBar
-                     Minimum="0"
-                     Value="{Binding Progress}"
-                     Maximum="100"
-                     IsIndeterminate="False" />
 
-                <TextBlock Margin="56,0"
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextSmallStyle}">
-                            <Run Text="Uploaded:      " />
-                            <Run Text="{Binding UploadedTabs, Mode=OneWay}" />
-                </TextBlock>
-                <TextBlock Margin="56,0"
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextSmallStyle}">
-                            <Run Text="Downloaded: " />
-                            <Run Text="{Binding DownloadedTabs, Mode=OneWay}" />
-                </TextBlock>
+              
                 <CheckBox IsChecked="{Binding DownloadAll, Mode=TwoWay}" 
                           IsEnabled="{Binding IsSyncNotRunning}"
                           toolkit:TiltEffect.IsTiltEnabled="True"
