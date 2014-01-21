@@ -104,7 +104,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 hub.RaiseTabsDownloaded();
                 hub.RaiseTabsRefreshed();
                 IsSyncNotRunning = true;
-                SetProgressIndicator(true, DownloadedTabs.ToString() + " tabs downloaded - " + UploadedTabs.ToString() + " tabs Uploaded.");
+                SetProgressIndicator(true, DownloadedTabs.ToString() + " tabs downloaded - " + UploadedTabs.ToString() + " tabs uploaded.");
                 SystemTray.ProgressIndicator.IsIndeterminate = false;
             };
             IsSyncNotRunning = true;
@@ -118,6 +118,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 {
                     this.ProgressIndicator = new ProgressIndicator();
                     IsSyncNotRunning = false;
+                    SetProgressIndicator(!IsSyncNotRunning, "Connecting to SkyDrive..."); 
                     SyncService.Synchronize(DownloadAll);
                 });
             }
