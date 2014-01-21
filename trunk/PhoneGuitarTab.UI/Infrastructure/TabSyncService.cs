@@ -331,7 +331,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
             public string GetMessage()
             {
-                return string.Format("{0} {1} {2}", GetAction(), Group, Tab);
+                return string.Format("{0} {1} - {2}", GetAction(), Group, Tab);
             }
         }
 
