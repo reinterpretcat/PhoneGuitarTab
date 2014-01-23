@@ -378,6 +378,10 @@
     <Content Include="Html\js\utils\filereader.js" />
     <Content Include="Html\sandbox.html" />
     <Content Include="Html\texttab.html" />
+    <Content Include="Images\about\codeplex.png" />
+    <Content Include="Images\about\fb.png" />
+    <Content Include="Images\about\feedback.png" />
+    <Content Include="Images\about\rate.png" />
     <Content Include="Images\dark\appbar.back.rest.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -460,6 +464,7 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

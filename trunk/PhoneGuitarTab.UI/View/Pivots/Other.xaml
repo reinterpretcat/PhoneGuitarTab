@@ -8,10 +8,11 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     Header="other"
                     mc:Ignorable="d">
+    
     <phone:PivotItem.Resources>
         <Style x:Key="HyperlinkButtonContentStyle" TargetType="HyperlinkButton">
             <Setter Property="FontSize" Value="36" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalAlignment" Value="Left" />            
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="HyperlinkButton">
@@ -40,16 +41,19 @@
                             <Border Margin="{StaticResource PhoneHorizontalMargin}"
                                     Background="{TemplateBinding Background}"
                                     Padding="20">
-                                <TextBlock x:Name="TextElement"
+                                     <TextBlock x:Name="TextElement"
                                            FontSize="{TemplateBinding FontSize}"
                                            Text="{TemplateBinding Content}"
                                            TextWrapping="Wrap" />
+                              
+                              
                             </Border>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        
     </phone:PivotItem.Resources>
 
     <Grid Margin="28,40,0,0">
@@ -66,16 +70,6 @@
                         <Command:ExecuteCommandAction x:Name="SynchronizeClick"
                                                 Command="{Binding GoTo}"
                                                 CommandParameter="Synchronize" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </HyperlinkButton>
-
-            <HyperlinkButton Content="help" Style="{StaticResource HyperlinkButtonContentStyle}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <Command:ExecuteCommandAction x:Name="HelpClick"
-                                                Command="{Binding GoTo}"
-                                                CommandParameter="Help" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </HyperlinkButton>

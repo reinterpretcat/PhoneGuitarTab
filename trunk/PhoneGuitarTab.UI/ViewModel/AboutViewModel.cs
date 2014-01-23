@@ -1,8 +1,6 @@
-﻿
-using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Microsoft.Phone.Tasks;
-
+using System;
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Views;
@@ -21,6 +19,8 @@ namespace PhoneGuitarTab.UI.ViewModel
             SupportEmail = AppResources.SupportEmail;
             Support = AppResources.Support;
             SupportMessage = AppResources.SupportMessage;
+            Review = AppResources.Review;
+            ReviewTheApp = AppResources.ReviewTheApp;
             ApplicationVersion = App.Version;
         }
 
@@ -33,6 +33,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         public string SupportMessage { get; set; }
         public string AppTitle { get; set; }
         public string ApplicationVersion { get; set; }
+        public string Review { get; set; }
+        public string ReviewTheApp { get; set; }
 
         public ICommand ViewWebsiteCommand
         {
@@ -59,6 +61,15 @@ namespace PhoneGuitarTab.UI.ViewModel
                     emailComposeTask.Show();
                 });
             }
-        }        
+        }
+
+        public ICommand ReviewCommand
+        {
+            get
+            {
+                return new ExecuteCommand(() =>
+                  new MarketplaceReviewTask().Show());
+            }
+        }
     }
 }
