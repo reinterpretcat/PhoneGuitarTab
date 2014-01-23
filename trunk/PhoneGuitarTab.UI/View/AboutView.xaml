@@ -42,7 +42,7 @@
 
     <Grid x:Name="LayoutRoot">
         <Grid.Background>
-            <SolidColorBrush Color="{StaticResource PhoneAccentColor}">
+            <SolidColorBrush Color="Black">
             </SolidColorBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
