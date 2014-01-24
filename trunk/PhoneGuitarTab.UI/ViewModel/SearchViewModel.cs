@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.Phone.Shell;
 using System.Net.NetworkInformation;
 using System.Windows;
 
@@ -556,7 +557,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 
 
                   DownloadTab.RaiseCanExecuteChanged();
-
+                 
               });
         }
 
@@ -597,6 +598,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             IsSearching = true;
             groupSearch.Run(CurrentPageIndex, SearchTabType);
+            
         }
 
       

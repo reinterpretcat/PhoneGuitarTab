@@ -40,13 +40,13 @@
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
-
+  
     <Grid x:Name="LayoutRoot">
         <Controls:Pivot TitleTemplate="{StaticResource EmptyTitleTemplate}">
             <Pivots:Tabs />
+            <Pivots:Search />
             <Pivots:Bands />
             <Pivots:History />
-            <Pivots:Search />
             <Pivots:Other />
 
             <i:Interaction.Triggers>

@@ -9,6 +9,7 @@
             try
             {
                 InitializeComponent();
+              
             }
             catch (System.InvalidCastException)
             {

@@ -33,6 +33,7 @@ namespace PhoneGuitarTab.UI.ViewModel
           //  MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
 
             ProductVersion = App.Version;
+          
         }
 
         #endregion Constructors
