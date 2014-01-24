@@ -27,7 +27,7 @@ namespace PhoneGuitarTab.Core.Views
             // is no need to save state.
             if (e.NavigationMode != NavigationMode.Back)
             {
-                State["ViewModel"] = (this.DataContext as ViewModel);
+                
             // Save view model state in the page's State dictionary.
             (this.DataContext as ViewModel).SaveStateTo(this.State);
              }
