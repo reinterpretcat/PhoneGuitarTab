@@ -279,7 +279,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {       
-            if (!String.IsNullOrEmpty(value.ToString()))
+            if (value != null && !String.IsNullOrEmpty(value.ToString()))
             return new Uri(value.ToString(), UriKind.RelativeOrAbsolute);
             else
             return new Uri("", UriKind.RelativeOrAbsolute);
