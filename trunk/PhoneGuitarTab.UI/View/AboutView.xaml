@@ -111,7 +111,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button BorderThickness="0" Grid.Column="1" Content="rate and&#xD;&#xA; review" Margin="17,90,13,56"  FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2">
+                <Button BorderThickness="0" Grid.Column="1" Content="rate and&#xD;&#xA; review" Margin="17,90,13,56"  FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ReviewCommand, Mode=OneWay}" />
@@ -128,7 +128,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button BorderThickness="0" Grid.Column="3" Content="like" Margin="0,97,64,0" Width="62" FlowDirection="LeftToRight" Padding="15,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="44" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2">
+                <Button BorderThickness="0" Grid.Column="3" Content="like" Margin="0,97,64,0" Width="62" FlowDirection="LeftToRight" Padding="15,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="44" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
@@ -146,7 +146,7 @@
                     <Image x:Name="feedback" Source="/Images/about/feedback.png" Height="75" Width="80"/>
                 </Button>
 
-                <Button BorderThickness="0" Content="   give &#xD;&#xA;feedback " Grid.Column="2"  Margin="30,88,16,52"  FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2">
+                <Button BorderThickness="0" Content="   give &#xD;&#xA;feedback " Grid.Column="2"  Margin="30,88,16,52"  FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding SupportQuestionCommand, Mode=OneWay}" />
@@ -170,7 +170,7 @@
                     </i:Interaction.Triggers>
 
                 </Button>
-                <Button BorderThickness="0" Content="project page &#xD;&#xA;on CodePlex" Margin="0,61,173,0" Width="103" FlowDirection="LeftToRight" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" >
+                <Button BorderThickness="0" Content="project page &#xD;&#xA;on CodePlex" Margin="0,61,173,0" Width="103" FlowDirection="LeftToRight" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" Foreground="White" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
@@ -179,7 +179,7 @@
                     </i:Interaction.Triggers>
                 </Button>
 
-                <TextBlock Margin="140,176,24,10"
+                <TextBlock Margin="140,176,24,10" Foreground="White"
                        Text="{Binding Copyright}"
                        TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="14"  >
                 </TextBlock>
