@@ -9,6 +9,8 @@ namespace PhoneGuitarTab.UI.Entities
 {
    public static class TilesForTabs
     {
+       private const string TileNavigationUrl = "/View/StartupView.xaml?";
+
         private static FlipTileData GetSecondaryTileData(Tab tab)
         {
 
@@ -65,18 +67,18 @@ namespace PhoneGuitarTab.UI.Entities
 
         public static void PinTabToStart(Tab tab)
         {
-            bool tileExists = FindTile(tab.TabType.TileUrl + tab.Id.ToString());
+            bool tileExists = FindTile(TileNavigationUrl + tab.Id.ToString());
 
             if (!tileExists)
             {
                 StandardTileData tileData = GetSecondaryTileData(tab);
-                ShellTile.Create(new Uri(tab.TabType.TileUrl+ tab.Id.ToString(), UriKind.Relative), tileData, false);
+                ShellTile.Create(new Uri(TileNavigationUrl + tab.Id.ToString(), UriKind.Relative), tileData, false);
             }        
         }
 
         public static void RemoveTabFromStart(Tab tab)
-        { 
-            ShellTile TileToDelete = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains(tab.TabType.TileUrl + tab.Id.ToString()));
+        {
+            ShellTile TileToDelete = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains(TileNavigationUrl + tab.Id.ToString()));
         if (!(TileToDelete == null))
             TileToDelete.Delete();
         }
