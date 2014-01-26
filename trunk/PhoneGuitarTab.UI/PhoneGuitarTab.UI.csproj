@@ -135,6 +135,7 @@
     <Compile Include="Controls\AutoScroll.xaml.cs">
       <DependentUpon>AutoScroll.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\UpdateScript.cs" />
     <Compile Include="Entities\TilesForTabs.cs" />
     <Compile Include="Infrastructure\Behaviours\WaterMarkBehaviour.cs" />
     <Compile Include="Infrastructure\DefaultTrace.cs" />

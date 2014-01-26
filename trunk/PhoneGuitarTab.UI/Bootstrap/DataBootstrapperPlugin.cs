@@ -1,4 +1,6 @@
-﻿namespace PhoneGuitarTab.UI.Bootstrap
+﻿using PhoneGuitarTab.UI.Data;
+
+namespace PhoneGuitarTab.UI.Bootstrap
 {
     using System;
     using System.Linq;
@@ -22,71 +24,24 @@
 
         public bool Run()
         {
-            Action<IDataContextService> initialzeDatabase = service =>
+            Action<IDataContextService> onCreateDb = service =>
                 {
-                    // TODO change pictures
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML"});
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro"});
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "tab", ImageUrl = "/Images/instrument/Electric-Guitar"});
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "bass", ImageUrl = "/Images/instrument/Bass"});
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords"});
                     service.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums" });
-
-                    //TODO update existing Band Pictures
                 };
-            
-            Container.Register(Component.For<IDataContextService>().Use<DataContextService>(DbConnectionString, initialzeDatabase).Singleton());
-           
-            var dbService = Container.Resolve<IDataContextService>();
 
-            CheckDatabaseVesion(dbService);
+            Container.Register(Component.For<IDataContextService>().Use<DataContextService>(DbConnectionString, onCreateDb).Singleton());
+           
+            (new UpdateScript(Container.Resolve<IDataContextService>(), DbConnectionString, DbVersion))
+                .CheckAndUpdate();
+            
             return true;
         }
 
-        private void CheckDatabaseVesion(IDataContextService dbService)
-        {
-            TabDataContext dataContext = new TabDataContext(DbConnectionString);
-            DatabaseSchemaUpdater dbUpdater = dataContext.CreateDatabaseSchemaUpdater();
-
-            if (dbUpdater.DatabaseSchemaVersion < DbVersion)
-                UpdateDataBase(dbService, dbUpdater);
-        }
-
-        private void UpdateDataBase(IDataContextService dbService, DatabaseSchemaUpdater dbUpdater)
-        {
-             // Db schema changes
-
-            // Release 1.1
-             if (!dbService.TabTypes.Any(type => type.Name == "chords"))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords" });
-
-             if (!dbService.TabTypes.Any(type => type.Name == "drums"))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums" });
-
-            // Release 2.0
-             if (!dbService.TabTypes.Any(type => type.Name == Strings.GuitarPro))
-                 dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro" });
-
-            // Release 3.0
-            if (dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
-            {
-                dbUpdater.AddColumn<Tab>("CloudName");
-                dbUpdater.AddColumn<Tab>("AlbumCoverImageUrl");
-      
-                dbUpdater.AddColumn<Group>("LargeImageUrl");
-                dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
-                dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
-               
-            }
-
-             dbService.SubmitChanges();
-
-             // Add the new database version.
-             dbUpdater.DatabaseSchemaVersion = DbVersion;
-
-            // Perform the database update in a single transaction.
-            dbUpdater.Execute();
-        }
 
 
         public bool Update()
