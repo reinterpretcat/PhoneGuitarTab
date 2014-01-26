@@ -14,7 +14,7 @@ namespace PhoneGuitarTab.UI.Entities
         private static FlipTileData GetSecondaryTileData(Tab tab)
         {
 
-            if (tab.AlbumCoverImageUrl == "")
+            if (String.IsNullOrEmpty(tab.AlbumCoverImageUrl))
                 tab.AlbumCoverImageUrl = tab.Group.ImageUrl;
            
             FlipTileData tileData = new FlipTileData

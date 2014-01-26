@@ -409,7 +409,7 @@
     <Content Include="Images\instrument\guitar_tile.png" />
     <Content Include="Images\instrument\musicxml_tile.png" />
     <Content Include="Images\light\band.png" />
-    <Content Include="Images\light\band_light.png" />
+    <Content Include="Images\light\groupDefault.png" />
     <Content Include="Images\instrument\Bass_dark.png" />
     <Content Include="Images\instrument\Chords_dark.png" />
     <Content Include="Images\instrument\Drums_dark.png" />

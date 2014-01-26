@@ -81,6 +81,20 @@ namespace PhoneGuitarTab.UI.Data
                 dbUpdater.AddColumn<Group>("LargeImageUrl");
                 dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
                 _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
+
+                //update the tab type image urls.
+                _dbService.TabTypes.Single(tt => tt.Name == "tab").ImageUrl = "/Images/instrument/Electric-Guitar";
+                _dbService.TabTypes.Single(tt => tt.Name == "bass").ImageUrl = "/Images/instrument/Bass";
+                _dbService.TabTypes.Single(tt => tt.Name == "chords").ImageUrl = "/Images/instrument/Chords";
+                _dbService.TabTypes.Single(tt => tt.Name == "drums").ImageUrl = "/Images/instrument/Drums";
+                _dbService.TabTypes.Single(tt => tt.Name == Strings.GuitarPro).ImageUrl = "/Images/instrument/Guitarpro";
+
+                var allGroups = _dbService.Groups;
+                foreach (var group in allGroups) 
+                {
+                    group.ImageUrl = "/Images/light/groupDefault.png";
+                }
+
             }
         }
 
