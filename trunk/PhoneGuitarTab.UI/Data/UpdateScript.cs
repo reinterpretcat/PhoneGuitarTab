@@ -50,7 +50,6 @@ namespace PhoneGuitarTab.UI.Data
             //Update table data - for updated db.
             UpdateRowsForVersion3_0();
             _dbService.SubmitChanges();
-            dbUpdater.Execute();
            
         }
 
