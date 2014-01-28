@@ -27,6 +27,8 @@ namespace PhoneGuitarTab.UI.Data
 
             if (dbUpdater.DatabaseSchemaVersion < _dbVersion)
                 UpdateDataBase(dbUpdater);
+
+            
         }
 
         private void UpdateDataBase(DatabaseSchemaUpdater dbUpdater)
@@ -44,6 +46,12 @@ namespace PhoneGuitarTab.UI.Data
 
             // Perform the database update in a single transaction.
             dbUpdater.Execute();
+
+            //Update table data - for updated db.
+            UpdateRowsForVersion3_0();
+            _dbService.SubmitChanges();
+            dbUpdater.Execute();
+           
         }
 
         #region Release 1.1
@@ -77,7 +85,7 @@ namespace PhoneGuitarTab.UI.Data
             {
                 dbUpdater.AddColumn<Tab>("CloudName");
                 dbUpdater.AddColumn<Tab>("AlbumCoverImageUrl");
-      
+
                 dbUpdater.AddColumn<Group>("LargeImageUrl");
                 dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
                 _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
@@ -88,14 +96,18 @@ namespace PhoneGuitarTab.UI.Data
                 _dbService.TabTypes.Single(tt => tt.Name == "chords").ImageUrl = "/Images/instrument/Chords";
                 _dbService.TabTypes.Single(tt => tt.Name == "drums").ImageUrl = "/Images/instrument/Drums";
                 _dbService.TabTypes.Single(tt => tt.Name == Strings.GuitarPro).ImageUrl = "/Images/instrument/Guitarpro";
-
-                var allGroups = _dbService.Groups;
-                foreach (var group in allGroups) 
-                {
-                    group.ImageUrl = "/Images/light/groupDefault.png";
-                }
-
+            
             }
+        }
+
+        private void UpdateRowsForVersion3_0()
+        {
+
+            foreach (Group g in _dbService.Groups)
+            {
+                _dbService.Groups.Single(group => group.Id == g.Id).ImageUrl = "/Images/light/groupDefault.png";
+            }
+
         }
 
         #endregion
