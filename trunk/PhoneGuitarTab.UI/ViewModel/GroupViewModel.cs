@@ -221,6 +221,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             set;
         }
 
+        public ExecuteCommand<int> PinTabToStart
+        {
+            get;
+            private set;
+        }
         /*public ExecuteCommand SettingsCommand
         {
             get;
@@ -287,6 +292,17 @@ namespace PhoneGuitarTab.UI.ViewModel
             NavigationService.NavigateTo(Strings.Startup);
         }
 
+        private void DoPinTabToStart(int id)
+        {
+
+            Tab tab = (from Tab t in Database.Tabs
+                       where t.Id == id
+                       select t).Single();
+
+            TilesForTabs.PinTabToStart(tab);
+        }
+
+
         #endregion Command handlers
 
 
@@ -340,7 +356,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             SearchCommand = new ExecuteCommand<Group>(DoSearch);
             HomeCommand = new ExecuteCommand(DoHome);
             RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);
-
+            PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
             //CancelTab = new ExecuteCommand(() => { });
