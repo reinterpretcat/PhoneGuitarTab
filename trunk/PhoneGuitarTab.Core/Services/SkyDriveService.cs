@@ -199,6 +199,8 @@ namespace PhoneGuitarTab.Core.Services
 
                 _liveSession = _liveResult.Session;
                 _liveClient = new LiveConnectClient(_liveSession);
+
+                _liveClient.BackgroundTransferPreferences = BackgroundTransferPreferences.AllowCellularAndBattery;
             }
 
             if (_folderId == null) await GetSkyDriveFolder();
