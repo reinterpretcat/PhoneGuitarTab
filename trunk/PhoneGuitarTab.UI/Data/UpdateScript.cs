@@ -27,8 +27,6 @@ namespace PhoneGuitarTab.UI.Data
 
             if (dbUpdater.DatabaseSchemaVersion < _dbVersion)
                 UpdateDataBase(dbUpdater);
-
-            
         }
 
         private void UpdateDataBase(DatabaseSchemaUpdater dbUpdater)
@@ -50,7 +48,7 @@ namespace PhoneGuitarTab.UI.Data
             //Update table data - for updated db.
             UpdateRowsForVersion3_0();
             _dbService.SubmitChanges();
-           
+
         }
 
         #region Release 1.1
@@ -65,7 +63,7 @@ namespace PhoneGuitarTab.UI.Data
         #endregion
 
         #region Release 2.0
-        
+
         private void CheckAndUpdateToVersion2_0(DatabaseSchemaUpdater dbUpdater)
         {
             // Release 2.0
@@ -79,34 +77,36 @@ namespace PhoneGuitarTab.UI.Data
 
         private void CheckAndUpdateToVersion3_0(DatabaseSchemaUpdater dbUpdater)
         {
-               // Release 3.0
-            if (dbUpdater.DatabaseSchemaVersion > 0 && dbUpdater.DatabaseSchemaVersion < 3)
-            {
-                dbUpdater.AddColumn<Tab>("CloudName");
-                dbUpdater.AddColumn<Tab>("AlbumCoverImageUrl");
+            // Release 3.0
+            // NOTE can't relay on DatabaseSchemaVersion cause it's always zero for clean installed versions
+            // NOTE can't check for column existing - no such API, so use ImageUrl as a marker of version 3.0
+            if (_dbService.TabTypes.Any(type => type.ImageUrl == "/Images/instrument/Electric-Guitar"))
+                return;
 
-                dbUpdater.AddColumn<Group>("LargeImageUrl");
-                dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
-                _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
+            dbUpdater.AddColumn<Tab>("CloudName");
+            dbUpdater.AddColumn<Tab>("AlbumCoverImageUrl");
 
-                //update the tab type image urls.
-                _dbService.TabTypes.Single(tt => tt.Name == "tab").ImageUrl = "/Images/instrument/Electric-Guitar";
-                _dbService.TabTypes.Single(tt => tt.Name == "bass").ImageUrl = "/Images/instrument/Bass";
-                _dbService.TabTypes.Single(tt => tt.Name == "chords").ImageUrl = "/Images/instrument/Chords";
-                _dbService.TabTypes.Single(tt => tt.Name == "drums").ImageUrl = "/Images/instrument/Drums";
-                _dbService.TabTypes.Single(tt => tt.Name == Strings.GuitarPro).ImageUrl = "/Images/instrument/Guitarpro";
-            
-            }
+            dbUpdater.AddColumn<Group>("LargeImageUrl");
+            dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
+            _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
+
+            //update the tab type image urls.
+            _dbService.TabTypes.Single(tt => tt.Name == "tab").ImageUrl = "/Images/instrument/Electric-Guitar";
+            _dbService.TabTypes.Single(tt => tt.Name == "bass").ImageUrl = "/Images/instrument/Bass";
+            _dbService.TabTypes.Single(tt => tt.Name == "chords").ImageUrl = "/Images/instrument/Chords";
+            _dbService.TabTypes.Single(tt => tt.Name == "drums").ImageUrl = "/Images/instrument/Drums";
+            _dbService.TabTypes.Single(tt => tt.Name == Strings.GuitarPro).ImageUrl = "/Images/instrument/Guitarpro";
         }
 
         private void UpdateRowsForVersion3_0()
         {
+            if (_dbService.TabTypes.Any(type => type.ImageUrl == "/Images/instrument/Electric-Guitar"))
+                return;
 
             foreach (Group g in _dbService.Groups)
             {
-                _dbService.Groups.Single(group => group.Id == g.Id).ImageUrl = "/Images/light/groupDefault.png";
+                _dbService.Groups.Single(group => @group.Id == g.Id).ImageUrl = "/Images/light/groupDefault.png";
             }
-
         }
 
         #endregion

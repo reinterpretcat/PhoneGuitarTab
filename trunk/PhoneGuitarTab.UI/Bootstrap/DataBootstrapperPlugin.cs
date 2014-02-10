@@ -14,8 +14,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
     /// </summary>
     public class DataBootstrapperPlugin : IBootstrapperPlugin
     {
-        private const int DbVersion = 3;
-        const string DbConnectionString = "Data Source=isostore:/TabDatabase.sdf";
+        private const int DbVersion = 4;
+        const string DbConnectionString = "Data Source=isostore:/TabData.sdf";
 
         public string Name { get { return "Data"; } }
 
