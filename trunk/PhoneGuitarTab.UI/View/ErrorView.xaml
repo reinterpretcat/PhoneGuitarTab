@@ -12,7 +12,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="False">
-  
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -28,23 +28,21 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            
+
             <StackPanel Orientation="Vertical">
-                <TextBlock Margin="24,-12,24,0" Text="Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:"
+                <TextBlock Margin="24,0,24,0" Text="Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:"
                            TextWrapping="Wrap"  
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextSmallStyle}">
-                </TextBlock>
-                <TextBlock Name="ErrorTextBlock" Margin="69,20,24,0" Text=""
+                           Style="{StaticResource PhoneTextSmallStyle}"/>
+                <TextBlock x:Name="ErrorTextBlock" Margin="24,20,24,0" Text=""
                            TextWrapping="Wrap"  
-                           Style="{StaticResource PhoneTextSmallStyle}">
-                </TextBlock>
+                           Style="{StaticResource PhoneTextSmallStyle}" Height="42"/>
             </StackPanel>
-            
-            
+
+
         </Grid>
 
     </Grid>
-    
+
 
 </phone:PhoneApplicationPage>
