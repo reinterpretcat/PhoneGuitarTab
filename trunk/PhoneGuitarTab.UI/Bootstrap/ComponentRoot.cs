@@ -1,4 +1,6 @@
-﻿namespace PhoneGuitarTab.UI.Bootstrap
+﻿using System;
+
+namespace PhoneGuitarTab.UI.Bootstrap
 {
     using System.Linq;
     using PhoneGuitarTab.Core.Bootstrap;
@@ -16,15 +18,23 @@
 
         public ComponentRoot()
         {
-            _container = new Container();
+            try
+            {
+                _container = new Container();
 
-            _container.Register(Component.For<IBootstrapperPlugin>().Use<CoreBootstrapperPlugin>().Named("Core").Singleton());
-            _container.Register(Component.For<IBootstrapperPlugin>().Use<DataBootstrapperPlugin>().Named("Data").Singleton());
-            _container.Register(Component.For<IBootstrapperPlugin>().Use<NavigationBootstrapperPlugin>().Named("Navigation").Singleton());
-            _container.Register(Component.For<IBootstrapperPlugin>().Use<CloudBootstrapperPlugin>().Named("Cloud").Singleton());
+                _container.Register(Component.For<IBootstrapperPlugin>().Use<CoreBootstrapperPlugin>().Named("Core").Singleton());
+                _container.Register(Component.For<IBootstrapperPlugin>().Use<DataBootstrapperPlugin>().Named("Data").Singleton());
+                _container.Register(Component.For<IBootstrapperPlugin>().Use<NavigationBootstrapperPlugin>().Named("Navigation").Singleton());
+                _container.Register(Component.For<IBootstrapperPlugin>().Use<CloudBootstrapperPlugin>().Named("Cloud").Singleton());
 
-            _container.ResolveAll<IBootstrapperPlugin>().ToList()
-                .Aggregate(true, (current, task) => current & task.Run());
+                _container.ResolveAll<IBootstrapperPlugin>().ToList()
+                    .Aggregate(true, (current, task) => current & task.Run());
+            }
+            catch (Exception fatalException)
+            {
+                // suppress any error here, let fail when app is initialized
+                App.FatalException = fatalException;
+            }
         }
 
         #region View models
@@ -73,17 +83,6 @@
             get
             {
                 return _container.Resolve<ViewModel>(Strings.TextTab) as TextTabViewModel;
-            }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-          "CA1822:MarkMembersAsStatic",
-          Justification = "This non-static member is needed for data binding purposes.")]
-        public HelpViewModel Help
-        {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.Help) as HelpViewModel;
             }
         }
 

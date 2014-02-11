@@ -152,6 +152,9 @@
     <Compile Include="ViewModel\SynchronizeViewModel.cs" />
     <Compile Include="ViewModel\StaveTabViewModel.cs" />
     <Compile Include="ViewModel\TabViewModelBase.cs" />
+    <Compile Include="View\ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SynchronizeView.xaml.cs">
       <DependentUpon>SynchronizeView.xaml</DependentUpon>
     </Compile>
@@ -192,7 +195,6 @@
     <Compile Include="Infrastructure\TabFileStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AboutViewModel.cs" />
-    <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\DataContextViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="Infrastructure\SearchType.cs" />
@@ -201,9 +203,6 @@
     <Compile Include="ViewModel\TextTabViewModel.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HelpView.xaml.cs">
-      <DependentUpon>HelpView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GroupView.xaml.cs">
       <DependentUpon>GroupView.xaml</DependentUpon>
@@ -224,6 +223,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\AutoScroll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -266,10 +269,6 @@
     <Page Include="View\AboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\HelpView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\GroupView.xaml">
       <Generator>MSBuild:Compile</Generator>

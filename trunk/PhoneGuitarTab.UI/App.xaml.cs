@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Controls;
+﻿using System;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Data.Linq;
 using Microsoft.Phone.Shell;
 using PhoneGuitarTab.Core;
@@ -118,12 +119,19 @@ namespace PhoneGuitarTab.UI
                 // An unhandled exception has occurred; break into the debugger
                 Debugger.Break();
             }
+
+            if (FatalException == null)
+                FatalException = e.ExceptionObject;
+
+
+            e.Handled = true;
+
+            (RootVisual as PhoneApplicationFrame).Source =
+                new Uri("/View/ErrorView.xaml", UriKind.Relative);
+
         }
 
         #endregion Event handlers
-
-
-        
 
         #region Phone application initialization
 
@@ -158,6 +166,12 @@ namespace PhoneGuitarTab.UI
             // Remove this handler since it is no longer needed
             RootFrame.Navigated -= CompleteInitializePhoneApplication;
         }
+
+        #endregion
+
+        #region
+
+        public static Exception FatalException { get; set; }
 
         #endregion
     }
