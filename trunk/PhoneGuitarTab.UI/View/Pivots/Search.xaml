@@ -12,7 +12,7 @@
                     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                     x:Name="root"
                     DataContext="{Binding Search, Source={StaticResource Locator}}"
-                    Header="online"
+                    Header="search"
                     mc:Ignorable="d">
     <phone:PivotItem.Resources>
         <DataTemplate x:Key="SearchHeaderTemplate">

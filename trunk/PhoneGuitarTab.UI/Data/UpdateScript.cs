@@ -88,6 +88,13 @@ namespace PhoneGuitarTab.UI.Data
 
             dbUpdater.AddColumn<Group>("LargeImageUrl");
             dbUpdater.AddColumn<Group>("ExtraLargeImageUrl");
+        }
+
+        private void UpdateRowsForVersion3_0()
+        {
+            if (_dbService.TabTypes.Any(type => type.ImageUrl == "/Images/instrument/Electric-Guitar"))
+                return;
+
             _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
 
             //update the tab type image urls.
@@ -96,12 +103,6 @@ namespace PhoneGuitarTab.UI.Data
             _dbService.TabTypes.Single(tt => tt.Name == "chords").ImageUrl = "/Images/instrument/Chords";
             _dbService.TabTypes.Single(tt => tt.Name == "drums").ImageUrl = "/Images/instrument/Drums";
             _dbService.TabTypes.Single(tt => tt.Name == Strings.GuitarPro).ImageUrl = "/Images/instrument/Guitarpro";
-        }
-
-        private void UpdateRowsForVersion3_0()
-        {
-            if (_dbService.TabTypes.Any(type => type.ImageUrl == "/Images/instrument/Electric-Guitar"))
-                return;
 
             foreach (Group g in _dbService.Groups)
             {
