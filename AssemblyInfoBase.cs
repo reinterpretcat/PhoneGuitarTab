@@ -9,5 +9,5 @@ using System.Resources;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("3.1.0.*")]
+[assembly: AssemblyVersion("3.2.0.*")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
