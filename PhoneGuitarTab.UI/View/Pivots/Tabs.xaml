@@ -1,0 +1,66 @@
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.Pivots.Tabs"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    DataContext="{Binding Collection, Source={StaticResource Locator}}"
+                    Header="tabs"
+                    mc:Ignorable="d">
+   
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+    <phone:PivotItem.Resources>
+        <Infrastructure:TabsGroupsCollectionToVisibilityConverter x:Key="tabsGroupsCollectionToVisibility" />
+    </phone:PivotItem.Resources>
+
+    <phone:LongListSelector x:Name="TabList"
+                                toolkit:TiltEffect.IsTiltEnabled="True"
+                              Background="Transparent" IsGroupingEnabled="true" HideEmptyGroups ="true"
+                              GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                              JumpListStyle="{StaticResource SearchListJumpListStyle}"
+                              ItemTemplate="{StaticResource TabItemDataTemplate}"
+                              ItemsSource="{Binding AllTabs, Mode=TwoWay}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Tap">
+                <Command:ExecuteCommandAction Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+        <phone:LongListSelector.ListHeaderTemplate>
+            <DataTemplate>
+                <TextBlock Margin="0,80"
+                           HorizontalAlignment="Center"
+                           FontSize="26"
+                           Opacity="0.5"
+                           Text="You have nothing downloaded yet."
+                           Visibility="{Binding DataContext.AllTabs,
+                                                ElementName=TabList,
+                                                Converter={StaticResource tabsGroupsCollectionToVisibility}}" />
+            </DataTemplate>
+        </phone:LongListSelector.ListHeaderTemplate>
+    </phone:LongListSelector>
+
+</phone:PivotItem>

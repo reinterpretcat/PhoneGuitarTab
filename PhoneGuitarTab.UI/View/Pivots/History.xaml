@@ -1,0 +1,25 @@
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.Pivots.History"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    Header="history"
+                    mc:Ignorable="d">
+    <Grid>
+        <ListBox x:Name="TabList"
+                 toolkit:TiltEffect.IsTiltEnabled="True"
+                 ItemTemplate="{StaticResource HistoryTabItemDataTemplate}"
+                 ItemsSource="{Binding TabsHistory.Tabs}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Tap">
+                    <Command:ExecuteCommandAction Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+    </Grid>
+
+</phone:PivotItem>

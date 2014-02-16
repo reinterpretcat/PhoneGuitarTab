@@ -1,0 +1,86 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="PhoneGuitarTab.UI.View.SynchronizeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:commands="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+    DataContext="{Binding Synchronize, Source={StaticResource Locator}}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="SYNCHRONIZE" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="skydrive" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel Orientation="Vertical">
+                <Button HorizontalAlignment="Stretch" 
+                    toolkit:TiltEffect.IsTiltEnabled="True"
+                    VerticalAlignment="Top" 
+                    IsEnabled="{Binding IsSyncNotRunning}"
+                    Height="80"
+                    Content="Start!">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <commands:ExecuteCommandAction Command="{Binding LaunchSync, Mode=OneWay}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+
+              
+                <CheckBox IsChecked="{Binding DownloadAll, Mode=TwoWay}" 
+                          IsEnabled="{Binding IsSyncNotRunning}"
+                          toolkit:TiltEffect.IsTiltEnabled="True"
+                          Content="Restore all tabs" />
+                <TextBlock Margin="56,-12,12,0" Text="This option is useful if you removed all tabs from your phone and want to get them back from skydrive"
+                           TextWrapping="Wrap"  
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   Style="{StaticResource PhoneTextSmallStyle}">
+                </TextBlock>
+            </StackPanel>
+            
+            
+        </Grid>
+        
+    </Grid>
+</phone:PhoneApplicationPage>

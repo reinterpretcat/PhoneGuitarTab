@@ -1,0 +1,192 @@
+﻿<Views:ViewPage x:Class="PhoneGuitarTab.UI.View.AboutView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                DataContext="{Binding About,
+                                     Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="False"
+               mc:Ignorable="d">
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <SolidColorBrush Color="Black">
+            </SolidColorBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="156" />
+            <RowDefinition Height="45*" />
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="56*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="TitlePanel"
+                    Grid.Row="0"
+                    Margin="-2,16,2,0">
+            <Grid Height="128">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="116" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image x:Name="PhoneGuitarTab" Source="/ApplicationIcon.png" Margin="0,10,1,29">
+                </Image>
+                <TextBlock VerticalAlignment="Bottom"
+                	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                	FontSize="{StaticResource PhoneFontSizeLarge}"
+                	Foreground="White"
+                	Text="Phone Guitar Tab" Margin="0,0,55,65" Height="43" Grid.Column="1" />
+                <TextBlock VerticalAlignment="Center"
+                	FontFamily="{StaticResource PhoneFontFamilyLight}"
+                	Text="version" Margin="3,66,272,41"  Grid.Column="1" FontSize="16" Height="21" />
+                <TextBlock Margin="65,61,136,28"
+                		VerticalAlignment="Center"
+                		FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                		Text="{Binding ApplicationVersion}"
+                		FontSize="20" Grid.Column="1" Height="39" />
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Margin="0,0,2,0" Grid.Row="1">
+            <TextBlock Margin="20,15,0,6"
+        		TextWrapping="Wrap" Foreground="White" Height="140" >
+        		<Run FontFamily="Segoe WP Semibold" Text="Phone Guitar Tab "/>
+        		<Run Text="is an open source project and is licensed under Microsoft Public License (Ms-PL). "/>
+        		<LineBreak/>
+        		<Run/>
+        		<LineBreak/>
+        		<Run Text="Our team invites developers &amp; designers to join us to improve the best tablature app on the Store."/>
+            </TextBlock>
+        </StackPanel>
+
+        <StackPanel Margin="0,0,2,0" Grid.Row="2" toolkit:TiltEffect.IsTiltEnabled="True">
+            <Grid Height="220">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="13*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="36" />
+                    <ColumnDefinition Width="129*" />
+                    <ColumnDefinition Width="161" />
+                    <ColumnDefinition Width="152*" />
+                </Grid.ColumnDefinitions>
+                <Button  BorderThickness="0" Grid.Column="1" Margin="12,0">
+                    <Image x:Name="rate" Source="/Images/about/rate.png" Grid.Column="1" Height="80" Width="52">
+                    </Image>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding ReviewCommand, Mode=OneWay}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button BorderThickness="0" Grid.Column="1" Content="rate and&#xD;&#xA; review" Margin="17,90,13,56"  FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding ReviewCommand, Mode=OneWay}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <Button BorderThickness="0" Grid.Column="3" Margin="10,0,36,1" >
+                    <Image x:Name="fb" Source="/Images/about/fb.png" Width="69"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
+        					CommandParameter="{Binding FacebookUrl}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button BorderThickness="0" Grid.Column="3" Content="like" Margin="0,97,64,0" Width="62" FlowDirection="LeftToRight" Padding="15,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="44" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
+        					CommandParameter="{Binding FacebookUrl}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <Button BorderThickness="0" Grid.Column="2" Margin="21,6,13,1"  >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding SupportQuestionCommand, Mode=OneWay}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image x:Name="feedback" Source="/Images/about/feedback.png" Height="75" Width="80"/>
+                </Button>
+
+                <Button BorderThickness="0" Content="   give &#xD;&#xA;feedback " Grid.Column="2"  Margin="30,88,16,52"  FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding SupportQuestionCommand, Mode=OneWay}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Margin="0,0,2,0" Grid.Row="3" toolkit:TiltEffect.IsTiltEnabled="True">
+            <Grid Height="222" >
+
+                <Button  BorderThickness="0" Margin="199,3,176,119">
+                    <Image x:Name="codeplex" Source="/Images/about/codeplex.png" Height="55" Width="45"  >
+                    </Image>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
+        				CommandParameter="{Binding CompanyUrl}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                </Button>
+                <Button BorderThickness="0" Content="project page &#xD;&#xA;on CodePlex" Margin="0,61,173,0" Width="103" FlowDirection="LeftToRight" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" Foreground="White" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
+        				CommandParameter="{Binding CompanyUrl}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <TextBlock Margin="140,176,24,10" Foreground="White"
+                       Text="{Binding Copyright}"
+                       TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="14"  >
+                </TextBlock>
+            </Grid>
+        </StackPanel>
+
+
+    </Grid>
+
+</Views:ViewPage>

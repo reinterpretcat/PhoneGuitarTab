@@ -1,0 +1,47 @@
+<Project ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!--<Import Project="C:\Program Files (x86)\MSBuild\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>-->
+    <PropertyGroup>
+        <Major>2</Major>
+        <Minor>0</Minor>
+        <Build>0</Build>
+        <Revision>x</Revision>
+        <OutputPath>Build\</OutputPath>
+        <OutputPathDebug>..\Build\Debug\</OutputPathDebug>
+        <OutputPathRelease>..\Build\Release\</OutputPathRelease>
+    </PropertyGroup>
+	 <Target Name="BuildDebug" DependsOnTargets="Clean; Version">
+		 <PropertyGroup>
+			<Configuration>Debug</Configuration>
+		 </PropertyGroup>
+        <msbuild Projects="PhoneGuitarTab.sln" Properties="Configuration=$(Configuration);OutputPath=$(OutputPathDebug)"/>
+    </Target>
+	<Target Name="BuildDebugAndRunUnitTests" DependsOnTargets="BuildDebug;UnitTests"></Target>
+	<Target Name="BuildReleaseAndRunUnitTests" DependsOnTargets="BuildRelease;UnitTests"></Target>
+	<Target Name="BuildRelease" DependsOnTargets="Clean; Version">
+		 <PropertyGroup>
+			<Configuration>Release</Configuration>
+		 </PropertyGroup>
+        <msbuild  Projects="PhoneGuitarTab.sln" Properties="Configuration=$(Configuration);OutputPath=$(OutputPathRelease)"/>
+    </Target>
+    <Target Name="Clean">
+        <RemoveDir Directories="$(OutputPath)" Condition="Exists('$(OutputPath)')"/>
+        <MakeDir Directories="$(OutputPath)" Condition="!Exists('$(OutputPath)')"/>
+    </Target>
+    <Target Name="Version">
+        <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)"/>
+        <!--<XmlUpdate
+                Namespace=""
+                XmlFileName="WindowsPhone\Properties\WMAppManifest.xml"
+                XPath="//App[@Version]//@Version"
+                Value="$(Major).$(Minor).$(Build).$(Revision)"/>-->
+    </Target>
+	<Target Name="UnitTests">
+		<PropertyGroup>
+		  <TestSuccessOrNot>1</TestSuccessOrNot>
+		</PropertyGroup>
+		<Exec Command='"$(VS110COMNTOOLS)..\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"  "$(MSBuildStartupDirectory)\$(OutputPath)$(Configuration)\PhoneGuitarTab.UnitTests_$(Configuration)_x86.xap"' >
+			<Output TaskParameter="ExitCode" PropertyName="TestSuccessOrNot"/>
+		</Exec>
+		<Error Condition="'$(TestSuccessOrNot)'=='1'" Text="Unit tests are failed" />
+	</Target>
+</Project>

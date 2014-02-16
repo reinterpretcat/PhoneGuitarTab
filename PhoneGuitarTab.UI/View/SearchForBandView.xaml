@@ -1,0 +1,126 @@
+﻿<Views:ViewPage x:Class="PhoneGuitarTab.UI.Notation.SearchForBandView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+               xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" x:Name="root"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               DataContext="{Binding Search, Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               shell:SystemTray.IsVisible="True"
+               mc:Ignorable="d">
+
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="2,0,2,8">
+            <Run Text="Results for" />
+            <Run Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}" />
+            <Run Text="online" />
+        </TextBlock>
+
+        <phone:LongListSelector x:Name="tabsList"
+                                toolkit:TiltEffect.IsTiltEnabled="True"
+                                  Grid.Row="1" IsGroupingEnabled="True" HideEmptyGroups="True"
+                                  Background="Transparent"
+                                  JumpListStyle="{StaticResource SearchListJumpListStyle}"
+                                  ItemTemplate="{StaticResource SearchTabItemTemplate}"
+                                  ItemsSource="{Binding SearchGroupTabs}"
+                                  Tag="{Binding FirstTabInList}">
+
+            <phone:LongListSelector.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Border Background="Transparent">
+                        <Border Width="75"
+                                Height="75"
+                                HorizontalAlignment="Left"
+                                Background="{StaticResource PhoneAccentBrush}">
+                            <TextBlock VerticalAlignment="Bottom"
+                                       Foreground="{StaticResource PhoneForegroundBrush}"
+                                       Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                       Text="{Binding Key}" />
+                        </Border>
+                    </Border>
+                </DataTemplate>
+            </phone:LongListSelector.GroupHeaderTemplate>
+
+            <phone:LongListSelector.ListHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.HeaderPagingVisibility, ElementName=root}">
+                            <TextBlock Padding="8" Text="Pages:" />
+                            <ListBox x:Name="pagesList"
+                                     ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
+                                     ItemsSource="{Binding Path=DataContext.Pages,
+                                                           ElementName=root}"
+                                     SelectedItem="{Binding Path=DataContext.SelectedPage, Mode=TwoWay,
+                                                            ElementName=root}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <toolkit:WrapPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock x:Name="pageHyperlink"
+                                                   FontSize="22"
+                                                   Padding="24,8"
+                                                   Text="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </phone:LongListSelector.ListHeaderTemplate>
+
+            <phone:LongListSelector.ListFooterTemplate>
+                <DataTemplate>
+                    <Button HorizontalAlignment="Stretch"
+                            Background="{StaticResource PhoneAccentBrush}"
+                            Click="ToTopButton_Click"
+                            Visibility="{Binding Path=DataContext.IsFooterNeeded,
+                                                 ElementName=root,
+                                                 Converter={StaticResource boolVisibility}}">
+                        to top
+                    </Button>
+                </DataTemplate>
+            </phone:LongListSelector.ListFooterTemplate>
+
+        </phone:LongListSelector>
+
+        <ProgressBar x:Name="performanceBar"
+                                        VerticalAlignment="Top"
+                                        IsIndeterminate="{Binding IsSearching,
+                                                                  Mode=TwoWay}"
+                                        Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}" />
+
+        <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1.0">
+            <custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}"
+                                                     IconUri="/Images/dark/appbar.feature.home.png"
+                                                     Text="To all tabs" />
+        </custom:BindableApplicationBar>
+    </Grid>
+</Views:ViewPage>

@@ -1,0 +1,88 @@
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.Pivots.Bands"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    DataContext="{Binding Collection, Source={StaticResource Locator}}"
+                    Header="bands"
+                    mc:Ignorable="d">
+    <phone:PivotItem.Resources>
+        <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush"/>
+        <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
+        <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="GridCellSize"  Value="99,99"/>
+            <Setter Property="LayoutMode" Value="Grid" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Border 
+                            Margin="6"
+                            Background="{Binding Converter={StaticResource groupBrush}}"
+                            IsHitTestVisible="{Binding HasItems}">
+                            <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
+                                   VerticalAlignment="Bottom"
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   FontSize="36"
+                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                   Text="{Binding Key}" />
+                        </Border>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PivotItem.Resources>
+
+    <phone:LongListSelector x:Name="GroupList"
+                              toolkit:TiltEffect.IsTiltEnabled="True"
+                              IsGroupingEnabled="true" HideEmptyGroups ="true"
+                              Background="Transparent"
+                              GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                              JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"  
+                              ItemsSource="{Binding Groups}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Tap">
+                <Command:ExecuteCommandAction Command="{Binding GoToGroup}" CommandParameter="{Binding ElementName=GroupList}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+       
+        <phone:LongListSelector.ItemTemplate>
+            <DataTemplate>
+                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image VerticalAlignment="Center"
+                           Stretch="UniformToFill"
+                           Visibility="Visible" MaxHeight="130" MaxWidth="130">
+                      <Image.Source >
+                            <BitmapImage UriSource="{Binding Item2.ImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
+                        </Image.Source>
+                    </Image>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Margin="20,-10,8,6"
+                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   Text="{Binding Item2.Name}" />
+                        <TextBlock Margin="48,0"
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   Style="{StaticResource PhoneTextNormalStyle}">
+                            <Run Text="Tabs: " />
+                            <Run Text="{Binding Item1}" />
+                        </TextBlock>
+                    </StackPanel>
+
+                </Grid>
+            </DataTemplate>
+        </phone:LongListSelector.ItemTemplate>
+
+    </phone:LongListSelector>
+
+</phone:PivotItem>

@@ -1,0 +1,38 @@
+﻿div.vex-tabdiv {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  /*padding: 0 10px 10px 0;*/
+  padding: 0px;
+  margin: 0px;
+  color: #554;
+  white-space: pre;
+}
+div#body {
+    margin-left: -10px;
+}
+
+div.vex-tabdiv .vex-canvas {
+  background: #eed;
+  /*border: 10px solid #ddc;*/
+}
+/*
+div.vex-tabdiv .editor {
+  background: #cfc;
+  font-family: Courier;
+  font-size: 14px;
+}*/
+/*
+div.vex-tabdiv .editor-error .text {
+  background: #faa;
+  border: 5px solid #f88;
+  font-family: Courier;
+  font-size: 14px;
+  padding: 3px;
+}
+*/
+div.vex-tabdiv .title {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  padding: 10px;
+  color: #554;
+}

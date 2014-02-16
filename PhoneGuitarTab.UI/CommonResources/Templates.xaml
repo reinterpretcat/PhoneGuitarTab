@@ -1,0 +1,339 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+                    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls">
+
+    <Infrastructure:StringToIntConverter x:Key="stringToInt" />
+    <Infrastructure:IntToStringConverter x:Name="IntToStr" />
+    <Infrastructure:TabToBrushValueConverter x:Key="tabBrush" />
+    <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush" />
+    <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+    <Infrastructure:SearchTypeConverter x:Key="searchTypeConverter" />
+    <Infrastructure:SearchTabTypeConverter x:Key="searchTabTypeConverter" />
+    <Infrastructure:IntToVisibilityConverter x:Key="intToVisibility" />
+    <Infrastructure:RelativeDateTimeConverter x:Key="relativeTimeConverter"/>
+
+    <DataTemplate x:Key="TabItemDataTemplate">
+        <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            
+            <Image VerticalAlignment="Center"
+                   Source="{Binding RelativeImageUri}"
+                   Stretch="None" 
+                   Visibility ="Visible" />
+
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                <TextBlock Margin="12,0"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextLargeStyle}"
+                           Text="{Binding Name}"
+                           TextTrimming="WordEllipsis" />
+                <TextBlock Margin="28,0"
+                           HorizontalAlignment="Left"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="{Binding Group}"
+                           TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal">
+                    <uiControls:RatingControl Margin="12, 2, 0, 4"
+                                              VerticalAlignment="Bottom"
+                                              Rating="{Binding Rating,
+                                                               Converter={StaticResource stringToInt}}" />
+                    <TextBlock VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Style="{StaticResource PhoneTextSmallStyle}"
+                               Text="{Binding Type}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu>
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
+                                                        ElementName=TabList}"
+                                      CommandParameter="{Binding Id}"
+                                      Header="remove tab" />
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.PinTabToStart, ElementName=TabList}"
+                                                     
+                                      CommandParameter="{Binding Id}"
+                                      Header="pin to start" />
+                </toolkit:ContextMenu>
+                
+            </toolkit:ContextMenuService.ContextMenu>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="HistoryTabItemDataTemplate">
+        <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Image VerticalAlignment="Center"
+                   Source="{Binding RelativeImageUri}"
+                   Stretch="None" 
+                   Visibility ="Visible" />
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                <TextBlock Margin="12,0"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextLargeStyle}"
+                           Text="{Binding Name}"
+                           TextTrimming="WordEllipsis" />
+                <TextBlock Margin="28,0"
+                           HorizontalAlignment="Left"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="{Binding Group}"
+                           TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal">
+                    <uiControls:RatingControl Margin="12, 2, 0, 4"
+                                              VerticalAlignment="Bottom"
+                                              Rating="{Binding Rating,
+                                                               Converter={StaticResource stringToInt}}" />
+                    <TextBlock VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Style="{StaticResource PhoneTextSmallStyle}"
+                               Text="{Binding Type}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Grid.Row="1"
+                       Margin="12,0,0,0"
+                       Grid.Column="1" Foreground="Gray">
+                <Run Text="last opened:" />
+                <Run Text="{Binding LastOpened, Converter={StaticResource relativeTimeConverter}}" />
+            </TextBlock>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu>
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
+                                                        ElementName=TabList}"
+                                      CommandParameter="{Binding Id}"
+                                      Header="remove tab" />
+                </toolkit:ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="GroupHeaderTemplate">
+        <Border Background="Transparent">
+            <Border Width="70"
+                    Height="70"
+                    HorizontalAlignment="Left"
+                    Background="{StaticResource PhoneAccentBrush}">
+                <TextBlock Margin="8"
+                           VerticalAlignment="Bottom"
+                           Foreground="{StaticResource PhoneForegroundBrush}"
+                           Style="{StaticResource PhoneTextExtraLargeStyle}"
+                           Text="{Binding Key}" />
+            </Border>
+        </Border>
+    </DataTemplate>
+
+
+
+    <Style x:Key="SearchListJumpListStyle" TargetType="phone:LongListSelector">
+        <Setter Property="GridCellSize"  Value="99,99"/>
+        <Setter Property="LayoutMode" Value="Grid" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border Width="99"
+                        Height="99"
+                        Margin="6"
+                        Background="{Binding Converter={StaticResource tabBrush}}"
+                        IsHitTestVisible="{Binding HasItems}">
+
+                        <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
+                               VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               FontSize="36"
+                               Foreground="{StaticResource PhoneForegroundBrush}"
+                               Text="{Binding Key}" />
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <DataTemplate x:Key="SearchTabItemTemplate">
+        <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Tap">
+                    <Command:ExecuteCommandAction Command="{Binding ElementName=tabsList, Path=DataContext.ToggleActionArea}" CommandParameter="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            
+            <Image VerticalAlignment="Center"
+                   Source="{Binding RelativeImageUri}"
+                   Stretch="None" 
+                   Visibility ="Visible" />
+
+            <!--
+            <Image VerticalAlignment="Center"
+                   Source="../Images/light/Document-Download_light.png"
+                   Stretch="None"
+                   Visibility="{StaticResource PhoneLightThemeVisibility}" />
+            <Image VerticalAlignment="Center"
+                   Source="../Images/dark/Document-Download_dark.png"
+                   Stretch="None"
+                   Visibility="{StaticResource PhoneDarkThemeVisibility}" /> -->
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                <TextBlock Margin="12,0"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextLargeStyle}"
+                           Text="{Binding Name}"
+                           TextTrimming="WordEllipsis" />
+                <TextBlock Margin="28,0"
+                           HorizontalAlignment="Left"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="{Binding Group}"
+                           TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="14,0"
+                               VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               Text="{Binding Type}" />
+                    <uiControls:RatingControl Margin="12,0,6,4"
+                                              VerticalAlignment="Bottom"
+                                              Rating="{Binding Rating,
+                                                               Converter={StaticResource stringToInt}}" />
+                    <TextBlock VerticalAlignment="Bottom"
+                               FontSize="16"
+                               FontStyle="Italic"
+                               Foreground="Gray"
+                               Visibility="{Binding Votes,
+                                                    Converter={StaticResource intToVisibility}}">
+                        <Run Text="votes:" />
+                        <Run Text="{Binding Votes}" />
+                    </TextBlock>
+
+                </StackPanel>
+            </StackPanel>
+
+            <Grid x:Name="ActionsGrid"
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  Visibility="{Binding ActionAreaVisible,
+                                       Converter={StaticResource boolVisibility}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Margin="60,0,0,0"
+                           VerticalAlignment="Center"
+                           FontStyle="Italic"
+                           Foreground="Gray"
+                           Style="{StaticResource PhoneTextNormalStyle}">
+                    <Run Text="Version:" />
+                    <Run Text="{Binding Version}" />
+                </TextBlock>
+
+                <Button Grid.Column="1"
+                        Command="{Binding Path=DataContext.DownloadTab,
+                                          ElementName=root}"
+                        CommandParameter="{Binding SearchId}"
+                        Content="Download"
+                        IsEnabled="{Binding Path=DataContext.CanDownload,
+                                            ElementName=root}"
+                        Visibility="{Binding IsNotDownloaded,
+                                             Converter={StaticResource boolVisibility}}" />
+                <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Foreground="{StaticResource PhoneAccentBrush}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="Downloaded"
+                           Visibility="{Binding IsDownloaded,Mode=TwoWay,
+                                                Converter={StaticResource boolVisibility}}" />
+
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="PagesListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="LayoutRoot"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentContainer" Storyboard.TargetProperty="(Control.FontWeight)">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <FontWeight>Bold</FontWeight>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentContainer" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneAccentBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentControl x:Name="ContentContainer"
+                                        Margin="{TemplateBinding Padding}"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <DataTemplate x:Key="EmptyTitleTemplate">
+        <TextBlock Height="1" />
+    </DataTemplate>
+
+
+</ResourceDictionary>
