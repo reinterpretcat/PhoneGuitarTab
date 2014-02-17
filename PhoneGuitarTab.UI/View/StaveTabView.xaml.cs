@@ -167,7 +167,9 @@ namespace PhoneGuitarTab.UI.View
                 this.ListPickerInstrument.Visibility = Visibility.Visible;
                 this.slider.MouseLeftButtonUp += Slider_Clicked;
                 this.isFirstLoad = false;
-              
+
+                var viewModel = DataContext as StaveTabViewModel;
+                viewModel.Browser_LoadCompleted(sender, e);
             }
            
         }
@@ -202,7 +204,12 @@ namespace PhoneGuitarTab.UI.View
             viewModel.PinTabToStart();
         }
 
-
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var viewModel = DataContext as StaveTabViewModel;
+            viewModel.IncreaseTabViewCount();
+        }
       
     }
 }

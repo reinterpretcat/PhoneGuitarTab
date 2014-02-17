@@ -8,22 +8,26 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.Data;
     using PhoneGuitarTab.UI.Infrastructure;
     using PhoneGuitarTab.UI.Entities;
+    using PhoneGuitarTab.UI.Data;
+    using System.Windows.Navigation;
     using System.Linq;
     using Microsoft.Phone.Shell;
-    
+    using Microsoft.Phone.Tasks;
+
     public abstract class TabViewModelBase:  DataContextViewModel
     {
         public string TabContent { get; set; }
        
         protected Tab Tablature { get; set; }
-       
+
+        private AppSettings _appSettings;
         protected IDialogController Dialog { get; set; }
 
         [Dependency]
         protected TabViewModelBase(IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
-            
+            _appSettings = new AppSettings();    
         }
 
         protected override void ReadNavigationParameters()
@@ -54,14 +58,56 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
-          
+           
         }
         
         public void PinTabToStart()
         {
             TilesForTabs.PinTabToStart(Tablature);
-        } 
-        
+        }
+
+        public void Browser_LoadCompleted(object sender, NavigationEventArgs e)
+        {
+            this.RunRating();
+        }
+
+        private void RunRating()
+        {
+            if (!IsAppRated())
+            {
+                if (GetTabViewCountMod() == 0)
+                {
+                    MessageBoxResult result = MessageBox.Show( AppResources.ReviewTheApp, AppResources.RateTheApp, MessageBoxButton.OKCancel);
+                    //show message.
+                    if (result == MessageBoxResult.OK)
+                    {
+                        if (_appSettings.AddOrUpdateValue(AppSettings.isAppRatedKeyName, true))
+                            _appSettings.Save();
+                        new MarketplaceReviewTask().Show();
+                    }
+                }
+            }
+        }
+       
+        private int GetTabViewCountMod()
+        {
+          
+           return _appSettings.GetValueOrDefault<int>(AppSettings.tabViewCountKeyName, AppSettings.tabViewCountDefault) % 4;            
+        }
+
+        public void IncreaseTabViewCount()
+        {
+            int tabCount = _appSettings.GetValueOrDefault<int>(AppSettings.tabViewCountKeyName, AppSettings.tabViewCountDefault);
+
+            if (this._appSettings.AddOrUpdateValue(AppSettings.tabViewCountKeyName, (tabCount + 1)))
+                this._appSettings.Save();
+        }
+
+        private bool IsAppRated()
+        {
+            return _appSettings.GetValueOrDefault<bool>(AppSettings.isAppRatedKeyName, AppSettings.isAppratedDefault);
+        }
+
         
     }
 }

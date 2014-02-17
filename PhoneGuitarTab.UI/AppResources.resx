@@ -132,11 +132,14 @@
   <data name="Help" xml:space="preserve">
     <value>about</value>
   </data>
+  <data name="RateTheApp" xml:space="preserve">
+    <value>Rate the app?</value>
+  </data>
   <data name="Review" xml:space="preserve">
     <value>review</value>
   </data>
   <data name="ReviewTheApp" xml:space="preserve">
-    <value>If you like this app and think others might find this application useful, sharing your experience in a short review would be highly appreciated:</value>
+    <value>Enjoying the app? Motivate us by rating and reviewing it.</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>support</value>

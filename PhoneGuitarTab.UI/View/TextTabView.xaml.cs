@@ -12,16 +12,16 @@ namespace PhoneGuitarTab.UI
     public partial class TextTabView : ViewPage
     {
         private string TextTabUri = "/Html/texttab.html";
-       
+
         public TextTabView()
         {
             InitializeComponent();
             this.slider.Browser = this.tabWebBrowser;
-            
-        }
-     
 
-       
+            var viewModel = DataContext as TextTabViewModel;
+            this.tabWebBrowser.LoadCompleted += viewModel.Browser_LoadCompleted;
+        }
+ 
         /// <summary>
         /// Event to Stop / Resume the scrolling when tapped.
         /// </summary>
@@ -56,7 +56,6 @@ namespace PhoneGuitarTab.UI
             tabWebBrowser.Navigate(new Uri(this.TextTabUri, UriKind.Relative));
         }
 
-       
 
         private void AutoScrollApplicationBarIconButton_OnClick(object sender, EventArgs e)
         {
@@ -79,8 +78,12 @@ namespace PhoneGuitarTab.UI
             viewModel.PinTabToStart();
         }
 
-
-       
-       
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var viewModel = DataContext as TextTabViewModel;
+            viewModel.IncreaseTabViewCount();
+        }
+  
     }
 }

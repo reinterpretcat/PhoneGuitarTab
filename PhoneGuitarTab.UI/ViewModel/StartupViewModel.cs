@@ -11,13 +11,13 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Views.Commands;
     using PhoneGuitarTab.UI.Infrastructure;
-
+    using PhoneGuitarTab.UI.Data;
     public class StartupViewModel : DataContextViewModel
     {
         #region Fields
 
         private TabsForHistory _tabsHistory;
-
+        private AppSettings _appSettings;
         #endregion Fields
 
 
@@ -107,6 +107,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoReview()
         {
+            if (_appSettings.AddOrUpdateValue(AppSettings.isAppRatedKeyName, true))
+                _appSettings.Save();
             new MarketplaceReviewTask().Show();
         }
 
@@ -125,6 +127,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         protected override void DataBind()
         {
             TabsHistory = new TabsForHistory(5, Database);
+            _appSettings = new AppSettings();
         }
 
         public override void LoadStateFrom(IDictionary<string, object> state)

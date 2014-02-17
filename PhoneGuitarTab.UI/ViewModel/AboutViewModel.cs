@@ -5,7 +5,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Views;
     using PhoneGuitarTab.Core.Views.Commands;
-
+    using PhoneGuitarTab.UI.Data;
     public class AboutViewModel: ViewModel
     {
 
@@ -22,8 +22,9 @@ namespace PhoneGuitarTab.UI.ViewModel
             Review = AppResources.Review;
             ReviewTheApp = AppResources.ReviewTheApp;
             ApplicationVersion = App.Version;
+            _appSettings = new AppSettings();
         }
-
+       
         public string Help { get; set; }
         public string CompanyUrl { get; set; }
         public string FacebookUrl { get; set; }
@@ -35,6 +36,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         public string ApplicationVersion { get; set; }
         public string Review { get; set; }
         public string ReviewTheApp { get; set; }
+
+        private AppSettings _appSettings; 
 
         public ICommand ViewWebsiteCommand
         {
@@ -67,6 +70,9 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get
             {
+                if (_appSettings.AddOrUpdateValue(AppSettings.isAppRatedKeyName, true))
+                    _appSettings.Save();
+
                 return new ExecuteCommand(() =>
                   new MarketplaceReviewTask().Show());
             }
