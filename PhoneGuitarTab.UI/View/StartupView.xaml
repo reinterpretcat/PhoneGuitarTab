@@ -9,6 +9,7 @@
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:Pivots="clr-namespace:PhoneGuitarTab.UI.Pivots" x:Name="root"
                xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
+               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                DataContext="{Binding Startup,  Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -64,6 +65,19 @@
                                         Visibility="{Binding Search.IsSearching,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}" />
+        
+        <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="0.3" Mode ="Minimized">
+          
+            <custom:BindableApplicationBarIconButton x:Name="RateButton"
+                                                     Command="{Binding Review}"
+                                                     IconUri="/Images/dark/rate.png"
+                                                     Text="rate" />
+            <custom:BindableApplicationBarMenuItem x:Name="AboutButton" 
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="About"
+                                                     Text="about" />
+        </custom:BindableApplicationBar>
+
     </Grid>
 
 </Views:ViewPage>
