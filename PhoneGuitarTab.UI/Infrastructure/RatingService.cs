@@ -1,8 +1,7 @@
-﻿
-using PhoneGuitarTab.Core.Dependencies;
+﻿using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Services;
 
-namespace PhoneGuitarTab.UI.Data
+namespace PhoneGuitarTab.UI.Infrastructure
 {
     public class RatingService 
     {
