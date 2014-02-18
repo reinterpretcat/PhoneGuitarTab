@@ -1,4 +1,5 @@
-﻿using PhoneGuitarTab.UI.Data;
+﻿using PhoneGuitarTab.Core.Services;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Bootstrap
 {
@@ -38,6 +39,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
            
             (new UpdateScript(Container.Resolve<IDataContextService>(), DbConnectionString, DbVersion))
                 .CheckAndUpdate();
+
+            Container.Register(Component.For<ISettingService>().Use<AppSettingService>());
             
             return true;
         }

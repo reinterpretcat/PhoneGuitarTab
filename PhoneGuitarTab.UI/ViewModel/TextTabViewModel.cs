@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Shell;
+using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Data;
 using System;
 using System.IO;
@@ -17,8 +18,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         
 
         [Dependency]
-        public TextTabViewModel(IDataContextService database, MessageHub hub)
-            : base(database, hub)
+        public TextTabViewModel(IDataContextService database, ISettingService settingService, MessageHub hub)
+            : base(database, settingService, hub)
         {
             _textTabAdapter = new TextTabAdapter();
            

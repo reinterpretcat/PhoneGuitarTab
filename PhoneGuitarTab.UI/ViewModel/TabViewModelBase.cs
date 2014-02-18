@@ -1,4 +1,5 @@
 ﻿using System;
+using PhoneGuitarTab.Core.Services;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -20,14 +21,15 @@ namespace PhoneGuitarTab.UI.ViewModel
        
         protected Tab Tablature { get; set; }
 
-        private AppSettings _appSettings;
+        private ISettingService _settingService;
+
         protected IDialogController Dialog { get; set; }
 
         [Dependency]
-        protected TabViewModelBase(IDataContextService database, MessageHub hub)
+        protected TabViewModelBase(IDataContextService database, ISettingService settingService, MessageHub hub)
             : base(database, hub)
         {
-            _appSettings = new AppSettings();    
+            _settingService = settingService;   
         }
 
         protected override void ReadNavigationParameters()
@@ -81,8 +83,8 @@ namespace PhoneGuitarTab.UI.ViewModel
                     //show message.
                     if (result == MessageBoxResult.OK)
                     {
-                        if (_appSettings.AddOrUpdateValue(AppSettings.isAppRatedKeyName, true))
-                            _appSettings.Save();
+                        if (_settingService.AddOrUpdateValue(AppSettingService.isAppRatedKeyName, true))
+                            _settingService.Save();
                         new MarketplaceReviewTask().Show();
                     }
                 }
@@ -91,21 +93,21 @@ namespace PhoneGuitarTab.UI.ViewModel
        
         private int GetTabViewCountMod()
         {
-          
-           return _appSettings.GetValueOrDefault<int>(AppSettings.tabViewCountKeyName, AppSettings.tabViewCountDefault) % 4;            
+
+            return _settingService.GetValueOrDefault<int>(AppSettingService.tabViewCountKeyName, AppSettingService.tabViewCountDefault) % 4;            
         }
 
         public void IncreaseTabViewCount()
         {
-            int tabCount = _appSettings.GetValueOrDefault<int>(AppSettings.tabViewCountKeyName, AppSettings.tabViewCountDefault);
+            int tabCount = _settingService.GetValueOrDefault<int>(AppSettingService.tabViewCountKeyName, AppSettingService.tabViewCountDefault);
 
-            if (this._appSettings.AddOrUpdateValue(AppSettings.tabViewCountKeyName, (tabCount + 1)))
-                this._appSettings.Save();
+            if (this._settingService.AddOrUpdateValue(AppSettingService.tabViewCountKeyName, (tabCount + 1)))
+                this._settingService.Save();
         }
 
         private bool IsAppRated()
         {
-            return _appSettings.GetValueOrDefault<bool>(AppSettings.isAppRatedKeyName, AppSettings.isAppratedDefault);
+            return _settingService.GetValueOrDefault<bool>(AppSettingService.isAppRatedKeyName, AppSettingService.isAppratedDefault);
         }
 
         

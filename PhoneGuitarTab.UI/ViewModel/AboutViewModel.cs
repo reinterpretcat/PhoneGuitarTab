@@ -1,6 +1,9 @@
 ﻿using System.Windows.Input;
 using Microsoft.Phone.Tasks;
 using System;
+using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Services;
+
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using PhoneGuitarTab.Core.Views;
@@ -8,8 +11,8 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.UI.Data;
     public class AboutViewModel: ViewModel
     {
-
-        public AboutViewModel()
+        [Dependency]
+        public AboutViewModel(ISettingService settingService)
         {
             Help = AppResources.Help;
             AppTitle = AppResources.AppTitle;
@@ -22,7 +25,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Review = AppResources.Review;
             ReviewTheApp = AppResources.ReviewTheApp;
             ApplicationVersion = App.Version;
-            _appSettings = new AppSettings();
+            _settingService = settingService;  
         }
        
         public string Help { get; set; }
@@ -37,7 +40,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         public string Review { get; set; }
         public string ReviewTheApp { get; set; }
 
-        private AppSettings _appSettings; 
+        private ISettingService _settingService; 
 
         public ICommand ViewWebsiteCommand
         {
@@ -70,8 +73,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get
             {
-                if (_appSettings.AddOrUpdateValue(AppSettings.isAppRatedKeyName, true))
-                    _appSettings.Save();
+                if (_settingService.AddOrUpdateValue(AppSettingService.isAppRatedKeyName, true))
+                    _settingService.Save();
 
                 return new ExecuteCommand(() =>
                   new MarketplaceReviewTask().Show());

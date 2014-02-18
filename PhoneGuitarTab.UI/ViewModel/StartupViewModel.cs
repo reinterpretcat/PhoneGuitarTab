@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Tasks;
+using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Data;
 using PhoneGuitarTab.UI.Entities;
 using System.Collections.Generic;
@@ -17,23 +18,20 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Fields
 
         private TabsForHistory _tabsHistory;
-        private AppSettings _appSettings;
+        private ISettingService _settingService;
         #endregion Fields
 
 
         #region Constructors
 
         [Dependency]
-        public StartupViewModel(IDataContextService database, MessageHub hub)
+        public StartupViewModel(IDataContextService database, ISettingService settingService,  MessageHub hub)
             : base(database, hub)
         {
+            _settingService = settingService;
+
             CreateCommands();
-
-           // MessengerInstance.Register<CollectionTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-          //  MessengerInstance.Register<GroupTabRemovedMessage>(this, (message) => { RemoveTabFromList(message.Id); });
-
             ProductVersion = App.Version;
-          
         }
 
         #endregion Constructors
@@ -107,8 +105,8 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoReview()
         {
-            if (_appSettings.AddOrUpdateValue(AppSettings.isAppRatedKeyName, true))
-                _appSettings.Save();
+            if (_settingService.AddOrUpdateValue(AppSettingService.isAppRatedKeyName, true))
+                _settingService.Save();
             new MarketplaceReviewTask().Show();
         }
 
@@ -127,7 +125,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         protected override void DataBind()
         {
             TabsHistory = new TabsForHistory(5, Database);
-            _appSettings = new AppSettings();
         }
 
         public override void LoadStateFrom(IDictionary<string, object> state)

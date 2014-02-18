@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO.IsolatedStorage;
+﻿
 namespace PhoneGuitarTab.UI.Data
 {
-    public class AppSettings : PhoneGuitarTab.Core.Services.IsolatedStorageSettingService
+    public class AppSettingService : PhoneGuitarTab.Core.Services.IsolatedStorageSettingService
     {
             // The key names of our settings
             public const string isAppRatedKeyName = "isApprated";
