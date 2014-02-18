@@ -39,9 +39,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
            
             (new UpdateScript(Container.Resolve<IDataContextService>(), DbConnectionString, DbVersion))
                 .CheckAndUpdate();
-
-            Container.Register(Component.For<ISettingService>().Use<AppSettingService>());
-            
+           
             return true;
         }
 

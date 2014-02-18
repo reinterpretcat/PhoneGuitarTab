@@ -18,17 +18,17 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Fields
 
         private TabsForHistory _tabsHistory;
-        private ISettingService _settingService;
+        private RatingService _ratingService;
         #endregion Fields
 
 
         #region Constructors
 
         [Dependency]
-        public StartupViewModel(IDataContextService database, ISettingService settingService,  MessageHub hub)
+        public StartupViewModel(IDataContextService database, RatingService ratingService,  MessageHub hub)
             : base(database, hub)
         {
-            _settingService = settingService;
+            _ratingService = ratingService;
 
             CreateCommands();
             ProductVersion = App.Version;
@@ -105,8 +105,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoReview()
         {
-            if (_settingService.AddOrUpdateValue(AppSettingService.isAppRatedKeyName, true))
-                _settingService.Save();
+            _ratingService.RateApp();
             new MarketplaceReviewTask().Show();
         }
 

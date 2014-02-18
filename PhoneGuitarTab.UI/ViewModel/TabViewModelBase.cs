@@ -21,15 +21,15 @@ namespace PhoneGuitarTab.UI.ViewModel
        
         protected Tab Tablature { get; set; }
 
-        private ISettingService _settingService;
+        public RatingService RatingService { get; private set; }
 
         protected IDialogController Dialog { get; set; }
 
         [Dependency]
-        protected TabViewModelBase(IDataContextService database, ISettingService settingService, MessageHub hub)
+        protected TabViewModelBase(IDataContextService database, RatingService ratingService, MessageHub hub)
             : base(database, hub)
         {
-            _settingService = settingService;   
+            RatingService = ratingService;   
         }
 
         protected override void ReadNavigationParameters()
@@ -47,7 +47,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         public override void LoadStateFrom(IDictionary<string, object> state)
         {
             base.LoadStateFrom(state);
-            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;   
+            PhoneApplicationService phoneAppService = PhoneApplicationService.Current;  // ??? 
         }
 
         public override void SaveStateTo(IDictionary<string, object> state)
@@ -75,41 +75,20 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RunRating()
         {
-            if (!IsAppRated())
+            if (!RatingService.IsAppRated())
             {
-                if (GetTabViewCountMod() == 0)
+                if (RatingService.GetTabViewCountMod() == 0)
                 {
                     MessageBoxResult result = MessageBox.Show( AppResources.ReviewTheApp, AppResources.RateTheApp, MessageBoxButton.OKCancel);
                     //show message.
                     if (result == MessageBoxResult.OK)
                     {
-                        if (_settingService.AddOrUpdateValue(AppSettingService.isAppRatedKeyName, true))
-                            _settingService.Save();
+                        RatingService.RateApp();
                         new MarketplaceReviewTask().Show();
                     }
                 }
             }
         }
-       
-        private int GetTabViewCountMod()
-        {
-
-            return _settingService.GetValueOrDefault<int>(AppSettingService.tabViewCountKeyName, AppSettingService.tabViewCountDefault) % 4;            
-        }
-
-        public void IncreaseTabViewCount()
-        {
-            int tabCount = _settingService.GetValueOrDefault<int>(AppSettingService.tabViewCountKeyName, AppSettingService.tabViewCountDefault);
-
-            if (this._settingService.AddOrUpdateValue(AppSettingService.tabViewCountKeyName, (tabCount + 1)))
-                this._settingService.Save();
-        }
-
-        private bool IsAppRated()
-        {
-            return _settingService.GetValueOrDefault<bool>(AppSettingService.isAppRatedKeyName, AppSettingService.isAppratedDefault);
-        }
-
-        
+               
     }
 }

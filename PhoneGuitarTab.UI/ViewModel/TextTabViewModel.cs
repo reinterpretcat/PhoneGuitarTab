@@ -4,6 +4,7 @@ using PhoneGuitarTab.Data;
 using System;
 using System.IO;
 using System.Windows;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -15,11 +16,9 @@ namespace PhoneGuitarTab.UI.ViewModel
         public string Style { get; set; }
         private TextTabAdapter _textTabAdapter;
 
-        
-
         [Dependency]
-        public TextTabViewModel(IDataContextService database, ISettingService settingService, MessageHub hub)
-            : base(database, settingService, hub)
+        public TextTabViewModel(IDataContextService database, RatingService ratingService, MessageHub hub)
+            : base(database, ratingService, hub)
         {
             _textTabAdapter = new TextTabAdapter();
            

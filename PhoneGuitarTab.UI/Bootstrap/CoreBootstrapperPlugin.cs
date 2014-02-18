@@ -1,4 +1,5 @@
 ﻿using PhoneGuitarTab.Core.Services;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Bootstrap
 {
@@ -21,9 +22,11 @@ namespace PhoneGuitarTab.UI.Bootstrap
 
             Container.Register(Component.For<IFileSystemService>().Use<IsolatedStorageFileService>().Singleton());
             Container.Register(Component.For<TabFileStorage>().Use<TabFileStorage>().Singleton());
+            Container.Register(Component.For<ISettingService>().Use<IsolatedStorageSettingService>().Singleton());
 
             Container.Register(Component.For<MessageHub>().Use<MessageHub>().Singleton());
 
+            Container.Register(Component.For<RatingService>().Use<RatingService>().Singleton());
             Container.Register(Component.For<IDialogController>().Use<ToastDialogController>().Singleton());
             
             return true;

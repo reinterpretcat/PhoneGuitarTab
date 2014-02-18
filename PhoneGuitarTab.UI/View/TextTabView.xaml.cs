@@ -82,7 +82,7 @@ namespace PhoneGuitarTab.UI
         {
             base.OnNavigatedTo(e);
             var viewModel = DataContext as TextTabViewModel;
-            viewModel.IncreaseTabViewCount();
+            viewModel.RatingService.IncreaseTabViewCount();
         }
   
     }

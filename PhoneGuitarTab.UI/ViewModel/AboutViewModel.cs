@@ -12,7 +12,7 @@ namespace PhoneGuitarTab.UI.ViewModel
     public class AboutViewModel: ViewModel
     {
         [Dependency]
-        public AboutViewModel(ISettingService settingService)
+        public AboutViewModel(RatingService ratingService)
         {
             Help = AppResources.Help;
             AppTitle = AppResources.AppTitle;
@@ -25,7 +25,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Review = AppResources.Review;
             ReviewTheApp = AppResources.ReviewTheApp;
             ApplicationVersion = App.Version;
-            _settingService = settingService;  
+            _ratingService = ratingService;  
         }
        
         public string Help { get; set; }
@@ -40,7 +40,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         public string Review { get; set; }
         public string ReviewTheApp { get; set; }
 
-        private ISettingService _settingService; 
+        private readonly  RatingService _ratingService; 
 
         public ICommand ViewWebsiteCommand
         {
@@ -73,8 +73,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             get
             {
-                if (_settingService.AddOrUpdateValue(AppSettingService.isAppRatedKeyName, true))
-                    _settingService.Save();
+                _ratingService.RateApp();
 
                 return new ExecuteCommand(() =>
                   new MarketplaceReviewTask().Show());

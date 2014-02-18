@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Microsoft.Phone.Controls;
 using PhoneGuitarTab.Core.Services;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.ViewModel
 {
@@ -13,11 +14,11 @@ namespace PhoneGuitarTab.UI.ViewModel
 
     public class StaveTabViewModel : TabViewModelBase
     {
+
         [Dependency]
-        public StaveTabViewModel(IDataContextService database, ISettingService settingService, MessageHub hub)
-            : base(database, settingService, hub)
+        public StaveTabViewModel(IDataContextService database, RatingService ratingService, MessageHub hub)
+            : base(database, ratingService, hub)
         {
-           
         }
 
         public void NavigateToHome()
