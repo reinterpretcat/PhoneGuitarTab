@@ -6,13 +6,12 @@ namespace PhoneGuitarTab.UI.Data
 {
     public class RatingService 
     {
-        // The key names of our settings
         private const string IsAppRatedKeyName = "isApprated";
         private const string TabViewCountKeyName = "tabViewCount";
 
-        // The default value of our settings
         private const bool IsAppratedDefault = false;
         private const int TabViewCountDefault = 0;
+        private const int ShowRatingInEveryN = 4;
 
         private readonly  ISettingService _settingService;
 
@@ -28,17 +27,17 @@ namespace PhoneGuitarTab.UI.Data
                 _settingService.Save();
         }
 
-        public int GetTabViewCountMod()
+        public bool IsNeedShowMessage()
         {
-            return _settingService.GetValueOrDefault<int>(TabViewCountKeyName, TabViewCountDefault) % 4;
+            return (_settingService.GetValueOrDefault<int>(TabViewCountKeyName, TabViewCountDefault) % ShowRatingInEveryN) == 0;
         }
 
         public void IncreaseTabViewCount()
         {
             int tabCount = _settingService.GetValueOrDefault<int>(TabViewCountKeyName, TabViewCountDefault);
 
-            if (this._settingService.AddOrUpdateValue(TabViewCountKeyName, (tabCount + 1)))
-                this._settingService.Save();
+            if (_settingService.AddOrUpdateValue(TabViewCountKeyName, (tabCount + 1)))
+                _settingService.Save();
         }
 
         public bool IsAppRated()

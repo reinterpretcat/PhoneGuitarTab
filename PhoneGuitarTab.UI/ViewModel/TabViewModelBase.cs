@@ -75,17 +75,14 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void RunRating()
         {
-            if (!RatingService.IsAppRated())
+            if (!RatingService.IsAppRated() && RatingService.IsNeedShowMessage())
             {
-                if (RatingService.GetTabViewCountMod() == 0)
+                MessageBoxResult result = MessageBox.Show( AppResources.ReviewTheApp, AppResources.RateTheApp, MessageBoxButton.OKCancel);
+                //show message.
+                if (result == MessageBoxResult.OK)
                 {
-                    MessageBoxResult result = MessageBox.Show( AppResources.ReviewTheApp, AppResources.RateTheApp, MessageBoxButton.OKCancel);
-                    //show message.
-                    if (result == MessageBoxResult.OK)
-                    {
-                        RatingService.RateApp();
-                        new MarketplaceReviewTask().Show();
-                    }
+                    RatingService.RateApp();
+                    new MarketplaceReviewTask().Show();
                 }
             }
         }
