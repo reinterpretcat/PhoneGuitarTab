@@ -66,7 +66,7 @@
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}" />
         
-        <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="0.3" Mode ="Minimized">
+        <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1" Mode ="Minimized">
           
             <custom:BindableApplicationBarIconButton x:Name="RateButton"
                                                      Command="{Binding Review}"
