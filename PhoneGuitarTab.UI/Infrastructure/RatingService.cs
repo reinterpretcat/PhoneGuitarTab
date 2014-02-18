@@ -10,7 +10,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         private const bool IsAppratedDefault = false;
         private const int TabViewCountDefault = 0;
-        private const int ShowRatingInEveryN = 4;
+        private const int ShowRatingInEveryN = 7;
 
         private readonly  ISettingService _settingService;
 
