@@ -17,8 +17,12 @@
    
     
     <phone:PivotItem.Resources>
-        <Infrastructure:ObjectNameToImagePathConverter x:Key="NameImageConverter"/>
-        
+        <Storyboard x:Name="tabsfadein">
+            <DoubleAnimation Storyboard.TargetName="tabsList"
+        		Storyboard.TargetProperty="Opacity" From="0.0"
+        		To="1" Duration="0:0:1"/>
+        </Storyboard>
+
         <DataTemplate x:Key="SearchHeaderTemplate">
                 <StackPanel Orientation="Vertical">
                     <Grid>
@@ -173,12 +177,14 @@
         
         <DataTemplate x:Key="SearchFooterTemplate">
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
-                                             ElementName=root
-                                             }">
-                <Button x:Name="PreviousButton" HorizontalAlignment="Left"
-                        BorderThickness="0"
-                       >
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center"  
+                        VerticalAlignment="Center" 
+                        Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
+                        ElementName=root}">
+                <Button x:Name="PreviousButton" 
+                        HorizontalAlignment="Left"
+                        BorderThickness="0">
                     <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="64" Height="64" >
                         <Rectangle.OpacityMask>
                             <ImageBrush ImageSource="/Images/light/previous.png" />
@@ -186,7 +192,8 @@
                     </Rectangle>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="previous" />
+                            <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
+                                                          CommandParameter="previous" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
@@ -198,7 +205,8 @@
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" 
+                                                              CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <ListBox.ItemsPanel>
@@ -219,8 +227,7 @@
                 </StackPanel>
                 
                 <Button x:Name="NextButton" HorizontalAlignment="Right"
-                        BorderThickness="0"
-                        >
+                        BorderThickness="0">
                     <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="64" Height="64" >
                         <Rectangle.OpacityMask>
                             <ImageBrush ImageSource="/Images/light/next.png" />
@@ -228,7 +235,8 @@
                     </Rectangle>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="next" />
+                            <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
+                                                          CommandParameter="next" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
@@ -245,7 +253,7 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}">
+                              Tag="{Binding FirstTabInList}" Loaded="tabsList_Loaded">
     </phone:LongListSelector>
 
 </phone:PivotItem>

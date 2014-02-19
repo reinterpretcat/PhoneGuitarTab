@@ -544,6 +544,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                         if(Pages.Any())
                             SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
                         RaisePropertyChanged("SelectedPage");
+                       
                         IsSearching = false;
                     });
             }

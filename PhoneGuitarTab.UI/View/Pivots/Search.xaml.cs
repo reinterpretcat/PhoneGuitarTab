@@ -19,6 +19,11 @@ namespace PhoneGuitarTab.UI.Pivots
             bindingExpr.UpdateSource();
         }
 
+        private void tabsList_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.tabsfadein.Begin();
+        }
+
      
    
     }
