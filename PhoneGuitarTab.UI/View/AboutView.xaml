@@ -128,7 +128,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button BorderThickness="0" Grid.Column="3" Content="like" Margin="0,97,64,0" Width="62" FlowDirection="LeftToRight" Padding="15,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="44" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
+                <Button BorderThickness="0" Grid.Column="3" Content="fb page" Margin="0,97,45,0" Width="90" FlowDirection="LeftToRight" Padding="15,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="48" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
