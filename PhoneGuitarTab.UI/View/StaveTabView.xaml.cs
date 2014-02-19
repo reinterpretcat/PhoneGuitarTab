@@ -210,6 +210,16 @@ namespace PhoneGuitarTab.UI.View
             var viewModel = DataContext as StaveTabViewModel;
             viewModel.RatingService.IncreaseTabViewCount();
         }
+
+        private void ViewPage_OrientationChanged(object sender, OrientationChangedEventArgs e)
+        {
+            //Control the appbar transparency (in landscape mode it opens the buttons so should be more transparent)
+            if ((this.Orientation == PageOrientation.LandscapeLeft) || (this.Orientation == PageOrientation.LandscapeRight))
+            {
+                this.ApplicationBar.Opacity = 0.1;
+            }
+            else { this.ApplicationBar.Opacity = 0.7; }
+        }
       
     }
 }

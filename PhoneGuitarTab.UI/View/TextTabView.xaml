@@ -19,7 +19,7 @@
                d:DesignWidth="480"
                shell:SystemTray.IsVisible="False"
                mc:Ignorable="d"
-     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
+     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" OrientationChanged="root_OrientationChanged">
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
@@ -43,7 +43,7 @@
 
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized" Opacity="0.6">
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Minimized" Opacity="0.7">
             <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
             <shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" Text="pin to start" Click="PinToStartIconButton_Click"/>
         </shell:ApplicationBar>
