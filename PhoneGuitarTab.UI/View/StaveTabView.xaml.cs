@@ -55,7 +55,9 @@ namespace PhoneGuitarTab.UI.View
 
         private void ScaleApplicationBar_Click(object sender, EventArgs e)
         {
-            Browser.InvokeScript("scaleChange");  
+            Browser.InvokeScript("scaleChange");
+            if (!(this.ApplicationBar.Mode == ApplicationBarMode.Minimized))
+                this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
 
@@ -64,6 +66,9 @@ namespace PhoneGuitarTab.UI.View
         {
             this.ListPickerInstrument.Visibility = Visibility.Visible;
             this.ListPickerInstrument.Open();
+
+            if (!(this.ApplicationBar.Mode == ApplicationBarMode.Minimized))
+                this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
         //Event that is fired after picking an instrument (latebinding after ListPicker populated)
@@ -198,6 +203,9 @@ namespace PhoneGuitarTab.UI.View
                 this.slider.Visibility = Visibility.Visible;
                 this.slider.invokeAutoScroll(sender);
             }
+
+            if (!(this.ApplicationBar.Mode == ApplicationBarMode.Minimized))
+                this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
         private void PinToStartIconButton_Click(object sender, EventArgs e)

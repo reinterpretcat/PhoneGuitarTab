@@ -74,6 +74,9 @@ namespace PhoneGuitarTab.UI
                 this.slider.Visibility = Visibility.Visible;
                 this.slider.invokeAutoScroll(sender);
             }
+
+            if (!(this.ApplicationBar.Mode == ApplicationBarMode.Minimized))
+                this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
         private void PinToStartIconButton_Click(object sender, EventArgs e)
