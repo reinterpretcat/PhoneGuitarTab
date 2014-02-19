@@ -111,6 +111,8 @@ namespace PhoneGuitarTab.UI.View
             //Collapse ListPicker.
             this.ListPickerInstrument.Visibility = Visibility.Collapsed;
 
+            if (!(this.ApplicationBar.Mode == ApplicationBarMode.Minimized))
+                this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
 
@@ -213,12 +215,12 @@ namespace PhoneGuitarTab.UI.View
 
         private void ViewPage_OrientationChanged(object sender, OrientationChangedEventArgs e)
         {
-            //Control the appbar transparency (in landscape mode it opens the buttons so should be more transparent)
+            //Control the appbar visibility (in landscape mode it opens the buttons, reading tabs become harder)
             if ((this.Orientation == PageOrientation.LandscapeLeft) || (this.Orientation == PageOrientation.LandscapeRight))
             {
-                this.ApplicationBar.Opacity = 0.1;
+                this.ApplicationBar.IsVisible = false;
             }
-            else { this.ApplicationBar.Opacity = 0.7; }
+            else { this.ApplicationBar.IsVisible = true; }
         }
       
     }

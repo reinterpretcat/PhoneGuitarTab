@@ -1,6 +1,7 @@
 ﻿using System;
 using PhoneGuitarTab.UI.ViewModel;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using System.Windows.Navigation;
 
 namespace PhoneGuitarTab.UI
@@ -36,6 +37,9 @@ namespace PhoneGuitarTab.UI
                 else
                     this.slider.invokeAutoScroll(sender); 
             }
+
+            if(!(this.ApplicationBar.Mode == ApplicationBarMode.Minimized))
+            this.ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
         private void tabWebBrowser_ScriptNotify(object sender, NotifyEventArgs e)
@@ -87,12 +91,12 @@ namespace PhoneGuitarTab.UI
 
         private void root_OrientationChanged(object sender, OrientationChangedEventArgs e)
         {
-            //Control the appbar transparency (in landscape mode it opens the buttons so should be more transparent)
+            //Control the appbar visibility (in landscape mode it opens the buttons, reading tabs become harder)
             if ((this.Orientation == PageOrientation.LandscapeLeft) || (this.Orientation == PageOrientation.LandscapeRight))
             {
-                this.ApplicationBar.Opacity = 0.1;
+                this.ApplicationBar.IsVisible = false;
             }
-            else { this.ApplicationBar.Opacity = 0.7; }
+            else {this.ApplicationBar.IsVisible = true; }
         }
   
     }
