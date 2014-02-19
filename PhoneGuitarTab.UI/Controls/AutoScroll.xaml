@@ -7,15 +7,48 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}" Height="175.957" Width="57.725">
+
+    <!-- Animates the a control's height. -->
+
+    <UserControl.Resources>
+        <Storyboard x:Name="fadein">
+            <DoubleAnimation Storyboard.TargetName="slideControl"
+        Storyboard.TargetProperty="Opacity" From="0.0"
+        To="0.8" Duration="0:0:1"/>
+            <DoubleAnimation Storyboard.TargetName="slow"
+        Storyboard.TargetProperty="Opacity" From="0.0"
+        To="0.5" Duration="0:0:1"/>
+            <DoubleAnimation Storyboard.TargetName="fast"
+        Storyboard.TargetProperty="Opacity" From="0.0"
+        To="0.5" Duration="0:0:1"/>
+        </Storyboard>
+
+        <Storyboard x:Name="fadeout">
+            <DoubleAnimation Storyboard.TargetName="slideControl"
+        Storyboard.TargetProperty="Opacity" From="1"
+        To="0.05" Duration="0:0:1"/>
+            <DoubleAnimation Storyboard.TargetName="slow"
+        Storyboard.TargetProperty="Opacity" From="1"
+        To="0.05" Duration="0:0:1"/>
+            <DoubleAnimation Storyboard.TargetName="fast"
+        Storyboard.TargetProperty="Opacity" From="1"
+        To="0.05" Duration="0:0:1"/>
+        </Storyboard>
+
+        <Storyboard x:Name="animateinfo">
+            <DoubleAnimation Storyboard.TargetName="info"
+        Storyboard.TargetProperty="Opacity" From="0"
+        To="1" Duration="0:0:0.5" AutoReverse="True"/>
+        </Storyboard>
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Slider x:Name="slideControl" Margin="1,-9,0,-1"
 		ValueChanged="slideControl_ValueChanged" 
-        
 		Orientation="Vertical" Maximum="9" 
 		FlowDirection="LeftToRight" 
 		RenderTransformOrigin="0.48,0.493" 
 		BorderThickness="0" SmallChange="0.1" 
-		Opacity="0.25" 
+		Opacity="0.01" 
             MouseLeave="slideControl_LostMouseCapture"
             MouseLeftButtonUp="slideControl_LostMouseCapture"
             MouseEnter="slideControl_MouseEnter" 
@@ -25,16 +58,24 @@
                 <CompositeTransform Rotation="-180" TranslateX="2" TranslateY="2.604" />
             </Slider.RenderTransform>
         </Slider>
-        <TextBlock x:Name="slow" HorizontalAlignment="Center" Margin="12,-20,10,0" TextWrapping="Wrap" Text="Slow" VerticalAlignment="Top" Width="36" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.70" Height="18" >
+        <TextBlock x:Name="slow" HorizontalAlignment="Center" Margin="12,-20,10,0" TextWrapping="Wrap" Text="Slow" VerticalAlignment="Top" Width="36" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.01" Height="18" >
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="fast" HorizontalAlignment="Center" Margin="14,172,8,-14" TextWrapping="Wrap" Text="Fast" VerticalAlignment="Top" Width="36" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.70" Height="18" >
+        <TextBlock x:Name="fast" HorizontalAlignment="Center" Margin="14,172,8,-14" TextWrapping="Wrap" Text="Fast" VerticalAlignment="Top" Width="36" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.01" Height="18" >
+            <TextBlock.Foreground>
+                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+            </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="info" HorizontalAlignment="Center" Margin="-23,200,-18,-57" TextWrapping="Wrap" Text="info" VerticalAlignment="Top" Width="99" RenderTransformOrigin="1.396,0.333" FontSize="20" Opacity="0.00" Height="33" TextAlignment="Center" >
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
             </TextBlock.Foreground>
         </TextBlock>
 
+
     </Grid>
+
 </UserControl>
+        

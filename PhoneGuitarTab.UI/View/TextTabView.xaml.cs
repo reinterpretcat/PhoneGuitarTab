@@ -32,9 +32,9 @@ namespace PhoneGuitarTab.UI
             if (this.slider.Visibility == Visibility.Visible)
             {
                 if (this.slider.isScrolling == true)
-                    this.slider.stopAutoScroll();
+                    this.slider.stopAutoScroll(sender);
                 else
-                    this.slider.invokeAutoScroll(); 
+                    this.slider.invokeAutoScroll(sender); 
             }
         }
 
@@ -63,12 +63,12 @@ namespace PhoneGuitarTab.UI
             if (this.slider.Visibility == Visibility.Visible)
             {
                 this.slider.Visibility = Visibility.Collapsed;
-                this.slider.stopAutoScroll();
+                this.slider.stopAutoScroll(sender);
             }
             else
             {
                 this.slider.Visibility = Visibility.Visible;
-                this.slider.invokeAutoScroll();
+                this.slider.invokeAutoScroll(sender);
             }
         }
 

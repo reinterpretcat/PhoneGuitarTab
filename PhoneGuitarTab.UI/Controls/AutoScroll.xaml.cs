@@ -16,6 +16,7 @@ namespace PhoneGuitarTab.UI.Controls
         public AutoScroll()
         {
             InitializeComponent();
+           
         }
 
         public WebBrowser Browser { get; set; }
@@ -26,28 +27,58 @@ namespace PhoneGuitarTab.UI.Controls
         /// </summary>
         public bool isScrolling { get; set; }
 
+        private bool isFirstLaunch = true;
 
-        public void invokeAutoScroll()
+        public void invokeAutoScroll(object sender)
         {
-            this.stopAutoScroll();
+            //stop the previous invocation.
+            this.stopAutoScroll(this);
+
+            //if value is not set to 0 then slide.
             if (slideControl.Value != 0)
             {
                 this.Browser.InvokeScript("slide", ((10 - System.Convert.ToInt16(slideControl.Value)) * 8).ToString());
                 this.isScrolling = true;
             }
+            
+          
+            if (this.isFirstLaunch)
+            {
+                //animate for the first launch
+                this.fadein.Begin();
 
+            }
+            else 
+            {
+                //if invoked from outside, show info message.
+                if (!sender.GetType().Equals(typeof(AutoScroll)))
+                {
+                    this.info.Text = "resume";
+                    this.animateinfo.Begin();
+                }
+            }
+
+            this.isFirstLaunch = false;
         }
-        public void stopAutoScroll()
+        public void stopAutoScroll(object sender)
         {
             this.Browser.InvokeScript("stopSlide");
             this.isScrolling = false;
+
+            //if invoked from outside, show info message.
+            if (!sender.GetType().Equals(typeof(AutoScroll)))
+            {
+                this.info.Text = "paused";
+                this.animateinfo.Begin();
+            }
+
         }
 
 
         #region Slide Control Events
         private void slideControl_ValueChanged(object sender, System.Windows.RoutedPropertyChangedEventArgs<double> e)
         {
-            this.invokeAutoScroll();
+            this.invokeAutoScroll(this);
         }
 
         private void slideControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -59,11 +90,11 @@ namespace PhoneGuitarTab.UI.Controls
 
         private void slideControl_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            this.slideControl.Opacity = 0.05;
-            this.slow.Opacity = 0.001;
-            this.fast.Opacity = 0.001;
+           
+            this.fadeout.Begin();
         }
         #endregion
 
+       
     }
 }
