@@ -94,6 +94,7 @@
                                    Text="selected type " />
                         <toolkit:ListPicker Grid.Row="2"
                                             Grid.Column="1"
+                                            FullModeHeader="Tab Types"
                                             ItemsSource="{Binding Path=DataContext.SearchTabTypeOptions, ElementName=root}"
                                             SelectedItem="{Binding Path=DataContext.SearchTabType,ElementName=root,Mode=TwoWay}">
                             <toolkit:ListPicker.ItemTemplate>
@@ -101,7 +102,13 @@
                                     <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" />
                                 </DataTemplate>
                             </toolkit:ListPicker.ItemTemplate>
-                        </toolkit:ListPicker>
+
+                        <toolkit:ListPicker.FullModeItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" Margin="16 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                            </DataTemplate>
+                        </toolkit:ListPicker.FullModeItemTemplate>
+                    </toolkit:ListPicker>
                     </Grid>
 
 
