@@ -13,9 +13,6 @@ namespace PhoneGuitarTab.UI.View
             InitializeComponent();
         }
 
-        public void PivotSelectionChangedHandler(object sender, SelectionChangedEventArgs e)
-        {
-            this.RefreshButton.IsEnabled = this.PivotControl.SelectedIndex == 1;
-        }
+      
     }
 }

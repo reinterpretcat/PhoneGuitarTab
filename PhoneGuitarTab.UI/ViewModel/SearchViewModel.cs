@@ -237,7 +237,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             get
             {
                 if (searchTabTypeOptions == null)
-                    searchTabTypeOptions = new List<TabulatureType>() { TabulatureType.All, TabulatureType.GuitarPro, TabulatureType.Guitar, TabulatureType.Bass, TabulatureType.Chords, /*TabulatureType.Drum*/ };
+                    searchTabTypeOptions = new List<TabulatureType>() { TabulatureType.All, TabulatureType.GuitarPro, TabulatureType.Guitar, TabulatureType.Bass, TabulatureType.Chords, TabulatureType.Drum };
                 return searchTabTypeOptions;
             }
         }
@@ -349,6 +349,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
+        public ExecuteCommand<string> NavigatePage 
+        {
+            get;
+            private set;
+        }
         /*public ExecuteCommand CollectionCommand
         {
             get;
@@ -417,6 +422,25 @@ namespace PhoneGuitarTab.UI.ViewModel
                     RunSearch(CurrentSearchText, string.Empty);
                 else
                     RunSearch(string.Empty, CurrentSearchText);
+            }
+        }
+
+        private void DoNavigatePage(string direction)
+        {
+            if (direction == null)
+                return;
+
+            if (direction == "next")
+            {
+                if (!(this.Pages.Count()==CurrentPageIndex))
+                this.DoSelectPage((CurrentPageIndex + 1).ToString());
+            }
+            else if (direction == "previous")
+            {
+                if (!(CurrentPageIndex == 1))
+                {
+                    this.DoSelectPage((CurrentPageIndex - 1).ToString());
+                }
             }
         }
 
@@ -576,6 +600,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             SelectPage = new ExecuteCommand<string>(DoSelectPage);
             DownloadTab = new ExecuteCommand<string>(DoDownloadTab);
             ToggleActionArea = new ExecuteCommand<TabEntity>(DoToggleActionArea);
+            NavigatePage = new ExecuteCommand<string>(DoNavigatePage);
         }
 
         private void RunSearch(string bandName, string songName)

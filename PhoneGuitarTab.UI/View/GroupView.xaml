@@ -58,7 +58,7 @@
         <controls:Pivot x:Name="PivotControl"
                         Title="{Binding CurrentGroup.Name,
                                         Converter={StaticResource UpperStr}}"
-                        SelectionChanged="PivotSelectionChangedHandler">
+                       >
             <controls:PivotItem Header="tabs">
                 <controls:PivotItem.Background>
                     <ImageBrush Stretch="UniformToFill" Opacity="0.4">
@@ -122,19 +122,12 @@
 
         <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="0.3" Mode ="Minimized">
             <!--  IsEnabled for this button is changing from codebehind PivotSelectionChangedHandler()  -->
-            <custom:BindableApplicationBarIconButton x:Name="RefreshButton"
-                                                     Command="{Binding RefreshInfoCommand}"
-                                                     CommandParameter="{Binding CurrentGroup}"
-                                                     IconUri="/Images/dark/refresh.png"
-                                                     Text="refresh" />
+            
             <custom:BindableApplicationBarIconButton Command="{Binding SearchCommand}"
                                                      CommandParameter="{Binding CurrentGroup}"
                                                      IconUri="/Images/dark/appbar.feature.search.rest.png"
                                                      Text="more online" />
-            <!-- Bad AppBar Button Implementation - Navigating to home kinda stuff, posions the hardware back button usage.-->
-            <!--custom:BindableApplicationBarIconButton Command="{Binding HomeCommand}"
-                                                     IconUri="/Images/dark/appbar.feature.home.png"
-                                                     Text="to all tabs" /-->
+           
         </custom:BindableApplicationBar>
     </Grid>
 </Views:ViewPage>

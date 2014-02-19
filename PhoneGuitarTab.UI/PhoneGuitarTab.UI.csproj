@@ -433,8 +433,10 @@
     <Content Include="Images\light\Document-Download_light.png" />
     <Content Include="Images\light\Electric-Guitar_light.png" />
     <Content Include="Images\light\Find_light.png" />
+    <Content Include="Images\light\previous.png" />
     <Content Include="Images\light\pinTab.png" />
     <Content Include="Images\light\refresh.png" />
+    <Content Include="Images\light\next.png" />
     <Content Include="Images\light\Text-Justify-Align_light.png" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />

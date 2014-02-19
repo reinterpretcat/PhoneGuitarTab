@@ -293,4 +293,32 @@ namespace PhoneGuitarTab.UI.Infrastructure
             return imageUrl.OriginalString;
         }
     }
+
+    public class ObjectNameToImagePathConverter : IValueConverter
+    {
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+           
+  
+            if (value != null && !String.IsNullOrEmpty(value.ToString()))
+            {
+                bool dark = ((Visibility)Application.Current.Resources["PhoneDarkThemeVisibility"] == Visibility.Visible);
+
+                if (dark)
+                    return new Uri("/Images/dark/"+ value.ToString() + "_dark.png", UriKind.Relative);
+                else
+                    return new Uri("/Images/light/" + value.ToString() + "_light.png", UriKind.Relative);
+            }     
+            else
+                return new Uri("", UriKind.Relative);
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var imageUrl = (Uri)value;
+            return imageUrl.OriginalString;
+        }
+    }
 }

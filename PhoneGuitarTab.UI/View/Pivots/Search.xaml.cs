@@ -19,9 +19,7 @@ namespace PhoneGuitarTab.UI.Pivots
             bindingExpr.UpdateSource();
         }
 
-        private void ToTopButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            this.tabsList.ScrollTo(this.tabsList.Tag);
-        }
+     
+   
     }
 }
