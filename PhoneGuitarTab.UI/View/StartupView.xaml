@@ -18,7 +18,7 @@
                SupportedOrientations="Portrait"
                d:DesignHeight="800"
                d:DesignWidth="480"
-               shell:SystemTray.IsVisible="True"
+               shell:SystemTray.IsVisible="False"
                mc:Ignorable="d"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
                 <toolkit:TransitionService.NavigationInTransition>
