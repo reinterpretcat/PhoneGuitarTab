@@ -20,9 +20,16 @@
         <Storyboard x:Name="tabsfadein">
             <DoubleAnimation Storyboard.TargetName="tabsList"
         		Storyboard.TargetProperty="Opacity" From="0.0"
-        		To="1" Duration="0:0:1"/>
+        		To="1" Duration="0:0:2"/>
         </Storyboard>
 
+        <Storyboard x:Name="searchFadeOut">
+            <DoubleAnimation Storyboard.TargetName="tabsList"
+        		Storyboard.TargetProperty="Opacity" From="1.0"
+        		To="0.3" Duration="0:0:2"/>
+        </Storyboard>
+
+        
         <DataTemplate x:Key="SearchHeaderTemplate">
                 <StackPanel Orientation="Vertical">
                     <Grid>
@@ -52,54 +59,39 @@
                                                           Text=" type here.." />
                             </Interactivity:Interaction.Behaviors>
                         </TextBox>
-                        <Button Grid.Column="2"
-                                Command="{Binding Path=DataContext.LaunchSearch,
-                                                  ElementName=root}"
-                                CommandParameter="{Binding Text,
-                                                           ElementName=searchTextBox}">
-                            <Button.Template>
-                                <ControlTemplate>
-                                    <Grid>
-                                        <Image VerticalAlignment="Center"
-                                               Source="/Images/light/Find_light.png"
-                                               Stretch="None"
-                                               Visibility="{StaticResource PhoneLightThemeVisibility}" />
-                                        <Image VerticalAlignment="Center"
-                                               Source="/Images/dark/Find_dark.png"
-                                               Stretch="None"
-                                               Visibility="{StaticResource PhoneDarkThemeVisibility}" />
-                                    </Grid>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                        <TextBlock Grid.Row="1"
+
+                    <TextBlock x:Name="searchBy"
+                                   Grid.Row="1"
                                    Margin="12,0,0,-14"
                                    FontSize="16"
                                    Opacity="0.7"
                                    Text="search by " />
-                        <toolkit:ListPicker Grid.Row="2"
-                                            ItemsSource="{Binding Path=DataContext.SearchMethodOptions,ElementName=root}"
+                    <toolkit:ListPicker x:Name="searchPicker" Grid.Row="2"
+                                         HorizontalContentAlignment="Center"    
+                                        ItemsSource="{Binding Path=DataContext.SearchMethodOptions,ElementName=root}"
                                             SelectedItem="{Binding Path=DataContext.SearchMethod,ElementName=root,Mode=TwoWay}">
                             <toolkit:ListPicker.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" />
+                                    <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" HorizontalAlignment="Center"/>
                                 </DataTemplate>
                             </toolkit:ListPicker.ItemTemplate>
                         </toolkit:ListPicker>
-                        <TextBlock Grid.Row="1"
+                    <TextBlock x:Name="selectedType" Grid.Row="1"
                                    Grid.Column="1"
                                    Margin="12,0,0,-14"
                                    FontSize="16"
                                    Opacity="0.7"
                                    Text="selected type " />
-                        <toolkit:ListPicker Grid.Row="2"
+                    <toolkit:ListPicker     x:Name="searchPicker2" 
+                                            Grid.Row="2"
                                             Grid.Column="1"
-                                            FullModeHeader="Tab Types"
+                                            FullModeHeader="Select Tab Type"
+                                            HorizontalContentAlignment="Center"
                                             ItemsSource="{Binding Path=DataContext.SearchTabTypeOptions, ElementName=root}"
                                             SelectedItem="{Binding Path=DataContext.SearchTabType,ElementName=root,Mode=TwoWay}">
                             <toolkit:ListPicker.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" />
+                                    <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" HorizontalAlignment="Center" />
                                 </DataTemplate>
                             </toolkit:ListPicker.ItemTemplate>
 
@@ -110,14 +102,21 @@
                         </toolkit:ListPicker.FullModeItemTemplate>
                     </toolkit:ListPicker>
                     </Grid>
-
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
+                    
+                <StackPanel HorizontalAlignment="Left" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
                                              ElementName=root}">
-                    <Button x:Name="PreviousButton" HorizontalAlignment="Left"
-                        BorderThickness="0"
-                      >
-                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="64" Height="64" >
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="260" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                   
+                    <Button Grid.Column="0"
+                            x:Name="PreviousButton" 
+                            HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                            BorderThickness="0">
+                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
                             <Rectangle.OpacityMask>
                                 <ImageBrush ImageSource="/Images/light/previous.png" />
                             </Rectangle.OpacityMask>
@@ -129,8 +128,9 @@
                         </i:Interaction.Triggers>
                     </Button>
 
-                    <StackPanel Margin="0,2,0,4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <ListBox x:Name="pagesList"
+                        <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <ListBox x:Name="pagesList" HorizontalContentAlignment="Center" 
                                  ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
                                  ItemsSource="{Binding Path=DataContext.Pages,ElementName=root}"
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
@@ -141,14 +141,14 @@
                             </i:Interaction.Triggers>
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <toolkit:WrapPanel Orientation="Horizontal" />
+                                        <toolkit:WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
                                 </ItemsPanelTemplate>
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock x:Name="pageHyperlink"
                                                FontSize="30"
-                                              Padding="10"
+                                               Padding=  "{Binding Path=DataContext.PagingListPadding,ElementName=root}"
                                                Text="{Binding}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -156,10 +156,9 @@
                         </ListBox>
                     </StackPanel>
 
-                    <Button x:Name="NextButton" HorizontalAlignment="Right"
-                        BorderThickness="0"
-                        >
-                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="64" Height="64" >
+                        <Button Grid.Column="2" x:Name="NextButton" HorizontalAlignment="Right" HorizontalContentAlignment="Right" 
+                        BorderThickness="0">
+                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
                             <Rectangle.OpacityMask>
                                 <ImageBrush ImageSource="/Images/light/next.png" />
                             </Rectangle.OpacityMask>
@@ -170,7 +169,11 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
+
+                    </Grid>
+                    
                 </StackPanel>
+                    
                 <TextBlock Margin="0,80"
                                HorizontalAlignment="Center"
                                FontSize="30"
@@ -184,71 +187,77 @@
         
         <DataTemplate x:Key="SearchFooterTemplate">
 
-            <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Center"  
-                        VerticalAlignment="Center" 
-                        Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
-                        ElementName=root}">
-                <Button x:Name="PreviousButton" 
-                        HorizontalAlignment="Left"
-                        BorderThickness="0">
-                    <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="64" Height="64" >
-                        <Rectangle.OpacityMask>
-                            <ImageBrush ImageSource="/Images/light/previous.png" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
-                                                          CommandParameter="previous" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                
-                <StackPanel Margin="0,2,0,4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <ListBox x:Name="pagesList"
+            <StackPanel HorizontalAlignment="Left" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
+                                             ElementName=root}">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            x:Name="PreviousButton" 
+                            HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                            BorderThickness="0">
+                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="/Images/light/previous.png" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="previous" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                        <ListBox x:Name="pagesList" HorizontalContentAlignment="Center" 
                                  ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
                                  ItemsSource="{Binding Path=DataContext.Pages,ElementName=root}"
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <toolkit:WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock x:Name="pageHyperlink"
+                                               FontSize="30"
+                                               Padding=  "{Binding Path=DataContext.PagingListPadding,ElementName=root}"
+                                               Text="{Binding}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                        </ListBox>
+                    </StackPanel>
+
+                    <Button Grid.Column="2" x:Name="NextButton" HorizontalAlignment="Right" HorizontalContentAlignment="Right" 
+                        BorderThickness="0">
+                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="/Images/light/next.png" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" 
-                                                              CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                            <i:EventTrigger EventName="Click">
+                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="next" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <toolkit:WrapPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock x:Name="pageHyperlink"
-                                               FontSize="30"
-                                              Padding="12"
-                                               Text="{Binding}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
+                    </Button>
 
-                    </ListBox>
-                </StackPanel>
-                
-                <Button x:Name="NextButton" HorizontalAlignment="Right"
-                        BorderThickness="0">
-                    <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="64" Height="64" >
-                        <Rectangle.OpacityMask>
-                            <ImageBrush ImageSource="/Images/light/next.png" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
-                                                          CommandParameter="next" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
+                </Grid>
+
             </StackPanel>
-                        
+
         </DataTemplate>
     </phone:PivotItem.Resources>
     <phone:LongListSelector x:Name="tabsList"
@@ -260,7 +269,7 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}" Loaded="tabsList_Loaded">
+                              Tag="{Binding FirstTabInList}">
     </phone:LongListSelector>
 
 </phone:PivotItem>

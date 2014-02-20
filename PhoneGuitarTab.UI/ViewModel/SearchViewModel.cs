@@ -33,6 +33,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         private  LastFmSearch tabSearch;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
+        private HorizontalAlignment _pagesListAlignment;
+        private Thickness _pagingListPadding;
         private IEnumerable<string> _pages;
         private TabsByName _searchGroupTabs;
         private bool _isSearching;
@@ -94,6 +96,27 @@ namespace PhoneGuitarTab.UI.ViewModel
                 _headerPagingVisibility = value;
                 RaisePropertyChanged("HeaderPagingVisibility");
             }
+        }
+
+        public HorizontalAlignment PagesListAlignment
+        {
+            get { return _pagesListAlignment; }
+            set 
+            {
+                _pagesListAlignment = value;
+                RaisePropertyChanged("PagesListAlignment");
+            }
+        }
+
+        public Thickness PagingListPadding
+        {
+            get { return _pagingListPadding; }
+            set
+            {
+                _pagingListPadding = value;
+                RaisePropertyChanged("PagingListPadding");
+            }
+        
         }
 
         //NOTE I cannot bind Command in ItemsControl with custom ItemPanelTemplate
@@ -535,16 +558,13 @@ namespace PhoneGuitarTab.UI.ViewModel
                     () =>
                     {
                         Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
-                        HeaderPagingVisibility =
-                            groupSearch.Summary.PageCount > 1
-                                ? Visibility.Visible
-                                : Visibility.Collapsed;
+                        
                         SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
                         FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
                         if(Pages.Any())
                             SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
                         RaisePropertyChanged("SelectedPage");
-                       
+                        this.AssignHeaderPagingUI(groupSearch.Summary.PageCount);
                         IsSearching = false;
                     });
             }
@@ -627,6 +647,22 @@ namespace PhoneGuitarTab.UI.ViewModel
             
         }
 
+        private void AssignHeaderPagingUI(int pageCount)
+        {
+          
+
+            PagesListAlignment = pageCount < 7
+                ? HorizontalAlignment.Center
+                : HorizontalAlignment.Center;
+        
+            PagingListPadding = pageCount < 7
+                ? new Thickness(14)
+                : new Thickness(4);
+
+            HeaderPagingVisibility = pageCount > 1
+                              ? Visibility.Visible
+                              : Visibility.Collapsed;
+        }
       
         #endregion Helper methods
     }

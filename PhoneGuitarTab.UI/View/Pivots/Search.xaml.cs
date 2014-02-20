@@ -1,7 +1,8 @@
 ﻿using Microsoft.Phone.Controls;
 using System.Windows.Controls;
 using System.Windows.Data;
-
+using PhoneGuitarTab.UI.ViewModel;
+using Microsoft.Phone.Shell;
 namespace PhoneGuitarTab.UI.Pivots
 {
     public partial class Search : PivotItem
@@ -9,7 +10,21 @@ namespace PhoneGuitarTab.UI.Pivots
         public Search()
         {
             InitializeComponent();
+
+            var viewModel = DataContext as SearchViewModel;
+            viewModel.PropertyChanged += viewModel_PropertyChanged;
+
         }
+
+        private void viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "SelectedPage")
+        {        
+                this.tabsfadein.Begin();
+               
+        }
+ 	  
+    }
 
         private void OnSearchTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
@@ -19,12 +34,6 @@ namespace PhoneGuitarTab.UI.Pivots
             bindingExpr.UpdateSource();
         }
 
-        private void tabsList_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            this.tabsfadein.Begin();
-        }
-
-     
-   
+      
     }
 }
