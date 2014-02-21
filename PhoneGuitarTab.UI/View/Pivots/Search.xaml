@@ -14,9 +14,12 @@
                     DataContext="{Binding Search, Source={StaticResource Locator}}"
                     Header="search"
                     mc:Ignorable="d" >
-   
+    
+  
     
     <phone:PivotItem.Resources>
+        <Infrastructure:SearchTabTypeImageConverter x:Key="SearchTabTypeImageConverter" />
+      
         <Storyboard x:Name="tabsFadeIn">
             <DoubleAnimation Storyboard.TargetName="tabsList"
         		Storyboard.TargetProperty="Opacity" From="0.0"
@@ -97,8 +100,8 @@
                                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Rectangle VerticalAlignment="Bottom" Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
                                         <Rectangle.OpacityMask>
-                                            <ImageBrush ImageSource="{Binding Converter={StaticResource searchTabTypeImageConverter},
-                                                ElementName=root}" />
+
+                                            <ImageBrush ImageSource="{Binding Converter={StaticResource SearchTabTypeImageConverter}}"/>
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource searchTabTypeConverter}}" Margin="20 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>

@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Linq;
 using PhoneGuitarTab.Search;
 
@@ -227,34 +228,29 @@ namespace PhoneGuitarTab.UI.Infrastructure
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string returnString = string.Empty;
+            
             TabulatureType searchType = (TabulatureType)value;
 
             switch (searchType)
             {
                 case TabulatureType.All:
-                    returnString = "all tabs";
-                    break;
+                    return new BitmapImage(new Uri("/Images/instrument/musicxml_tile.png", UriKind.Relative));
                 case TabulatureType.Guitar:
-                    returnString = "guitar tabs";
-                    break;
+                    return new BitmapImage(new Uri("/Images/instrument/Electric-Guitar_dark.png", UriKind.Relative));
                 case TabulatureType.Bass:
-                    returnString = "bass tabs";
-                    break;
+                    return new BitmapImage(new Uri("/Images/instrument/Bass_dark.png", UriKind.Relative));
                 case TabulatureType.Chords:
-                    returnString = "chords";
-                    break;
+                    return new BitmapImage(new Uri("/Images/instrument/Chords_dark.png", UriKind.Relative));
                 case TabulatureType.Drum:
-                    returnString = "drum tabs";
-                    break;
+                    return new BitmapImage(new Uri("/Images/instrument/Drums_dark.png", UriKind.Relative));
                 case TabulatureType.GuitarPro:
-                    returnString = "guitar pro";
-                    break;
+                    return new BitmapImage(new Uri("/Images/instrument/Guitarpro_dark.png", UriKind.Relative));
                 default:
-                    break;
+                    return new Uri("", UriKind.Relative);
+                  
             }
 
-            return returnString;
+     
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

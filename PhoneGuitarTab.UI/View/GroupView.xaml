@@ -22,7 +22,7 @@
                SupportedOrientations="Portrait"
                d:DesignHeight="768"
                d:DesignWidth="480"
-               shell:SystemTray.IsVisible="True"
+               shell:SystemTray.IsVisible="False"
                mc:Ignorable="d">
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
