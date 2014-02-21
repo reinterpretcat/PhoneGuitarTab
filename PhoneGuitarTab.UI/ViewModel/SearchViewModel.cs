@@ -655,7 +655,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 ? HorizontalAlignment.Center
                 : HorizontalAlignment.Center;
         
-            PagingListPadding = pageCount < 7
+            PagingListPadding = pageCount < 8
                 ? new Thickness(14)
                 : new Thickness(6.5);
 
