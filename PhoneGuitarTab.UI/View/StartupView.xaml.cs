@@ -6,6 +6,7 @@
     {
         public StartupView()
         {
+            InitializeComponent();
         }
     }
 }
