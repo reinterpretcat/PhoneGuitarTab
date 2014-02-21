@@ -20,12 +20,12 @@
         <Storyboard x:Name="tabsfadein">
             <DoubleAnimation Storyboard.TargetName="tabsList"
         		Storyboard.TargetProperty="Opacity" From="0.0"
-        		To="1" Duration="0:0:1"/>
+        		To="1" Duration="0:0:0.7"/>
         </Storyboard>
 
         
         <DataTemplate x:Key="SearchHeaderTemplate">
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -83,26 +83,38 @@
                                             HorizontalContentAlignment="Center"
                                             ItemsSource="{Binding Path=DataContext.SearchTabTypeOptions, ElementName=root}"
                                             SelectedItem="{Binding Path=DataContext.SearchTabType,ElementName=root,Mode=TwoWay}">
-                            <toolkit:ListPicker.ItemTemplate>
+                           
+                        <toolkit:ListPicker.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" HorizontalAlignment="Center" />
-                                </DataTemplate>
+                                  
+                                <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" HorizontalAlignment="Center" />
+                            </DataTemplate>
                             </toolkit:ListPicker.ItemTemplate>
 
                         <toolkit:ListPicker.FullModeItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" Margin="16 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                                
+                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Rectangle VerticalAlignment="Bottom" Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                                        <Rectangle.OpacityMask>
+                                            <ImageBrush ImageSource="{Binding Converter={StaticResource searchTabTypeConverter},
+                                                ElementName=root}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource searchTabTypeConverter}}" Margin="20 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+
+                                </StackPanel>
                             </DataTemplate>
                         </toolkit:ListPicker.FullModeItemTemplate>
                     </toolkit:ListPicker>
                     </Grid>
                     
-                <StackPanel HorizontalAlignment="Left" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
+                <StackPanel Margin="-15,-20,-15,0" HorizontalAlignment="Stretch" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
                                              ElementName=root}">
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="260" />
+                            <ColumnDefinition Width="300" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                    
@@ -263,7 +275,7 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}">
+                              Tag="{Binding FirstTabInList}" Margin="-8,-35">
     </phone:LongListSelector>
 
 </phone:PivotItem>

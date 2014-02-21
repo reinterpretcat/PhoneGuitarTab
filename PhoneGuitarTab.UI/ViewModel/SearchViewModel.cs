@@ -657,7 +657,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         
             PagingListPadding = pageCount < 7
                 ? new Thickness(14)
-                : new Thickness(4);
+                : new Thickness(6.5);
 
             HeaderPagingVisibility = pageCount > 1
                               ? Visibility.Visible
