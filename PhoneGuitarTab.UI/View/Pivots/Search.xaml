@@ -41,7 +41,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="searchTextBox"
+                        <TextBox x:Name="searchTextBox" InputScope="Search"
                                  Grid.ColumnSpan="2"
                                  Text="{Binding Path=DataContext.CurrentSearchText,
                                                 ElementName=root,
