@@ -6,15 +6,7 @@
     {
         public StartupView()
         {
-            try
-            {
-                InitializeComponent();
-              
-            }
-            catch (System.InvalidCastException)
-            {
-
-            }
+            InitializeComponent();
         }
     }
 }

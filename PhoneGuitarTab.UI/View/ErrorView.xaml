@@ -36,7 +36,7 @@
                            Style="{StaticResource PhoneTextSmallStyle}"/>
                 <TextBlock x:Name="ErrorTextBlock" Margin="24,20,24,0" Text=""
                            TextWrapping="Wrap"  
-                           Style="{StaticResource PhoneTextSmallStyle}" Height="42"/>
+                           Style="{StaticResource PhoneTextSmallStyle}" />
             </StackPanel>
 
 
