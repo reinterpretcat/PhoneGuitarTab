@@ -21,7 +21,7 @@ namespace PhoneGuitarTab.UI.Pivots
     {
         if (e.PropertyName == "SelectedPage")
         {        
-              this.tabsfadein.Begin();
+              this.tabsFadeIn.Begin();
                
         }
  	  

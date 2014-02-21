@@ -17,7 +17,7 @@
    
     
     <phone:PivotItem.Resources>
-        <Storyboard x:Name="tabsfadein">
+        <Storyboard x:Name="tabsFadeIn">
             <DoubleAnimation Storyboard.TargetName="tabsList"
         		Storyboard.TargetProperty="Opacity" From="0.0"
         		To="1" Duration="0:0:0.7"/>
@@ -97,7 +97,7 @@
                                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Rectangle VerticalAlignment="Bottom" Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
                                         <Rectangle.OpacityMask>
-                                            <ImageBrush ImageSource="{Binding Converter={StaticResource searchTabTypeConverter},
+                                            <ImageBrush ImageSource="{Binding Converter={StaticResource searchTabTypeImageConverter},
                                                 ElementName=root}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
@@ -275,7 +275,7 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}" Margin="-8,-35">
+                              Tag="{Binding FirstTabInList}" Margin="-4,-20">
     </phone:LongListSelector>
 
 </phone:PivotItem>

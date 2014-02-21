@@ -223,6 +223,46 @@ namespace PhoneGuitarTab.UI.Infrastructure
         }
     }
 
+    public class SearchTabTypeImageConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string returnString = string.Empty;
+            TabulatureType searchType = (TabulatureType)value;
+
+            switch (searchType)
+            {
+                case TabulatureType.All:
+                    returnString = "all tabs";
+                    break;
+                case TabulatureType.Guitar:
+                    returnString = "guitar tabs";
+                    break;
+                case TabulatureType.Bass:
+                    returnString = "bass tabs";
+                    break;
+                case TabulatureType.Chords:
+                    returnString = "chords";
+                    break;
+                case TabulatureType.Drum:
+                    returnString = "drum tabs";
+                    break;
+                case TabulatureType.GuitarPro:
+                    returnString = "guitar pro";
+                    break;
+                default:
+                    break;
+            }
+
+            return returnString;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException("Convert from string to se");
+        }
+    }
+
     public class TabsGroupsCollectionToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
