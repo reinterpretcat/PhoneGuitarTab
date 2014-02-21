@@ -20,13 +20,7 @@
         <Storyboard x:Name="tabsfadein">
             <DoubleAnimation Storyboard.TargetName="tabsList"
         		Storyboard.TargetProperty="Opacity" From="0.0"
-        		To="1" Duration="0:0:2"/>
-        </Storyboard>
-
-        <Storyboard x:Name="searchFadeOut">
-            <DoubleAnimation Storyboard.TargetName="tabsList"
-        		Storyboard.TargetProperty="Opacity" From="1.0"
-        		To="0.3" Duration="0:0:2"/>
+        		To="1" Duration="0:0:1"/>
         </Storyboard>
 
         

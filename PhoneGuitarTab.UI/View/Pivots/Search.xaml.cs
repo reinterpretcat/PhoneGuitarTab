@@ -13,6 +13,7 @@ namespace PhoneGuitarTab.UI.Pivots
 
             var viewModel = DataContext as SearchViewModel;
             viewModel.PropertyChanged += viewModel_PropertyChanged;
+         
 
         }
 
@@ -20,7 +21,7 @@ namespace PhoneGuitarTab.UI.Pivots
     {
         if (e.PropertyName == "SelectedPage")
         {        
-                this.tabsfadein.Begin();
+              this.tabsfadein.Begin();
                
         }
  	  
