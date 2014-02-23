@@ -3,13 +3,31 @@
 <head>
     <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
     <title>PhoneGuitarTab</title>
+  
+  <script>
+    $(window).load(function(){
+    $("#audioSection").sticky({ topSpacing: 0 });
+    });
+  </script>
+
     <style>
-        span { font-weight: bold;}
+      span { font-weight: bold;}
+      #audioSection {  }
     </style>
+  
     <script src="js/sandbox/jquery-1.10.2.min.js"></script>
-</head>
-<body>
-    <div id="textContainer"></div>
+    <script src="js/texttab/jquery.sticky.js"></script>
     <script src="js/texttab/interaction.js"></script>
+</head>
+  
+<body>
+  
+  <div id="audioSection">
+    <audio id="audio1"  controls="controls"></audio>
+  </div>  
+  
+  <div id="textContainer"></div>
+   
+ 
 </body>
-</html>"
+</html>

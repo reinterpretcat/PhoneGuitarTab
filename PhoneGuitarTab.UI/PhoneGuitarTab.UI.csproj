@@ -375,6 +375,7 @@
     <Content Include="Html\js\tablatures\title.js" />
     <Content Include="Html\js\tablatures\track.js" />
     <Content Include="Html\js\texttab\interaction.js" />
+    <Content Include="Html\js\texttab\jquery.sticky.js" />
     <Content Include="Html\js\utils\core.js" />
     <Content Include="Html\js\utils\filereader.js" />
     <Content Include="Html\sandbox.html" />

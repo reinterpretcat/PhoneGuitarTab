@@ -14,17 +14,24 @@ namespace PhoneGuitarTab.UI.ViewModel
     using System.Linq;
     using Microsoft.Phone.Shell;
     using Microsoft.Phone.Tasks;
+    using System.Net;
+    using System.IO;
+    using Microsoft.Phone.Controls;
 
     public abstract class TabViewModelBase:  DataContextViewModel
     {
         public string TabContent { get; set; }
        
-        protected Tab Tablature { get; set; }
+        public Tab Tablature { get; set; }
 
         public RatingService RatingService { get; private set; }
 
         protected IDialogController Dialog { get; set; }
 
+        public event AudioUrlRetrievedHandler AudioUrlRetrieved;
+        public delegate void AudioUrlRetrievedHandler();
+
+        public string AudioUrl { get; set; }
         [Dependency]
         protected TabViewModelBase(IDataContextService database, RatingService ratingService, MessageHub hub)
             : base(database, hub)
@@ -43,6 +50,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                     });
 
         }
+
 
         public override void LoadStateFrom(IDictionary<string, object> state)
         {
@@ -73,6 +81,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             this.RunRating();
         }
 
+
         private void RunRating()
         {
             if (!RatingService.IsAppRated() && RatingService.IsNeedShowMessage())
@@ -86,6 +95,35 @@ namespace PhoneGuitarTab.UI.ViewModel
                 }
             }
         }
-               
+
+        public void GetTrackStreamRedirectUrl(string sourceUrl)
+        {
+            if (!string.IsNullOrEmpty(sourceUrl))
+            {
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(sourceUrl + ".json?client_id=5ca9c93662aaa8d953a421ce53500bae");
+                request.Method = "HEAD";
+                request.AllowReadStreamBuffering = true;
+                request.AllowAutoRedirect = true;
+                request.BeginGetResponse(new AsyncCallback(ReadWebRequestCallback), request);
+            }
+        }
+
+        private void ReadWebRequestCallback(IAsyncResult callbackResult)
+        {
+            HttpWebRequest myRequest = (HttpWebRequest)callbackResult.AsyncState;
+            HttpWebResponse myResponse = (HttpWebResponse)myRequest.EndGetResponse(callbackResult);
+
+
+            using (StreamReader httpwebStreamReader = new StreamReader(myResponse.GetResponseStream()))
+            {
+                this.AudioUrl = myResponse.ResponseUri.AbsoluteUri;
+                AudioUrlRetrieved();
+
+            }
+            myResponse.Close();
+
+        }
+
+       
     }
 }
