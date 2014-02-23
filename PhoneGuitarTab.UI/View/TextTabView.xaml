@@ -12,7 +12,7 @@
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
                Foreground="{StaticResource PhoneForegroundBrush}"
-               Orientation="Landscape"
+               Orientation="Portrait"
                
                SupportedOrientations="PortraitOrLandscape"
                d:DesignHeight="768"
@@ -65,10 +65,10 @@
 			IsScriptEnabled="True" Grid.ColumnSpan="4" Grid.RowSpan="3"  Margin="0,-10,0,10" MouseLeftButtonUp="tabWebBrowser_MouseLeftButtonUp" ScriptNotify="tabWebBrowser_ScriptNotify" Loaded="tabWebBrowser_Loaded" LoadCompleted="tabWebBrowser_LoadCompleted"  />
         <Controls:AutoScroll x:Name="slider" 
                              HorizontalAlignment="Left" 
-                             Margin="24,26,0,0" 
+                             Margin="19,72,0,0" 
                              VerticalAlignment="Top" 
                              Height="176" 
-                             Width="60" Grid.Column="3" Grid.RowSpan="2" Visibility="Collapsed"/>
+                             Width="60" Grid.Column="3" Visibility="Collapsed" Grid.Row="1"/>
     </Grid>
 
 </Views:ViewPage>
