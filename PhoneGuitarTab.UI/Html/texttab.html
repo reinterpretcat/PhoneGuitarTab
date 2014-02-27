@@ -4,15 +4,13 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0"/>
     <title>PhoneGuitarTab</title>
   
-  <script>
-    $(window).load(function(){
-    $("#audioSection").sticky({ topSpacing: 0 });
-    });
-  </script>
+
 
     <style>
       span { font-weight: bold;}
       #audioSection {  }
+      #audio1{}
+      label {font: 12px Segoe UI;}
     </style>
   
     <script src="js/sandbox/jquery-1.10.2.min.js"></script>
@@ -23,7 +21,8 @@
 <body>
   
   <div id="audioSection">
-    <audio id="audio1"  controls="controls"></audio>
+    <label id="info"></label>
+    <audio id="audio1"  src="" controls="">  </audio>
   </div>  
   
   <div id="textContainer"></div>

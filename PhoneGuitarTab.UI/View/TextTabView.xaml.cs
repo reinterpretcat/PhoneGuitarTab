@@ -116,6 +116,8 @@ namespace PhoneGuitarTab.UI
         {
             if (NetworkInterface.GetIsNetworkAvailable())
                 this.InvokeAudioStreamUrl();
+            else
+                tabWebBrowser.InvokeScript("setLabel", "Connect your device to internet to stream ", viewModel.Tablature.Name);
         }
 
         private void InvokeAudioStreamUrl()

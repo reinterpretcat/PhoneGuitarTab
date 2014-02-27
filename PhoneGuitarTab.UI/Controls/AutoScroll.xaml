@@ -25,7 +25,7 @@
         <Storyboard x:Name="fadeout">
             <DoubleAnimation Storyboard.TargetName="slideControl"
         		Storyboard.TargetProperty="Opacity" From="1"
-        		To="0.05" Duration="0:0:1"/>
+        		To="0.1" Duration="0:0:1"/>
             <DoubleAnimation Storyboard.TargetName="slow"
         		Storyboard.TargetProperty="Opacity" From="1"
         		To="0.1" Duration="0:0:1"/>
