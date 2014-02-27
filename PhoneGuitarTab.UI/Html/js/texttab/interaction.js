@@ -8,9 +8,9 @@ $(document).ready(function () {
  
 
 function slide(interval) {
-    clearInterval(delay);
+   clearInterval(delay);
     delay = setInterval( function () {
-        window.scrollBy(0, 2)
+        window.scrollBy(0, 1 )
     }, interval);
 }
 
