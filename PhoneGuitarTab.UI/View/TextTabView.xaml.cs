@@ -9,7 +9,7 @@ namespace PhoneGuitarTab.UI
     using PhoneGuitarTab.Core.Views;
     using PhoneGuitarTab.UI.Entities;
     using System.Windows;
-    using System.Net.NetworkInformation;
+
   
     public partial class TextTabView : ViewPage
     {
@@ -19,12 +19,12 @@ namespace PhoneGuitarTab.UI
         {
             InitializeComponent();
             this.slider.Browser = this.tabWebBrowser;
+            this.viewModel = DataContext as TextTabViewModel;
 
-            viewModel = DataContext as TextTabViewModel;
             this.tabWebBrowser.LoadCompleted += viewModel.Browser_LoadCompleted;
-            viewModel.AudioUrlRetrieved += new TabViewModelBase.AudioUrlRetrievedHandler(audioRedirectUrlRetrievedHandler);
+            this.tabWebBrowser.ScriptNotify += viewModel.Browser_ScriptNotify;
+            this.viewModel.AudioUrlRetrieved += this.AudioUrlRetrievedHandler;
 
-          
         }
  
         /// <summary>
@@ -58,11 +58,6 @@ namespace PhoneGuitarTab.UI
                  }
              }
 
-             if (e.Value.StartsWith("onStreamUrlRetrieved") )
-             {  
-                 viewModel.GetTrackStreamRedirectUrl((string)tabWebBrowser.InvokeScript("getTrackUrl"));          
-             }
-            
         }
 
         private void tabWebBrowser_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -112,26 +107,9 @@ namespace PhoneGuitarTab.UI
             else {this.ApplicationBar.IsVisible = true; }
         }
 
-        private void tabWebBrowser_LoadCompleted(object sender, NavigationEventArgs e)
+        private void AudioUrlRetrievedHandler(string audioUrl)
         {
-            if (NetworkInterface.GetIsNetworkAvailable())
-                this.InvokeAudioStreamUrl();
-            else
-                tabWebBrowser.InvokeScript("setLabel", "Connect your device to internet to stream ", viewModel.Tablature.Name);
-        }
-
-        private void InvokeAudioStreamUrl()
-        {
-            Dispatcher.BeginInvoke(() =>
-            {
-                tabWebBrowser.InvokeScript("getAudioStreamUrl", viewModel.Tablature.Group.Name + " " + viewModel.Tablature.Name);
-
-            });
-        }
-
-        private void audioRedirectUrlRetrievedHandler()
-        {
-            Dispatcher.BeginInvoke(() => tabWebBrowser.InvokeScript("setAudioUrl", viewModel.AudioUrl));
+            Dispatcher.BeginInvoke(() => tabWebBrowser.InvokeScript("setAudioUrl", audioUrl));
         }
     
 

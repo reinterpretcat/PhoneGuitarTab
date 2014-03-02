@@ -62,7 +62,7 @@
             <ColumnDefinition Width="89*"/>
         </Grid.ColumnDefinitions>
         <phone:WebBrowser x:Name="tabWebBrowser"
-			IsScriptEnabled="True" Grid.ColumnSpan="4" Grid.RowSpan="3"  Margin="0,-10,0,10" MouseLeftButtonUp="tabWebBrowser_MouseLeftButtonUp" ScriptNotify="tabWebBrowser_ScriptNotify" Loaded="tabWebBrowser_Loaded" LoadCompleted="tabWebBrowser_LoadCompleted"  />
+			IsScriptEnabled="True" Grid.ColumnSpan="4" Grid.RowSpan="3"  Margin="0,-10,0,10" MouseLeftButtonUp="tabWebBrowser_MouseLeftButtonUp" ScriptNotify="tabWebBrowser_ScriptNotify" Loaded="tabWebBrowser_Loaded" />
         <Controls:AutoScroll x:Name="slider" 
                              HorizontalAlignment="Left" 
                              Margin="19,72,0,0" 

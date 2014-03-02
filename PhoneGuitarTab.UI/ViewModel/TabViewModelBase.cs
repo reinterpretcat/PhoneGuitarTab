@@ -1,6 +1,6 @@
 ﻿using System;
 using PhoneGuitarTab.Core.Services;
-
+using PhoneGuitarTab.Search.SoundCloud;
 namespace PhoneGuitarTab.UI.ViewModel
 {
     using System.Windows;
@@ -14,8 +14,7 @@ namespace PhoneGuitarTab.UI.ViewModel
     using System.Linq;
     using Microsoft.Phone.Shell;
     using Microsoft.Phone.Tasks;
-    using System.Net;
-    using System.IO;
+    using System.Net.NetworkInformation;
     using Microsoft.Phone.Controls;
 
     public abstract class TabViewModelBase:  DataContextViewModel
@@ -28,10 +27,10 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected IDialogController Dialog { get; set; }
 
+        private string AudioUrl { get; set; }
         public event AudioUrlRetrievedHandler AudioUrlRetrieved;
-        public delegate void AudioUrlRetrievedHandler();
+        public delegate void AudioUrlRetrievedHandler(string audioUrl);
 
-        public string AudioUrl { get; set; }
         [Dependency]
         protected TabViewModelBase(IDataContextService database, RatingService ratingService, MessageHub hub)
             : base(database, hub)
@@ -78,15 +77,45 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
+            var browser = sender as WebBrowser;
+            this.GetAudioStreamUrl(browser);
+
             this.RunRating();
         }
 
+        public void Browser_ScriptNotify(object sender, NotifyEventArgs e)
+        {
+            var browser = sender as WebBrowser;
+            if (e.Value.StartsWith("onStreamUrlRetrieved"))
+            {
+                SoundCloudSearch soundCloudSearch = new SoundCloudSearch((string)browser.InvokeScript("getTrackUrl"));
+                soundCloudSearch.SearchCompleted += SoundCloudSearchCompleted;
+                soundCloudSearch.Run();
+            }
+        }
 
+        #region helpers
+       
+        private void GetAudioStreamUrl(WebBrowser browser)
+        {
+
+            if (NetworkInterface.GetIsNetworkAvailable())
+            {
+                System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(() =>
+                {
+                    browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name + " " + Tablature.Name);
+
+                });
+            }
+            else
+                browser.InvokeScript("setLabel", "Connect your device to internet to stream ", Tablature.Name);
+        }
+       
         private void RunRating()
         {
             if (!RatingService.IsAppRated() && RatingService.IsNeedShowMessage())
             {
-                MessageBoxResult result = MessageBox.Show( AppResources.ReviewTheApp, AppResources.RateTheApp, MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show(AppResources.ReviewTheApp, AppResources.RateTheApp, MessageBoxButton.OKCancel);
                 //show message.
                 if (result == MessageBoxResult.OK)
                 {
@@ -96,34 +125,19 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public void GetTrackStreamRedirectUrl(string sourceUrl)
+        #endregion
+          
+        #region event handlers
+
+        private void SoundCloudSearchCompleted(object sender)
         {
-            if (!string.IsNullOrEmpty(sourceUrl))
-            {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(sourceUrl + ".json?client_id=5ca9c93662aaa8d953a421ce53500bae");
-                request.Method = "HEAD";
-                request.AllowReadStreamBuffering = true;
-                request.AllowAutoRedirect = true;
-                request.BeginGetResponse(new AsyncCallback(ReadWebRequestCallback), request);
-            }
+            var result = sender as SoundCloudSearch;
+            this.AudioUrl = result.AudioStreamEndPointUrl;
+            this.AudioUrlRetrieved(this.AudioUrl);
         }
 
-        private void ReadWebRequestCallback(IAsyncResult callbackResult)
-        {
-            HttpWebRequest myRequest = (HttpWebRequest)callbackResult.AsyncState;
-            HttpWebResponse myResponse = (HttpWebResponse)myRequest.EndGetResponse(callbackResult);
-
-
-            using (StreamReader httpwebStreamReader = new StreamReader(myResponse.GetResponseStream()))
-            {
-                this.AudioUrl = myResponse.ResponseUri.AbsoluteUri;
-                AudioUrlRetrieved();
-
-            }
-            myResponse.Close();
-
-        }
-
-       
+        #endregion
+      
+      
     }
 }
