@@ -34,8 +34,13 @@ namespace PhoneGuitarTab.UI.View
             this.ListPickerInstrument.DataContext = this.Tracks;
             
            //set slider's Browser property to current.
-            this.slider.Browser = this.Browser; 
+            this.slider.Browser = this.Browser;
 
+            
+            var viewModel = DataContext as StaveTabViewModel;
+            
+            //subscribe to AudioURLretrieved event.
+            viewModel.AudioUrlRetrieved += this.AudioUrlRetrievedHandler;
          
         }
 
@@ -97,6 +102,8 @@ namespace PhoneGuitarTab.UI.View
                 OrientationChanged += (_, __) => Browser.InvokeScript("showTab");
             }
 
+            var viewModel = DataContext as StaveTabViewModel;        
+            viewModel.Browser_ScriptNotify(sender, e);
              
         }
 
@@ -230,6 +237,12 @@ namespace PhoneGuitarTab.UI.View
             }
             else { this.ApplicationBar.IsVisible = true; }
         }
-      
+
+        private void AudioUrlRetrievedHandler(string audioUrl)
+        {
+            //Set Audioplayers endpoint streamUrl.
+            Dispatcher.BeginInvoke(() =>  this.Browser.InvokeScript("setAudioUrl", audioUrl));
+        }
+
     }
 }

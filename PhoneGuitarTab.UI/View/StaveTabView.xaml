@@ -37,7 +37,7 @@
 
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default" Opacity="0.5">  
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default" Opacity="0.5">
             <shell:ApplicationBarIconButton x:Name ="InstrumentApplicationBarIconButton" IconUri="/Images/instrument/instruments.png" IsEnabled="True" Text="instruments" Click="InstrumentApplicationBar_Click"/>
             <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
             <shell:ApplicationBarIconButton x:Name ="ScaleApplicationBarIconButton"  IconUri="/Images/dark/scale.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
@@ -48,9 +48,9 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="323*"/>
-            <RowDefinition Height="87*"/>
+            <RowDefinition Height="175*"/>
+            <RowDefinition Height="454*"/>
+            <RowDefinition Height="139*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="9*"/>
@@ -70,12 +70,12 @@
 			NavigationFailed="Browser_NavigationFailed" Grid.ColumnSpan="4" Grid.RowSpan="3" RenderTransformOrigin="0.504,0.578"/>
         <Controls:AutoScroll x:Name="slider" 
                              HorizontalAlignment="Left" 
-                             Margin="24,26,0,0" 
+                             Margin="22,96,0,0" 
                              VerticalAlignment="Top" 
                              Height="176" 
                              Width="60" Grid.Column="3" Grid.RowSpan="2" Visibility="Collapsed"/>
-        <toolkit:ListPicker x:Name="ListPickerInstrument" FullModeHeader="Instruments"
-                            Margin="6,4,3,120"
+        <toolkit:ListPicker x:Name="ListPickerInstrument" FullModeHeader="Select Instrument"
+                            Margin="4,104,5,20"
                             ExpansionMode ="FullScreenOnly"
                             Visibility="Collapsed" Opacity="0.5"
                             ItemsSource="{Binding}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="2" 

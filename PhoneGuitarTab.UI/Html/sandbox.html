@@ -4,12 +4,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>PhoneGuitarTab</title>
         <meta name="viewport" content="width=device-width" />
-		
-		<link rel="stylesheet" type="text/css" href="css/site.css">
+
+      <style>
+        #audioSection {  }
+        #audio1{opacity:0.7;  margin-left: -10px; margin-top: -5px;}
+        #info {font: 10px Segoe UI; color:white;}
+      </style>
+      
+		<link rel="stylesheet" type="text/css" href="css/site.css"/>
 		<link rel="stylesheet" type="text/css" href="css/tabdiv.css" />
 		
 		<!-- sandbox-specific files -->
 		<script src="js/sandbox/jquery-1.10.2.min.js"></script>
+    <script src="js/sandbox/tabs.js"></script>
+    <script src="js/texttab/interaction.js"></script>
+    <script src="js/texttab/jquery.sticky.js"></script>
+     
 
 		<!-- vexflow scripts-->
 		<script src="js/utils/core.js"></script>
@@ -79,12 +89,18 @@
         <script src="js/tablatures/adapters/ugTabAdapter.js"></script>
         <script src="js/utils/filereader.js"></script>
 		<script src="js/tablatures/tabFactory.js"></script>
-
+    
        
     </head>
     <body>
-        <div id="body"></div>
-        <script src="js/sandbox/tabs.js"></script>
-        <script src="js/texttab/interaction.js"></script>
+      
+      <div id="audioSection">
+         <label id="info"></label>
+        <audio id="audio1"  src="" controls="">  </audio>
+     </div>  
+      
+      <div id="body"></div>
+      
+   
     </body>
 </html>
