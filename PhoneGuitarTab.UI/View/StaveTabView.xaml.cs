@@ -51,9 +51,10 @@ namespace PhoneGuitarTab.UI.View
             //Navigate only for the first load (to prevent renavigation while switching back and forth from listpicker's fullmode)
             //For all other Loads (after navigating back from instrument selection) become visible.
             if (isFirstLoad)
+            {
                 Browser.Navigate(new Uri(SandboxUri, UriKind.Relative));
-            else
-                this.ListPickerInstrument.Visibility = Visibility.Visible;
+               
+            }
 
           
         }
@@ -69,7 +70,7 @@ namespace PhoneGuitarTab.UI.View
         ////Appbar button to visible / hide for listpicker.
         private void InstrumentApplicationBar_Click(object sender, EventArgs e)
         {
-            this.ListPickerInstrument.Visibility = Visibility.Visible;
+          
             this.ListPickerInstrument.Open();
 
             if (!(this.ApplicationBar.Mode == ApplicationBarMode.Minimized))
@@ -80,6 +81,7 @@ namespace PhoneGuitarTab.UI.View
         private void ListPickerInstrument_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Browser.InvokeScript("changeInstrument", ListPickerInstrument.SelectedIndex.ToString());
+           
         }
 
         
