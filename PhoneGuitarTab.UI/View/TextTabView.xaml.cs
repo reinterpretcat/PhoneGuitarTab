@@ -97,6 +97,13 @@ namespace PhoneGuitarTab.UI
             viewModel.RatingService.IncreaseTabViewCount();
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            var viewModel = DataContext as TextTabViewModel;
+            viewModel.StopAudioPlayer(this.tabWebBrowser);
+        }
+
         private void root_OrientationChanged(object sender, OrientationChangedEventArgs e)
         {
             //Control the appbar visibility (in landscape mode it opens the buttons, reading tabs become harder)

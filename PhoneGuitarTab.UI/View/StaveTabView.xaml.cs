@@ -49,7 +49,6 @@ namespace PhoneGuitarTab.UI.View
             Browser.IsScriptEnabled = true;
 
             //Navigate only for the first load (to prevent renavigation while switching back and forth from listpicker's fullmode)
-            //For all other Loads (after navigating back from instrument selection) become visible.
             if (isFirstLoad)
             {
                 Browser.Navigate(new Uri(SandboxUri, UriKind.Relative));
@@ -228,6 +227,13 @@ namespace PhoneGuitarTab.UI.View
             base.OnNavigatedTo(e);
             var viewModel = DataContext as StaveTabViewModel;
             viewModel.RatingService.IncreaseTabViewCount();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            var viewModel = DataContext as StaveTabViewModel;
+            viewModel.StopAudioPlayer(this.Browser);
         }
 
         private void ViewPage_OrientationChanged(object sender, OrientationChangedEventArgs e)

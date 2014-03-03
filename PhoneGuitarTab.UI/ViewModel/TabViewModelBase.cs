@@ -27,7 +27,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected IDialogController Dialog { get; set; }
 
-        private string AudioUrl { get; set; }
         public event AudioUrlRetrievedHandler AudioUrlRetrieved;
         public delegate void AudioUrlRetrievedHandler(string audioUrl);
 
@@ -50,7 +49,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         }
 
-
         public override void LoadStateFrom(IDictionary<string, object> state)
         {
             base.LoadStateFrom(state);
@@ -70,10 +68,7 @@ namespace PhoneGuitarTab.UI.ViewModel
            
         }
         
-        public void PinTabToStart()
-        {
-            TilesForTabs.PinTabToStart(Tablature);
-        }
+        
 
         public void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
@@ -94,6 +89,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        public void PinTabToStart()
+        {
+            TilesForTabs.PinTabToStart(Tablature);
+        }
+
+        public void StopAudioPlayer(WebBrowser browser)
+        {
+             System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(() =>
+                {
+                    browser.InvokeScript("stopAudioPlayer");
+                });
+        }
         #region helpers
        
         private void GetAudioStreamUrl(WebBrowser browser)
@@ -132,8 +139,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void SoundCloudSearchCompleted(object sender)
         {
             var result = sender as SoundCloudSearch;
-            this.AudioUrl = result.AudioStreamEndPointUrl;
-            this.AudioUrlRetrieved(this.AudioUrl);
+            this.AudioUrlRetrieved(result.AudioStreamEndPointUrl);
         }
 
         #endregion
