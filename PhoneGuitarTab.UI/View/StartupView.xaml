@@ -42,6 +42,7 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
   
+    
     <Grid x:Name="LayoutRoot">
         <Controls:Pivot TitleTemplate="{StaticResource EmptyTitleTemplate}">
             <Pivots:Tabs />
@@ -56,7 +57,6 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Controls:Pivot>
-
         <ProgressBar x:Name="performanceBar"
                                         VerticalAlignment="Top"
                                         IsIndeterminate="{Binding Search.IsSearching,
@@ -64,20 +64,23 @@
                                                                   Mode=TwoWay}"
                                         Visibility="{Binding Search.IsSearching,
                                                              Source={StaticResource Locator},
-                                                             Converter={StaticResource boolVisibility}}" />
-        
-        <custom:BindableApplicationBar x:Name="AppBar" BarOpacity="1" Mode ="Minimized">
-          
-            <custom:BindableApplicationBarIconButton x:Name="RateButton"
+                                                             Converter={StaticResource boolVisibility}}" />   
+    </Grid>
+
+
+    <custom:Bindable.ApplicationBar>
+        <custom:BindableApplicationBar Mode="Minimized">
+            <custom:BindableApplicationBarButton x:Name="RateButton"
                                                      Command="{Binding Review}"
                                                      IconUri="/Images/dark/rate.png"
                                                      Text="rate" />
-            <custom:BindableApplicationBarMenuItem x:Name="AboutButton" 
+            <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem x:Name="AboutButton" 
                                                      Command="{Binding GoTo}"
                                                      CommandParameter="About"
                                                      Text="about" />
+            </custom:BindableApplicationBar.MenuItems>
+
         </custom:BindableApplicationBar>
-
-    </Grid>
-
+    </custom:Bindable.ApplicationBar>
 </Views:ViewPage>

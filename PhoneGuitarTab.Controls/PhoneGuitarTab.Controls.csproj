@@ -101,9 +101,13 @@
     <Compile Include="..\AssemblyInfoBase.cs">
       <Link>Properties\AssemblyInfoBase.cs</Link>
     </Compile>
+    <Compile Include="BindableApplicationBar\Bindable.cs" />
     <Compile Include="BindableApplicationBar\BindableApplicationBar.cs" />
-    <Compile Include="BindableApplicationBar\BindableApplicationBarIconButton.cs" />
+    <Compile Include="BindableApplicationBar\BindableApplicationBarButton.cs" />
     <Compile Include="BindableApplicationBar\BindableApplicationBarMenuItem.cs" />
+    <Compile Include="BindableApplicationBar\DataContextChangedHelper.cs" />
+    <Compile Include="BindableApplicationBar\FlexibleDataContextChangedHelper.cs" />
+    <Compile Include="BindableApplicationBar\UIElementExtensions.cs" />
     <Compile Include="BindableApplicationBar\VisualTreeHelperExtensions.cs" />
     <Compile Include="CommandBehaviorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
