@@ -60,7 +60,6 @@
                                                      Text="about" />             
             </custom:BindableApplicationBar.MenuItems>
         </custom:BindableApplicationBar>
-
         <custom:BindableApplicationBar x:Key="Default" Mode="Minimized">
             <custom:BindableApplicationBarButton 
                                                      Command="{Binding Review}"
@@ -82,7 +81,6 @@
             <Pivots:Search />
             <Pivots:Bands />
             <Pivots:History />
-            <Pivots:Other />
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
