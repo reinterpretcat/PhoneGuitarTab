@@ -21,7 +21,7 @@
                shell:SystemTray.IsVisible="False"
                mc:Ignorable="d"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
-                <toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
                 <toolkit:TurnstileTransition Mode="BackwardIn"/>
@@ -31,7 +31,7 @@
             </toolkit:NavigationInTransition.Forward>
         </toolkit:NavigationInTransition>
     </toolkit:TransitionService.NavigationInTransition>
-               <toolkit:TransitionService.NavigationOutTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
         <toolkit:NavigationOutTransition>
             <toolkit:NavigationOutTransition.Backward>
                 <toolkit:TurnstileTransition Mode="BackwardOut"/>
@@ -41,10 +41,43 @@
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
-  
-    
-    <Grid x:Name="LayoutRoot">
-        <Controls:Pivot TitleTemplate="{StaticResource EmptyTitleTemplate}">
+
+    <Views:ViewPage.Resources>
+        <custom:BindableApplicationBar x:Key="TabsAppBar"  Mode="Default" >
+
+            <custom:BindableApplicationBarButton 
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="Synchronize"
+                                                     IconUri="/Images/light/refresh.png"
+                                                     Text="sync" />
+            <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem 
+                                                        Command="{Binding Review}"
+                                                        Text="rate the app" />
+                <custom:BindableApplicationBarMenuItem 
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="About"
+                                                     Text="about" />             
+            </custom:BindableApplicationBar.MenuItems>
+        </custom:BindableApplicationBar>
+
+        <custom:BindableApplicationBar x:Key="Default" Mode="Minimized">
+            <custom:BindableApplicationBarButton 
+                                                     Command="{Binding Review}"
+                                                     IconUri="/Images/dark/rate.png"
+                                                     Text="rate" />
+            <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem  
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="About"
+                                                     Text="about" />
+            </custom:BindableApplicationBar.MenuItems>
+
+        </custom:BindableApplicationBar>
+    </Views:ViewPage.Resources>
+
+        <Grid x:Name="LayoutRoot">
+        <Controls:Pivot Name="MainPivot" TitleTemplate="{StaticResource EmptyTitleTemplate}" SelectionChanged="Pivot_SelectionChanged">
             <Pivots:Tabs />
             <Pivots:Search />
             <Pivots:Bands />
@@ -66,21 +99,10 @@
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}" />   
     </Grid>
+   
 
-
-    <custom:Bindable.ApplicationBar>
-        <custom:BindableApplicationBar Mode="Minimized">
-            <custom:BindableApplicationBarButton x:Name="RateButton"
-                                                     Command="{Binding Review}"
-                                                     IconUri="/Images/dark/rate.png"
-                                                     Text="rate" />
-            <custom:BindableApplicationBar.MenuItems>
-                <custom:BindableApplicationBarMenuItem x:Name="AboutButton" 
-                                                     Command="{Binding GoTo}"
-                                                     CommandParameter="About"
-                                                     Text="about" />
-            </custom:BindableApplicationBar.MenuItems>
-
+    <custom:Bindable.ApplicationBar >
+        <custom:BindableApplicationBar Name="AppBar"  Mode="Minimized" >
         </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>
 </Views:ViewPage>
