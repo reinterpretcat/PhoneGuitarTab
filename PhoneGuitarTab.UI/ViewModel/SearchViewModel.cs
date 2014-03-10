@@ -510,10 +510,30 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 this.SearchInfoTextBlock = "Page " + index + " for " + this.CurrentTypedText + ".."; 
                 CurrentPageIndex = pageNumber;
-                if (SearchMethod == SearchType.ByBand)
-                    RunSearch(CurrentSearchText, string.Empty);
-                else
-                    RunSearch(string.Empty, CurrentSearchText);
+
+                string bandName = string.Empty,
+                    songName = string.Empty;
+
+                switch (SearchMethod)
+                {  
+                    case SearchType.ByBand:
+                        bandName = CurrentSearchText;
+                        break;
+                    case SearchType.BySong:
+                        songName = CurrentSearchText;
+                        break;
+                    case SearchType.BandSong:
+                            if (CurrentSearchText.Contains(","))
+                            { 
+                                string[] words = CurrentSearchText.Split(',');
+                                bandName = words[0].Trim();
+                                songName = words[1].Trim();
+                            }
+                            else { bandName = CurrentSearchText; }
+                        break;
+                }
+                RunSearch(bandName, songName);
+
             }
         }
 
