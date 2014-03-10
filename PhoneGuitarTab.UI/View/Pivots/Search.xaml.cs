@@ -33,6 +33,9 @@ namespace PhoneGuitarTab.UI.Pivots
             // Update the binding source
             BindingExpression bindingExpr = textBox.GetBindingExpression(TextBox.TextProperty);
             bindingExpr.UpdateSource();
+            var viewModel = DataContext as SearchViewModel;
+            viewModel.CurrentTypedText = textBox.Text;
+           
         }
 
       

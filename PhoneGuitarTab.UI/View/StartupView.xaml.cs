@@ -18,6 +18,9 @@
                 case 0:
                         Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]); 
                     break;
+                case 1:
+                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Search"]); 
+                    break;
                 default:
                       Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]); 
                     break;

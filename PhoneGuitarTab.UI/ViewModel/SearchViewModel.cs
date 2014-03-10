@@ -39,6 +39,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private TabsByName _searchGroupTabs;
         private bool _isSearching;
         private string currentSearchText;
+        private string currentTypedText;
         private bool isNothingFound = false;
         private bool isHintVisible = true;
         private SearchType searchMethod = SearchType.ByBand;
@@ -179,6 +180,19 @@ namespace PhoneGuitarTab.UI.ViewModel
                 if (currentSearchText == string.Empty)
                     IsNothingFound = false;
                 RaisePropertyChanged("CurrentSearchBand");
+            }
+        }
+
+        public string CurrentTypedText
+        {
+            get
+            {
+                return currentTypedText;
+            }
+            set
+            {
+                currentTypedText = value;
+                RaisePropertyChanged("CurrentTypedText");
             }
         }
 
