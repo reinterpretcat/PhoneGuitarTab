@@ -78,6 +78,7 @@
             <custom:BindableApplicationBarButton 
                                                      Command="{Binding Search.LaunchSearch, Source={StaticResource Locator}}"
                                                      CommandParameter="{Binding Search.CurrentTypedText, Source={StaticResource Locator}}"
+                                                     IsEnabled="{Binding Search.IsSearchButtonEnabled, Source={StaticResource Locator}}"
                                                      IconUri="/Images/light/appbar.feature.search.rest.png"
                                                      Text="search">
                 </custom:BindableApplicationBarButton>

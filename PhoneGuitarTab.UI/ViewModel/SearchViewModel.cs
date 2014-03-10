@@ -40,6 +40,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private bool _isSearching;
         private string currentSearchText;
         private string currentTypedText;
+        private bool isSearchButtonEnabled;
         private bool isNothingFound = false;
         private bool isHintVisible = true;
         private SearchType searchMethod = SearchType.ByBand;
@@ -197,6 +198,20 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         public int CurrentPageIndex { get; set; }
+
+        public bool IsSearchButtonEnabled 
+        {
+            get
+            {
+                return isSearchButtonEnabled;
+            }
+            set
+            {
+                isSearchButtonEnabled = value;
+                RaisePropertyChanged("IsSearchButtonEnabled");
+            }
+        
+        }
 
         public bool IsNothingFound
         {
