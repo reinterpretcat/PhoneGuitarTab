@@ -51,7 +51,7 @@
                                  custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch,
                                                                 ElementName=root}">
                             <Interactivity:Interaction.Behaviors>
-                                <Infrastructure:Watermark FontStyle="Italic"
+                                <Infrastructure:Watermark x:Name="waterMark" FontStyle="Italic"
                                                           Foreground="Gray"
                                                           Text=" type here.." />
                             </Interactivity:Interaction.Behaviors>
@@ -270,8 +270,18 @@
         </DataTemplate>
     </phone:PivotItem.Resources>
     <Grid >
-        
-        <ProgressBar x:Name="performanceBar" Margin="0, -4"
+        <TextBlock x:Name="textBlock" 
+                   VerticalAlignment="Top" HorizontalAlignment="Center"
+                   FontFamily="Segoe UI Light"
+                   FontSize="20"
+                   Margin="0, 10"
+                   Text="{Binding Search.SearchInfoTextBlock,Source={StaticResource Locator}}"
+                   Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+        </TextBlock>
+        <ProgressBar x:Name="performanceBar" 
                                         VerticalAlignment="Top"
                                         IsIndeterminate="{Binding Search.IsSearching,
                                                                   Source={StaticResource Locator},
@@ -281,16 +291,7 @@
                                                              Converter={StaticResource boolVisibility}}">
 
         </ProgressBar>
-        <TextBlock x:Name="textBlock" 
-                   VerticalAlignment="Top" HorizontalAlignment="Center"
-                   FontFamily="Segoe UI Light"
-                   FontSize="20"
-                   Text="{Binding Search.SearchingTextBlock,Source={StaticResource Locator}}"
-                   Visibility="{Binding Search.IsSearching,
-                                                             Source={StaticResource Locator},
-                                                             Converter={StaticResource boolVisibility}}">
-
-        </TextBlock>
+       
         <phone:LongListSelector x:Name="tabsList"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="True" HideEmptyGroups="True"

@@ -170,6 +170,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 case SearchType.BySong :
                     returnString = "song name";
                     break;
+                case SearchType.BandSong :
+                    returnString = "band, song";
+                    break;
                 default:
 
                     break;

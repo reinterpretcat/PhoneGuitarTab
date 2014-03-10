@@ -29,7 +29,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         #region Fields
 
         private UltimateGuitarTabSearcher groupSearch;
-        private  LastFmSearch tabSearch;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
         private HorizontalAlignment _pagesListAlignment;
@@ -39,7 +38,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         private bool _isSearching;
         private string currentSearchText;
         private string currentTypedText;
-        private string searchingTextBlock;
+        private string searchInfoTextBlock;
+        private bool isDownloading;
         private bool isSearchButtonEnabled;
         private bool isNothingFound = false;
         private bool isHintVisible = true;
@@ -163,6 +163,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        public bool IsDownloading 
+        {
+            get
+            {
+                return isDownloading;
+            }
+            set
+            {
+                isDownloading = value;
+                RaisePropertyChanged("IsDownloading");
+            }
+        }
         public bool CanDownload
         {
             get { return !IsSearching; }
@@ -197,19 +209,20 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-        public string SearchingTextBlock
+        public string SearchInfoTextBlock
         {
             get
             {
-                return searchingTextBlock;
+                return searchInfoTextBlock;
             }
             set
             {
-                searchingTextBlock = value;
-                RaisePropertyChanged("SearchingTextBlock");
+                searchInfoTextBlock = value;
+                RaisePropertyChanged("SearchInfoTextBlock");
             }
         }
-        
+
+      
 
         public int CurrentPageIndex { get; set; }
 
@@ -278,11 +291,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 if (searchTabType != value)
                 {
                     searchTabType = value;
-                    HeaderPagingVisibility = Visibility.Collapsed;
-                    if (SearchMethod == SearchType.ByBand)
-                        RunSearch(CurrentSearchText, string.Empty);
-                    else
-                        RunSearch(string.Empty, CurrentSearchText);
+                    this.DoLaunchSearch(this.CurrentSearchText);
                     RaisePropertyChanged("SearchTabType");
                 }
             }
@@ -293,7 +302,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             get
             {
                 if (searchMethodOptions == null)
-                    searchMethodOptions = new List<SearchType>() { SearchType.ByBand, SearchType.BySong };
+                    searchMethodOptions = new List<SearchType>() { SearchType.ByBand, SearchType.BySong, SearchType.BandSong };
                 return searchMethodOptions;
             }
         }
@@ -453,14 +462,31 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             string  bandName = string.Empty, 
                     songName = string.Empty;
-            if (SearchMethod == SearchType.ByBand)
-                bandName = CurrentSearchText = arg;
-            else
-                songName = CurrentSearchText = arg;
+            switch (SearchMethod)
+            { 
+                case SearchType.ByBand:
+                     bandName = CurrentSearchText = arg;
+                     break;
+                case SearchType.BySong:
+                     songName = CurrentSearchText = arg;
+                     break;
+                case SearchType.BandSong:
+                     if (arg.Contains(","))
+                     {
+                         CurrentSearchText = arg;
+                         string[] words = arg.Split(',');
+                         bandName = words[0].Trim();
+                         songName = words[1].Trim();
+                     }
+                     else { bandName = CurrentSearchText = arg; }
+                    
+                     break;
 
+            }
+            
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
-            SearchingTextBlock = "Searching for " + CurrentTypedText + "..";
+            SearchInfoTextBlock = "Searching for " + CurrentTypedText + "..";
             RunSearch(bandName, songName);
         }
         
@@ -471,7 +497,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
             CurrentSearchText = arg;
-            SearchingTextBlock = "Searching for " + CurrentTypedText + "..";
             RunSearch(CurrentSearchText, string.Empty);
         }
 
@@ -483,7 +508,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             int pageNumber;
             if (Int32.TryParse(index, out pageNumber))
             {
-                this.SearchingTextBlock = "Page " + index + " for " + this.CurrentTypedText + ".."; 
+                this.SearchInfoTextBlock = "Page " + index + " for " + this.CurrentTypedText + ".."; 
                 CurrentPageIndex = pageNumber;
                 if (SearchMethod == SearchType.ByBand)
                     RunSearch(CurrentSearchText, string.Empty);
@@ -519,7 +544,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             downloadButtonClicked = true;
 
-            if (IsSearching)
+            if (IsDownloading)
             {
                 Dialog.Show("Sorry, you cannot download the tab right now.");
                 return;
@@ -545,12 +570,13 @@ namespace PhoneGuitarTab.UI.ViewModel
                     Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {
-                        IsSearching = false;
+                        IsDownloading = false;
                     });
                 else
                     DownloadTabComplete(tab, filePath);
             };
-            IsSearching = true;
+            SearchInfoTextBlock = "Downloading " + tab.Name + "..";
+            IsDownloading = true;
             try
             {
                 downloader.Download();
@@ -558,7 +584,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             catch (Exception ex)
             {
                 Dialog.Show(String.Format("Error: {0}", ex));
-                IsSearching = false;
+                IsDownloading = false;
             }
         }
 

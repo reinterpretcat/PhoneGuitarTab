@@ -3,6 +3,7 @@
     public enum SearchType
     {
         ByBand,
-        BySong
+        BySong,
+        BandSong
     }
 }

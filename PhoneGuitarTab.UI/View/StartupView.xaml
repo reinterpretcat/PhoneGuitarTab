@@ -98,7 +98,27 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Controls:Pivot>
-       
+        <TextBlock x:Name="textBlock" 
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   FontFamily="Segoe UI Light"
+                   FontSize="18"
+                   Margin="20,2"
+                   Text="{Binding Search.SearchInfoTextBlock,Source={StaticResource Locator}}"
+                   Visibility="{Binding Search.IsDownloading,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+        </TextBlock>
+        <ProgressBar x:Name="performanceBar" 
+                                        VerticalAlignment="Top"
+                                        IsIndeterminate="{Binding Search.IsDownloading,
+                                                                  Source={StaticResource Locator},
+                                                                  Mode=TwoWay}"
+                                        Visibility="{Binding Search.IsDownloading,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+        </ProgressBar>
     </Grid>
    
 
