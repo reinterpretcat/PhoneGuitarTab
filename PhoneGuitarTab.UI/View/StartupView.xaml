@@ -98,14 +98,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Controls:Pivot>
-        <ProgressBar x:Name="performanceBar"
-                                        VerticalAlignment="Top"
-                                        IsIndeterminate="{Binding Search.IsSearching,
-                                                                  Source={StaticResource Locator},
-                                                                  Mode=TwoWay}"
-                                        Visibility="{Binding Search.IsSearching,
-                                                             Source={StaticResource Locator},
-                                                             Converter={StaticResource boolVisibility}}" />   
+       
     </Grid>
    
 

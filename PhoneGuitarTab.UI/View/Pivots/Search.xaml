@@ -269,7 +269,29 @@
 
         </DataTemplate>
     </phone:PivotItem.Resources>
-    <phone:LongListSelector x:Name="tabsList"
+    <Grid >
+        
+        <ProgressBar x:Name="performanceBar" Margin="0, -4"
+                                        VerticalAlignment="Top"
+                                        IsIndeterminate="{Binding Search.IsSearching,
+                                                                  Source={StaticResource Locator},
+                                                                  Mode=TwoWay}"
+                                        Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+        </ProgressBar>
+        <TextBlock x:Name="textBlock" 
+                   VerticalAlignment="Top" HorizontalAlignment="Center"
+                   FontFamily="Segoe UI Light"
+                   FontSize="20"
+                   Text="{Binding Search.SearchingTextBlock,Source={StaticResource Locator}}"
+                   Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+        </TextBlock>
+        <phone:LongListSelector x:Name="tabsList"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="True" HideEmptyGroups="True"
                               ListHeaderTemplate="{StaticResource SearchHeaderTemplate}"
@@ -279,6 +301,9 @@
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
                               Tag="{Binding FirstTabInList}" Margin="-4,-20">
-    </phone:LongListSelector>
+        </phone:LongListSelector>
+    </Grid>
+
+        
 
 </phone:PivotItem>

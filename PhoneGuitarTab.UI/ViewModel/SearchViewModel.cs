@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.Phone.Shell;
 using System.Net.NetworkInformation;
 using System.Windows;
 
@@ -40,6 +39,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private bool _isSearching;
         private string currentSearchText;
         private string currentTypedText;
+        private string searchingTextBlock;
         private bool isSearchButtonEnabled;
         private bool isNothingFound = false;
         private bool isHintVisible = true;
@@ -196,6 +196,20 @@ namespace PhoneGuitarTab.UI.ViewModel
                 RaisePropertyChanged("CurrentTypedText");
             }
         }
+
+        public string SearchingTextBlock
+        {
+            get
+            {
+                return searchingTextBlock;
+            }
+            set
+            {
+                searchingTextBlock = value;
+                RaisePropertyChanged("SearchingTextBlock");
+            }
+        }
+        
 
         public int CurrentPageIndex { get; set; }
 
@@ -446,7 +460,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
-
+            SearchingTextBlock = "Searching for " + CurrentTypedText + "..";
             RunSearch(bandName, songName);
         }
         
@@ -457,7 +471,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
             CurrentSearchText = arg;
-
+            SearchingTextBlock = "Searching for " + CurrentTypedText + "..";
             RunSearch(CurrentSearchText, string.Empty);
         }
 
@@ -469,6 +483,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             int pageNumber;
             if (Int32.TryParse(index, out pageNumber))
             {
+                this.SearchingTextBlock = "Page " + index + " for " + this.CurrentTypedText + ".."; 
                 CurrentPageIndex = pageNumber;
                 if (SearchMethod == SearchType.ByBand)
                     RunSearch(CurrentSearchText, string.Empty);
@@ -481,16 +496,20 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             if (direction == null)
                 return;
-
+            
             if (direction == "next")
             {
-                if (!(this.Pages.Count()==CurrentPageIndex))
-                this.DoSelectPage((CurrentPageIndex + 1).ToString());
+                if (!(this.Pages.Count() == CurrentPageIndex))
+                {
+                
+                    this.DoSelectPage((CurrentPageIndex + 1).ToString());
+                }
             }
             else if (direction == "previous")
             {
                 if (!(CurrentPageIndex == 1))
                 {
+                   
                     this.DoSelectPage((CurrentPageIndex - 1).ToString());
                 }
             }
@@ -586,6 +605,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {
+                      
                         Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
                         
                         SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
@@ -599,8 +619,9 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
             else
             {
-                Dialog.Show("Sorry,", "can't reach the server right now.");
                 IsSearching = false;
+                Dialog.Show("Sorry,", "can't reach the server right now.");
+               
             }
         }
 
@@ -672,6 +693,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             };
 
             IsSearching = true;
+           
             groupSearch.Run(CurrentPageIndex, SearchTabType);
             
         }
