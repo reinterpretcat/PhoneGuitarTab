@@ -185,9 +185,9 @@
                     
                 <TextBlock Margin="0,80"
                                HorizontalAlignment="Center"
-                               FontSize="30"
+                               FontSize="25"
                                Opacity="0.5"
-                               Text="Sorry, nothing found."
+                               Text="Sorry, nothing found. &#x0a;Try Searching band name, song name."
                                Visibility="{Binding Path=DataContext.IsNothingFound,
                                                     ElementName=root,
                                                     Converter={StaticResource boolVisibility}}" />

@@ -39,6 +39,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private string currentSearchText;
         private string currentTypedText;
         private string searchInfoTextBlock;
+        private string waterMarkText = " type here..";
         private bool isDownloading;
         private bool isSearchButtonEnabled;
         private bool isNothingFound = false;
@@ -223,7 +224,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
-      
+        public string WaterMarkText 
+        {
+            get
+            {
+                return waterMarkText;
+            }
+            set
+            {
+                waterMarkText = value;
+                RaisePropertyChanged("WaterMarkText");
+            }
+        }
 
         public int CurrentPageIndex { get; set; }
 
@@ -479,7 +491,18 @@ namespace PhoneGuitarTab.UI.ViewModel
                          bandName = words[0].Trim();
                          songName = words[1].Trim();
                      }
-                     else { bandName = CurrentSearchText = arg; }
+                     else if (arg.Contains(" "))
+                     {
+                         CurrentSearchText = arg;
+                         string[] words = arg.Split(' ');
+                         bandName = words[0].Trim();
+                         for (int i = 1; i < words.Length; i++)
+                         {
+                             songName += words[i];
+                         }
+                     }
+                     else
+                     { bandName = CurrentSearchText = arg; }
                     
                      break;
 
@@ -529,6 +552,16 @@ namespace PhoneGuitarTab.UI.ViewModel
                                 string[] words = CurrentSearchText.Split(',');
                                 bandName = words[0].Trim();
                                 songName = words[1].Trim();
+                            }
+                            else if (CurrentSearchText.Contains(" "))
+                            {
+
+                                string[] words = CurrentSearchText.Split(' ');
+                                bandName = words[0].Trim();
+                                for (int i = 1; i < words.Length; i++)
+                                {
+                                    songName += words[i];
+                                }
                             }
                             else { bandName = CurrentSearchText; }
                         break;

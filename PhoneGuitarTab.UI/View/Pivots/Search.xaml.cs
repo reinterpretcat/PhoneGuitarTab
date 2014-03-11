@@ -13,7 +13,7 @@ namespace PhoneGuitarTab.UI.Pivots
 
             var viewModel = DataContext as SearchViewModel;
             viewModel.PropertyChanged += viewModel_PropertyChanged;
-         
+            
 
         }
 
