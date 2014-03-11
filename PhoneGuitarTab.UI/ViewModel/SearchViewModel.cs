@@ -504,7 +504,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                          bandName = words[0].Trim();
                          for (int i = 1; i < words.Length; i++)
                          {
-                             songName += words[i];
+                             songName += words[i] + " ";
                          }
                      }
                      else
@@ -566,7 +566,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                                 bandName = words[0].Trim();
                                 for (int i = 1; i < words.Length; i++)
                                 {
-                                    songName += words[i];
+                                    songName += words[i] + " ";
                                 }
                             }
                             else { bandName = CurrentSearchText; }
