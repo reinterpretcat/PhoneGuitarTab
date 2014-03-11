@@ -187,7 +187,7 @@
                                HorizontalAlignment="Center"
                                FontSize="25"
                                Opacity="0.5"
-                               Text="Sorry, nothing found. &#x0a;Try Searching band name, song name."
+                               Text="Sorry, nothing found. &#x0a;Try Searching with a comma: &#x0a;band name, song name"
                                Visibility="{Binding Path=DataContext.IsNothingFound,
                                                     ElementName=root,
                                                     Converter={StaticResource boolVisibility}}" />

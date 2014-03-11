@@ -263,6 +263,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 isNothingFound = value;
                 RaisePropertyChanged("IsNothingFound");
+                if (isNothingFound)
+                {
+                    this.SearchMethod = SearchType.BandSong;
+                    RaisePropertyChanged("SearchMethod"); 
+                }
+               
             }
         }
 
