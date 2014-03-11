@@ -159,7 +159,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 _isSearching = value;
                 RaisePropertyChanged("IsSearching");
-                RaisePropertyChanged("CanDownload");
+               
             }
         }
 
@@ -173,11 +173,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 isDownloading = value;
                 RaisePropertyChanged("IsDownloading");
+                RaisePropertyChanged("CanDownload");
             }
         }
         public bool CanDownload
         {
-            get { return !IsSearching; }
+            get { return !IsDownloading; }
         }
 
         //helpers properties
@@ -689,7 +690,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                   Hub.RaiseTabsDownloaded();
 
                   this.CurrentTabEntity.IsDownloaded = true;
-                  IsSearching = false;
+                  IsDownloading = false;
 
                   Dialog.Show(" was downloaded", "\"" + this.CurrentTabEntity.Name + "\" by " + this.CurrentTabEntity.Group, new DialogActionContainer()
                   {
