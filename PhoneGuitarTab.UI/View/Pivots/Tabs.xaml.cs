@@ -38,7 +38,7 @@ namespace PhoneGuitarTab.UI.Pivots
         private void TabList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             var viewModel = DataContext as CollectionViewModel;
-            viewModel.SelectedItemIds.Clear();
+            //viewModel.SelectedItemIds.Clear();
             foreach (TabEntity item  in e.AddedItems)
 	         {
                  viewModel.SelectedItemIds.Add(item.Id);                    

@@ -210,10 +210,11 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
         private void DoRemoveTabs()
         {
-            foreach (int itemNum in SelectedItemIds)
+            foreach (int id in SelectedItemIds)
             {
-                this.DoRemoveTab(itemNum);   
+                this.DoRemoveTab(id);   
             }
+            this.SelectedItemIds.Clear();
         }
 
         private void DoPinTabToStart(int id)
