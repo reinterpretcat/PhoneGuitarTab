@@ -35,7 +35,7 @@ namespace PhoneGuitarTab.UI.View
             
            //set slider's Browser property to current.
             this.slider.Browser = this.Browser;
-
+        
             
             var viewModel = DataContext as StaveTabViewModel;
             

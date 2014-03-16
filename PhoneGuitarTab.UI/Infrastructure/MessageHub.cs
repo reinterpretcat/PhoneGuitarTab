@@ -32,10 +32,26 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 handler(this, id);
         }
 
+        public event EventHandler<bool> SelectorIsSelectionEnabled;
+        public void RaiseSelectorIsSelectionEnabled(bool enabled)
+        {
+            var handler = SelectorIsSelectionEnabled;
+            if (handler != null)
+                handler(this, enabled);
+        }
+
         public event EventHandler TabsDownloaded;
         public void RaiseTabsDownloaded()
         {
             var handler = TabsDownloaded;
+            if (handler != null)
+                handler(this, new EventArgs());
+        }
+
+        public event EventHandler SelectionEnableRequested;
+        public void RaiseSelectionEnableRequested()
+        {
+            var handler = SelectionEnableRequested;
             if (handler != null)
                 handler(this, new EventArgs());
         }

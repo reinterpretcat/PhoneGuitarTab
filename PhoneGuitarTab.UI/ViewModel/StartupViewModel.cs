@@ -13,12 +13,14 @@ namespace PhoneGuitarTab.UI.ViewModel
     using PhoneGuitarTab.Core.Views.Commands;
     using PhoneGuitarTab.UI.Infrastructure;
     using PhoneGuitarTab.UI.Data;
+    using PhoneGuitarTab.UI.View;
     public class StartupViewModel : DataContextViewModel
     {
         #region Fields
 
         private TabsForHistory _tabsHistory;
         private RatingService _ratingService;
+        private bool _isSelectionEnabled;
         #endregion Fields
 
 
@@ -29,7 +31,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             : base(database, hub)
         {
             _ratingService = ratingService;
-
+            RegisterEvents();
             CreateCommands();
             ProductVersion = App.Version;
         }
@@ -51,6 +53,16 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+        public bool IsSelectionEnabled
+        {
+            get { return _isSelectionEnabled; }
+            set
+            {
+                _isSelectionEnabled = value;
+                RaisePropertyChanged("IsSelectionEnabled");
+            }
+        }
+
         #endregion Properties
 
         
@@ -68,12 +80,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             private set;
         }
 
-         public ExecuteCommand Review
+        public ExecuteCommand Review
          {
              get;
              private set;
          }
 
+        public ExecuteCommand EnableSelector
+        {
+            get;
+            private set;
+        }
+    
         public ExecuteCommand<int> RemoveTab
         {
             get;
@@ -109,6 +127,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             new MarketplaceReviewTask().Show();
         }
 
+        private void DoEnableSelector()
+        {
+            Hub.RaiseSelectionEnableRequested();
+        }
+    
         private void DoRemoveTab(int id)
         {
             RemoveTabFromList(id);
@@ -165,6 +188,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
             Review = new ExecuteCommand(DoReview);
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
+            EnableSelector = new ExecuteCommand(DoEnableSelector);
+        }
+
+        private void RegisterEvents()
+        {
+            Hub.SelectorIsSelectionEnabled += (o, enabled) => { this.IsSelectionEnabled = enabled; };
         }
 
         private void RemoveTabFromList(int id)

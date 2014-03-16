@@ -8,6 +8,40 @@
         public StartupView()
         {
             InitializeComponent();
+
+            var viewModel = DataContext as StartupViewModel;
+            viewModel.PropertyChanged += viewModel_PropertyChanged;
+        }
+
+        void viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsSelectionEnabled")
+            {
+                var viewModel = sender as StartupViewModel;
+                if (viewModel.IsSelectionEnabled)
+                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["MultiSelectAppBar"]); 
+                else
+                 Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]);               
+            }
+
+           
+        }
+         
+        private void StartupView_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var view = sender as StartupView;
+            if (view.MainPivot.SelectedItem.GetType() == typeof (Pivots.Tabs))
+            {
+                var selector = ((view.MainPivot.SelectedItem) as Pivots.Tabs).TabList as Microsoft.Phone.Controls.LongListMultiSelector;
+                var viewModel = ((view.MainPivot.SelectedItem) as Pivots.Tabs).DataContext as CollectionViewModel;
+                if (selector.IsSelectionEnabled)
+                {
+                    e.Cancel = true;
+                    selector.IsSelectionEnabled = false;
+                    viewModel.SetIsSelectionEnabled.Execute(false);
+                }
+                
+            }
         }
 
         private void Pivot_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -26,5 +60,6 @@
                     break;
             }
         }
+
     }
 }

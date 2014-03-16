@@ -36,20 +36,16 @@
         <Infrastructure:TabsGroupsCollectionToVisibilityConverter x:Key="tabsGroupsCollectionToVisibility" />
     </phone:PivotItem.Resources>
 
-    <phone:LongListSelector x:Name="TabList"
+    <toolkit:LongListMultiSelector x:Name="TabList"
                                 toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="true" HideEmptyGroups ="true"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource TabItemDataTemplate}"
-                              ItemsSource="{Binding AllTabs, Mode=TwoWay}">
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Tap">
-                <Command:ExecuteCommandAction Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList}" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
+                              IsSelectionEnabled="{Binding IsSelectionEnabled}"
+                              ItemsSource="{Binding AllTabs, Mode=TwoWay}" Tap="TabList_Tap" IsSelectionEnabledChanged="TabList_IsSelectionEnabledChanged" SelectionChanged="TabList_SelectionChanged" >
 
-        <phone:LongListSelector.ListHeaderTemplate>
+        <toolkit:LongListMultiSelector.ListHeaderTemplate>
             <DataTemplate>
                 <TextBlock Margin="0,80"
                            HorizontalAlignment="Center"
@@ -60,7 +56,7 @@
                                                 ElementName=TabList,
                                                 Converter={StaticResource tabsGroupsCollectionToVisibility}}" />
             </DataTemplate>
-        </phone:LongListSelector.ListHeaderTemplate>
-    </phone:LongListSelector>
+        </toolkit:LongListMultiSelector.ListHeaderTemplate>
+    </toolkit:LongListMultiSelector>
 
 </phone:PivotItem>

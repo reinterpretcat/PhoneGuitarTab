@@ -21,7 +21,8 @@ namespace PhoneGuitarTab.UI.ViewModel
         private BandByName groups;
         private TabsByName allTabs;
         private bool isPendingChangesOnCollection = false;
-
+        private bool isSelectionEnabled;
+        private List<int> _selectedItemIds;
         #endregion Fields
 
         #region Constructor
@@ -65,13 +66,47 @@ namespace PhoneGuitarTab.UI.ViewModel
                 RaisePropertyChanged("AllTabs");
             }
         }
+        public List<int> SelectedItemIds
+        {
+            get
+            {
+                return _selectedItemIds;
+            }
+            set
+            {
+                _selectedItemIds = value;
+                RaisePropertyChanged("SelectedItemIds");
+            }
+        }
 
+        public bool IsSelectionEnabled
+        {
+            get
+            {
+                return isSelectionEnabled;
+            }
+            set
+            {
+                isSelectionEnabled = value;
+                RaisePropertyChanged("IsSelectionEnabled");
+                Hub.RaiseSelectorIsSelectionEnabled(isSelectionEnabled);
+              
+            }
+        }
+       
         #endregion Properties
 
 
         #region Commands
 
         public ExecuteCommand<object> GoToGroup
+        {
+            get;
+            private set;
+        }
+      
+  
+        public ExecuteCommand<bool> SetIsSelectionEnabled
         {
             get;
             private set;
@@ -90,6 +125,12 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
 
         public ExecuteCommand<int> RemoveTab
+        {
+            get;
+            private set;
+        }
+
+        public ExecuteCommand RemoveTabs
         {
             get;
             private set;
@@ -128,6 +169,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             AllTabs = new TabsByName(Database);            
             Groups = new BandByName(Database);
+            SelectedItemIds = new List<int>();
         }
 
         #endregion Override methods
@@ -147,17 +189,17 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private void DoGoToTabView(object sender)
         {
-            Microsoft.Phone.Controls.LongListSelector selector = sender as Microsoft.Phone.Controls.LongListSelector;
-            if (selector != null && selector.SelectedItem is TabEntity)
+            TabEntity tabEntity = sender as TabEntity;
+            if (tabEntity != null)
             {
-                TabEntity tabEntity = selector.SelectedItem as TabEntity;
+               
                 Tab tab = (from Tab t in Database.Tabs
                            where t.Id == tabEntity.Id
                            select t).Single();
                 NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", tab } });
-                selector.SelectedItem = null;
             }
         }
+      
 
         private void DoRemoveTab(int id)
         {
@@ -165,6 +207,13 @@ namespace PhoneGuitarTab.UI.ViewModel
             Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
             RemoveTabFromList(id);
             Hub.RaiseCollectionTabRemoved(id);
+        }
+        private void DoRemoveTabs()
+        {
+            foreach (int itemNum in SelectedItemIds)
+            {
+                this.DoRemoveTab(itemNum);   
+            }
         }
 
         private void DoPinTabToStart(int id)
@@ -177,6 +226,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             TilesForTabs.PinTabToStart(tab);
         }
 
+        private void DoSetIsSelectionEnabled(bool enabled)
+        {
+            this.IsSelectionEnabled = enabled;
+           
+        }
 
         private void DoRefreshData()
         {
@@ -201,10 +255,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             //HomeCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Startup));
 
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
+            RemoveTabs = new ExecuteCommand(DoRemoveTabs);
             PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
             GoToGroup = new ExecuteCommand<object>(DoGoToGroup);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
-
+            SetIsSelectionEnabled = new ExecuteCommand<bool>(DoSetIsSelectionEnabled);
             RefreshData = new ExecuteCommand(DoRefreshData);
         }
 
@@ -214,6 +269,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Hub.GroupTabRemoved += (o, id) => RemoveTabFromList(id);
             Hub.TabsDownloaded += (o, args) => isPendingChangesOnCollection = true;
             Hub.TabsRefreshed += (o, args) => DoRefreshData();
+            Hub.SelectionEnableRequested += (o, args) => DoSetIsSelectionEnabled(true);
         }
 
         private void RemoveTabFromList(int id)

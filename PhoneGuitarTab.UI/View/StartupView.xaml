@@ -20,6 +20,7 @@
                d:DesignWidth="480"
                shell:SystemTray.IsVisible="False"
                mc:Ignorable="d"
+               BackKeyPress="StartupView_BackKeyPress"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -50,6 +51,11 @@
                                                      CommandParameter="Synchronize"
                                                      IconUri="/Images/light/refresh.png"
                                                      Text="sync" />
+            <custom:BindableApplicationBarButton 
+                                                     Command="{Binding EnableSelector}"
+                                                    
+                                                     IconUri="/Images/light/multi.png"
+                                                     Text="select" />
             <custom:BindableApplicationBar.MenuItems>
                 <custom:BindableApplicationBarMenuItem 
                                                         Command="{Binding Review}"
@@ -73,7 +79,6 @@
             </custom:BindableApplicationBar.MenuItems>
 
         </custom:BindableApplicationBar>
-
         <custom:BindableApplicationBar x:Key="Search" Mode="Default">
             <custom:BindableApplicationBarButton 
                                                      Command="{Binding Search.LaunchSearch, Source={StaticResource Locator}}"
@@ -82,6 +87,14 @@
                                                      IconUri="/Images/light/appbar.feature.search.rest.png"
                                                      Text="search">
                 </custom:BindableApplicationBarButton>
+        </custom:BindableApplicationBar>
+        <custom:BindableApplicationBar x:Key="MultiSelectAppBar" Mode="Default">
+            <custom:BindableApplicationBarButton 
+                                                    Command="{Binding Collection.RemoveTabs
+                                                        , Source={StaticResource Locator}}"
+                                                     IconUri="/Images/light/delete.png"
+                                                     Text="delete">
+            </custom:BindableApplicationBarButton>
         </custom:BindableApplicationBar>
     </Views:ViewPage.Resources>
 
