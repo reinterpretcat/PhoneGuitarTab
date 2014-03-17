@@ -48,6 +48,10 @@
             <i:EventTrigger EventName="SelectionChanged">
                 <Command:ExecuteCommandAction Command="{Binding SetSelectedItems}" CommandParameter="{Binding ElementName=TabList}" />
             </i:EventTrigger>
+           
+            <!--i:EventTrigger EventName="IsSelectionEnabledChanged">
+                <Command:ExecuteCommandAction Command="{Binding SetIsSelectionEnabled}" CommandParameter="{Binding ElementName=TabList}" />
+            </i:EventTrigger-->
         </i:Interaction.Triggers>
         
         <toolkit:LongListMultiSelector.ListHeaderTemplate>

@@ -112,7 +112,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         }
       
   
-        public ExecuteCommand<bool> SetIsSelectionEnabled
+        public ExecuteCommand<object> SetIsSelectionEnabled
         {
             get;
             private set;
@@ -209,6 +209,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 this.DoRemoveTab(id);   
             }
+     
             this.SelectedItemIds.Clear();
         }
 
@@ -222,9 +223,10 @@ namespace PhoneGuitarTab.UI.ViewModel
             TilesForTabs.PinTabToStart(tab);
         }
 
-        private void DoSetIsSelectionEnabled(bool enabled)
+        private void DoSetIsSelectionEnabled(object sender)
         {
-            this.IsSelectionEnabled = enabled;
+            var selector = sender as Microsoft.Phone.Controls.LongListMultiSelector;
+            this.IsSelectionEnabled = selector.IsSelectionEnabled;
            
         }
         private void DoSetSelectedItems(object sender)        
@@ -264,7 +266,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
             GoToGroup = new ExecuteCommand<object>(DoGoToGroup);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
-            SetIsSelectionEnabled = new ExecuteCommand<bool>(DoSetIsSelectionEnabled);
+            SetIsSelectionEnabled = new ExecuteCommand<object>(DoSetIsSelectionEnabled);
             SetSelectedItems = new ExecuteCommand<object>(DoSetSelectedItems);
             RefreshData = new ExecuteCommand(DoRefreshData);
         }
