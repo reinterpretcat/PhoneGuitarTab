@@ -104,6 +104,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             get;
             private set;
         }
+
+        public ExecuteCommand<object> SetSelectedItems
+        {
+            get;
+            private set;
+        }
       
   
         public ExecuteCommand<bool> SetIsSelectionEnabled
@@ -221,6 +227,15 @@ namespace PhoneGuitarTab.UI.ViewModel
             this.IsSelectionEnabled = enabled;
            
         }
+        private void DoSetSelectedItems(object sender)        
+        {
+            this.SelectedItemIds.Clear();
+            var selector = sender as Microsoft.Phone.Controls.LongListMultiSelector;
+            foreach (TabEntity item in selector.SelectedItems)
+            {
+                this.SelectedItemIds.Add(item.Id);
+            }
+        }
 
         private void DoRefreshData()
         {
@@ -242,7 +257,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void CreateCommands()
         {
             SearchCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Search));
-            //HomeCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Startup));
+          
 
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
             RemoveTabs = new ExecuteCommand(DoRemoveTabs);
@@ -250,6 +265,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             GoToGroup = new ExecuteCommand<object>(DoGoToGroup);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
             SetIsSelectionEnabled = new ExecuteCommand<bool>(DoSetIsSelectionEnabled);
+            SetSelectedItems = new ExecuteCommand<object>(DoSetSelectedItems);
             RefreshData = new ExecuteCommand(DoRefreshData);
         }
 

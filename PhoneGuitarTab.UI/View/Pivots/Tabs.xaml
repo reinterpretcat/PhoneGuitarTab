@@ -43,8 +43,13 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource TabItemDataTemplate}"
                               IsSelectionEnabled="{Binding IsSelectionEnabled}"
-                              ItemsSource="{Binding AllTabs, Mode=TwoWay}" Tap="TabList_Tap" IsSelectionEnabledChanged="TabList_IsSelectionEnabledChanged" SelectionChanged="TabList_SelectionChanged" >
-
+                              ItemsSource="{Binding AllTabs, Mode=TwoWay}" Tap="TabList_Tap" IsSelectionEnabledChanged="TabList_IsSelectionEnabledChanged"  >
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="SelectionChanged">
+                <Command:ExecuteCommandAction Command="{Binding SetSelectedItems}" CommandParameter="{Binding ElementName=TabList}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        
         <toolkit:LongListMultiSelector.ListHeaderTemplate>
             <DataTemplate>
                 <TextBlock Margin="0,80"

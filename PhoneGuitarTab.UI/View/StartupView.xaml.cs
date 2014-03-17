@@ -49,9 +49,10 @@
 
         private void Pivot_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            // "Bindable.ApplicationBar property needs to be set on a PhoneApplicationPage element."
+            //"Bindable.ApplicationBar property needs to be set on a PhoneApplicationPage element."
             //Therefore this piece of code can not be moved to ViewModel
-          //Switch appbars depending on the selected pivot.
+            
+            //Switch appbars depending on the selected pivot.
             switch (MainPivot.SelectedIndex)
             { 
                 case 0:
