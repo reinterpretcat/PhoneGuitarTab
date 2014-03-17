@@ -142,17 +142,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             set;
         }
 
-       /* public ExecuteCommand SettingsCommand
-        {
-            get;
-            set;
-        }*/
-
-        /*public ExecuteCommand HomeCommand
-        {
-            get;
-            set;
-        }*/
 
         public ExecuteCommand RefreshData
         {
@@ -270,7 +259,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Hub.GroupTabRemoved += (o, id) => RemoveTabFromList(id);
             Hub.TabsDownloaded += (o, args) => isPendingChangesOnCollection = true;
             Hub.TabsRefreshed += (o, args) => DoRefreshData();
-            Hub.SelectionEnableRequested += (o, args) => DoSetIsSelectionEnabled(true);
+          
         }
 
         private void RemoveTabFromList(int id)

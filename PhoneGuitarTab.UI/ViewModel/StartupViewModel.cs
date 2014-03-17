@@ -86,11 +86,7 @@ namespace PhoneGuitarTab.UI.ViewModel
              private set;
          }
 
-        public ExecuteCommand EnableSelector
-        {
-            get;
-            private set;
-        }
+    
     
         public ExecuteCommand<int> RemoveTab
         {
@@ -125,11 +121,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             _ratingService.RateApp();
             new MarketplaceReviewTask().Show();
-        }
-
-        private void DoEnableSelector()
-        {
-            Hub.RaiseSelectionEnableRequested();
         }
     
         private void DoRemoveTab(int id)
@@ -188,7 +179,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
             Review = new ExecuteCommand(DoReview);
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
-            EnableSelector = new ExecuteCommand(DoEnableSelector);
+           
         }
 
         private void RegisterEvents()

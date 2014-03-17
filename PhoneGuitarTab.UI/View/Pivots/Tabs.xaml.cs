@@ -46,7 +46,7 @@ namespace PhoneGuitarTab.UI.Pivots
 
             foreach (TabEntity item in e.RemovedItems)
             {
-                viewModel.SelectedItemIds.Add(item.Id);
+                viewModel.SelectedItemIds.Remove(item.Id);
             }
 
         }

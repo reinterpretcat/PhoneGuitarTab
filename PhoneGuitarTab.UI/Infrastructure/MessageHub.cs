@@ -48,13 +48,6 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 handler(this, new EventArgs());
         }
 
-        public event EventHandler SelectionEnableRequested;
-        public void RaiseSelectionEnableRequested()
-        {
-            var handler = SelectionEnableRequested;
-            if (handler != null)
-                handler(this, new EventArgs());
-        }
 
         public event EventHandler TabsRefreshed;
         public void RaiseTabsRefreshed()

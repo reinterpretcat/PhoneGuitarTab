@@ -51,11 +51,6 @@
                                                      CommandParameter="Synchronize"
                                                      IconUri="/Images/light/refresh.png"
                                                      Text="sync" />
-            <custom:BindableApplicationBarButton 
-                                                     Command="{Binding EnableSelector}"
-                                                    
-                                                     IconUri="/Images/light/multi.png"
-                                                     Text="select" />
             <custom:BindableApplicationBar.MenuItems>
                 <custom:BindableApplicationBarMenuItem 
                                                         Command="{Binding Review}"
