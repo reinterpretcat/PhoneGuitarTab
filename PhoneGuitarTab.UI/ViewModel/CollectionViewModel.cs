@@ -231,9 +231,10 @@ namespace PhoneGuitarTab.UI.ViewModel
                 var selector = arg as Microsoft.Phone.Controls.LongListMultiSelector;
                 this.IsSelectionEnabled = selector.IsSelectionEnabled;
             }
-            else
-            {              
-               this.IsSelectionEnabled = true;
+            else if(arg.ToString() == "true" || arg.ToString() =="false")
+            {
+
+                this.IsSelectionEnabled = Convert.ToBoolean(arg.ToString()); ;
             }                    
         }
         private void DoSetSelectedItems(object sender)        
