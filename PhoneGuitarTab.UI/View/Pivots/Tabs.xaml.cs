@@ -10,18 +10,16 @@ namespace PhoneGuitarTab.UI.Pivots
         public Tabs()
         {
             InitializeComponent();
-            
+           
         }
+
        
 
-        //Unfortunately, not possible to trigger this event via ViewModel
         private void TabList_IsSelectionEnabledChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
-        {  
+        {
             var viewModel = DataContext as CollectionViewModel;
-            viewModel.SetIsSelectionEnabled.Execute(sender);       
+            viewModel.SetIsSelectionEnabled.Execute(sender);
         }
-
        
-
     }
 }

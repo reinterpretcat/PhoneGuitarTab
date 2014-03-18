@@ -43,15 +43,12 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource TabItemDataTemplate}"
                               IsSelectionEnabled="{Binding IsSelectionEnabled}"
-                              ItemsSource="{Binding AllTabs, Mode=TwoWay}"  IsSelectionEnabledChanged="TabList_IsSelectionEnabledChanged"  >
+                              EnforceIsSelectionEnabled="{Binding IsSelectionEnabled}"
+                              ItemsSource="{Binding AllTabs, Mode=TwoWay}" IsSelectionEnabledChanged="TabList_IsSelectionEnabledChanged" >
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="SelectionChanged">
                 <Command:ExecuteCommandAction Command="{Binding SetSelectedItems}" CommandParameter="{Binding ElementName=TabList}" />
-            </i:EventTrigger>
-           
-            <!--i:EventTrigger EventName="IsSelectionEnabledChanged">
-                <Command:ExecuteCommandAction Command="{Binding SetIsSelectionEnabled}" CommandParameter="{Binding ElementName=TabList}" />
-            </i:EventTrigger-->
+            </i:EventTrigger>        
         </i:Interaction.Triggers>
         
         <toolkit:LongListMultiSelector.ListHeaderTemplate>

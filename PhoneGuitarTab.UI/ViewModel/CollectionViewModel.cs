@@ -223,11 +223,18 @@ namespace PhoneGuitarTab.UI.ViewModel
             TilesForTabs.PinTabToStart(tab);
         }
 
-        private void DoSetIsSelectionEnabled(object sender)
+        private void DoSetIsSelectionEnabled(object arg)
         {
-            var selector = sender as Microsoft.Phone.Controls.LongListMultiSelector;
-            this.IsSelectionEnabled = selector.IsSelectionEnabled;
-           
+            
+            if (arg.GetType() == typeof( Microsoft.Phone.Controls.LongListMultiSelector))
+            {
+                var selector = arg as Microsoft.Phone.Controls.LongListMultiSelector;
+                this.IsSelectionEnabled = selector.IsSelectionEnabled;
+            }
+            else
+            {              
+               this.IsSelectionEnabled = true;
+            }                    
         }
         private void DoSetSelectedItems(object sender)        
         {

@@ -51,7 +51,14 @@
                                                      CommandParameter="Synchronize"
                                                      IconUri="/Images/light/refresh.png"
                                                      Text="sync" />
+            <custom:BindableApplicationBarButton 
+                                                     Command="{Binding Collection.SetIsSelectionEnabled, Source={StaticResource Locator}}"
+                                                     CommandParameter="true"
+                                                     IconUri="/Images/light/multi.png"
+                                                     Text="select" />
+            
             <custom:BindableApplicationBar.MenuItems>
+                
                 <custom:BindableApplicationBarMenuItem 
                                                         Command="{Binding Review}"
                                                         Text="rate the app" />

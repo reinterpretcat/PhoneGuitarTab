@@ -35,11 +35,11 @@
             var view = sender as StartupView;
             if (view.MainPivot.SelectedItem.GetType() == typeof (Pivots.Tabs))
             {
-                var selector = ((view.MainPivot.SelectedItem) as Pivots.Tabs).TabList as Microsoft.Phone.Controls.LongListMultiSelector;
-                if (selector.IsSelectionEnabled)
+                var viewModel = ((view.MainPivot.SelectedItem) as Pivots.Tabs).DataContext as CollectionViewModel;
+                if (viewModel.IsSelectionEnabled)
                 {
                     e.Cancel = true;
-                    selector.IsSelectionEnabled = false;
+                    viewModel.IsSelectionEnabled = false;
                 }
                 
             }
