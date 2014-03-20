@@ -96,10 +96,16 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public void StopAudioPlayer(WebBrowser browser)
         {
-             System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(() =>
+         
+          
+                System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(() =>
                 {
+
                     browser.InvokeScript("stopAudioPlayer");
+
                 });
+           
+       
         }
         #region helpers
        

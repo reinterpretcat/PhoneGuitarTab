@@ -52,8 +52,11 @@ function setLabel(text, title) {
 	}
 
 function stopAudioPlayer(){
-	document.getElementById("audio1").pause();
+if( $(document).ready )
+	{
+		document.getElementById("audio1").pause();
 	}
+}
 
 
  $(document).ready(function(){

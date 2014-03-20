@@ -136,10 +136,16 @@ namespace PhoneGuitarTab.UI.View
         /// <param name="indicatorText"></param>
         private void SetProgressIndicator(bool isVisible, [Optional]string indicatorText)
         {
-            SystemTray.IsVisible = isVisible;
-            SystemTray.ProgressIndicator.Text = indicatorText;
-            SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
-            SystemTray.ProgressIndicator.IsVisible = isVisible;
+
+            if ( ((TransitionFrame)System.Windows.Application.Current.RootVisual).Content  == this)
+            {
+                SystemTray.IsVisible = isVisible;
+              
+                SystemTray.ProgressIndicator.IsIndeterminate = isVisible;
+                SystemTray.ProgressIndicator.IsVisible = isVisible;
+                if (!String.IsNullOrEmpty(indicatorText))
+                SystemTray.ProgressIndicator.Text = indicatorText;
+            }
         }
 
         //Helper method to populate the list with track data.
@@ -170,13 +176,14 @@ namespace PhoneGuitarTab.UI.View
         }
 
         private void Browser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
-        {   
+        {
             //stop progress indicator
             SetProgressIndicator(false);
            
             //Fill the tracklist just once in the first load.
-            if (isFirstLoad)
+            if (isFirstLoad & ((TransitionFrame)System.Windows.Application.Current.RootVisual).Content == this)
             {
+                
                 this.FillTrackList(this.Tracks);  
                 this.ListPickerInstrument.SelectionChanged += this.ListPickerInstrument_SelectionChanged;
                 this.ListPickerInstrument.Visibility = Visibility.Visible;
