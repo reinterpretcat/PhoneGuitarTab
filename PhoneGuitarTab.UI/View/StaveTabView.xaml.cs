@@ -21,7 +21,8 @@ namespace PhoneGuitarTab.UI.View
         public bool _isNewPageInstance = false;
         //flag to prevent renavigation of browser while switching back and forth from listpicker's fullmode
         private bool isFirstLoad = true;
-       
+
+        private bool isBrowserReady;
         // Url of Home page
         private const string SandboxUri = "/Html/sandbox.html";
 
@@ -54,7 +55,7 @@ namespace PhoneGuitarTab.UI.View
                 Browser.Navigate(new Uri(SandboxUri, UriKind.Relative));
                
             }
-
+           
           
         }
 
@@ -102,7 +103,7 @@ namespace PhoneGuitarTab.UI.View
                 Browser.InvokeScript("readBase64", parameters);
                 OrientationChanged += (_, __) => Browser.InvokeScript("showTab");
             }
-
+            this.isBrowserReady = true;
             var viewModel = DataContext as StaveTabViewModel;        
             viewModel.Browser_ScriptNotify(sender, e);
              
@@ -239,11 +240,12 @@ namespace PhoneGuitarTab.UI.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            if (((TransitionFrame)System.Windows.Application.Current.RootVisual).Content == this)
+            if (this.isBrowserReady)
             {
                 var viewModel = DataContext as StaveTabViewModel;
                 viewModel.StopAudioPlayer(this.Browser);
             }
+           
         }
 
         private void ViewPage_OrientationChanged(object sender, OrientationChangedEventArgs e)

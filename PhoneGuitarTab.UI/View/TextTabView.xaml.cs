@@ -15,6 +15,7 @@ namespace PhoneGuitarTab.UI
     {
         private string TextTabUri = "/Html/texttab.html";
         public TextTabViewModel viewModel;
+        private bool isBrowserReady;
         public TextTabView()
         {
             InitializeComponent();
@@ -56,6 +57,7 @@ namespace PhoneGuitarTab.UI
                  {
                      tabWebBrowser.InvokeScript("pullTabContent", viewModel.TabContent);
                  }
+                 this.isBrowserReady = true;
              }
 
         }
@@ -63,7 +65,6 @@ namespace PhoneGuitarTab.UI
         private void tabWebBrowser_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             tabWebBrowser.Navigate(new Uri(this.TextTabUri, UriKind.Relative));
-           
         }    
 
         private void AutoScrollApplicationBarIconButton_OnClick(object sender, EventArgs e)
@@ -100,12 +101,11 @@ namespace PhoneGuitarTab.UI
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            if (((TransitionFrame)System.Windows.Application.Current.RootVisual).Content == this)
+            if (isBrowserReady)
             {
                 var viewModel = DataContext as TextTabViewModel;
                 viewModel.StopAudioPlayer(this.tabWebBrowser);
-            }
-           
+            }        
         }
 
         private void root_OrientationChanged(object sender, OrientationChangedEventArgs e)
