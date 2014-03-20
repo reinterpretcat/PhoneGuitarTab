@@ -239,8 +239,11 @@ namespace PhoneGuitarTab.UI.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            var viewModel = DataContext as StaveTabViewModel;
-            viewModel.StopAudioPlayer(this.Browser);
+            if (((TransitionFrame)System.Windows.Application.Current.RootVisual).Content == this)
+            {
+                var viewModel = DataContext as StaveTabViewModel;
+                viewModel.StopAudioPlayer(this.Browser);
+            }
         }
 
         private void ViewPage_OrientationChanged(object sender, OrientationChangedEventArgs e)

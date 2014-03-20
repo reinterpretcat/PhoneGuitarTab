@@ -99,9 +99,12 @@ namespace PhoneGuitarTab.UI
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            base.OnNavigatedFrom(e);  
-            var viewModel = DataContext as TextTabViewModel;
-            viewModel.StopAudioPlayer(this.tabWebBrowser);
+            base.OnNavigatedFrom(e);
+            if (((TransitionFrame)System.Windows.Application.Current.RootVisual).Content == this)
+            {
+                var viewModel = DataContext as TextTabViewModel;
+                viewModel.StopAudioPlayer(this.tabWebBrowser);
+            }
            
         }
 
