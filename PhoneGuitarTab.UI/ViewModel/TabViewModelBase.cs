@@ -121,7 +121,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 });
             }
             else
-                browser.InvokeScript("setLabel", "Connect your device to internet to stream ", Tablature.Name);
+                browser.InvokeScript("setLabel", "Connect your device to internet to play", " this song");
         }
        
         private void RunRating()

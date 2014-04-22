@@ -33,6 +33,7 @@ function getAudioStreamUrl(bandAndSongName){
 			trackUrl = tracks[0].stream_url;
 			trackTitle = tracks[0].title;
 			isNetworkAvailable = true;
+			setSticky();
 			window.external.notify("onStreamUrlRetrieved");
 		});
     }
@@ -58,11 +59,10 @@ if( $(document).ready )
 		document.getElementById("audio1").pause();
 	}
 }
- $(document).ready(function () {
+function setSticky() {
 				
-	$("#audioSection").sticky({topSpacing:-15});
-				
-});
+$("#audioSection").sticky({topSpacing:-15});					
+}
 
 
  $(function (){
