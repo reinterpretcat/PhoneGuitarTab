@@ -37,10 +37,10 @@
         </Style>
     </phone:PivotItem.Resources>
 
-    <phone:LongListSelector x:Name="GroupList"
+    <phone:LongListSelector x:Name="GroupList"  
                               toolkit:TiltEffect.IsTiltEnabled="True"
-                              IsGroupingEnabled="true" HideEmptyGroups ="true"
-                              Background="Transparent"
+                              IsGroupingEnabled="True" LayoutMode="Grid" GridCellSize="220,220"
+                              HideEmptyGroups="True"                          
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
                               JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"  
                               ItemsSource="{Binding Groups}">
@@ -49,36 +49,37 @@
                 <Command:ExecuteCommandAction Command="{Binding GoToGroup}" CommandParameter="{Binding ElementName=GroupList}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
-
+   
        
         <phone:LongListSelector.ItemTemplate>
+            
             <DataTemplate>
-                <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Image VerticalAlignment="Center"
+                <Grid Margin="10,10,10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Image VerticalAlignment="Center" HorizontalAlignment="Center"
                            Stretch="UniformToFill"
-                           Visibility="Visible" MaxHeight="130" MaxWidth="130">
+                           Visibility="Visible" MaxHeight="220" MaxWidth="220" Opacity="0.75">
                       <Image.Source >
-                            <BitmapImage UriSource="{Binding Item2.ImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
+                            <BitmapImage UriSource="{Binding Item2.ExtraLargeImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
                         </Image.Source>
                     </Image>
-
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock Margin="20,-10,8,6"
-                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                    <StackPanel  VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                        <TextBlock Margin="5,0,-20,0"
+                                   FontFamily="{StaticResource PhoneFontFamilyBold}"
+                                    FontSize="22"
                                    Style="{StaticResource PhoneTextLargeStyle}"
                                    Text="{Binding Item2.Name}" />
-                        <TextBlock Margin="48,0"
+                        <TextBlock Margin="5,0,0,19"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                             FontSize="16"
                                    Style="{StaticResource PhoneTextNormalStyle}">
                             <Run Text="Tabs: " />
                             <Run Text="{Binding Item1}" />
                         </TextBlock>
                     </StackPanel>
-
                 </Grid>
             </DataTemplate>
         </phone:LongListSelector.ItemTemplate>
