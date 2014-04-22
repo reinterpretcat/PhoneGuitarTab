@@ -37,7 +37,7 @@ namespace PhoneGuitarTab.UI.Controls
             //if value is not set to 0 then slide.
             if (slideControl.Value != 0)
             {
-                this.Browser.InvokeScript("slide", ((10 - System.Convert.ToInt16(slideControl.Value)) * 40).ToString());
+                this.Browser.InvokeScript("slide", ((10 - System.Convert.ToInt16(slideControl.Value)) * 30).ToString());
                 this.isScrolling = true;
             }
             

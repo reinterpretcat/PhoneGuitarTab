@@ -3,9 +3,10 @@ var trackUrl;
 var trackTitle;
 var isNetworkAvailable = false;
 
+
+
 $(document).ready(function () {
     window.external.notify("onReady");
-	
 });
  
 
@@ -48,7 +49,8 @@ function setAudioUrl(audioUrl) {
 
 function setLabel(text, title) {
 		title = "[ " + title + " ]";
-		document.getElementById("info").innerHTML = text + title;
+		var subTitle = title.substring(0,50);
+		document.getElementById("info").innerHTML = text + subTitle;
 	}
 
 function stopAudioPlayer(){
@@ -57,17 +59,22 @@ if( $(document).ready )
 		document.getElementById("audio1").pause();
 	}
 }
+ $(document).ready(function () {
+				
+	$("#audioSection").sticky({topSpacing:-15});
+				
+});
 
 
- $(document).ready(function(){
+ $(function (){
 	
 	var aud = document.getElementById("audio1");
 	
-			aud.addEventListener('play', function(){
+			aud.addEventListener('playing', function(){
 				if(isNetworkAvailable)
-				{
-					$("#audio1").sticky({topSpacing:0});
+				{					
 					setLabel("Playing " , trackTitle );
+					
 				}
 				else
 				{
