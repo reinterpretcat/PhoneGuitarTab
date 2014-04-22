@@ -45,7 +45,7 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
     <!--  LayoutRoot is the root grid where all page content is placed  -->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot">
         <!--  Pivot Control  -->
         <Grid.Resources>
             <Infrastructure:UpperStringConverter x:Name="UpperStr" />
@@ -55,19 +55,12 @@
             <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
             
         </Grid.Resources>
-        <controls:Pivot x:Name="PivotControl"
+        <controls:Pivot x:Name="PivotControl" 
                         Title="{Binding CurrentGroup.Name,
-                                        Converter={StaticResource UpperStr}}"
-                       >
+                                        Converter={StaticResource UpperStr}}">
+           
             <controls:PivotItem Header="tabs">
-                <controls:PivotItem.Background>
-                    <ImageBrush Stretch="UniformToFill" Opacity="0.4">
-                        <ImageBrush.ImageSource>
-                            <BitmapImage UriSource="{Binding CurrentGroup.ExtraLargeImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
-                        </ImageBrush.ImageSource>
-
-                    </ImageBrush>
-                </controls:PivotItem.Background>
+               
                 <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
                          ItemTemplate="{StaticResource TabItemDataTemplate}"
                          ItemsSource="{Binding Path=Tabs.Tabs}">
@@ -118,7 +111,16 @@
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
+          
         </controls:Pivot>
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" Opacity="0.45">
+                <ImageBrush.ImageSource>
+                    <BitmapImage UriSource="{Binding CurrentGroup.ExtraLargeImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
+                </ImageBrush.ImageSource>
+
+            </ImageBrush>
+        </Grid.Background>
     </Grid>
 
     <custom:Bindable.ApplicationBar>
