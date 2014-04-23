@@ -22,6 +22,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private TabsByName allTabs;
         private bool isPendingChangesOnCollection = false;
         private bool isSelectionEnabled;
+        private string backGroundImage;
         private List<int> _selectedItemIds;
         #endregion Fields
 
@@ -93,7 +94,19 @@ namespace PhoneGuitarTab.UI.ViewModel
               
             }
         }
-       
+
+        public string BackGroundImage
+        {
+            get
+            {
+                return backGroundImage;
+            }
+            set
+            {
+                backGroundImage = value;
+                RaisePropertyChanged("BackGroundImage");
+            }
+        }
         #endregion Properties
 
 
@@ -178,6 +191,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             if (selector != null && selector.SelectedItem is ObservableTuple<int, Group>)
             {
                 Group group = (selector.SelectedItem as ObservableTuple<int, Group>).Item2;
+                this.BackGroundImage = group.ExtraLargeImageUrl;
                 NavigationService.NavigateTo(Strings.Group, new Dictionary<string, object> { { "group", group } });
             }
         }

@@ -44,6 +44,15 @@
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
+
+    <Views:ViewPage.Resources>
+        <DataTemplate x:Key="SmallPanoramaTitle">
+            <ContentPresenter>
+                <TextBlock Text="{Binding}" FontSize="140" Margin="0,0,0,0" />
+            </ContentPresenter>
+        </DataTemplate>
+    </Views:ViewPage.Resources>
+
     <!--  LayoutRoot is the root grid where all page content is placed  -->
     <Grid x:Name="LayoutRoot">
         <!--  Pivot Control  -->
@@ -55,11 +64,10 @@
             <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
             
         </Grid.Resources>
-        <controls:Pivot x:Name="PivotControl" 
-                        Title="{Binding CurrentGroup.Name,
-                                        Converter={StaticResource UpperStr}}">
+        <controls:Panorama x:Name="PivotControl" 
+                        Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource SmallPanoramaTitle}">
            
-            <controls:PivotItem Header="tabs">
+            <controls:PanoramaItem Header="tabs">
                
                 <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
                          ItemTemplate="{StaticResource TabItemDataTemplate}"
@@ -70,9 +78,9 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ListBox>
-            </controls:PivotItem>
+            </controls:PanoramaItem>
 
-            <controls:PivotItem x:Name="InfoPivotItem" Header="info">
+            <controls:PanoramaItem x:Name="InfoPivotItem" Header="info">
                 <ScrollViewer>
                     <StackPanel>
                         <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"
@@ -110,17 +118,16 @@
                         </HyperlinkButton>
                     </StackPanel>
                 </ScrollViewer>
-            </controls:PivotItem>
-          
-        </controls:Pivot>
-        <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" Opacity="0.45">
-                <ImageBrush.ImageSource>
-                    <BitmapImage UriSource="{Binding CurrentGroup.ExtraLargeImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
-                </ImageBrush.ImageSource>
-
-            </ImageBrush>
-        </Grid.Background>
+            </controls:PanoramaItem>
+            <controls:Panorama.Background>
+                <ImageBrush Stretch="UniformToFill"  Opacity="0.6" AlignmentX="Center" AlignmentY="Center">
+                    <ImageBrush.ImageSource>
+                        <BitmapImage UriSource="{Binding Collection.BackGroundImage, Source={StaticResource Locator}, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </controls:Panorama.Background>
+        </controls:Panorama>
+       
     </Grid>
 
     <custom:Bindable.ApplicationBar>
