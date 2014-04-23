@@ -70,7 +70,7 @@
             <controls:PanoramaItem Header="tabs">
                
                 <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
-                         ItemTemplate="{StaticResource TabItemDataTemplate}"
+                         ItemTemplate="{StaticResource TabItemLightDataTemplate}"
                          ItemsSource="{Binding Path=Tabs.Tabs}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Tap">

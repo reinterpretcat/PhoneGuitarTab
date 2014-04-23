@@ -149,7 +149,55 @@
         </Border>
     </DataTemplate>
 
+    <DataTemplate x:Key="TabItemLightDataTemplate">
+        <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image VerticalAlignment="Center"
+                   Source="{Binding RelativeImageUri}"
+                   Stretch="None" 
+                   Visibility ="Visible" />
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                <TextBlock Margin="12,0"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextLargeStyle}"
+                           Text="{Binding Name}"
+                           TextTrimming="WordEllipsis" />
+                <StackPanel Orientation="Horizontal">
+                    <uiControls:RatingControl Margin="12, 2, 0, 4"
+                                              VerticalAlignment="Bottom"
+                                              Rating="{Binding Rating,
+                                                               Converter={StaticResource stringToInt}}" />
+                    <TextBlock VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Style="{StaticResource PhoneTextSmallStyle}"
+                               Text="{Binding Type}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu>
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
+                                                        ElementName=TabList}"
+                                      CommandParameter="{Binding Id}"
+                                      Header="remove tab" />
+                    <toolkit:MenuItem Command="{Binding Path=DataContext.PinTabToStart, ElementName=TabList}"
+                                                     
+                                      CommandParameter="{Binding Id}"
+                                      Header="pin to start" />
+                </toolkit:ContextMenu>
 
+            </toolkit:ContextMenuService.ContextMenu>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Tap">
+                    <Command:ExecuteCommandAction Command="{Binding Collection.GoToTabView, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Grid>
+    </DataTemplate>
 
     <Style x:Key="SearchListJumpListStyle" TargetType="phone:LongListSelector">
         <Setter Property="GridCellSize"  Value="99,99"/>
