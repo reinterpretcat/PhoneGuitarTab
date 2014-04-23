@@ -66,15 +66,17 @@
                             <BitmapImage UriSource="{Binding Item2.ExtraLargeImageUrl, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
                         </Image.Source>
                     </Image>
-                    <StackPanel  VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                    <StackPanel  VerticalAlignment="Bottom" HorizontalAlignment="Left">
                         <TextBlock Margin="5,0,-20,0"
                                    FontFamily="{StaticResource PhoneFontFamilyBold}"
-                                    FontSize="22"
+                                   FontSize="22"
+                                   Foreground="White"
                                    Style="{StaticResource PhoneTextLargeStyle}"
                                    Text="{Binding Item2.Name}" />
                         <TextBlock Margin="5,0,0,19"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                             FontSize="16"
+                                   FontSize="16"
+                                    Foreground="White"
                                    Style="{StaticResource PhoneTextNormalStyle}">
                             <Run Text="Tabs: " />
                             <Run Text="{Binding Item1}" />
