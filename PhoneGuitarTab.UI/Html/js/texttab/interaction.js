@@ -61,7 +61,7 @@ if( $(document).ready )
 }
 function setSticky() {
 				
-$("#audioSection").sticky({topSpacing:-22});					
+$("#audioSection").sticky({topSpacing:-20});					
 }
 
 
