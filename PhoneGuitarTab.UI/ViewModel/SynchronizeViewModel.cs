@@ -118,7 +118,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 {
                     this.ProgressIndicator = new ProgressIndicator();
                     IsSyncNotRunning = false;
-                    SetProgressIndicator(!IsSyncNotRunning, "Connecting to SkyDrive..."); 
+                    SetProgressIndicator(!IsSyncNotRunning, "Connecting to OneDrive..."); 
                     SyncService.Synchronize(DownloadAll);
                 });
             }

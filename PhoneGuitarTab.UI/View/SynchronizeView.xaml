@@ -47,7 +47,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="SYNCHRONIZE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="skydrive" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="OneDrive" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -72,7 +72,7 @@
                           IsEnabled="{Binding IsSyncNotRunning}"
                           toolkit:TiltEffect.IsTiltEnabled="True"
                           Content="Restore all tabs" />
-                <TextBlock Margin="56,-12,12,0" Text="This option is useful if you removed all tabs from your phone and want to get them back from skydrive"
+                <TextBlock Margin="56,-12,12,0" Text="This option is useful if you removed all tabs from your phone and want to get them back from OneDrive"
                            TextWrapping="Wrap"  
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    Style="{StaticResource PhoneTextSmallStyle}">
