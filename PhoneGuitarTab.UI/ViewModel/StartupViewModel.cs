@@ -137,7 +137,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
-            TabsHistory = new TabsForHistory(5, Database);
+            TabsHistory = new TabsForHistory(6, Database);
         }
 
         public override void LoadStateFrom(IDictionary<string, object> state)

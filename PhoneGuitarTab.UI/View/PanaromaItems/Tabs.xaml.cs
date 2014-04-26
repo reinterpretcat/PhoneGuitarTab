@@ -3,9 +3,9 @@ using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.ViewModel;
 using PhoneGuitarTab.Controls;
 using PhoneGuitarTab.UI.View;
-namespace PhoneGuitarTab.UI.Pivots
+namespace PhoneGuitarTab.UI.PanaromaItems
 {
-    public partial class Tabs : PivotItem
+    public partial class Tabs : PanoramaItem
     {
         public Tabs()
         {

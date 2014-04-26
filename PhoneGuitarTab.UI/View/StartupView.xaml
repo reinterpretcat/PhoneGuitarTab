@@ -7,7 +7,7 @@
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:Pivots="clr-namespace:PhoneGuitarTab.UI.Pivots" x:Name="root"
+               xmlns:PanaromaItems="clr-namespace:PhoneGuitarTab.UI.PanaromaItems" x:Name="root"
                xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                DataContext="{Binding Startup,  Source={StaticResource Locator}}"
@@ -21,59 +21,44 @@
                shell:SystemTray.IsVisible="False"
                mc:Ignorable="d"
                BackKeyPress="StartupView_BackKeyPress"
+               Style="{StaticResource TransitionPageStyle}"
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
-    <toolkit:TransitionService.NavigationInTransition>
-        <toolkit:NavigationInTransition>
-            <toolkit:NavigationInTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardIn"/>
-            </toolkit:NavigationInTransition.Backward>
-            <toolkit:NavigationInTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardIn"/>
-            </toolkit:NavigationInTransition.Forward>
-        </toolkit:NavigationInTransition>
-    </toolkit:TransitionService.NavigationInTransition>
-    <toolkit:TransitionService.NavigationOutTransition>
-        <toolkit:NavigationOutTransition>
-            <toolkit:NavigationOutTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardOut"/>
-            </toolkit:NavigationOutTransition.Backward>
-            <toolkit:NavigationOutTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardOut"/>
-            </toolkit:NavigationOutTransition.Forward>
-        </toolkit:NavigationOutTransition>
-    </toolkit:TransitionService.NavigationOutTransition>
+ 
 
     <Views:ViewPage.Resources>
-        <custom:BindableApplicationBar x:Key="TabsAppBar"  Mode="Default" >
-
-            <custom:BindableApplicationBarButton 
-                                                     Command="{Binding GoTo}"
-                                                     CommandParameter="Synchronize"
-                                                     IconUri="/Images/light/refresh.png"
-                                                     Text="sync" />
+        <custom:BindableApplicationBar x:Key="TabsAppBar"  Mode="Default" BindableOpacity="0.6">
+            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
+                                                      CommandParameter="MainSearch"                                      
+                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
+                                                     Text="tab search">
+            </custom:BindableApplicationBarButton>
             <custom:BindableApplicationBarButton 
                                                      Command="{Binding Collection.SetIsSelectionEnabled, Source={StaticResource Locator}}"
                                                      CommandParameter="true"
                                                      IconUri="/Images/light/multi.png"
-                                                     Text="select" />
-            
+                                                     Text="select" />            
             <custom:BindableApplicationBar.MenuItems>
-                
-                <custom:BindableApplicationBarMenuItem 
-                                                        Command="{Binding Review}"
-                                                        Text="rate the app" />
+                <custom:BindableApplicationBarMenuItem
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="Synchronize"
+                                                  
+                                                     Text="sync with OneDrive" />              
                 <custom:BindableApplicationBarMenuItem 
                                                      Command="{Binding GoTo}"
                                                      CommandParameter="About"
                                                      Text="about" />             
             </custom:BindableApplicationBar.MenuItems>
         </custom:BindableApplicationBar>
-        <custom:BindableApplicationBar x:Key="Default" Mode="Minimized">
-            <custom:BindableApplicationBarButton 
-                                                     Command="{Binding Review}"
-                                                     IconUri="/Images/dark/rate.png"
-                                                     Text="rate" />
+        <custom:BindableApplicationBar x:Key="Default" Mode="Default" BindableOpacity="0.6">
+            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
+                                                      CommandParameter="MainSearch"                                      
+                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
+                                                     Text="tab search">
+            </custom:BindableApplicationBarButton>          
             <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem 
+                                                     Command="{Binding Review}"                                                   
+                                                     Text="rate the app" />
                 <custom:BindableApplicationBarMenuItem  
                                                      Command="{Binding GoTo}"
                                                      CommandParameter="About"
@@ -81,64 +66,64 @@
             </custom:BindableApplicationBar.MenuItems>
 
         </custom:BindableApplicationBar>
-        <custom:BindableApplicationBar x:Key="Search" Mode="Default">
-            <custom:BindableApplicationBarButton 
-                                                     Command="{Binding Search.LaunchSearch, Source={StaticResource Locator}}"
-                                                     CommandParameter="{Binding Search.CurrentTypedText, Source={StaticResource Locator}}"
-                                                     IsEnabled="{Binding Search.IsSearchButtonEnabled, Source={StaticResource Locator}}"
+        <custom:BindableApplicationBar x:Key="Recent" Mode="Default" BindableOpacity="0.6">
+            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
+                                                      CommandParameter="MainSearch"                                      
                                                      IconUri="/Images/light/appbar.feature.search.rest.png"
-                                                     Text="search">
-                </custom:BindableApplicationBarButton>
-        </custom:BindableApplicationBar>
-        <custom:BindableApplicationBar x:Key="MultiSelectAppBar" Mode="Default">
-            <custom:BindableApplicationBarButton 
+                                                     Text="tab search">
+            </custom:BindableApplicationBarButton>
+        </custom:BindableApplicationBar>        
+        <custom:BindableApplicationBar x:Key="MultiSelectAppBar" Mode="Default"  BindableOpacity="0.6">
+            <custom:BindableApplicationBarButton
                                                     Command="{Binding Collection.RemoveTabs
                                                         , Source={StaticResource Locator}}"
                                                      IconUri="/Images/light/delete.png"
                                                      Text="delete">
             </custom:BindableApplicationBarButton>
         </custom:BindableApplicationBar>
+
+      
+
     </Views:ViewPage.Resources>
 
         <Grid x:Name="LayoutRoot">
-        <Controls:Pivot Name="MainPivot" TitleTemplate="{StaticResource EmptyTitleTemplate}" SelectionChanged="Pivot_SelectionChanged">
-            <Pivots:Tabs />
-            <Pivots:Search />
-            <Pivots:Bands />
-            <Pivots:History />
-
+        <Controls:Panorama Name="MainPanorama" Title="Phone Guitar Tab" TitleTemplate="{StaticResource EmptyTitleTemplate}" SelectionChanged="MainPanorama_SelectionChanged">        
+            <PanaromaItems:Tabs />
+            <PanaromaItems:Bands />
+            <PanaromaItems:History />            
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <Command:ExecuteCommandAction Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Controls:Pivot>
-        <TextBlock x:Name="textBlock" 
-                   VerticalAlignment="Top" HorizontalAlignment="Left"
-                   FontFamily="Segoe UI Light"
-                   FontSize="18"
-                   Margin="20,2"
-                   Text="{Binding Search.SearchInfoTextBlock,Source={StaticResource Locator}}"
-                   Visibility="{Binding Search.IsDownloading,
-                                                             Source={StaticResource Locator},
-                                                             Converter={StaticResource boolVisibility}}">
-
-        </TextBlock>
-        <ProgressBar x:Name="performanceBar" 
-                                        VerticalAlignment="Top"
-                                        IsIndeterminate="{Binding Search.IsDownloading,
-                                                                  Source={StaticResource Locator},
-                                                                  Mode=TwoWay}"
-                                        Visibility="{Binding Search.IsDownloading,
-                                                             Source={StaticResource Locator},
-                                                             Converter={StaticResource boolVisibility}}">
-
-        </ProgressBar>
+        </Controls:Panorama>
+       
     </Grid>
    
 
     <custom:Bindable.ApplicationBar >
-        <custom:BindableApplicationBar Name="AppBar"  Mode="Minimized" >
+        <custom:BindableApplicationBar x:Name="TabsAppBar"  Mode="Default" BindableOpacity="0.6">
+            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
+                                                      CommandParameter="MainSearch"                                      
+                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
+                                                     Text="tab search">
+            </custom:BindableApplicationBarButton>
+            <custom:BindableApplicationBarButton 
+                                                     Command="{Binding Collection.SetIsSelectionEnabled, Source={StaticResource Locator}}"
+                                                     CommandParameter="true"
+                                                     IconUri="/Images/light/multi.png"
+                                                     Text="select" />
+            <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="Synchronize"
+                                                  
+                                                     Text="sync with OneDrive" />
+                <custom:BindableApplicationBarMenuItem 
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="About"
+                                                     Text="about" />
+            </custom:BindableApplicationBar.MenuItems>
         </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>
 </Views:ViewPage>

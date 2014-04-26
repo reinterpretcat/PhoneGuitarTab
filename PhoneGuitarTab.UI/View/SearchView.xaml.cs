@@ -3,11 +3,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using PhoneGuitarTab.UI.ViewModel;
 using Microsoft.Phone.Shell;
-namespace PhoneGuitarTab.UI.Pivots
+using Microsoft.Phone.Controls;
+namespace PhoneGuitarTab.UI.View
 {
-    public partial class Search : PivotItem
+    using PhoneGuitarTab.Core.Views;
+
+    public partial class SearchView : ViewPage 
     {
-        public Search()
+        public SearchView()
         {
             InitializeComponent();
 

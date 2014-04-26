@@ -120,7 +120,7 @@
                 </ScrollViewer>
             </controls:PanoramaItem>
             <controls:Panorama.Background>
-                <ImageBrush Stretch="UniformToFill"  Opacity="0.6" AlignmentX="Center" AlignmentY="Center">
+                <ImageBrush Stretch="UniformToFill"  Opacity="0.5" AlignmentX="Center" AlignmentY="Center">
                     <ImageBrush.ImageSource>
                         <BitmapImage UriSource="{Binding Collection.BackGroundImage, Source={StaticResource Locator}, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
                     </ImageBrush.ImageSource>

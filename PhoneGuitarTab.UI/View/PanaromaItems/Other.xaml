@@ -1,4 +1,4 @@
-﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.Pivots.Other"
+﻿<phone:PivotItem x:Class="PhoneGuitarTab.UI.PanaromaItems.Other"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"

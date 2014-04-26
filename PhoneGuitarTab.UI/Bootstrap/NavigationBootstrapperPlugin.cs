@@ -20,6 +20,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
             {
                 {new Tuple<string, Uri>(Strings.Startup, new Uri(@"/View/StartupView.xaml", UriKind.Relative)), typeof(StartupViewModel)},
                 {new Tuple<string, Uri>(Strings.Search, new Uri(@"/View/SearchForBandView.xaml", UriKind.Relative)), typeof(SearchViewModel)},
+                 {new Tuple<string, Uri>(Strings.MainSearch, new Uri(@"/View/SearchView.xaml", UriKind.Relative)), typeof(SearchViewModel)},
                 {new Tuple<string, Uri>(Strings.TextTab, new Uri(@"/View/TextTabView.xaml", UriKind.Relative)), typeof(TextTabViewModel)},
                 {new Tuple<string, Uri>(Strings.StaveTab, new Uri(@"/View/StaveTabView.xaml", UriKind.Relative)), typeof(StaveTabViewModel)},
                 {new Tuple<string, Uri>(Strings.About, new Uri(@"/View/AboutView.xaml", UriKind.Relative)), typeof(AboutViewModel)},

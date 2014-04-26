@@ -8,6 +8,7 @@ namespace PhoneGuitarTab.UI
     internal static class Strings
     {
         public const string Startup = "Startup";
+        public const string MainSearch = "MainSearch";
         public const string Search = "Search";
         public const string TextTab = "TextTab";
         public const string StaveTab = "StaveTab";

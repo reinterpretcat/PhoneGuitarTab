@@ -120,7 +120,16 @@ namespace PhoneGuitarTab.UI
 
         private void AudioUrlRetrievedHandler(string audioUrl)
         {
-            Dispatcher.BeginInvoke(() => tabWebBrowser.InvokeScript("setAudioUrl", audioUrl));
+            try
+            {
+                Dispatcher.BeginInvoke(() => tabWebBrowser.InvokeScript("setAudioUrl", audioUrl));
+                  
+            }
+            catch (Exception)
+            {
+                //TODO - do some exception handling here  - sometimes the above JS function sucks.               
+            }
+               
         }
     
 

@@ -3,6 +3,7 @@
     using PhoneGuitarTab.Core.Views;
     using PhoneGuitarTab.Controls;
     using PhoneGuitarTab.UI.ViewModel;
+    using Microsoft.Phone.Controls;
     public partial class StartupView : ViewPage
     {
         public StartupView()
@@ -33,9 +34,9 @@
         private void StartupView_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var view = sender as StartupView;
-            if (view.MainPivot.SelectedItem.GetType() == typeof (Pivots.Tabs))
+            if (view.MainPanorama.SelectedItem.GetType() == typeof (PanaromaItems.Tabs))
             {
-                var viewModel = ((view.MainPivot.SelectedItem) as Pivots.Tabs).DataContext as CollectionViewModel;
+                var viewModel = ((view.MainPanorama.SelectedItem) as PanaromaItems.Tabs).DataContext as CollectionViewModel;
                 if (viewModel.IsSelectionEnabled)
                 {
                     e.Cancel = true;
@@ -45,25 +46,36 @@
             }
         }
 
-        private void Pivot_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+       
+
+        private void MainPanorama_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             //"Bindable.ApplicationBar property needs to be set on a PhoneApplicationPage element."
             //Therefore this piece of code can not be moved to ViewModel
-            
+
             //Switch appbars depending on the selected pivot.
-            switch (MainPivot.SelectedIndex)
-            { 
-                case 0:
-                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]); 
+            switch (MainPanorama.SelectedIndex)
+            {
+                //recent
+                case 2:
+                     Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Recent"]);
                     break;
+                //groups
                 case 1:
-                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Search"]); 
+                   Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
                     break;
+                //Tabs
+                case 0:
+                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]);
+                    break;
+              
                 default:
-                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]); 
+                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
                     break;
             }
         }
+
+     
 
     }
 }
