@@ -55,13 +55,15 @@
                                    FontSize="20"
                                    Foreground="White"
                                    Style="{StaticResource PhoneTextLargeStyle}"
+                                   TextTrimming="WordEllipsis"
                                    Text="{Binding Name}" />
                             <TextBlock Margin="5,0,0,19"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    FontSize="14"
                                     Foreground="White"
+                                       TextWrapping="Wrap"
                                    Style="{StaticResource PhoneTextNormalStyle}">
-                            <Run Text="{Binding Group}" />
+                            <Run Text="{Binding Group}"   />
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Name="TabData" Orientation="Vertical" Grid.Column="0" Margin="0,0,-150,0">

@@ -112,7 +112,7 @@
             <Controls:Panorama.Background>
                 <ImageBrush Stretch="UniformToFill"  Opacity="0.5" AlignmentX="Center" AlignmentY="Center">
                     <ImageBrush.ImageSource>
-                        <BitmapImage UriSource="{Binding Collection.BackGroundImage, Source={StaticResource Locator}, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
+                        <BitmapImage UriSource="{Binding Startup.BackGroundImage, Source={StaticResource Locator}, Converter={StaticResource ImageUrlToUriConverter}}" CreateOptions="BackgroundCreation" />
                     </ImageBrush.ImageSource>
                 </ImageBrush>
             </Controls:Panorama.Background>

@@ -9,7 +9,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Data;
-
+    using PhoneGuitarTab.UI.Infrastructure;
     /// <summary>
     /// Processes data-specific staff
     /// </summary>

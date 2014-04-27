@@ -126,8 +126,8 @@ namespace PhoneGuitarTab.UI
 
             e.Handled = true;
 
-            (RootVisual as PhoneApplicationFrame).Source =
-                new Uri("/View/ErrorView.xaml", UriKind.Relative);
+           // (RootVisual as PhoneApplicationFrame).Source =
+             //   new Uri("/View/ErrorView.xaml", UriKind.Relative);
 
         }
 

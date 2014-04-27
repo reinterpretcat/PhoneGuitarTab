@@ -208,6 +208,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 Group group = (selector.SelectedItem as ObservableTuple<int, Group>).Item2;
                 this.BackGroundImage = group.ExtraLargeImageUrl;
+                Hub.RaiseBackGroundImageChangeActivity(group.ExtraLargeImageUrl);
                 NavigationService.NavigateTo(Strings.Group, new Dictionary<string, object> { { "group", group } });
             }
         }
@@ -222,6 +223,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                            where t.Id == tabEntity.Id
                            select t).Single();
                 NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", tab } });
+                Hub.RaiseBackGroundImageChangeActivity(tab.Group.ExtraLargeImageUrl);
                 Hub.RaiseTabBrowsed();
             }
         }
@@ -295,6 +297,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             () =>
             {
                 TabsHistory = new TabsForHistory(6, Database);
+                
             });
            
         }

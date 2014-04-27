@@ -21,7 +21,7 @@ namespace PhoneGuitarTab.UI.ViewModel
       
         private RatingService _ratingService;
         private bool _isSelectionEnabled;
-      
+        private string _backGroundImage;
         #endregion Fields
 
 
@@ -53,7 +53,19 @@ namespace PhoneGuitarTab.UI.ViewModel
                 RaisePropertyChanged("IsSelectionEnabled");
             }
         }
-       
+
+        public string BackGroundImage
+        {
+            get
+            {
+                return _backGroundImage;
+            }
+            set
+            {
+                _backGroundImage = value;
+                RaisePropertyChanged("BackGroundImage");
+            }
+        }
         #endregion Properties
 
         
@@ -168,6 +180,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         private void RegisterEvents()
         {
             Hub.SelectorIsSelectionEnabled += (o, enabled) => { this.IsSelectionEnabled = enabled; };
+            Hub.BackGroundImageChangeActivity += (o, image) => { this.BackGroundImage = image; };
         }
 
        

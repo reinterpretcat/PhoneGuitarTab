@@ -374,6 +374,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             }
         }
 
+
         public TabEntity CurrentTabEntity
         {
             get
@@ -727,19 +728,21 @@ namespace PhoneGuitarTab.UI.ViewModel
                   };
                   Database.InsertTab(this.CurrentTab);
                   Hub.RaiseTabsDownloaded();
-
+                  Hub.RaiseBackGroundImageChangeActivity(this.CurrentTab.Group.ExtraLargeImageUrl);
                   this.CurrentTabEntity.IsDownloaded = true;
                   IsDownloading = false;
-
+                  
                   Dialog.Show(" was downloaded", "\"" + this.CurrentTabEntity.Name + "\" by " + this.CurrentTabEntity.Group, new DialogActionContainer()
                   {
-                      OnTapAction = (o, e) => NavigationService.NavigateToTab(this.CurrentTab)
+                      OnTapAction = (o, e) => { this.DoGoToTabView(this.CurrentTab.Id); }
+                    
                   });
                 
 
                   DownloadTab.RaiseCanExecuteChanged();
                  
               });
+           
         }
 
        
@@ -800,7 +803,21 @@ namespace PhoneGuitarTab.UI.ViewModel
                               ? Visibility.Visible
                               : Visibility.Collapsed;
         }
-      
+
+        private void DoGoToTabView(int id)
+        {
+           
+            if (id != null)
+            {
+
+                Tab tab = (from Tab t in Database.Tabs
+                           where t.Id == id
+                           select t).Single();
+                NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", tab } });
+                Hub.RaiseBackGroundImageChangeActivity(tab.Group.ExtraLargeImageUrl);
+                Hub.RaiseTabBrowsed();
+            }
+        }
         #endregion Helper methods
     }
 }

@@ -6,7 +6,7 @@
     using PhoneGuitarTab.Search.Lastfm;
     using PhoneGuitarTab.Data;
     using System.Net;
-
+  
     /// <summary>
     /// Unit of works over data context
     /// </summary>

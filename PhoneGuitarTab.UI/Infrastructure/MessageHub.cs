@@ -57,5 +57,14 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (handler != null)
                 handler(this, new EventArgs());
         }
+
+
+        public event EventHandler<string> BackGroundImageChangeActivity;
+        public void RaiseBackGroundImageChangeActivity(string ImageUrl)
+        {
+            var handler = BackGroundImageChangeActivity;
+            if (handler != null)
+                handler(this, ImageUrl);
+        }
     }
 }
