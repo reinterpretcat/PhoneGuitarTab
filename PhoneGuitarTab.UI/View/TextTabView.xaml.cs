@@ -122,6 +122,7 @@ namespace PhoneGuitarTab.UI
         {
             try
             {
+                if(isBrowserReady)
                 Dispatcher.BeginInvoke(() => tabWebBrowser.InvokeScript("setAudioUrl", audioUrl));
                   
             }
