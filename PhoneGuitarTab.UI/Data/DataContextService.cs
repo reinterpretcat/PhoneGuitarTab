@@ -200,13 +200,17 @@
 
                 if (!string.IsNullOrEmpty(albumCover))
                 {
-                    currentTab.AlbumCoverImageUrl = result.LargeImageUrl;
+                    currentTab.AlbumCoverImageUrl = result.ImageUrl;
                     this.SubmitChanges();
                 }
                 else
                 {
-                    currentTab.AlbumCoverImageUrl = "";
-                    //handle other conditions
+                    if (!String.IsNullOrEmpty(result.LargeImageUrl))
+                        currentTab.AlbumCoverImageUrl = result.LargeImageUrl;
+                    else if (!String.IsNullOrEmpty(currentTab.Group.ImageUrl))
+                        currentTab.AlbumCoverImageUrl = currentTab.Group.ImageUrl;
+                    else
+                        currentTab.AlbumCoverImageUrl = "";               
                 }
             }
             catch

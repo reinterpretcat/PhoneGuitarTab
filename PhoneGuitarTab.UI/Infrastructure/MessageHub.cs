@@ -16,14 +16,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 handler(this, id);
         }
 
-        public event EventHandler<int> HistoryTabRemoved;
-        public void RaiseHistoryTabRemoved(int id)
-        {
-            var handler = HistoryTabRemoved;
-            if (handler != null)
-                handler(this, id);
-        }
-
+      
         public event EventHandler<int> GroupTabRemoved;
         public void RaiseGroupTabRemoved(int id)
         {
@@ -53,6 +46,14 @@ namespace PhoneGuitarTab.UI.Infrastructure
         public void RaiseTabsRefreshed()
         {
             var handler = TabsRefreshed;
+            if (handler != null)
+                handler(this, new EventArgs());
+        }
+
+        public event EventHandler TabBrowsed;
+        public void RaiseTabBrowsed()
+        {
+            var handler = TabBrowsed;
             if (handler != null)
                 handler(this, new EventArgs());
         }

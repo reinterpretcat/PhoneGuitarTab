@@ -20,6 +20,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         private BandByName groups;
         private TabsByName allTabs;
+        private TabsForHistory _tabsHistory;
         private bool isPendingChangesOnCollection = false;
         private bool isSelectionEnabled;
         private string backGroundImage;
@@ -65,6 +66,16 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 allTabs = value;
                 RaisePropertyChanged("AllTabs");
+            }
+        }
+
+        public TabsForHistory TabsHistory
+        {
+            get { return _tabsHistory; }
+            set
+            {
+                _tabsHistory = value;
+                RaisePropertyChanged("TabsHistory");
             }
         }
         public List<int> SelectedItemIds
@@ -167,7 +178,11 @@ namespace PhoneGuitarTab.UI.ViewModel
             get;
             set;
         }
-
+        public ExecuteCommand RefreshHistory
+        {
+            get;
+            set;
+        }
         #endregion Commands
 
 
@@ -177,6 +192,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             AllTabs = new TabsByName(Database);            
             Groups = new BandByName(Database);
+            TabsHistory = new TabsForHistory(6, Database);
             SelectedItemIds = new List<int>();
         }
 
@@ -206,6 +222,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                            where t.Id == tabEntity.Id
                            select t).Single();
                 NavigationService.NavigateToTab(new Dictionary<string, object>() { { "Tab", tab } });
+                Hub.RaiseTabBrowsed();
             }
         }
       
@@ -272,7 +289,15 @@ namespace PhoneGuitarTab.UI.ViewModel
                 isPendingChangesOnCollection = false;
             });
         }
-
+        private void DoRefreshHistroy()
+        {
+             Deployment.Current.Dispatcher.BeginInvoke(
+            () =>
+            {
+                TabsHistory = new TabsForHistory(6, Database);
+            });
+           
+        }
         #endregion Command handlers
 
 
@@ -282,7 +307,6 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             SearchCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Search));
           
-
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
             RemoveTabs = new ExecuteCommand(DoRemoveTabs);
             PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
@@ -291,15 +315,15 @@ namespace PhoneGuitarTab.UI.ViewModel
             SetIsSelectionEnabled = new ExecuteCommand<object>(DoSetIsSelectionEnabled);
             SetSelectedItems = new ExecuteCommand<object>(DoSetSelectedItems);
             RefreshData = new ExecuteCommand(DoRefreshData);
+            RefreshHistory = new ExecuteCommand(DoRefreshHistroy);
         }
 
         private void RegisterEvents()
         {
-            Hub.HistoryTabRemoved += (o, id) => RemoveTabFromList(id);
             Hub.GroupTabRemoved += (o, id) => RemoveTabFromList(id);
             Hub.TabsDownloaded += (o, args) => isPendingChangesOnCollection = true;
             Hub.TabsRefreshed += (o, args) => DoRefreshData();
-          
+            Hub.TabBrowsed += (o, args) => DoRefreshHistroy();
         }
 
         private void RemoveTabFromList(int id)
@@ -307,6 +331,12 @@ namespace PhoneGuitarTab.UI.ViewModel
             var tabToRemove = AllTabs.Tabs.Single(tab => tab.Id == id);
             AllTabs.RemoveTab(tabToRemove);
             Groups.DecreaseTabCount(tabToRemove.Group);
+            var tabToDelete = TabsHistory.Tabs.Where(tab => tab.Id == id).FirstOrDefault();
+            if (tabToDelete != null)
+            {
+                TabsHistory.Tabs.Remove(tabToDelete);
+            }
+            RaisePropertyChanged("TabsHistory");
             RaisePropertyChanged("AllTabs");
         }
 

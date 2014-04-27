@@ -18,9 +18,10 @@ namespace PhoneGuitarTab.UI.ViewModel
     {
         #region Fields
 
-        private TabsForHistory _tabsHistory;
+      
         private RatingService _ratingService;
         private bool _isSelectionEnabled;
+      
         #endregion Fields
 
 
@@ -43,16 +44,6 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         public string ProductVersion { get; set; }
 
-        public TabsForHistory TabsHistory
-        {
-            get { return _tabsHistory; }
-            set
-            {
-                _tabsHistory = value;
-                RaisePropertyChanged("TabsHistory");
-            }
-        }
-
         public bool IsSelectionEnabled
         {
             get { return _isSelectionEnabled; }
@@ -62,7 +53,7 @@ namespace PhoneGuitarTab.UI.ViewModel
                 RaisePropertyChanged("IsSelectionEnabled");
             }
         }
-
+       
         #endregion Properties
 
         
@@ -123,12 +114,6 @@ namespace PhoneGuitarTab.UI.ViewModel
             new MarketplaceReviewTask().Show();
         }
     
-        private void DoRemoveTab(int id)
-        {
-            RemoveTabFromList(id);
-            Deployment.Current.Dispatcher.BeginInvoke(() => Database.DeleteTabById(id));
-            Hub.RaiseHistoryTabRemoved(id);
-        }
 
         #endregion Command handlers
 
@@ -137,7 +122,7 @@ namespace PhoneGuitarTab.UI.ViewModel
 
         protected override void DataBind()
         {
-            TabsHistory = new TabsForHistory(6, Database);
+            
         }
 
         public override void LoadStateFrom(IDictionary<string, object> state)
@@ -177,9 +162,7 @@ namespace PhoneGuitarTab.UI.ViewModel
         {
             GoTo = new ExecuteCommand<string>(DoGoTo);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
-            Review = new ExecuteCommand(DoReview);
-            RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
-           
+            Review = new ExecuteCommand(DoReview);           
         }
 
         private void RegisterEvents()
@@ -187,14 +170,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             Hub.SelectorIsSelectionEnabled += (o, enabled) => { this.IsSelectionEnabled = enabled; };
         }
 
-        private void RemoveTabFromList(int id)
-        {
-            var tabToDelete = TabsHistory.Tabs.Where(tab => tab.Id == id).FirstOrDefault();
-            if (tabToDelete != null)
-            {
-                TabsHistory.Tabs.Remove(tabToDelete);
-            }
-        }
+       
 
         #endregion Helper methods
     }

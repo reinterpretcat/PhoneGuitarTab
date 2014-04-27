@@ -14,9 +14,13 @@
                     x:Name="root"
                     DataContext="{Binding Search, Source={StaticResource Locator}}"
                     Style="{StaticResource TransitionPageStyle}"
-                    mc:Ignorable="d" >
+                    mc:Ignorable="d">
 
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="BackKeyPress">
+            <Command:ExecuteCommandAction Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Views:ViewPage.Resources>
         <Infrastructure:SearchTabTypeImageConverter x:Key="SearchTabTypeImageConverter" />

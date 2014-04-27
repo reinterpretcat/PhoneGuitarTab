@@ -46,8 +46,6 @@
             }
         }
 
-       
-
         private void MainPanorama_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             //"Bindable.ApplicationBar property needs to be set on a PhoneApplicationPage element."
@@ -59,14 +57,20 @@
                 //recent
                 case 2:
                      Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Recent"]);
+                     if (this.MainPanorama.Background.Opacity > 0.21)
+                       this.OpacityFadeOut.Begin();
                     break;
                 //groups
                 case 1:
                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
+                   if (this.MainPanorama.Background.Opacity > 0.21)
+                        this.OpacityFadeOut.Begin();
                     break;
                 //Tabs
                 case 0:
                     Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]);
+                    if(this.MainPanorama.Background.Opacity < 0.5)
+                    this.OpacityFadeIn.Begin();
                     break;
               
                 default:

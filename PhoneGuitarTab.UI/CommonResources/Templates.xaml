@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>           
-            <Image VerticalAlignment="Center"
+            <Image VerticalAlignment="Center" HorizontalAlignment="Left"
                    Source="{Binding RelativeImageUri}"
                    Stretch="None" 
                    Visibility ="Visible" />
@@ -76,63 +76,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="HistoryTabItemDataTemplate">
-        <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Image VerticalAlignment="Center"
-                   Source="{Binding RelativeImageUri}"
-                   Stretch="None" 
-                   Visibility ="Visible" />
-
-            <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                <TextBlock Margin="12,0"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextLargeStyle}"
-                           Text="{Binding Name}"
-                           TextTrimming="WordEllipsis" />
-                <TextBlock Margin="28,0"
-                           HorizontalAlignment="Left"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           Text="{Binding Group}"
-                           TextWrapping="Wrap" />
-                <StackPanel Orientation="Horizontal">
-                    <uiControls:RatingControl Margin="12, 2, 0, 4"
-                                              VerticalAlignment="Bottom"
-                                              Rating="{Binding Rating,
-                                                               Converter={StaticResource stringToInt}}" />
-                    <TextBlock VerticalAlignment="Bottom"
-                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                               Foreground="{StaticResource PhoneAccentBrush}"
-                               Style="{StaticResource PhoneTextSmallStyle}"
-                               Text="{Binding Type}"
-                               TextWrapping="Wrap" />
-                </StackPanel>
-            </StackPanel>
-            <TextBlock Grid.Row="1"
-                       Margin="12,0,0,0"
-                       Grid.Column="1" Foreground="Gray">
-                <Run Text="last opened:" />
-                <Run Text="{Binding LastOpened, Converter={StaticResource relativeTimeConverter}}" />
-            </TextBlock>
-            <toolkit:ContextMenuService.ContextMenu>
-                <toolkit:ContextMenu>
-                    <toolkit:MenuItem Command="{Binding Path=DataContext.RemoveTab,
-                                                        ElementName=TabList}"
-                                      CommandParameter="{Binding Id}"
-                                      Header="remove tab" />
-                </toolkit:ContextMenu>
-            </toolkit:ContextMenuService.ContextMenu>
-        </Grid>
-    </DataTemplate>
+    
 
     <DataTemplate x:Key="GroupHeaderTemplate">
         <Border Background="Transparent">
@@ -410,4 +354,36 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="TurnTransitionPageStyle" TargetType="phone:PhoneApplicationPage">
+        <Setter Property="toolkit:TransitionService.NavigationInTransition">
+            <Setter.Value>
+                <toolkit:NavigationInTransition>
+                    <toolkit:NavigationInTransition.Backward>
+                        <toolkit:TurnstileTransition Mode="BackwardIn"/>
+                    </toolkit:NavigationInTransition.Backward>
+                    <toolkit:NavigationInTransition.Forward>
+                        <toolkit:TurnstileTransition Mode="ForwardIn"/>
+                    </toolkit:NavigationInTransition.Forward>
+                </toolkit:NavigationInTransition>
+
+            </Setter.Value>
+        </Setter>
+        <Setter Property="toolkit:TransitionService.NavigationOutTransition">
+            <Setter.Value>
+                <toolkit:NavigationOutTransition>
+                    <toolkit:NavigationOutTransition.Backward>
+                        <toolkit:TurnstileTransition Mode="BackwardOut"/>
+                    </toolkit:NavigationOutTransition.Backward>
+                    <toolkit:NavigationOutTransition.Forward>
+                        <toolkit:TurnstileTransition Mode="ForwardOut"/>
+                    </toolkit:NavigationOutTransition.Forward>
+                </toolkit:NavigationOutTransition>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
+
+
+
+
+
