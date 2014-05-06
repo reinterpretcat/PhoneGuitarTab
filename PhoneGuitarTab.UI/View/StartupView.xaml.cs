@@ -28,10 +28,7 @@
                  Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]);               
             }
 
-            if (e.PropertyName == "BackGroundImage")
-            {
-                this.MainPanorama.UpdateLayout();
-            }
+        
            
         }
          

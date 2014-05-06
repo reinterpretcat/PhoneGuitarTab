@@ -193,6 +193,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             AllTabs = new TabsByName(Database);            
             Groups = new BandByName(Database);
             TabsHistory = new TabsForHistory(6, Database);
+            AssignBackGroundImageFromLastTab();    
             SelectedItemIds = new List<int>();
         }
 
@@ -343,6 +344,17 @@ namespace PhoneGuitarTab.UI.ViewModel
             RaisePropertyChanged("AllTabs");
         }
 
+        private void AssignBackGroundImageFromLastTab()
+        {
+            if (Database.Tabs.Count() > 0)
+            {
+                Tab LastTab = (from Tab tab in Database.Tabs
+                               orderby tab.LastOpened descending
+                               select tab).Where(t => t.LastOpened != null).FirstOrDefault();
+                if (!String.IsNullOrEmpty(LastTab.Group.ExtraLargeImageUrl))
+                    Hub.RaiseBackGroundImageChangeActivity(LastTab.Group.ExtraLargeImageUrl);
+            }
+        }
         #endregion Helper methods
     }
 }

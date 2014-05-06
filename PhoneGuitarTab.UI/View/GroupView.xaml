@@ -22,7 +22,7 @@
                SupportedOrientations="Portrait"
                d:DesignHeight="768"
                d:DesignWidth="480"
-               Style="{StaticResource TurnTransitionPageStyle}"
+               Style="{StaticResource TransitionPageStyle}"
                shell:SystemTray.IsVisible="False"
                mc:Ignorable="d">
   
