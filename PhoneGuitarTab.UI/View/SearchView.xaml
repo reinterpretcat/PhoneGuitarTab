@@ -46,8 +46,17 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
+                    <TextBlock 
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   FontFamily="Segoe UI"
+                   FontSize="18"
+                        Margin="10,-6"
+                  Foreground="{StaticResource PhoneForegroundBrush}"
+                   Text="TAB SEARCH">
+
+                    </TextBlock>
                     <TextBox x:Name="searchTextBox" InputScope="Search"
-                                 Grid.ColumnSpan="2"
+                                 Grid.ColumnSpan="2" Margin="0,7"
                                  Text="{Binding Path=DataContext.CurrentSearchText,
                                                 ElementName=root,
                                                 Mode=TwoWay,
@@ -276,19 +285,20 @@
         </DataTemplate>
     </Views:ViewPage.Resources>
     <Grid >
-        <TextBlock x:Name="textBlock2" 
+        <StackPanel Orientation="Vertical" Margin="0,308">
+            <TextBlock x:Name="textBlock2" 
                    VerticalAlignment="Top" HorizontalAlignment="Center"
                    FontFamily="Segoe UI Light"
-                   FontSize="20"
-                   Margin="0,10"
+                   FontSize="22"
                   
+                  Foreground="{StaticResource PhoneForegroundBrush}"
                    Text="{Binding Search.SearchInfoTextBlock,Source={StaticResource Locator}}"
                    Visibility="{Binding Search.IsSearching,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}">
 
-        </TextBlock>
-        <ProgressBar x:Name="performanceBar2" 
+            </TextBlock>
+            <ProgressBar x:Name="performanceBar2" 
                                         VerticalAlignment="Top"
                                         IsIndeterminate="{Binding Search.IsSearching,
                                                                   Source={StaticResource Locator},
@@ -297,8 +307,8 @@
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}" >
 
-        </ProgressBar>
-
+            </ProgressBar>
+        </StackPanel>
         <phone:LongListSelector x:Name="tabsList"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="True" HideEmptyGroups="True"
@@ -308,13 +318,14 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}" Margin="-4,32,-4,-20">
+                              Tag="{Binding FirstTabInList}" Margin="-4,32,-4,0">
         </phone:LongListSelector>
         <TextBlock x:Name="textBlock" 
                    VerticalAlignment="Top" HorizontalAlignment="Left"
                    FontFamily="Segoe UI Light"
-                   FontSize="18"
+                   FontSize="20"
                    Margin="20,2"
+                   Foreground="{StaticResource PhoneForegroundBrush}"
                    Text="{Binding Search.SearchInfoTextBlock,Source={StaticResource Locator}}"
                    Visibility="{Binding Search.IsDownloading,
                                                              Source={StaticResource Locator},
@@ -338,7 +349,7 @@
                                                      Command="{Binding Search.LaunchSearch, Source={StaticResource Locator}}"
                                                      CommandParameter="{Binding Search.CurrentTypedText, Source={StaticResource Locator}}"
                                                      IsEnabled="{Binding Search.IsSearchButtonEnabled, Source={StaticResource Locator}}"
-                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
+                                                     IconUri="/Images/light/go.png"
                                                      Text="search">
             </custom:BindableApplicationBarButton>
         </custom:BindableApplicationBar>

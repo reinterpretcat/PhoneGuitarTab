@@ -414,6 +414,7 @@
     <Content Include="Images\light\band_dark.png" />
     <Content Include="Images\light\band_light.png" />
     <Content Include="Images\light\delete.png" />
+    <Content Include="Images\light\go.png" />
     <Content Include="Images\light\groupDefault.png" />
     <Content Include="Images\instrument\Bass_dark.png" />
     <Content Include="Images\instrument\Chords_dark.png" />
