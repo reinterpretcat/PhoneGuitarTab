@@ -14,7 +14,7 @@
                     x:Name="root"
                     DataContext="{Binding Search, Source={StaticResource Locator}}"
                     Style="{StaticResource TransitionPageStyle}"
-                    mc:Ignorable="d">
+                    mc:Ignorable="d" >
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="BackKeyPress">
@@ -55,7 +55,7 @@
                    Text="TAB SEARCH">
 
                     </TextBlock>
-                    <TextBox x:Name="searchTextBox" InputScope="Search"
+                    <TextBox  x:Name="searchTextBox" InputScope="Search"
                                  Grid.ColumnSpan="2" Margin="0,7"
                                  Text="{Binding Path=DataContext.CurrentSearchText,
                                                 ElementName=root,
@@ -104,14 +104,22 @@
 
                         <toolkit:ListPicker.ItemTemplate>
                             <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                    <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="32" Height="32" HorizontalAlignment="Left" >
+                                        <Rectangle.OpacityMask>
 
-                                <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" HorizontalAlignment="Center" />
+                                            <ImageBrush ImageSource="{Binding Converter={StaticResource SearchTabTypeImageConverter}}"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" HorizontalAlignment="Right" />
+
+                                </StackPanel>
+                               
                             </DataTemplate>
                         </toolkit:ListPicker.ItemTemplate>
 
                         <toolkit:ListPicker.FullModeItemTemplate>
                             <DataTemplate>
-
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Rectangle VerticalAlignment="Bottom" Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
                                         <Rectangle.OpacityMask>
