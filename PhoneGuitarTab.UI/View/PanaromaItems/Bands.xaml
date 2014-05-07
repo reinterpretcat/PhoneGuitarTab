@@ -59,6 +59,9 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" 
+                              Stretch="UniformToFill" MaxHeight="200" MaxWidth="200" Opacity="0.1" Source="/Images/light/band_light.png">
+                    </Image>
                     <Image VerticalAlignment="Center" HorizontalAlignment="Center"
                            Stretch="UniformToFill"
                            Visibility="Visible" MaxHeight="200" MaxWidth="200" Opacity="0.75">

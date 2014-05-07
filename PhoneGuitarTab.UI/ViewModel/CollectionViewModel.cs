@@ -350,7 +350,7 @@ namespace PhoneGuitarTab.UI.ViewModel
             {
                 Tab LastTab = (from Tab tab in Database.Tabs
                                orderby tab.LastOpened descending
-                               select tab).Where(t => t.LastOpened != null).FirstOrDefault();
+                               select tab).FirstOrDefault();
                 if (!String.IsNullOrEmpty(LastTab.Group.ExtraLargeImageUrl))
                     Hub.RaiseBackGroundImageChangeActivity(LastTab.Group.ExtraLargeImageUrl);
             }
