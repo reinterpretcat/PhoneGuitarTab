@@ -11,6 +11,7 @@
                     DataContext="{Binding Collection, Source={StaticResource Locator}}"
                     Header="bands"
                     mc:Ignorable="d">
+    
     <phone:PanoramaItem.Resources>
         <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush"/>
         <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>

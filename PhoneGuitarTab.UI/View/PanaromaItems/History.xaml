@@ -12,6 +12,7 @@
                     DataContext="{Binding Collection, Source={StaticResource Locator}}"
                     Header="recent"
                     mc:Ignorable="d">
+    
     <phone:PanoramaItem.Resources>
         <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
         
