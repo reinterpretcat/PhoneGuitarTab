@@ -7,5 +7,5 @@ using System.Resources;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("3.3.0.*")]
+[assembly: AssemblyVersion("4.0.0.*")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
