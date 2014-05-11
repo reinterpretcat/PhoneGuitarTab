@@ -1,18 +1,17 @@
-﻿namespace PhoneGuitarTab.Core.Dependencies
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using PhoneGuitarTab.Core.Utilities;
+
+namespace PhoneGuitarTab.Core.Dependencies
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
-
-    using PhoneGuitarTab.Core.Utilities;
-
     internal static class TypeHelper
     {
         public static ConstructorInfo GetConstructor(Type type, object[] cstorArgs)
         {
             var constructor = type.GetConstructor(cstorArgs.Select(a => a.GetType()).ToArray());
             Guard.IsNotNull(constructor, "constructor",
-                     String.Format("Unable to find appropriate constructor of type: {0}", type));
+                String.Format("Unable to find appropriate constructor of type: {0}", type));
             return constructor;
         }
 
@@ -20,7 +19,7 @@
         {
             var constructor = type.GetConstructor(cstorSignature);
             Guard.IsNotNull(constructor, "constructor",
-                                 String.Format("Unable to find appropriate constructor of type: {0}", type));
+                String.Format("Unable to find appropriate constructor of type: {0}", type));
             return constructor;
         }
 
@@ -29,7 +28,7 @@
             if (type.GetConstructors().Any(c => c.GetCustomAttributes(attribute, true).Any()))
 
                 return type.GetConstructors().Single(
-                    c => c.GetCustomAttributes(typeof(DependencyAttribute), true).Any());
+                    c => c.GetCustomAttributes(typeof (DependencyAttribute), true).Any());
             return null;
         }
 
@@ -43,10 +42,11 @@
                     var parameters = methodInfo.GetParameters();
                     if (signParameters.Length == parameters.Length)
                     {
-                        var found = !signParameters.Where((t, i) => t.ParameterType != parameters[i].ParameterType).Any();
+                        var found =
+                            !signParameters.Where((t, i) => t.ParameterType != parameters[i].ParameterType).Any();
                         if (found)
                         {
-                            if(methodInfo.IsGenericMethod)
+                            if (methodInfo.IsGenericMethod)
                                 return GetGenericMethod(methodInfo, genericTypes);
                             return methodInfo;
                         }
@@ -61,6 +61,5 @@
         {
             return method.MakeGenericMethod(genericTypes);
         }
-
     }
 }

@@ -1,8 +1,7 @@
-﻿
+﻿using System;
+
 namespace PhoneGuitarTab.Core.Diagnostic
 {
-    using System;
-
     public sealed class TraceRecord
     {
         public TraceCategory Category { get; set; }

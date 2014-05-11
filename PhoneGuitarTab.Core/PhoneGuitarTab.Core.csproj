@@ -158,7 +158,6 @@
     <Reference Include="System.Windows.Interactivity, Version=3.9.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Fonts\LiveSymbol.ttf" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

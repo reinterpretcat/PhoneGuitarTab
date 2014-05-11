@@ -11,7 +11,7 @@ namespace PhoneGuitarTab.Core.Services
         Task<OperationStatus> CreateDirectory(string relativePath);
         Task<IEnumerable<string>> GetDirectoryNames(string relativePath);
         Task<IEnumerable<string>> GetFileNames(string relativePath);
-       
+
         Task<OperationStatus> UploadFile(string localPath, string cloudPath);
         Task<OperationStatus> DownloadFile(string localPath, string cloudPath);
 
@@ -22,6 +22,7 @@ namespace PhoneGuitarTab.Core.Services
 
     public enum OperationStatus
     {
-        Completed, Failed
+        Completed,
+        Failed
     }
 }

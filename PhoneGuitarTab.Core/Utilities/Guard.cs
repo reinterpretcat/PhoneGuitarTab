@@ -19,7 +19,8 @@ namespace PhoneGuitarTab.Core.Utilities
         public static void IsAssignableFrom(Type baseType, Type targetType)
         {
             if (!baseType.IsAssignableFrom(targetType))
-                throw new InvalidOperationException(String.Format("{0} cannot be assigned from {1}", targetType, baseType));
+                throw new InvalidOperationException(String.Format("{0} cannot be assigned from {1}", targetType,
+                    baseType));
         }
     }
 }

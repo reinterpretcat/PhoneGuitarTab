@@ -1,28 +1,27 @@
-﻿
+﻿using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interactivity;
+
 namespace PhoneCore.Framework.Views.Commands
 {
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Interactivity;
-
     /// <summary>
-    /// Interactivity command trigger
+    ///     Interactivity command trigger
     /// </summary>
     public class ExecuteCommandAction : TriggerAction<DependencyObject>
     {
         #region Properties
 
         #region Command
+
         public ICommand Command
         {
-            get { return (ICommand)base.GetValue(CommandProperty); }
+            get { return (ICommand) base.GetValue(CommandProperty); }
             set { base.SetValue(CommandProperty, value); }
         }
 
         public static ICommand GetCommand(DependencyObject obj)
         {
-
-            return (ICommand)obj.GetValue(CommandProperty);
+            return (ICommand) obj.GetValue(CommandProperty);
         }
 
         public static void SetCommand(DependencyObject obj, ICommand value)
@@ -31,7 +30,7 @@ namespace PhoneCore.Framework.Views.Commands
         }
 
         public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(ExecuteCommandAction), null);
+            DependencyProperty.Register("Command", typeof (ICommand), typeof (ExecuteCommandAction), null);
 
         #endregion
 
@@ -54,13 +53,12 @@ namespace PhoneCore.Framework.Views.Commands
         }
 
         public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(object), typeof(ExecuteCommandAction), null);
+            DependencyProperty.Register("CommandParameter", typeof (object), typeof (ExecuteCommandAction), null);
 
         #endregion
 
         #endregion Properties
 
-        
         protected override void Invoke(object parameter)
         {
             ICommand command = Command ?? GetCommand(AssociatedObject);

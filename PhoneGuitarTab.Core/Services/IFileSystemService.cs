@@ -6,7 +6,6 @@ namespace PhoneGuitarTab.Core.Services
 {
     public interface IFileSystemService
     {
-
         IEnumerable<string> GetFileNames(string searchPattern = null);
         IEnumerable<string> GetDirectoryNames(string searchPattern = null);
 

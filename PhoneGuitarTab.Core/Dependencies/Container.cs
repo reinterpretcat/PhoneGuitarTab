@@ -8,16 +8,17 @@ using PhoneGuitarTab.Core.Dependencies.Lifetime;
 namespace PhoneGuitarTab.Core.Dependencies
 {
     /// <summary>
-    /// Represents dependency injection container
+    ///     Represents dependency injection container
     /// </summary>
     public sealed class Container : IContainer
     {
         //TODO use specific type here
-        private readonly Dictionary<Primitives.Tuple<string, Type>, ILifetimeManager> _typeMapping = new Dictionary<Primitives.Tuple<string, Type>, ILifetimeManager>();
+        private readonly Dictionary<Primitives.Tuple<string, Type>, ILifetimeManager> _typeMapping =
+            new Dictionary<Primitives.Tuple<string, Type>, ILifetimeManager>();
 
         private readonly object[] _emptyArguments = new object[0];
         private readonly object _syncLock = new object();
-        private readonly Type _lifetimeManager = typeof(SingletonLifetimeManager);
+        private readonly Type _lifetimeManager = typeof (SingletonLifetimeManager);
         private readonly string _defaultKey = String.Empty;
 
         #region IContainer implementation
@@ -27,7 +28,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         public object Resolve(string name)
         {
             var key = _typeMapping.Keys.Single(t => t.Item1 == name);
-            return ResolveDependencies(ResolveLifetime( _typeMapping[key]).GetInstance(name));
+            return ResolveDependencies(ResolveLifetime(_typeMapping[key]).GetInstance(name));
         }
 
         public object Resolve(Type type)
@@ -41,7 +42,7 @@ namespace PhoneGuitarTab.Core.Dependencies
             {
                 //try to find value using full key
                 var key = new Primitives.Tuple<string, Type>(name, type);
-                if(_typeMapping.ContainsKey(key))
+                if (_typeMapping.ContainsKey(key))
                     return ResolveDependencies(ResolveLifetime(_typeMapping[key]).GetInstance());
 
                 //try to find using only type and delegate resolving of instance by name to LifetimeManager that
@@ -52,13 +53,14 @@ namespace PhoneGuitarTab.Core.Dependencies
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(String.Format("Unable to resolve type '{0}', name '{1}'", type, name), ex);
+                throw new InvalidOperationException(
+                    String.Format("Unable to resolve type '{0}', name '{1}'", type, name), ex);
             }
         }
 
         public IEnumerable<T> ResolveAll<T>()
         {
-            return ResolveAll(typeof (T)).Select(t => (T)t);
+            return ResolveAll(typeof (T)).Select(t => (T) t);
         }
 
         public IEnumerable<object> ResolveAll(Type type)
@@ -72,16 +74,18 @@ namespace PhoneGuitarTab.Core.Dependencies
         {
             //if cstor isn't provided, try to resolve one with dependency attribute
             if (lifetimeManager.Constructor == null && lifetimeManager.TargetType != null)
-                lifetimeManager.Constructor = TypeHelper.GetConstructor(lifetimeManager.TargetType, typeof (DependencyAttribute));
+                lifetimeManager.Constructor = TypeHelper.GetConstructor(lifetimeManager.TargetType,
+                    typeof (DependencyAttribute));
 
             //NOTE: resolve all parameters of provided constructor
             if (lifetimeManager.Constructor != null)
-                lifetimeManager.CstorArgs = lifetimeManager.Constructor.GetParameters().Select(p=> Resolve(p.ParameterType)).ToArray();
+                lifetimeManager.CstorArgs =
+                    lifetimeManager.Constructor.GetParameters().Select(p => Resolve(p.ParameterType)).ToArray();
             return lifetimeManager;
         }
 
         /// <summary>
-        /// Injects dependencies via property
+        ///     Injects dependencies via property
         /// </summary>
         private object ResolveDependencies(object instance)
         {
@@ -107,26 +111,27 @@ namespace PhoneGuitarTab.Core.Dependencies
 
             foreach (PropertyInfo property in properties.Distinct())
             {
-                foreach (DependencyAttribute attribute in property.GetCustomAttributes(typeof(DependencyAttribute), true))
+                foreach (
+                    DependencyAttribute attribute in property.GetCustomAttributes(typeof (DependencyAttribute), true))
                 {
                     var propertyType = property.PropertyType;
                     object value;
                     //special case
-                    if (propertyType == typeof(IContainer) || propertyType == typeof(Container))
+                    if (propertyType == typeof (IContainer) || propertyType == typeof (Container))
                         value = this;
                     else
                     {
                         //resolve type from container
                         var registeredName = attribute.Name;
-                        value = !String.IsNullOrEmpty(registeredName) ? 
-                            Resolve(propertyType, registeredName) : 
-                            Resolve(propertyType);
+                        value = !String.IsNullOrEmpty(registeredName)
+                            ? Resolve(propertyType, registeredName)
+                            : Resolve(propertyType);
                     }
                     //set value to target property
                     property.SetValue(instance, value, null);
-                   // objectType.InvokeMember(property.Name, BindingFlags.Public | BindingFlags.NonPublic | 
-                   //     BindingFlags.SetProperty | BindingFlags.Instance, 
-                   //     null, instance, new [] { value });
+                    // objectType.InvokeMember(property.Name, BindingFlags.Public | BindingFlags.NonPublic | 
+                    //     BindingFlags.SetProperty | BindingFlags.Instance, 
+                    //     null, instance, new [] { value });
                 }
             }
             return proxy ?? instance;
@@ -139,24 +144,24 @@ namespace PhoneGuitarTab.Core.Dependencies
 
         public T Resolve<T>(string name)
         {
-            return (T) Resolve(typeof(T), name);
+            return (T) Resolve(typeof (T), name);
         }
-
 
         #endregion
 
         #region Register component
 
         /// <summary>
-        /// Registers Component
+        ///     Registers Component
         /// </summary>
         public IContainer Register(Component component)
         {
-            var lifetimeManager =  component.LifetimeManager ?? Activator.CreateInstance(_lifetimeManager) as ILifetimeManager;
+            var lifetimeManager = component.LifetimeManager ??
+                                  Activator.CreateInstance(_lifetimeManager) as ILifetimeManager;
             lifetimeManager.Constructor = component.Constructor;
             return RegisterType(component.InterfaceType, component.TargetType, component.Name,
-                                lifetimeManager,
-                                component.Args ?? _emptyArguments);
+                lifetimeManager,
+                component.Args ?? _emptyArguments);
         }
 
         #endregion
@@ -164,7 +169,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         #region Register type
 
         /// <summary>
-        /// Registers type using name
+        ///     Registers type using name
         /// </summary>
         private IContainer RegisterType(Type t, Type c, string name, ILifetimeManager lifetimeManager, object[] args)
         {
@@ -181,20 +186,20 @@ namespace PhoneGuitarTab.Core.Dependencies
         #region Register instance
 
         /// <summary>
-        /// Registers existing instance of type T
+        ///     Registers existing instance of type T
         /// </summary>
         public IContainer RegisterInstance<T>(T instance)
         {
-            return RegisterInstance(typeof(T), instance);
+            return RegisterInstance(typeof (T), instance);
         }
 
         public IContainer RegisterInstance<T>(T instance, string name)
         {
-            return RegisterInstance(typeof(T), instance as object, name as string);
+            return RegisterInstance(typeof (T), instance, name);
         }
 
         /// <summary>
-        /// Registers existing instance of type t
+        ///     Registers existing instance of type t
         /// </summary>
         public IContainer RegisterInstance(Type t, object instance)
         {

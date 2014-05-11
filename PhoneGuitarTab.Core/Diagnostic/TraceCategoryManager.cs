@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using PhoneGuitarTab.Core.Dependencies.Lifetime;
 
 namespace PhoneGuitarTab.Core.Diagnostic
@@ -11,7 +10,7 @@ namespace PhoneGuitarTab.Core.Diagnostic
         private readonly object _lockInstance = new object();
 
         /// <summary>
-        /// Returns the instance of trace category
+        ///     Returns the instance of trace category
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -29,7 +28,7 @@ namespace PhoneGuitarTab.Core.Diagnostic
         }
 
         /// <summary>
-        /// Returns registred category names
+        ///     Returns registred category names
         /// </summary>
         public IEnumerable<string> GetRegistredCategoryNames
         {
@@ -42,10 +41,7 @@ namespace PhoneGuitarTab.Core.Diagnostic
 
         #region Implicit implementation of ILifetimeManager
 
-
-        object[] ILifetimeManager.CstorArgs
-
-        { get; set; }
+        object[] ILifetimeManager.CstorArgs { get; set; }
 
 
         object ILifetimeManager.GetInstance()
@@ -55,7 +51,7 @@ namespace PhoneGuitarTab.Core.Diagnostic
 
         object ILifetimeManager.GetInstance(string name)
         {
-            return this.GetInstance(name);
+            return GetInstance(name);
         }
 
         public System.Reflection.ConstructorInfo Constructor { get; set; }
@@ -70,7 +66,5 @@ namespace PhoneGuitarTab.Core.Diagnostic
         }
 
         #endregion
-
-
     }
 }

@@ -1,24 +1,19 @@
-﻿using System;
+﻿using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using System.Windows.Navigation;
 
 namespace PhoneGuitarTab.Core.Views
 {
-    using Microsoft.Phone.Controls;
-    using System.Text.RegularExpressions;
-    using System.Windows.Navigation;
-
     /// <summary>
-    /// PhoneApplicationPage with supporting of tombstoning
+    ///     PhoneApplicationPage with supporting of tombstoning
     /// </summary>
     public class ViewPage : PhoneApplicationPage
     {
         public bool _isNewPageInstance = false;
-       
+
         // Constructor
         public ViewPage()
         {
-            this._isNewPageInstance = true;
+            _isNewPageInstance = true;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -27,10 +22,9 @@ namespace PhoneGuitarTab.Core.Views
             // is no need to save state.
             if (e.NavigationMode != NavigationMode.Back)
             {
-                
-            // Save view model state in the page's State dictionary.
-            (this.DataContext as ViewModel).SaveStateTo(this.State);
-             }
+                // Save view model state in the page's State dictionary.
+                (DataContext as ViewModel).SaveStateTo(State);
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -41,10 +35,10 @@ namespace PhoneGuitarTab.Core.Views
             if (_isNewPageInstance)
             {
                 if (!e.IsNavigationInitiator)
-                this.State["TabUrl"] = e.Uri.OriginalString;
+                    State["TabUrl"] = e.Uri.OriginalString;
                 // restore page state
                 if (State.Count > 0)
-                    (this.DataContext as ViewModel).LoadStateFrom(this.State);
+                    (DataContext as ViewModel).LoadStateFrom(State);
             }
 
             // Set _isNewPageInstance to false. If the user navigates back to this page

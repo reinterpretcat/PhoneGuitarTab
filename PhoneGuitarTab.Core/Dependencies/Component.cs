@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using PhoneGuitarTab.Core.Utilities;
-using PhoneGuitarTab.Core.Dependencies.Lifetime;
 using PhoneGuitarTab.Core.Dependencies.Interception;
 using PhoneGuitarTab.Core.Dependencies.Interception.Behaviors;
 using PhoneGuitarTab.Core.Dependencies.Interception.Proxies;
-
+using PhoneGuitarTab.Core.Dependencies.Lifetime;
+using PhoneGuitarTab.Core.Utilities;
 
 namespace PhoneGuitarTab.Core.Dependencies
 {
     /// <summary>
-    /// Provides the way to 
+    ///     Provides the way to
     /// </summary>
     public sealed class Component
     {
         #region Internal properties used by Container
-        
+
         internal Type InterfaceType { get; private set; }
         internal Type TargetType { get; private set; }
         internal ILifetimeManager LifetimeManager { get; set; }
         internal object[] Args { get; private set; }
         internal ConstructorInfo Constructor { get; private set; }
         internal string Name { get; private set; }
-        internal List<IBehavior> Behaviors { get { return _behaviors; } }
+
+        internal List<IBehavior> Behaviors
+        {
+            get { return _behaviors; }
+        }
 
         #endregion
 
@@ -42,7 +45,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         }
 
         /// <summary>
-        /// true, if proxy type is defined
+        ///     true, if proxy type is defined
         /// </summary>
         internal bool CanCreateProxy
         {
@@ -52,28 +55,27 @@ namespace PhoneGuitarTab.Core.Dependencies
         #region Public instance methods in fluent and regular style
 
         /// <summary>
-        /// Adds behavior
+        ///     Adds behavior
         /// </summary>
         /// <param name="behavior"></param>
         /// <returns></returns>
         public Component AddBehavior(IBehavior behavior)
         {
-            if(!Behaviors.Any(b => b.Name == behavior.Name))
+            if (!Behaviors.Any(b => b.Name == behavior.Name))
                 Behaviors.Add(behavior);
             return this;
         }
 
         /// <summary>
-        /// Links component to usage of implementation by T
+        ///     Links component to usage of implementation by T
         /// </summary>
         public Component Use<T>(params object[] args)
         {
-
             return Use(typeof (T), args);
         }
 
         /// <summary>
-        /// Links component to usage of implementation by t
+        ///     Links component to usage of implementation by t
         /// </summary>
         /// <param name="t"></param>
         /// <param name="args">constructor args</param>
@@ -88,19 +90,19 @@ namespace PhoneGuitarTab.Core.Dependencies
         }
 
         /// <summary>
-        /// Links component to usage of implementation by t
+        ///     Links component to usage of implementation by t
         /// </summary>
         /// <param name="args">types of constructor args to resolve</param>
         public Component Use<T>(params Type[] args)
         {
-            return Use(typeof(T), args);
+            return Use(typeof (T), args);
         }
 
         /// <summary>
-        /// Links component to usage of implementation by t
+        ///     Links component to usage of implementation by t
         /// </summary>
         /// <param name="args">types of constructor args to resolve</param>
-        public Component Use(Type t, params  Type[] args)
+        public Component Use(Type t, params Type[] args)
         {
             Guard.IsAssignableFrom(InterfaceType, t);
             Guard.IsNull(Args, "Args", "Multiply Use call forbidden");
@@ -110,15 +112,15 @@ namespace PhoneGuitarTab.Core.Dependencies
         }
 
         /// <summary>
-        /// Empty args registration
+        ///     Empty args registration
         /// </summary>
         public Component Use<T>()
         {
-            return Use(typeof(T), new object[] { });
+            return Use(typeof (T), new object[] {});
         }
 
         /// <summary>
-        /// Stores component using name
+        ///     Stores component using name
         /// </summary>
         public Component Named(string name)
         {
@@ -127,15 +129,15 @@ namespace PhoneGuitarTab.Core.Dependencies
         }
 
         /// <summary>
-        /// Links component to usage of T proxy
+        ///     Links component to usage of T proxy
         /// </summary>
-        public Component Proxy<T>() where T:IProxy
+        public Component Proxy<T>() where T : IProxy
         {
             return Proxy(typeof (T));
         }
 
         /// <summary>
-        /// Links component to usage of T proxy
+        ///     Links component to usage of T proxy
         /// </summary>
         public Component Proxy(Type t)
         {
@@ -151,7 +153,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         #endregion
 
         /// <summary>
-        /// Entry point for component definition
+        ///     Entry point for component definition
         /// </summary>
         public static Component For<T>()
         {
@@ -159,7 +161,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         }
 
         /// <summary>
-        /// Entry point for component definition
+        ///     Entry point for component definition
         /// </summary>
         public static Component For(Type t)
         {
@@ -172,7 +174,7 @@ namespace PhoneGuitarTab.Core.Dependencies
         }
 
         /// <summary>
-        /// Creates proxy using component settings and default behaviors provided
+        ///     Creates proxy using component settings and default behaviors provided
         /// </summary>
         /// <param name="instance">wrapped instance</param>
         /// <param name="behaviors">default behaviors</param>

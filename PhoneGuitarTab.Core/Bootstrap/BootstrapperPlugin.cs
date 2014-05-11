@@ -1,12 +1,12 @@
-﻿namespace PhoneGuitarTab.Core.Bootstrap
-{
-    using PhoneGuitarTab.Core.Diagnostic;
-    using PhoneGuitarTab.Core.Dependencies;
+﻿using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Diagnostic;
 
+namespace PhoneGuitarTab.Core.Bootstrap
+{
     /// <summary>
-    /// Represents a bootstrapper plugin
+    ///     Represents a bootstrapper plugin
     /// </summary>
-    public abstract class BootstrapperPlugin: IBootstrapperPlugin
+    public abstract class BootstrapperPlugin : IBootstrapperPlugin
     {
         [Dependency]
         public IContainer Container { get; set; }

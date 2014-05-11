@@ -1,8 +1,7 @@
-﻿using System;
-namespace PhoneGuitarTab.Core.Primitives
+﻿namespace PhoneGuitarTab.Core.Primitives
 {
     /// <summary>
-    /// Tuple implementation
+    ///     Tuple implementation
     /// </summary>
     public struct Tuple<T1, T2>
     {
@@ -17,5 +16,5 @@ namespace PhoneGuitarTab.Core.Primitives
         }
 
         //TODO make IEquatable
-    } 
+    }
 }

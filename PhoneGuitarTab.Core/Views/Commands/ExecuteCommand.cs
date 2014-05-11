@@ -1,30 +1,31 @@
-﻿namespace PhoneGuitarTab.Core.Views.Commands
-{
-    using System;
-    using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
+namespace PhoneGuitarTab.Core.Views.Commands
+{
     /// <summary>
-    /// Interactivity command
+    ///     Interactivity command
     /// </summary>
-    public class ExecuteCommand: ICommand
+    public class ExecuteCommand : ICommand
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
+
         public ExecuteCommand(Action execute)
             : this(execute, null)
         {
         }
 
-        public ExecuteCommand(Action execute , Func<bool> canExecute)
+        public ExecuteCommand(Action execute, Func<bool> canExecute)
         {
-            this._execute = execute;
-            this._canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            if (this._canExecute != null)
-                return this._canExecute();
+            if (_canExecute != null)
+                return _canExecute();
             return true;
         }
 
@@ -32,7 +33,7 @@
 
         public void Execute(object parameter)
         {
-            this._execute();
+            _execute();
         }
     }
 }

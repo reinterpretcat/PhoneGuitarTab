@@ -5,37 +5,37 @@ using System.Windows.Navigation;
 namespace PhoneGuitarTab.Core.Services
 {
     /// <summary>
-    /// Represents navigation service
+    ///     Represents navigation service
     /// </summary>
     public interface INavigationService
     {
         /// <summary>
-        /// Navigating event
+        ///     Navigating event
         /// </summary>
         event NavigatingCancelEventHandler Navigating;
 
         /// <summary>
-        /// Navigates to uri
+        ///     Navigates to uri
         /// </summary>
         void NavigateTo(Uri pageUri);
 
         /// <summary>
-        /// Navigates to uri with parameters
+        ///     Navigates to uri with parameters
         /// </summary>
         void NavigateTo(Uri pageUri, Dictionary<string, object> parameters);
 
         /// <summary>
-        /// Navigates to page specified
+        ///     Navigates to page specified
         /// </summary>
         void NavigateTo(string name);
 
         /// <summary>
-        /// Navigates to page with parameters
+        ///     Navigates to page with parameters
         /// </summary>
         void NavigateTo(string name, Dictionary<string, object> parameters);
 
         /// <summary>
-        /// Goes back
+        ///     Goes back
         /// </summary>
         void GoBack();
     }

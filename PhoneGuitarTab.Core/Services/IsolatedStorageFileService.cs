@@ -5,7 +5,7 @@ using System.IO.IsolatedStorage;
 
 namespace PhoneGuitarTab.Core.Services
 {
-    public class IsolatedStorageFileService: IFileSystemService
+    public class IsolatedStorageFileService : IFileSystemService
     {
         private static IsolatedStorageFile _store;
 
@@ -16,16 +16,16 @@ namespace PhoneGuitarTab.Core.Services
 
         public IEnumerable<string> GetFileNames(string searchPattern = null)
         {
-            return searchPattern == null?
-                _store.GetFileNames() :
-                _store.GetFileNames(searchPattern);
+            return searchPattern == null
+                ? _store.GetFileNames()
+                : _store.GetFileNames(searchPattern);
         }
 
         public IEnumerable<string> GetDirectoryNames(string searchPattern = null)
         {
-            return searchPattern == null ?
-                _store.GetDirectoryNames() :
-                _store.GetDirectoryNames(searchPattern);
+            return searchPattern == null
+                ? _store.GetDirectoryNames()
+                : _store.GetDirectoryNames(searchPattern);
         }
 
         public Stream OpenFile(string path, FileMode mode)

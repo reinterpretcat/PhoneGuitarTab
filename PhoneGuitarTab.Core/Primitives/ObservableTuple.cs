@@ -1,12 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace PhoneGuitarTab.Core.Primitives
 {
-    public class ObservableTuple<T1, T2>: INotifyPropertyChanged
+    public class ObservableTuple<T1, T2> : INotifyPropertyChanged
     {
         private T1 item1;
-
 
         public ObservableTuple(T1 item1, T2 item2)
         {
@@ -15,20 +13,17 @@ namespace PhoneGuitarTab.Core.Primitives
         }
 
 
-        public T1 Item1 
+        public T1 Item1
         {
-            get
-            {
-                return item1;
-            }
+            get { return item1; }
             set
             {
                 item1 = value;
                 RaisePropertyChanged("Item1");
             }
         }
-        public T2 Item2 { get; set; }
 
+        public T2 Item2 { get; set; }
 
         #region INotifyPropertyChanged members
 
@@ -41,5 +36,5 @@ namespace PhoneGuitarTab.Core.Primitives
         }
 
         #endregion INotifyPropertyChanged members
-    } 
+    }
 }

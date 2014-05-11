@@ -1,4 +1,5 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
+
 using System;
 using System.Text;
 
@@ -13,7 +14,7 @@ using System.Text;
 namespace PhoneGuitarTab.Core.Cryptography
 {
     // Simple struct for the (a,b,c,d) which is used to compute the mesage digest.    
-    struct ABCDStruct
+    internal struct ABCDStruct
     {
         public uint A;
         public uint B;
@@ -24,14 +25,17 @@ namespace PhoneGuitarTab.Core.Cryptography
     public sealed class MD5Core
     {
         //Prevent CSC from adding a default public constructor
-        private MD5Core() { }
+        private MD5Core()
+        {
+        }
 
         public static byte[] GetHash(string input, Encoding encoding)
         {
             if (null == input)
                 throw new ArgumentNullException("input", "Unable to calculate hash over null input data");
             if (null == encoding)
-                throw new ArgumentNullException("encoding", "Unable to calculate hash over a string without a default encoding. Consider using the GetHash(string) overload to use UTF8 Encoding");
+                throw new ArgumentNullException("encoding",
+                    "Unable to calculate hash over a string without a default encoding. Consider using the GetHash(string) overload to use UTF8 Encoding");
 
             byte[] target = encoding.GetBytes(input);
 
@@ -59,7 +63,8 @@ namespace PhoneGuitarTab.Core.Cryptography
             if (null == input)
                 throw new ArgumentNullException("input", "Unable to calculate hash over null input data");
             if (null == encoding)
-                throw new ArgumentNullException("encoding", "Unable to calculate hash over a string without a default encoding. Consider using the GetHashString(string) overload to use UTF8 Encoding");
+                throw new ArgumentNullException("encoding",
+                    "Unable to calculate hash over a string without a default encoding. Consider using the GetHashString(string) overload to use UTF8 Encoding");
 
             byte[] target = encoding.GetBytes(input);
 
@@ -91,7 +96,7 @@ namespace PhoneGuitarTab.Core.Cryptography
                 startIndex += 64;
             }
             // The final data block. 
-            return MD5Core.GetHashFinalBlock(input, startIndex, input.Length - startIndex, abcd, (Int64)input.Length * 8);
+            return MD5Core.GetHashFinalBlock(input, startIndex, input.Length - startIndex, abcd, (Int64) input.Length*8);
         }
 
         internal static byte[] GetHashFinalBlock(byte[] input, int ibStart, int cbSize, ABCDStruct ABCD, Int64 len)
@@ -111,7 +116,7 @@ namespace PhoneGuitarTab.Core.Cryptography
                 Array.Copy(length, 0, working, 56, 8);
                 GetHashBlock(working, ref ABCD, 0);
             }
-            else  //We need an aditional chunk to store the length
+            else //We need an aditional chunk to store the length
             {
                 GetHashBlock(working, ref ABCD, 0);
                 //Create an entirely new chunk due to the 0-assigned trick mentioned above, to avoid an extra function call clearing the array
@@ -134,6 +139,7 @@ namespace PhoneGuitarTab.Core.Cryptography
         //    C = 0x98badcfe;
         //    D = 0x10325476;
         */
+
         internal static void GetHashBlock(byte[] input, ref ABCDStruct ABCDValue, int ibStart)
         {
             uint[] temp = Converter(input, ibStart);
@@ -214,7 +220,6 @@ namespace PhoneGuitarTab.Core.Cryptography
             ABCDValue.B = unchecked(b + ABCDValue.B);
             ABCDValue.C = unchecked(c + ABCDValue.C);
             ABCDValue.D = unchecked(d + ABCDValue.D);
-            return;
         }
 
         //Manually unrolling these equations nets us a 20% performance improvement
@@ -264,10 +269,10 @@ namespace PhoneGuitarTab.Core.Cryptography
 
             for (int i = 0; i < 16; i++)
             {
-                result[i] = (uint)input[ibStart + i * 4];
-                result[i] += (uint)input[ibStart + i * 4 + 1] << 8;
-                result[i] += (uint)input[ibStart + i * 4 + 2] << 16;
-                result[i] += (uint)input[ibStart + i * 4 + 3] << 24;
+                result[i] = input[ibStart + i*4];
+                result[i] += (uint) input[ibStart + i*4 + 1] << 8;
+                result[i] += (uint) input[ibStart + i*4 + 2] << 16;
+                result[i] += (uint) input[ibStart + i*4 + 3] << 24;
             }
 
             return result;

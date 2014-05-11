@@ -1,14 +1,12 @@
-﻿namespace PhoneGuitarTab.Core.Dependencies
+﻿using System;
+using System.Collections.Generic;
+
+namespace PhoneGuitarTab.Core.Dependencies
 {
-    using System;
-    using System.Collections.Generic;
-
-    using PhoneGuitarTab.Core.Dependencies.Lifetime;
-
     /// <summary>
-    ///  Represents dependency injection container behavior
-    ///  </summary>
-    public interface IContainer: IDisposable
+    ///     Represents dependency injection container behavior
+    /// </summary>
+    public interface IContainer : IDisposable
     {
         #region Resolve single instance
 

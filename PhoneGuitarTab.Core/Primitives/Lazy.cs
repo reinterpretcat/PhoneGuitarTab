@@ -14,24 +14,24 @@ namespace PhoneGuitarTab.Core.Primitives
         {
             get
             {
-                if (!this.IsValueCreated)
+                if (!IsValueCreated)
                 {
-                    lock (this._sync)
+                    lock (_sync)
                     {
-                        if (!this.IsValueCreated)
+                        if (!IsValueCreated)
                         {
-                            this._instance = this._getter();
-                            this.IsValueCreated = true;
+                            _instance = _getter();
+                            IsValueCreated = true;
                         }
                     }
                 }
-                return this._instance;
+                return _instance;
             }
         }
 
         public Lazy(Func<T> getter)
         {
-            this._getter = getter;
+            _getter = getter;
         }
     }
 }

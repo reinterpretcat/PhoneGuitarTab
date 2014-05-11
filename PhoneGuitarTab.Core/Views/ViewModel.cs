@@ -1,19 +1,17 @@
-﻿namespace PhoneGuitarTab.Core.Views
-{
-    using System.ComponentModel;
-    using System.Runtime.Serialization;
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.Serialization;
 
+namespace PhoneGuitarTab.Core.Views
+{
     [DataContract]
     public class ViewModel : INotifyPropertyChanged
     {
-        private Dictionary<string, object> _navigationParameters = null;
+        private Dictionary<string, object> _navigationParameters;
+
         public Dictionary<string, object> NavigationParameters
         {
-            get
-            {
-                return _navigationParameters;
-            }
+            get { return _navigationParameters; }
             set
             {
                 _navigationParameters = value;
@@ -26,24 +24,23 @@
         }
 
         /// <summary>
-        /// Saves view model state into dictionary
+        ///     Saves view model state into dictionary
         /// </summary>
         public virtual void SaveStateTo(IDictionary<string, object> state)
         {
-          
         }
 
         /// <summary>
-        /// Restores view model state from dictionary
+        ///     Restores view model state from dictionary
         /// </summary>
         public virtual void LoadStateFrom(IDictionary<string, object> state)
         {
-
         }
 
         #region INotifyPropertyChanged implementation
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void RaisePropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -52,6 +49,5 @@
         }
 
         #endregion
-
     }
 }
