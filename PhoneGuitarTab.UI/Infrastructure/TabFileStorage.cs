@@ -1,12 +1,10 @@
-﻿using PhoneGuitarTab.Core.Services;
+﻿using System;
+using System.IO;
+using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Services;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
-    using System;
-    using System.IO;
-
-    using PhoneGuitarTab.Core.Dependencies;
-
     public class TabFileStorage
     {
         [Dependency]
@@ -16,8 +14,8 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public virtual string CreateTabFilePath()
         {
-            if (!this.FileSystemService.DirectoryExists(TabDirectory))
-                this.FileSystemService.CreateDirectory(TabDirectory);
+            if (!FileSystemService.DirectoryExists(TabDirectory))
+                FileSystemService.CreateDirectory(TabDirectory);
 
             return String.Format("{0}\\{1}", TabDirectory, CreateTabFileName());
         }
@@ -29,9 +27,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public virtual Stream CreateTabFile(string filePath)
         {
-            return this.FileSystemService.OpenFile(filePath, FileMode.CreateNew);
+            return FileSystemService.OpenFile(filePath, FileMode.CreateNew);
         }
-
-
     }
 }

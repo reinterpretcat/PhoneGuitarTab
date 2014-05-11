@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using PhoneGuitarTab.Data;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace PhoneGuitarTab.UI.Entities
 {
@@ -14,6 +11,9 @@ namespace PhoneGuitarTab.UI.Entities
 
         public string Key { get; set; }
 
-        public bool HasItems { get { return Count > 0; } }
+        public bool HasItems
+        {
+            get { return Count > 0; }
+        }
     }
 }

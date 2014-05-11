@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using PhoneGuitarTab.Core.Dependencies;
-using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModels

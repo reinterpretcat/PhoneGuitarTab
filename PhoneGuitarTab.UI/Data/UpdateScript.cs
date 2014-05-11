@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using Microsoft.Phone.Data.Linq;
-using PhoneGuitarTab.Data;
 
 namespace PhoneGuitarTab.UI.Data
 {
     /// <summary>
-    /// Provides the way to update database schema and content to the latest version incrementally
+    ///     Provides the way to update database schema and content to the latest version incrementally
     /// </summary>
     public class UpdateScript
     {
@@ -48,18 +47,19 @@ namespace PhoneGuitarTab.UI.Data
             //Update table data - for updated db.
             UpdateRowsForVersion3_0();
             _dbService.SubmitChanges();
-
         }
 
         #region Release 1.1
+
         private void CheckAndUpdateToVersion1_1(DatabaseSchemaUpdater dbUpdater)
         {
             if (!_dbService.TabTypes.Any(type => type.Name == "chords"))
-                _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "chords", ImageUrl = "/Images/instrument/Chords" });
+                _dbService.TabTypes.InsertOnSubmit(new TabType {Name = "chords", ImageUrl = "/Images/instrument/Chords"});
 
             if (!_dbService.TabTypes.Any(type => type.Name == "drums"))
-                _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = "drums", ImageUrl = "/Images/instrument/Drums" });
+                _dbService.TabTypes.InsertOnSubmit(new TabType {Name = "drums", ImageUrl = "/Images/instrument/Drums"});
         }
+
         #endregion
 
         #region Release 2.0
@@ -68,7 +68,11 @@ namespace PhoneGuitarTab.UI.Data
         {
             // Release 2.0
             if (!_dbService.TabTypes.Any(type => type.Name == Strings.GuitarPro))
-                _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro" });
+                _dbService.TabTypes.InsertOnSubmit(new TabType
+                {
+                    Name = Strings.GuitarPro,
+                    ImageUrl = "/Images/instrument/Guitarpro"
+                });
         }
 
         #endregion
@@ -95,7 +99,11 @@ namespace PhoneGuitarTab.UI.Data
             if (_dbService.TabTypes.Any(type => type.ImageUrl == "/Images/instrument/Electric-Guitar"))
                 return;
 
-            _dbService.TabTypes.InsertOnSubmit(new TabType() { Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML" });
+            _dbService.TabTypes.InsertOnSubmit(new TabType
+            {
+                Name = Strings.MusicXml,
+                ImageUrl = "/Images/instrument/MusicXML"
+            });
 
             //update the tab type image urls.
             _dbService.TabTypes.Single(tt => tt.Name == "tab").ImageUrl = "/Images/instrument/Electric-Guitar";

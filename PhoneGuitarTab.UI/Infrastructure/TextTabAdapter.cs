@@ -4,7 +4,7 @@ using System.IO;
 namespace PhoneGuitarTab.UI.Infrastructure
 {
     /// <summary>
-    /// Adapts text file to browser view. In general, it means avoiding of incorrect line breaks
+    ///     Adapts text file to browser view. In general, it means avoiding of incorrect line breaks
     /// </summary>
     public class TextTabAdapter
     {
@@ -13,7 +13,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (!IsNeedToAdapt(content)) return content;
 
             var writer = new StringWriter();
-            var lines = content.Split(new [] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = content.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
             writer.WriteLine("<pre>");
 
             foreach (var line in lines)
@@ -28,6 +28,5 @@ namespace PhoneGuitarTab.UI.Infrastructure
         {
             return !content.StartsWith("<pre>");
         }
-
     }
 }

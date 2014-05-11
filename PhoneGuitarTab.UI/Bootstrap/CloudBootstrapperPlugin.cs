@@ -6,17 +6,20 @@ using PhoneGuitarTab.UI.Infrastructure;
 namespace PhoneGuitarTab.UI.Bootstrap
 {
     /// <summary>
-    /// Handles cloud-related functionallity
+    ///     Handles cloud-related functionallity
     /// </summary>
-    public class CloudBootstrapperPlugin: IBootstrapperPlugin
+    public class CloudBootstrapperPlugin : IBootstrapperPlugin
     {
-        private SkyDriveService.SkyDriveAppContext _context = new SkyDriveService.SkyDriveAppContext()
+        private readonly SkyDriveService.SkyDriveAppContext _context = new SkyDriveService.SkyDriveAppContext
         {
             AppFolder = "PhoneGuitarTab",
             ClientId = "000000004807241A"
         };
 
-        public string Name { get { return "Cloud"; } }
+        public string Name
+        {
+            get { return "Cloud"; }
+        }
 
         [Dependency]
         private IContainer Container { get; set; }
@@ -25,10 +28,10 @@ namespace PhoneGuitarTab.UI.Bootstrap
         {
             // NOTE missing functionality for injecting of primitive types in DI container
             // so use and register artificial context type
-            Container.RegisterInstance<SkyDriveService.SkyDriveAppContext>(_context);
+            Container.RegisterInstance(_context);
             Container.Register(Component.For<ICloudService>().Use<SkyDriveService>().Singleton());
             Container.Register(Component.For<TabSyncService>().Use<TabSyncService>().Singleton());
-            
+
             return true;
         }
 

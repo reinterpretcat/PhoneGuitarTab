@@ -6,19 +6,19 @@ using System.Windows;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
-using PhoneGuitarTab.Data;
-using Group = PhoneGuitarTab.Data.Group;
+using PhoneGuitarTab.UI.Data;
+using Group = PhoneGuitarTab.UI.Data.Group;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
     /// <summary>
-    /// Synchronizes tab collection with cloud storage.
+    ///     Synchronizes tab collection with cloud storage.
     /// </summary>
     public class TabSyncService
     {
         [Dependency]
         private ICloudService CloudService { get; set; }
-        
+
         [Dependency]
         private IDataContextService DataService { get; set; }
 
@@ -32,17 +32,15 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public bool DownloadSyncFiles { get; set; }
 
-        private Regex _syncSignatureRegex;
+        private readonly Regex _syncSignatureRegex;
 
-        private TraceCategory _traceCategory;
+        private readonly TraceCategory _traceCategory;
 
         private int _progressValue;
+
         private int ProgressValue
         {
-            get
-            {
-                return _progressValue;
-            }
+            get { return _progressValue; }
             set
             {
                 _progressValue = value;
@@ -54,10 +52,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public int Uploaded
         {
-            get
-            {
-                return _uploaded;
-            }
+            get { return _uploaded; }
             set
             {
                 _uploaded = value;
@@ -66,19 +61,16 @@ namespace PhoneGuitarTab.UI.Infrastructure
         }
 
         private int _downloaded;
+
         public int Downloaded
         {
-            get
-            {
-                return _downloaded;
-            }
+            get { return _downloaded; }
             set
             {
                 _downloaded = value;
                 OnProgress(_progressValue);
             }
         }
-
 
 
         private const string CloudRootPath = "PhoneGuitarTab";
@@ -128,17 +120,17 @@ namespace PhoneGuitarTab.UI.Infrastructure
         }
 
         /// <summary>
-        /// Tracks sync progress
+        ///     Tracks sync progress
         /// </summary>
         public event EventHandler<int> Progress;
 
         /// <summary>
-        /// Provides information about current action
+        ///     Provides information about current action
         /// </summary>
         public event EventHandler<IProgressMessage> ProgressMessage;
 
         /// <summary>
-        /// Raised when sync is completed
+        ///     Raised when sync is completed
         /// </summary>
         public event EventHandler Complete;
 
@@ -161,12 +153,13 @@ namespace PhoneGuitarTab.UI.Infrastructure
         }
 
         /// <summary>
-        /// Synchronization: Iso -> Cloud
+        ///     Synchronization: Iso -> Cloud
         /// </summary>
         private async Task IsoToCloudSync()
         {
             var groupsCount = DataService.Groups.Count();
-            var progressIncrement = HalfOfProgress / (groupsCount == 0 ? 1 : groupsCount); // just to prevent arithmetic error
+            var progressIncrement = HalfOfProgress/(groupsCount == 0 ? 1 : groupsCount);
+            // just to prevent arithmetic error
             foreach (var group in DataService.Groups)
             {
                 Trace.Info(_traceCategory, String.Format("synchronize group {0}", group.Name));
@@ -180,24 +173,23 @@ namespace PhoneGuitarTab.UI.Infrastructure
                         await CloudService.UploadFile(tab.Path, cloudName);
                         Uploaded++;
                     }
-
                 }
                 ProgressValue += progressIncrement;
             }
         }
 
         /// <summary>
-        /// Synchronization: Cloud -> Iso
+        ///     Synchronization: Cloud -> Iso
         /// </summary>
         private async Task CloudToIsoSync(bool downloadAll = false)
         {
             var groupNames = (await CloudService.GetDirectoryNames(CloudRootPath)).ToList();
             var groupsCount = groupNames.Count();
-            var progressIncrement = HalfOfProgress / (groupsCount == 0 ? 1 : groupsCount);
+            var progressIncrement = HalfOfProgress/(groupsCount == 0 ? 1 : groupsCount);
             foreach (var groupName in groupNames)
             {
                 Trace.Info(_traceCategory, String.Format("synchronize group {0}", groupName));
-               
+
                 var group = DataService.GetOrCreateGroupByName(groupName);
                 var localFileNamesMapped = group.Tabs.Select(GetCloudName);
                 var cloudFileNames = await CloudService.GetFileNames(String.Format("{0}/{1}", CloudRootPath, groupName));
@@ -209,12 +201,12 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 // NOTE it's possible that user reinstalled application, but had already synchronized files
                 // just handle this situation using special option
                 var deletedTabs = newTabs.Where(t => !downloadAll & IsMappedPath(t)).ToList();
-                
+
                 //if (!DownloadSyncFiles)
                 newTabs = newTabs.Except(deletedTabs).ToList();
 
                 // filter cloud synchronized files without _sync_
-                newTabs = newTabs.Where( name => !IsCloudName(name, group)).ToList();
+                newTabs = newTabs.Where(name => !IsCloudName(name, group)).ToList();
 
                 // all these tabs should be downloaded from skydrive to iso
                 foreach (var newTab in newTabs)
@@ -222,7 +214,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
                     Trace.Info(_traceCategory, String.Format("synchronize tab {0}", newTab));
                     var localName = TabFileStorage.CreateTabFilePath();
                     OnProgressMessage(new DownloadProgressMessage(groupName, newTab));
-                    await CloudService.DownloadFile(localName, string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
+                    await
+                        CloudService.DownloadFile(localName,
+                            string.Format("{0}/{1}/{2}", CloudRootPath, groupName, newTab));
                     DataService.InsertTab(GetTab(newTab, localName, group));
                     Downloaded++;
                 }
@@ -257,7 +251,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 name = name.Substring(0, index);
             }
 
-            var tab = new Tab()
+            var tab = new Tab
             {
                 Group = group,
                 TabType = GetTabTypeByName(cloudName),
@@ -273,11 +267,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
             // get tablature extension
             var extension = GetExtensionByType(tab.TabType);
 
-            return string.IsNullOrEmpty(tab.CloudName)?
-                // NOTE this signature should prevent name collisions
+            return string.IsNullOrEmpty(tab.CloudName)
+                ? // NOTE this signature should prevent name collisions
                 // and acts as marker of already synchronized tabs
-                String.Format("{0}/{1}/{2}_sync_{3}.{4}", CloudRootPath, tab.Group.Name, tab.Name, tab.Id, extension) : 
-                String.Format("{0}/{1}/{2}", CloudRootPath, tab.Group.Name, tab.CloudName);
+                String.Format("{0}/{1}/{2}_sync_{3}.{4}", CloudRootPath, tab.Group.Name, tab.Name, tab.Id, extension)
+                : String.Format("{0}/{1}/{2}", CloudRootPath, tab.Group.Name, tab.CloudName);
         }
 
         private string GetExtensionByType(TabType type)
@@ -298,7 +292,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (name.Contains(".gp"))
                 return DataService.TabTypes.Single(t => t.Name == Strings.GuitarPro);
 
-            if(name.Contains(".xml"))
+            if (name.Contains(".xml"))
                 return DataService.TabTypes.Single(t => t.Name == Strings.MusicXml);
 
             return DataService.TabTypes.Single(t => t.Name == "tab");
@@ -337,7 +331,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public class DownloadProgressMessage : TabProgressMessage
         {
-            public DownloadProgressMessage(string group, string tab) : base(group, tab, 0) { }
+            public DownloadProgressMessage(string group, string tab) : base(group, tab, 0)
+            {
+            }
 
             protected override string GetAction()
             {
@@ -347,7 +343,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public class UploadProgressMessage : TabProgressMessage
         {
-            public UploadProgressMessage(string group, string tab) : base(group, tab, 0) { }
+            public UploadProgressMessage(string group, string tab) : base(group, tab, 0)
+            {
+            }
 
             protected override string GetAction()
             {

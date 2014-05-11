@@ -1,23 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Phone.Shell;
-using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-   public static class TilesForTabs
+    public static class TilesForTabs
     {
-       private const string TileNavigationUrl = "/View/StartupView.xaml?";
+        private const string TileNavigationUrl = "/View/StartupView.xaml?";
 
         private static FlipTileData GetSecondaryTileData(Tab tab)
         {
-
             if (String.IsNullOrEmpty(tab.AlbumCoverImageUrl))
                 tab.AlbumCoverImageUrl = tab.Group.ImageUrl;
-           
-            FlipTileData tileData = new FlipTileData
+
+            var tileData = new FlipTileData
             {
                 Title = tab.Name,
                 BackgroundImage = new Uri(tab.AlbumCoverImageUrl, UriKind.RelativeOrAbsolute),
@@ -26,7 +23,7 @@ namespace PhoneGuitarTab.UI.Entities
                 BackBackgroundImage = new Uri(GetTabTypeTileImageUrl(tab.TabType.Name), UriKind.Relative),
                 BackContent = tab.Name
             };
-            
+
             return tileData;
         }
 
@@ -36,8 +33,7 @@ namespace PhoneGuitarTab.UI.Entities
                 tile => tile.NavigationUri.ToString().Contains(tileUri));
             if (shellTile == null)
                 return false;
-            else
-                return true;
+            return true;
         }
 
         private static string GetTabTypeTileImageUrl(string tabType)
@@ -60,27 +56,26 @@ namespace PhoneGuitarTab.UI.Entities
                 default:
                     return "/Images/instrument/default.png";
             }
-
-
-
         }
 
         public static void PinTabToStart(Tab tab)
         {
-            bool tileExists = FindTile(TileNavigationUrl + tab.Id.ToString());
+            bool tileExists = FindTile(TileNavigationUrl + tab.Id);
 
             if (!tileExists)
             {
                 StandardTileData tileData = GetSecondaryTileData(tab);
-                ShellTile.Create(new Uri(TileNavigationUrl + tab.Id.ToString(), UriKind.Relative), tileData, false);
-            }        
+                ShellTile.Create(new Uri(TileNavigationUrl + tab.Id, UriKind.Relative), tileData, false);
+            }
         }
 
         public static void RemoveTabFromStart(Tab tab)
         {
-            ShellTile TileToDelete = ShellTile.ActiveTiles.FirstOrDefault(x => x.NavigationUri.ToString().Contains(TileNavigationUrl + tab.Id.ToString()));
-        if (!(TileToDelete == null))
-            TileToDelete.Delete();
+            ShellTile TileToDelete =
+                ShellTile.ActiveTiles.FirstOrDefault(
+                    x => x.NavigationUri.ToString().Contains(TileNavigationUrl + tab.Id.ToString()));
+            if (!(TileToDelete == null))
+                TileToDelete.Delete();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Windows;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Primitives;
 using PhoneGuitarTab.Core.Views.Commands;
-using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 

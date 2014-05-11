@@ -10,7 +10,7 @@ using Moq;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
-using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UnitTests.Cloud

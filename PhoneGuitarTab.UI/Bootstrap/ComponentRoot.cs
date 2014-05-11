@@ -2,19 +2,18 @@
 using System.Linq;
 using PhoneGuitarTab.Core.Bootstrap;
 using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Views;
 using PhoneGuitarTab.UI.ViewModels;
 
 namespace PhoneGuitarTab.UI.Bootstrap
 {
-    using PhoneGuitarTab.Core.Views;
-
     /// <summary>
-    /// Represents an application bootstrapper.
-    /// NOTE I prefer here "Code over Configuration" approach
+    ///     Represents an application bootstrapper.
+    ///     NOTE I prefer here "Code over Configuration" approach
     /// </summary>
     public class ComponentRoot
     {
-        private IContainer _container;
+        private readonly IContainer _container;
 
         public ComponentRoot()
         {
@@ -40,97 +39,72 @@ namespace PhoneGuitarTab.UI.Bootstrap
         #region View models
 
         /// <summary>
-        /// Gets the Main property which defines the main viewmodel.
+        ///     Gets the Main property which defines the main viewmodel.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
         public StartupViewModel Startup
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.Startup) as StartupViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.Startup) as StartupViewModel; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-          "CA1822:MarkMembersAsStatic",
-          Justification = "This non-static member is needed for data binding purposes.")]
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
         public GroupViewModel Group
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.Group) as GroupViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.Group) as GroupViewModel; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-          "CA1822:MarkMembersAsStatic",
-          Justification = "This non-static member is needed for data binding purposes.")]
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
         public SearchViewModel Search
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.Search) as SearchViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.Search) as SearchViewModel; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-          "CA1822:MarkMembersAsStatic",
-          Justification = "This non-static member is needed for data binding purposes.")]
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
         public TextTabViewModel TextTab
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.TextTab) as TextTabViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.TextTab) as TextTabViewModel; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-          "CA1822:MarkMembersAsStatic",
-          Justification = "This non-static member is needed for data binding purposes.")]
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
         public AboutViewModel About
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.About) as AboutViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.About) as AboutViewModel; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-          "CA1822:MarkMembersAsStatic",
-          Justification = "This non-static member is needed for data binding purposes.")]
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
         public CollectionViewModel Collection
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.Collection) as CollectionViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.Collection) as CollectionViewModel; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-         "CA1822:MarkMembersAsStatic",
-         Justification = "This non-static member is needed for data binding purposes.")]
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
         public StaveTabViewModel StaveTab
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.StaveTab) as StaveTabViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.StaveTab) as StaveTabViewModel; }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-        "CA1822:MarkMembersAsStatic",
-        Justification = "This non-static member is needed for data binding purposes.")]
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
         public SynchronizeViewModel Synchronize
         {
-            get
-            {
-                return _container.Resolve<ViewModel>(Strings.Synchronize) as SynchronizeViewModel;
-            }
+            get { return _container.Resolve<ViewModel>(Strings.Synchronize) as SynchronizeViewModel; }
         }
 
         #endregion View models
-      
     }
 }

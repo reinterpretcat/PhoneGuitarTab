@@ -1,17 +1,14 @@
-﻿using PhoneGuitarTab.Core;
-using PhoneGuitarTab.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using PhoneGuitarTab.Core.Primitives;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    using PhoneGuitarTab.Core.Dependencies;
-    using PhoneGuitarTab.Core.Primitives;
-
     public class BandByName : List<BandInGroup>
     {
-        private static readonly string Groups = "#abcdefghijklmnopqrstuvwxyz";
-        private Dictionary<string, BandInGroup> bandGroupsDictionary;
+        private const string Groups = "#abcdefghijklmnopqrstuvwxyz";
+        private readonly Dictionary<string, BandInGroup> _bandGroupsDictionary;
 
         private IDataContextService Database { get; set; }
 
@@ -20,25 +17,24 @@ namespace PhoneGuitarTab.UI.Entities
             Database = database;
 
             var allGroups = (from Group g in Database.Groups
-                             orderby g.Name
-                             select g).ToList();
+                orderby g.Name
+                select g).ToList();
 
-            bandGroupsDictionary = new Dictionary<string, BandInGroup>();
-            CreateEmptyGroups(bandGroupsDictionary);
+            _bandGroupsDictionary = new Dictionary<string, BandInGroup>();
+            CreateEmptyGroups(_bandGroupsDictionary);
 
-           
+
             foreach (Group bandGroup in allGroups)
             {
                 //get count of tab for this group
                 var count = (from Tab t in Database.Tabs
-                             where t.Group.Id == bandGroup.Id
-                            select t).Count();
+                    where t.Group.Id == bandGroup.Id
+                    select t).Count();
 
-                bandGroupsDictionary[bandGroup.GetNameKey()].Add(new ObservableTuple<int, Group>
-                                               (count, bandGroup));
+                _bandGroupsDictionary[bandGroup.GetNameKey()].Add(new ObservableTuple<int, Group>
+                    (count, bandGroup));
             }
         }
-
 
         internal void DecreaseTabCount(string groupName)
         {
@@ -47,17 +43,16 @@ namespace PhoneGuitarTab.UI.Entities
 
             var firstChar = groupName.ToLower()[0];
             var groupKey = ((firstChar < 'a' || firstChar > 'z') ? '#' : firstChar);
-            var band = bandGroupsDictionary[groupKey.ToString()].Where(g => g.Item2.Name == groupName).FirstOrDefault();
+            var band = _bandGroupsDictionary[groupKey.ToString()].Where(g => g.Item2.Name == groupName).FirstOrDefault();
 
             if (band != null)
             {
                 var tabCount = band.Item1 - 1;
                 band.Item1 = tabCount;
                 if (tabCount == 0)
-                    bandGroupsDictionary[groupKey.ToString()].Remove(band);
+                    _bandGroupsDictionary[groupKey.ToString()].Remove(band);
             }
         }
-
 
         #region Helper methods
 
@@ -66,7 +61,7 @@ namespace PhoneGuitarTab.UI.Entities
             foreach (char c in Groups)
             {
                 BandInGroup group = new BandInGroup(c.ToString());
-                this.Add(group);
+                Add(group);
                 bandGroupsDictionary[c.ToString()] = group;
             }
         }

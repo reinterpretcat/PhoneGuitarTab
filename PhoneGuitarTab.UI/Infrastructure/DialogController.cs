@@ -1,15 +1,12 @@
-﻿
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
+using Coding4Fun.Toolkit.Controls;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
-    using System;
-    using System.Windows;
-
-    using Coding4Fun.Toolkit.Controls;
-
     /// <summary>
-    /// Incapsulates underlying dialog API
+    ///     Incapsulates underlying dialog API
     /// </summary>
     public interface IDialogController
     {
@@ -19,7 +16,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
     }
 
     /// <summary>
-    /// Contains typical event handlers for dialog
+    ///     Contains typical event handlers for dialog
     /// </summary>
     public class DialogActionContainer
     {
@@ -36,11 +33,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
     }
 
     /// <summary>
-    /// Uses  built-in MessageBox to display messages
+    ///     Uses  built-in MessageBox to display messages
     /// </summary>
     public class DefaultDialogController : IDialogController
     {
-
         public void Show(string message)
         {
             MessageBox.Show(message);
@@ -58,11 +54,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
     }
 
     /// <summary>
-    /// Uses toast control for better UX
+    ///     Uses toast control for better UX
     /// </summary>
     public class ToastDialogController : IDialogController
     {
-
         public void Show(string message)
         {
             CreateToastPromt("", message).Show();
@@ -86,7 +81,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         private static ToastPrompt CreateToastPromt(string title, string message)
         {
-            return new ToastPrompt()
+            return new ToastPrompt
             {
                 Title = message,
                 Message = title,

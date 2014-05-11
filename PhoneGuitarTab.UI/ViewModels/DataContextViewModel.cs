@@ -3,7 +3,7 @@ using System.Windows;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Core.Views;
-using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModels

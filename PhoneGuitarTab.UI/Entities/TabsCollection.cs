@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    using PhoneGuitarTab.Core.Dependencies;
-    using PhoneGuitarTab.Data;
-
     public abstract class TabsGroupsCollection : ObservableCollection<TabInGroup>
     {
         #region Fields
@@ -27,7 +25,6 @@ namespace PhoneGuitarTab.UI.Entities
         public ObservableCollection<TabEntity> Tabs { get; set; }
 
         #endregion Properties
-
 
         #region Public methods
 
@@ -52,16 +49,15 @@ namespace PhoneGuitarTab.UI.Entities
 
         #endregion Public methods
 
-
         #region Helper methods
 
-        protected void Initialize() 
+        protected void Initialize()
         {
             groups = new Dictionary<string, TabInGroup>();
             foreach (char c in Groups)
             {
                 TabInGroup tab = new TabInGroup(c.ToString());
-                this.Add(tab);
+                Add(tab);
                 groups[c.ToString()] = tab;
             }
 

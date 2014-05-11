@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PhoneGuitarTab.UI
+﻿namespace PhoneGuitarTab.UI
 {
     internal static class Strings
     {

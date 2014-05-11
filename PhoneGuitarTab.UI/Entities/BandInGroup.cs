@@ -1,11 +1,9 @@
-﻿using PhoneGuitarTab.Core;
-using PhoneGuitarTab.Data;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using PhoneGuitarTab.Core.Primitives;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-    using PhoneGuitarTab.Core.Primitives;
-
     public class BandInGroup : ObservableCollection<ObservableTuple<int, Group>>
     {
         public BandInGroup(string category)
@@ -15,6 +13,9 @@ namespace PhoneGuitarTab.UI.Entities
 
         public string Key { get; set; }
 
-        public bool HasItems { get { return Count > 0; } }
+        public bool HasItems
+        {
+            get { return Count > 0; }
+        }
     }
 }

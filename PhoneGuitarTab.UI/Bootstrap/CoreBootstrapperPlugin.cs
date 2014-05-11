@@ -1,16 +1,17 @@
-﻿using PhoneGuitarTab.Core.Services;
-using PhoneGuitarTab.UI.Data;
+﻿using PhoneGuitarTab.Core.Bootstrap;
+using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Diagnostic;
+using PhoneGuitarTab.Core.Services;
+using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.Bootstrap
 {
-    using PhoneGuitarTab.Core.Bootstrap;
-    using PhoneGuitarTab.Core.Dependencies;
-    using PhoneGuitarTab.Core.Diagnostic;
-    using PhoneGuitarTab.UI.Infrastructure;
-
     public class CoreBootstrapperPlugin : IBootstrapperPlugin
     {
-        public string Name { get { return "Core"; } }
+        public string Name
+        {
+            get { return "Core"; }
+        }
 
         [Dependency]
         private IContainer Container { get; set; }
@@ -18,7 +19,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
         public bool Run()
         {
             Container.Register(Component.For<ITrace>().Use<DefaultTrace>().Singleton());
-            Container.Register(Component.For<TraceCategory>().Use<TraceCategory>("Default").Singleton()); // TODO create several named categories
+            Container.Register(Component.For<TraceCategory>().Use<TraceCategory>("Default").Singleton());
+                // TODO create several named categories
 
             Container.Register(Component.For<IFileSystemService>().Use<IsolatedStorageFileService>().Singleton());
             Container.Register(Component.For<TabFileStorage>().Use<TabFileStorage>().Singleton());
@@ -28,7 +30,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
 
             Container.Register(Component.For<RatingService>().Use<RatingService>().Singleton());
             Container.Register(Component.For<IDialogController>().Use<ToastDialogController>().Singleton());
-            
+
             return true;
         }
 

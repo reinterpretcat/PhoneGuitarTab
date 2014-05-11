@@ -7,8 +7,8 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
-using PhoneGuitarTab.Data;
 using PhoneGuitarTab.Search.SoundCloud;
+using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 

@@ -4,21 +4,21 @@ using System.Windows;
 
 namespace PhoneGuitarTab.UI.Entities
 {
-
     public class TabEntity : INotifyPropertyChanged
     {
-      
         #region Fields
+
         //Flag to get theme [to set RelativeimageUri depending on the phone theme]
-        private bool dark = ((Visibility) Application.Current.Resources["PhoneDarkThemeVisibility"] ==
-                             Visibility.Visible);
-        private bool actionAreaVisible = false;
-        private bool isDownloaded = false;
+        private readonly bool dark = ((Visibility) Application.Current.Resources["PhoneDarkThemeVisibility"] ==
+                                      Visibility.Visible);
+
+        private bool actionAreaVisible;
+        private bool isDownloaded;
         private Uri relativeImageUri;
         private string imageUrl;
         private string albumCoverImageUrl;
-        #endregion Fields
 
+        #endregion Fields
 
         #region Properties
 
@@ -28,30 +28,37 @@ namespace PhoneGuitarTab.UI.Entities
         public string Type { get; set; }
         public string Rating { get; set; }
         public string Path { get; set; }
-        public string ImageUrl 
-        { get { return imageUrl; }
+
+        public string ImageUrl
+        {
+            get { return imageUrl; }
             set
-            {   this.OnImageUrlChanging(value);
+            {
+                OnImageUrlChanging(value);
                 imageUrl = value;
-            } 
+            }
         }
-        public Uri RelativeImageUri 
-        { 
+
+        public Uri RelativeImageUri
+        {
             get { return relativeImageUri; }
             set
             {
                 relativeImageUri = value;
                 RaisePropertyChanged("RelativeImageUri");
-            } 
+            }
         }
-        public string AlbumCoverImageUrl 
+
+        public string AlbumCoverImageUrl
         {
-            get { return this.albumCoverImageUrl; } 
-            set {
+            get { return albumCoverImageUrl; }
+            set
+            {
                 albumCoverImageUrl = value;
                 RaisePropertyChanged("AlbumCoverImageUrl");
-                }
+            }
         }
+
         public string Description { get; set; }
         public DateTime LastOpened { get; set; }
 
@@ -63,10 +70,7 @@ namespace PhoneGuitarTab.UI.Entities
 
         public bool ActionAreaVisible
         {
-            get
-            {
-                return actionAreaVisible;
-            }
+            get { return actionAreaVisible; }
             set
             {
                 actionAreaVisible = value;
@@ -76,12 +80,9 @@ namespace PhoneGuitarTab.UI.Entities
 
         public bool IsDownloaded
         {
-            get 
-            { 
-                return isDownloaded; 
-            }
-            set 
-            { 
+            get { return isDownloaded; }
+            set
+            {
                 isDownloaded = value;
                 RaisePropertyChanged("IsDownloaded");
                 RaisePropertyChanged("IsNotDownloaded");
@@ -90,14 +91,10 @@ namespace PhoneGuitarTab.UI.Entities
 
         public bool IsNotDownloaded
         {
-            get
-            {
-                return !isDownloaded;
-            }
+            get { return !isDownloaded; }
         }
 
         #endregion Properties
-
 
         #region INotifyPropertyChanged members
 
@@ -111,14 +108,14 @@ namespace PhoneGuitarTab.UI.Entities
 
         #endregion INotifyPropertyChanged members
 
-
         #region ExtensibilityMethods
+
         private void OnImageUrlChanging(string value)
         {
-            if (this.dark)
-            this.RelativeImageUri = new Uri(value + "_dark.png", UriKind.Relative);
+            if (dark)
+                RelativeImageUri = new Uri(value + "_dark.png", UriKind.Relative);
             else
-            this.relativeImageUri = new Uri(value + "_light.png", UriKind.Relative);
+                relativeImageUri = new Uri(value + "_light.png", UriKind.Relative);
         }
 
         #endregion

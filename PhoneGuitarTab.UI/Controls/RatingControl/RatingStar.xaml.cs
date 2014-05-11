@@ -13,29 +13,30 @@ namespace PhoneGuitarTab.UI.Controls
 
         // Using a DependencyProperty as the backing store for StarState.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StateProperty =
-            DependencyProperty.Register("State", typeof(StarState), typeof(RatingStar), new PropertyMetadata(StarState.Filled));
+            DependencyProperty.Register("State", typeof (StarState), typeof (RatingStar),
+                new PropertyMetadata(StarState.Filled));
 
         // Using a DependencyProperty as the backing store for Value.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(int), typeof(RatingStar), new PropertyMetadata(0));
+            DependencyProperty.Register("Value", typeof (int), typeof (RatingStar), new PropertyMetadata(0));
 
 
         public StarState State
         {
-            get { return (StarState)GetValue(StateProperty); }
+            get { return (StarState) GetValue(StateProperty); }
             set
             {
                 SetValue(StateProperty, value);
 
-                switch (this.State)
+                switch (State)
                 {
                     case StarState.Empty:
-                        this.PathEmpty.Visibility = System.Windows.Visibility.Visible;
-                        this.PathFilled.Visibility = System.Windows.Visibility.Collapsed;
+                        PathEmpty.Visibility = System.Windows.Visibility.Visible;
+                        PathFilled.Visibility = System.Windows.Visibility.Collapsed;
                         break;
                     case StarState.Filled:
-                        this.PathEmpty.Visibility = System.Windows.Visibility.Collapsed;
-                        this.PathFilled.Visibility = System.Windows.Visibility.Visible;
+                        PathEmpty.Visibility = System.Windows.Visibility.Collapsed;
+                        PathFilled.Visibility = System.Windows.Visibility.Visible;
                         break;
                 }
             }
@@ -43,7 +44,7 @@ namespace PhoneGuitarTab.UI.Controls
 
         public int Value
         {
-            get { return (int)GetValue(ValueProperty); }
+            get { return (int) GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
 

@@ -13,9 +13,9 @@ using System.Data.Linq.Mapping;
 using System.ComponentModel;
 using System;
 
-namespace PhoneGuitarTab.Data
+namespace PhoneGuitarTab.UI.Data
 {
-	[global::System.Data.Linq.Mapping.DatabaseAttribute()]
+	[Database()]
 	public partial class TabDataContext : DataContext
 	{
 		
@@ -65,7 +65,7 @@ namespace PhoneGuitarTab.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute()]
+	[Table()]
 	public partial class Group : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -117,7 +117,7 @@ namespace PhoneGuitarTab.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[Column(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -137,7 +137,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
+		[Column(Storage="_Name", DbType="NVarChar(100)")]
 		public virtual string Name
 		{
 			get
@@ -157,7 +157,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUrl", DbType="NVarChar(256)")]
+		[Column(Storage="_ImageUrl", DbType="NVarChar(256)")]
 		public string ImageUrl
 		{
 			get
@@ -177,7 +177,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_LargeImageUrl", DbType = "NVarChar(256)")]
+        [Column(Storage = "_LargeImageUrl", DbType = "NVarChar(256)")]
         public string LargeImageUrl
         {
             get
@@ -197,7 +197,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_ExtraLargeImageUrl", DbType = "NVarChar(256)")]
+        [Column(Storage = "_ExtraLargeImageUrl", DbType = "NVarChar(256)")]
         public string ExtraLargeImageUrl
         {
             get
@@ -217,7 +217,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Url", DbType = "NVarChar(256)")]
+        [Column(Storage = "_Url", DbType = "NVarChar(256)")]
         public string Url
         {
             get
@@ -237,7 +237,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BackgroundUrl", DbType="NVarChar(256)")]
+		[Column(Storage="_BackgroundUrl", DbType="NVarChar(256)")]
 		public string BackgroundUrl
 		{
 			get
@@ -257,7 +257,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Description", DbType = "NVarChar(2096)")]
+        [Column(Storage = "_Description", DbType = "NVarChar(2096)")]
         public string Description
         {
             get
@@ -277,7 +277,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Group", Storage="_Tabs", ThisKey="Id", OtherKey="GroupId", DeleteRule="CASCADE")]
+		[Association(Name="Tab_Group", Storage="_Tabs", ThisKey="Id", OtherKey="GroupId", DeleteRule="CASCADE")]
 		public virtual EntitySet<Tab> Tabs
 		{
 			get
@@ -323,7 +323,7 @@ namespace PhoneGuitarTab.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute()]
+	[Table()]
 	public partial class Tab : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -386,7 +386,7 @@ namespace PhoneGuitarTab.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[Column(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public virtual int Id
 		{
 			get
@@ -406,7 +406,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
+		[Column(Storage="_Name", DbType="NVarChar(100)")]
 		public virtual string Name
 		{
 			get
@@ -426,7 +426,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupId", DbType="Int NOT NULL")]
+		[Column(Storage="_GroupId", DbType="Int NOT NULL")]
 		public int GroupId
 		{
 			get
@@ -450,7 +450,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeTypeId", DbType="Int NOT NULL")]
+		[Column(Storage="_TypeTypeId", DbType="Int NOT NULL")]
 		public int TypeTypeId
 		{
 			get
@@ -474,7 +474,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rating", DbType="NVarChar(16)")]
+		[Column(Storage="_Rating", DbType="NVarChar(16)")]
 		public string Rating
 		{
 			get
@@ -494,7 +494,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="NVarChar(256)")]
+		[Column(Storage="_Path", DbType="NVarChar(256)")]
 		public virtual string Path
 		{
 			get
@@ -514,7 +514,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_cloudName", DbType = "NVarChar(256)")]
+        [Column(Storage = "_cloudName", DbType = "NVarChar(256)")]
         public virtual string CloudName
         {
             get
@@ -534,7 +534,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_AlbumCoverImageUrl", DbType = "NVarChar(256)")]
+        [Column(Storage = "_AlbumCoverImageUrl", DbType = "NVarChar(256)")]
         public string AlbumCoverImageUrl
         {
             get
@@ -554,7 +554,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_Description", DbType = "NVarChar(256)")]
+        [Column(Storage = "_Description", DbType = "NVarChar(256)")]
         public string Description
         {
             get
@@ -574,7 +574,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastOpened", DbType="DateTime")]
+		[Column(Storage="_LastOpened", DbType="DateTime")]
 		public Nullable<DateTime> LastOpened
 		{
 			get
@@ -594,7 +594,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Group", Storage="_Group", ThisKey="GroupId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true)]
+		[Association(Name="Tab_Group", Storage="_Group", ThisKey="GroupId", OtherKey="Id", IsForeignKey=true, DeleteOnNull=true)]
 		public virtual Group Group
 		{
 			get
@@ -628,7 +628,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Type", Storage="_TabType", ThisKey="TypeTypeId", OtherKey="Id", IsForeignKey=true)]
+		[Association(Name="Tab_Type", Storage="_TabType", ThisKey="TypeTypeId", OtherKey="Id", IsForeignKey=true)]
 		public virtual TabType TabType
 		{
 			get
@@ -683,7 +683,7 @@ namespace PhoneGuitarTab.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute()]
+	[Table()]
 	public partial class TabType : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
@@ -715,7 +715,7 @@ namespace PhoneGuitarTab.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[Column(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int Id
 		{
 			get
@@ -735,7 +735,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(100)")]
+		[Column(Storage="_Name", DbType="NVarChar(100)")]
 		public virtual string Name
 		{
 			get
@@ -755,7 +755,7 @@ namespace PhoneGuitarTab.Data
 			}
 		}
 
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_ImageUrl", DbType = "NVarChar(256)")]
+        [Column(Storage = "_ImageUrl", DbType = "NVarChar(256)")]
         public string ImageUrl
         {
             get
@@ -775,7 +775,7 @@ namespace PhoneGuitarTab.Data
             }
         }
 
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tab_Type", Storage="_Tabs", ThisKey="Id", OtherKey="TypeTypeId", DeleteRule="NO ACTION")]
+		[Association(Name="Tab_Type", Storage="_Tabs", ThisKey="Id", OtherKey="TypeTypeId", DeleteRule="NO ACTION")]
 		public EntitySet<Tab> Tabs
 		{
 			get

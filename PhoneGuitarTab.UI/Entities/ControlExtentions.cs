@@ -1,5 +1,5 @@
 ﻿using System;
-using PhoneGuitarTab.Data;
+using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Entities
 {
@@ -7,19 +7,19 @@ namespace PhoneGuitarTab.UI.Entities
     {
         public static TabEntity CreateEntity(this Tab tab)
         {
-            return new TabEntity()
-                       {
-                           Id = tab.Id,
-                           Name = tab.Name,
-                           Type = tab.TabType.Name,
-                           ImageUrl = tab.TabType.ImageUrl,
-                           AlbumCoverImageUrl = tab.AlbumCoverImageUrl,
-                           Path = tab.Path,
-                           Description = tab.Description,
-                           Group = tab.Group.Name,
-                           Rating = tab.Rating,
-                           LastOpened = tab.LastOpened ?? DateTime.MinValue
-                       };
+            return new TabEntity
+            {
+                Id = tab.Id,
+                Name = tab.Name,
+                Type = tab.TabType.Name,
+                ImageUrl = tab.TabType.ImageUrl,
+                AlbumCoverImageUrl = tab.AlbumCoverImageUrl,
+                Path = tab.Path,
+                Description = tab.Description,
+                Group = tab.Group.Name,
+                Rating = tab.Rating,
+                LastOpened = tab.LastOpened ?? DateTime.MinValue
+            };
         }
 
         public static string GetNameKey(this TabEntity tab)

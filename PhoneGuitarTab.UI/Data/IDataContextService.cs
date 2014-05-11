@@ -1,24 +1,22 @@
-﻿namespace PhoneGuitarTab.Data
+﻿using System;
+using System.Data.Linq;
+
+namespace PhoneGuitarTab.UI.Data
 {
-    using System;
-    using System.Data.Linq;
-
-    using PhoneGuitarTab.Data;
-
     public interface IDataContextService
     {
         /// <summary>
-        /// Specify a table for the songs.
+        ///     Specify a table for the songs.
         /// </summary>
         ITable<Tab> Tabs { get; }
 
         /// <summary>
-        /// Specify a table for the song types.
+        ///     Specify a table for the song types.
         /// </summary>
         ITable<TabType> TabTypes { get; }
 
         /// <summary>
-        /// Specify a table for the groups.
+        ///     Specify a table for the groups.
         /// </summary>
         ITable<Group> Groups { get; }
 

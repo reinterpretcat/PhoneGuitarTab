@@ -1,21 +1,17 @@
 ﻿using System;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Data.Linq;
-using Microsoft.Phone.Shell;
-using PhoneGuitarTab.Core;
-using PhoneGuitarTab.Data;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 
 namespace PhoneGuitarTab.UI
 {
     public partial class App : Application
     {
         /// <summary>
-        /// Constructor for the Application object.
+        ///     Constructor for the Application object.
         /// </summary>
         public App()
         {
@@ -50,21 +46,20 @@ namespace PhoneGuitarTab.UI
             }
         }
 
-
         #region Properties
 
         /// <summary>
-        /// Provides easy access to the root frame of the Phone Application.
+        ///     Provides easy access to the root frame of the Phone Application.
         /// </summary>
         /// <returns>The root frame of the Phone Application.</returns>
         public PhoneApplicationFrame RootFrame { get; private set; }
 
-        
+
         public static string Version
         {
             get
             {
-                string name = typeof(App).Assembly.FullName;
+                string name = typeof (App).Assembly.FullName;
                 AssemblyName asmName = new AssemblyName(name);
                 return asmName.Version.ToString();
             }
@@ -72,15 +67,12 @@ namespace PhoneGuitarTab.UI
 
         #endregion Properties
 
-
         #region Event handlers
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-         
-
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -126,9 +118,8 @@ namespace PhoneGuitarTab.UI
 
             e.Handled = true;
 
-           // (RootVisual as PhoneApplicationFrame).Source =
-             //   new Uri("/View/ErrorView.xaml", UriKind.Relative);
-
+            // (RootVisual as PhoneApplicationFrame).Source =
+            //   new Uri("/View/ErrorView.xaml", UriKind.Relative);
         }
 
         #endregion Event handlers
@@ -136,7 +127,7 @@ namespace PhoneGuitarTab.UI
         #region Phone application initialization
 
         // Avoid double-initialization
-        private bool phoneApplicationInitialized = false;
+        private bool phoneApplicationInitialized;
 
         // Do not add any additional code to this method
         private void InitializePhoneApplication()
