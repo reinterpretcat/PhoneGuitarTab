@@ -7,23 +7,23 @@ using Microsoft.Phone.Shell;
 namespace PhoneGuitarTab.Controls
 {
     /// <summary>
-    /// A wrapper for an <see cref="ApplicationBarMenuItem"/> object
-    /// that adds support for data binding.
+    ///     A wrapper for an <see cref="ApplicationBarMenuItem" /> object
+    ///     that adds support for data binding.
     /// </summary>
     /// <remarks>
-    /// To be used in <see cref="BindableApplicationBar.MenuItems"/> or
-    /// <see cref="BindableApplicationBar.MenuItemTemplate"/>
-    /// <para/>
-    /// The class derives from <see cref="FrameworkElement"/> to support
-    /// DataContext and bindings.
-    /// <para/>
-    /// Note that <see cref="ApplicationBarMenuItem.Click"/> event is not
-    /// wrapped since /// the purpose of this class is to bind to view models
-    /// and use Commands instead.
+    ///     To be used in <see cref="BindableApplicationBar.MenuItems" /> or
+    ///     <see cref="BindableApplicationBar.MenuItemTemplate" />
+    ///     <para />
+    ///     The class derives from <see cref="FrameworkElement" /> to support
+    ///     DataContext and bindings.
+    ///     <para />
+    ///     Note that <see cref="ApplicationBarMenuItem.Click" /> event is not
+    ///     wrapped since /// the purpose of this class is to bind to view models
+    ///     and use Commands instead.
     /// </remarks>
     /// <example>
-    /// See the below example for usage of the BindableApplicationBar:<br/>
-    /// <code>
+    ///     See the below example for usage of the BindableApplicationBar:<br />
+    ///     <code>
     /// <![CDATA[
     /// <bar:BindableApplicationBar
     ///     xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
@@ -50,171 +50,176 @@ namespace PhoneGuitarTab.Controls
     /// ]]>
     /// </code>
     /// </example>
-    /// <seealso cref="BindableApplicationBar"/>
-    /// <seealso cref="BindableApplicationBarButton"/>
+    /// <seealso cref="BindableApplicationBar" />
+    /// <seealso cref="BindableApplicationBarButton" />
     public class BindableApplicationBarMenuItem : FrameworkElement
     {
         private ApplicationBar applicationBar;
         private ApplicationBarMenuItem applicationBarMenuItem;
 
         #region Text
+
         /// <summary>
-        /// Text Dependency Property
+        ///     Text Dependency Property
         /// </summary>
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(
                 "Text",
-                typeof(string),
-                typeof(BindableApplicationBarMenuItem),
+                typeof (string),
+                typeof (BindableApplicationBarMenuItem),
                 new PropertyMetadata(null, OnTextChanged));
 
         /// <summary>
-        /// Gets or sets the Text property. This dependency property 
-        /// indicates the Text bound to the associated
-        /// ApplicationBarMenuItem's Text property.
+        ///     Gets or sets the Text property. This dependency property
+        ///     indicates the Text bound to the associated
+        ///     ApplicationBarMenuItem's Text property.
         /// </summary>
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
+            get { return (string) GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the Text property.
+        ///     Handles changes to the Text property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnTextChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (BindableApplicationBarMenuItem)d;
-            string oldText = (string)e.OldValue;
+            var target = (BindableApplicationBarMenuItem) d;
+            string oldText = (string) e.OldValue;
             string newText = target.Text;
             target.OnTextChanged(oldText, newText);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to the
-        /// Text property.
+        ///     Provides derived classes an opportunity to handle changes to the
+        ///     Text property.
         /// </summary>
         /// <param name="oldText">The old text.</param>
         /// <param name="newText">The new text.</param>
         protected virtual void OnTextChanged(string oldText, string newText)
         {
-            if (this.applicationBarMenuItem != null)
+            if (applicationBarMenuItem != null)
             {
-                this.applicationBarMenuItem.Text = newText;
+                applicationBarMenuItem.Text = newText;
             }
         }
+
         #endregion
 
         #region IsEnabled
+
         /// <summary>
-        /// IsEnabled Dependency Property
+        ///     IsEnabled Dependency Property
         /// </summary>
         public static readonly DependencyProperty IsEnabledProperty =
             DependencyProperty.Register(
                 "IsEnabled",
-                typeof(bool),
-                typeof(BindableApplicationBarMenuItem),
+                typeof (bool),
+                typeof (BindableApplicationBarMenuItem),
                 new PropertyMetadata(true, OnIsEnabledChanged));
 
         /// <summary>
-        /// Gets or sets a value indicating whether the associated menu item
-        /// is enabled.
+        ///     Gets or sets a value indicating whether the associated menu item
+        ///     is enabled.
         /// </summary>
         public bool IsEnabled
         {
-            get { return (bool)GetValue(IsEnabledProperty); }
+            get { return (bool) GetValue(IsEnabledProperty); }
             set { SetValue(IsEnabledProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the IsEnabled property.
+        ///     Handles changes to the IsEnabled property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnIsEnabledChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (BindableApplicationBarMenuItem)d;
-            bool oldIsEnabled = (bool)e.OldValue;
+            var target = (BindableApplicationBarMenuItem) d;
+            bool oldIsEnabled = (bool) e.OldValue;
             bool newIsEnabled = target.IsEnabled;
             target.OnIsEnabledChanged(oldIsEnabled, newIsEnabled);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to the
-        /// IsEnabled property.
+        ///     Provides derived classes an opportunity to handle changes to the
+        ///     IsEnabled property.
         /// </summary>
         /// <param name="oldIsEnabled">The old IsEnabled value.</param>
         /// <param name="newIsEnabled">The new IsEnabled value.</param>
         protected virtual void OnIsEnabledChanged(
             bool oldIsEnabled, bool newIsEnabled)
         {
-            if (this.applicationBarMenuItem != null)
+            if (applicationBarMenuItem != null)
             {
-                this.applicationBarMenuItem.IsEnabled = this.IsEnabled;
+                applicationBarMenuItem.IsEnabled = IsEnabled;
             }
         }
+
         #endregion
 
         #region Command
+
         /// <summary>
-        /// Command Dependency Property
+        ///     Command Dependency Property
         /// </summary>
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.Register(
                 "Command",
-                typeof(ICommand),
-                typeof(BindableApplicationBarMenuItem),
+                typeof (ICommand),
+                typeof (BindableApplicationBarMenuItem),
                 new PropertyMetadata(null, OnCommandChanged));
 
         /// <summary>
-        /// Gets or sets the Command property. This dependency property 
-        /// indicates the command to execute when the menuItem gets clicked.
+        ///     Gets or sets the Command property. This dependency property
+        ///     indicates the command to execute when the menuItem gets clicked.
         /// </summary>
         public ICommand Command
         {
-            get { return (ICommand)GetValue(CommandProperty); }
+            get { return (ICommand) GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the Command property.
+        ///     Handles changes to the Command property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnCommandChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (BindableApplicationBarMenuItem)d;
-            ICommand oldCommand = (ICommand)e.OldValue;
+            var target = (BindableApplicationBarMenuItem) d;
+            ICommand oldCommand = (ICommand) e.OldValue;
             ICommand newCommand = target.Command;
             target.OnCommandChanged(oldCommand, newCommand);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the Command property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the Command property.
         /// </summary>
         /// <param name="oldCommand">The old command.</param>
         /// <param name="newCommand">The new command.</param>
@@ -224,43 +229,45 @@ namespace PhoneGuitarTab.Controls
             if (oldCommand != null)
             {
                 oldCommand.CanExecuteChanged -=
-                    this.CommandCanExecuteChanged;
+                    CommandCanExecuteChanged;
             }
 
             if (newCommand != null)
             {
-                this.IsEnabled =
-                    newCommand.CanExecute(this.CommandParameter);
+                IsEnabled =
+                    newCommand.CanExecute(CommandParameter);
                 newCommand.CanExecuteChanged +=
-                    this.CommandCanExecuteChanged;
+                    CommandCanExecuteChanged;
             }
         }
 
         private void CommandCanExecuteChanged(object sender, EventArgs e)
         {
-            if (this.Command != null)
+            if (Command != null)
             {
-                this.IsEnabled =
-                    this.Command.CanExecute(this.CommandParameter);
+                IsEnabled =
+                    Command.CanExecute(CommandParameter);
             }
         }
+
         #endregion
 
         #region CommandParameter
+
         /// <summary>
-        /// CommandParameter Dependency Property
+        ///     CommandParameter Dependency Property
         /// </summary>
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.Register(
                 "CommandParameter",
-                typeof(object),
-                typeof(BindableApplicationBarMenuItem),
+                typeof (object),
+                typeof (BindableApplicationBarMenuItem),
                 new PropertyMetadata(null, OnCommandParameterChanged));
 
         /// <summary>
-        /// Gets or sets the CommandParameter property.
-        /// This dependency property indicates the parameter to be passed
-        /// to the Command when the menu item gets pressed.
+        ///     Gets or sets the CommandParameter property.
+        ///     This dependency property indicates the parameter to be passed
+        ///     to the Command when the menu item gets pressed.
         /// </summary>
         public object CommandParameter
         {
@@ -269,20 +276,20 @@ namespace PhoneGuitarTab.Controls
         }
 
         /// <summary>
-        /// Handles changes to the CommandParameter property.
+        ///     Handles changes to the CommandParameter property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnCommandParameterChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (BindableApplicationBarMenuItem)d;
+            var target = (BindableApplicationBarMenuItem) d;
             object oldCommandParameter = e.OldValue;
             object newCommandParameter = target.CommandParameter;
             target.OnCommandParameterChanged(
@@ -290,59 +297,60 @@ namespace PhoneGuitarTab.Controls
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the CommandParameter property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the CommandParameter property.
         /// </summary>
         /// <param name="oldCommandParameter">
-        /// The old CommandParameter value.
+        ///     The old CommandParameter value.
         /// </param>
         /// <param name="newCommandParameter">
-        /// The new CommandParameter value.
+        ///     The new CommandParameter value.
         /// </param>
         protected virtual void OnCommandParameterChanged(
             object oldCommandParameter, object newCommandParameter)
         {
-            if (this.Command != null)
+            if (Command != null)
             {
-                this.IsEnabled =
-                    this.Command.CanExecute(this.CommandParameter);
+                IsEnabled =
+                    Command.CanExecute(CommandParameter);
             }
         }
+
         #endregion
 
         /// <summary>
-        /// Creates an associated <see cref="ApplicationBarMenuItem"/> and
-        /// attaches it to the specified application bar.
+        ///     Creates an associated <see cref="ApplicationBarMenuItem" /> and
+        ///     attaches it to the specified application bar.
         /// </summary>
         /// <param name="parentApplicationBar">
-        /// The application bar to attach to.
+        ///     The application bar to attach to.
         /// </param>
         /// <param name="i">
-        /// The index at which the associated
-        /// <see cref="ApplicationBarMenuItem"/> will be inserted.
+        ///     The index at which the associated
+        ///     <see cref="ApplicationBarMenuItem" /> will be inserted.
         /// </param>
         public void Attach(ApplicationBar parentApplicationBar, int i)
         {
-            if (this.applicationBarMenuItem != null)
+            if (applicationBarMenuItem != null)
             {
                 return;
             }
 
-            this.applicationBar = parentApplicationBar;
-            this.applicationBarMenuItem =
+            applicationBar = parentApplicationBar;
+            applicationBarMenuItem =
                 new ApplicationBarMenuItem
                 {
-                    Text = string.IsNullOrEmpty(this.Text) ? "." : this.Text,
-                    IsEnabled = this.IsEnabled
+                    Text = string.IsNullOrEmpty(Text) ? "." : Text,
+                    IsEnabled = IsEnabled
                 };
 
-            this.applicationBarMenuItem.Click +=
-                this.ApplicationBarMenuItemClick;
+            applicationBarMenuItem.Click +=
+                ApplicationBarMenuItemClick;
 
             try
             {
-                this.applicationBar.MenuItems.Insert(
-                    i, this.applicationBarMenuItem);
+                applicationBar.MenuItems.Insert(
+                    i, applicationBarMenuItem);
             }
             catch (InvalidOperationException ex)
             {
@@ -359,25 +367,25 @@ namespace PhoneGuitarTab.Controls
         }
 
         /// <summary>
-        /// Detaches the associated <see cref="ApplicationBarMenuItem"/>
-        /// from the <see cref="ApplicationBar"/> and from this instance.
+        ///     Detaches the associated <see cref="ApplicationBarMenuItem" />
+        ///     from the <see cref="ApplicationBar" /> and from this instance.
         /// </summary>
         public void Detach()
         {
-            this.applicationBarMenuItem.Click -=
-                this.ApplicationBarMenuItemClick;
-            this.applicationBar.MenuItems.Remove(
-                this.applicationBarMenuItem);
-            this.applicationBar = null;
-            this.applicationBarMenuItem = null;
+            applicationBarMenuItem.Click -=
+                ApplicationBarMenuItemClick;
+            applicationBar.MenuItems.Remove(
+                applicationBarMenuItem);
+            applicationBar = null;
+            applicationBarMenuItem = null;
         }
 
         private void ApplicationBarMenuItemClick(object sender, EventArgs e)
         {
-            if (this.Command != null &&
-                this.Command.CanExecute(this.CommandParameter))
+            if (Command != null &&
+                Command.CanExecute(CommandParameter))
             {
-                this.Command.Execute(this.CommandParameter);
+                Command.Execute(CommandParameter);
             }
         }
     }

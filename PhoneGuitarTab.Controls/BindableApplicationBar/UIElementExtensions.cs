@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-
 using Microsoft.Phone.Controls;
 
 namespace PhoneGuitarTab.Controls

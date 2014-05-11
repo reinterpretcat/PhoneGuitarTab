@@ -10,18 +10,18 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using PhoneGuitarTab.Controls;
 
 namespace PhoneGuitarTab.Controls
 {
     /// <summary>
-    /// Serves as a bindable control wrapping the native ApplicationBar
-    /// for use in MVVM applications.
+    ///     Serves as a bindable control wrapping the native ApplicationBar
+    ///     for use in MVVM applications.
     /// </summary>
     /// <remarks>
-    /// TODO: Find out if bindings can work through ElementName - check for namescope issues.
-    /// TODO: Find out if current/max number of buttons/menu items can be exposed as bindable properties.
-    /// TODO: Figure out the best handling of cases when a button or menu item is added beyond the maximum number allowable.
+    ///     TODO: Find out if bindings can work through ElementName - check for namescope issues.
+    ///     TODO: Find out if current/max number of buttons/menu items can be exposed as bindable properties.
+    ///     TODO: Figure out the best handling of cases when a button or menu item is added beyond the maximum number
+    ///     allowable.
     /// </remarks>
     [ContentProperty("Buttons")]
     public class BindableApplicationBar : Control
@@ -45,49 +45,44 @@ namespace PhoneGuitarTab.Controls
                 new DependencyObjectCollection<BindableApplicationBarMenuItem>();
 
         #region Buttons
+
         /// <summary>
-        /// Buttons Dependency Property
+        ///     Buttons Dependency Property
         /// </summary>
         public static readonly DependencyProperty ButtonsProperty =
             DependencyProperty.Register(
                 "Buttons",
-                typeof(DependencyObjectCollection<BindableApplicationBarButton>),
-                typeof(BindableApplicationBar),
+                typeof (DependencyObjectCollection<BindableApplicationBarButton>),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(null, OnButtonsChanged));
 
         /// <summary>
-        /// Gets or sets the Buttons property. This dependency property 
-        /// indicates the list of BindableApplicationBarButton objects that
-        /// map to ApplicationBarIconButton generated for the ApplicationBar.
+        ///     Gets or sets the Buttons property. This dependency property
+        ///     indicates the list of BindableApplicationBarButton objects that
+        ///     map to ApplicationBarIconButton generated for the ApplicationBar.
         /// </summary>
         public DependencyObjectCollection<BindableApplicationBarButton> Buttons
         {
-            get
-            {
-                return (DependencyObjectCollection<BindableApplicationBarButton>)GetValue(ButtonsProperty);
-            }
+            get { return (DependencyObjectCollection<BindableApplicationBarButton>) GetValue(ButtonsProperty); }
 
-            set
-            {
-                SetValue(ButtonsProperty, value);
-            }
+            set { SetValue(ButtonsProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the Buttons property.
+        ///     Handles changes to the Buttons property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnButtonsChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var target = (BindableApplicationBar)d;
+            var target = (BindableApplicationBar) d;
             var oldButtons =
                 (DependencyObjectCollection<BindableApplicationBarButton>)
                     e.OldValue;
@@ -96,8 +91,8 @@ namespace PhoneGuitarTab.Controls
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the Buttons property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the Buttons property.
         /// </summary>
         /// <param name="oldButtons">The old buttons.</param>
         /// <param name="newButtons">The new buttons.</param>
@@ -107,63 +102,65 @@ namespace PhoneGuitarTab.Controls
         {
             if (oldButtons != null)
             {
-                oldButtons.CollectionChanged -= this.ButtonsCollectionChanged;
+                oldButtons.CollectionChanged -= ButtonsCollectionChanged;
             }
 
             if (newButtons != null)
             {
-                newButtons.CollectionChanged += this.ButtonsCollectionChanged;
+                newButtons.CollectionChanged += ButtonsCollectionChanged;
             }
         }
+
         #endregion
 
         #region MenuItems
+
         /// <summary>
-        /// MenuItems Dependency Property
+        ///     MenuItems Dependency Property
         /// </summary>
         public static readonly DependencyProperty MenuItemsProperty =
             DependencyProperty.Register(
                 "MenuItems",
-                typeof(DependencyObjectCollection<BindableApplicationBarMenuItem>),
-                typeof(BindableApplicationBar),
+                typeof (DependencyObjectCollection<BindableApplicationBarMenuItem>),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(null, OnMenuItemsChanged));
 
         /// <summary>
-        /// Gets or sets the MenuItems property. This dependency property 
-        /// indicates the list of BindableApplicationBarMenuItem objects that
-        /// map to ApplicationBarMenuItem generated for the ApplicationBar.
+        ///     Gets or sets the MenuItems property. This dependency property
+        ///     indicates the list of BindableApplicationBarMenuItem objects that
+        ///     map to ApplicationBarMenuItem generated for the ApplicationBar.
         /// </summary>
         public DependencyObjectCollection<BindableApplicationBarMenuItem> MenuItems
         {
-            get { return (DependencyObjectCollection<BindableApplicationBarMenuItem>)GetValue(MenuItemsProperty); }
+            get { return (DependencyObjectCollection<BindableApplicationBarMenuItem>) GetValue(MenuItemsProperty); }
             set { SetValue(MenuItemsProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the MenuItems property.
+        ///     Handles changes to the MenuItems property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnMenuItemsChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
+            BindableApplicationBar target = (BindableApplicationBar) d;
             DependencyObjectCollection<BindableApplicationBarMenuItem> oldMenuItems =
-                (DependencyObjectCollection<BindableApplicationBarMenuItem>)e.OldValue;
+                (DependencyObjectCollection<BindableApplicationBarMenuItem>) e.OldValue;
             DependencyObjectCollection<BindableApplicationBarMenuItem> newMenuItems =
                 target.MenuItems;
             target.OnMenuItemsChanged(oldMenuItems, newMenuItems);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the MenuItems property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the MenuItems property.
         /// </summary>
         /// <param name="oldMenuItems">The old menu items.</param>
         /// <param name="newMenuItems">The new menu items.</param>
@@ -174,62 +171,64 @@ namespace PhoneGuitarTab.Controls
             if (oldMenuItems != null)
             {
                 oldMenuItems.CollectionChanged -=
-                    this.MenuItemsCollectionChanged;
+                    MenuItemsCollectionChanged;
             }
 
             if (newMenuItems != null)
             {
                 newMenuItems.CollectionChanged +=
-                    this.MenuItemsCollectionChanged;
+                    MenuItemsCollectionChanged;
             }
         }
+
         #endregion
 
         #region ButtonsSource
+
         /// <summary>
-        /// ButtonsSource Dependency Property
+        ///     ButtonsSource Dependency Property
         /// </summary>
         public static readonly DependencyProperty ButtonsSourceProperty =
             DependencyProperty.Register(
                 "ButtonsSource",
-                typeof(IEnumerable),
-                typeof(BindableApplicationBar),
+                typeof (IEnumerable),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(null, OnButtonsSourceChanged));
 
         /// <summary>
-        /// Gets or sets the ButtonsSource property. This dependency property
-        /// indicates the collection from which to build the button objects,
-        /// using the <see cref="ButtonTemplate"/> DataTemplate.
+        ///     Gets or sets the ButtonsSource property. This dependency property
+        ///     indicates the collection from which to build the button objects,
+        ///     using the <see cref="ButtonTemplate" /> DataTemplate.
         /// </summary>
         public IEnumerable ButtonsSource
         {
-            get { return (IEnumerable)GetValue(ButtonsSourceProperty); }
+            get { return (IEnumerable) GetValue(ButtonsSourceProperty); }
             set { SetValue(ButtonsSourceProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the ButtonsSource property.
+        ///     Handles changes to the ButtonsSource property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnButtonsSourceChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            IEnumerable oldButtonsSource = (IEnumerable)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            IEnumerable oldButtonsSource = (IEnumerable) e.OldValue;
             IEnumerable newButtonsSource = target.ButtonsSource;
             target.OnButtonsSourceChanged(oldButtonsSource, newButtonsSource);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the ButtonsSource property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the ButtonsSource property.
         /// </summary>
         /// <param name="oldButtonsSource">The old buttons source.</param>
         /// <param name="newButtonsSource">The new buttons source.</param>
@@ -239,17 +238,17 @@ namespace PhoneGuitarTab.Controls
             if (oldButtonsSource != null &&
                 oldButtonsSource is INotifyCollectionChanged)
             {
-                ((INotifyCollectionChanged)oldButtonsSource)
-                    .CollectionChanged -= this.ButtonsSourceCollectionChanged;
+                ((INotifyCollectionChanged) oldButtonsSource)
+                    .CollectionChanged -= ButtonsSourceCollectionChanged;
             }
 
-            this.GenerateButtonsFromSource();
+            GenerateButtonsFromSource();
 
             if (newButtonsSource != null &&
                 newButtonsSource is INotifyCollectionChanged)
             {
-                ((INotifyCollectionChanged)newButtonsSource)
-                    .CollectionChanged += this.ButtonsSourceCollectionChanged;
+                ((INotifyCollectionChanged) newButtonsSource)
+                    .CollectionChanged += ButtonsSourceCollectionChanged;
             }
         }
 
@@ -263,24 +262,24 @@ namespace PhoneGuitarTab.Controls
                     // Copy item reference to prevent access to modified closure
                     var dataContext = buttonSource;
                     var button =
-                        this.buttonsSourceButtons.FirstOrDefault(
+                        buttonsSourceButtons.FirstOrDefault(
                             b => b.DataContext == dataContext);
 
                     if (button != null)
                     {
-                        this.buttonsSourceButtons.Remove(button);
+                        buttonsSourceButtons.Remove(button);
                     }
                 }
             }
 
-            if (this.ButtonsSource != null &&
-                this.ButtonTemplate != null &&
+            if (ButtonsSource != null &&
+                ButtonTemplate != null &&
                 e.NewItems != null)
             {
                 foreach (var buttonSource in e.NewItems)
                 {
                     var button = (BindableApplicationBarButton)
-                        this.ButtonTemplate.LoadContent();
+                        ButtonTemplate.LoadContent();
 
                     if (button == null)
                     {
@@ -289,23 +288,25 @@ namespace PhoneGuitarTab.Controls
                     }
 
                     button.DataContext = buttonSource;
-                    this.buttonsSourceButtons.Add(button);
+                    buttonsSourceButtons.Add(button);
                 }
             }
         }
+
         #endregion
 
         #region GenerateButtonsFromSource()
+
         private void GenerateButtonsFromSource()
         {
-            this.buttonsSourceButtons.Clear();
+            buttonsSourceButtons.Clear();
 
-            if (this.ButtonsSource != null && this.ButtonTemplate != null)
+            if (ButtonsSource != null && ButtonTemplate != null)
             {
-                foreach (var buttonSource in this.ButtonsSource)
+                foreach (var buttonSource in ButtonsSource)
                 {
                     var button = (BindableApplicationBarButton)
-                        this.ButtonTemplate.LoadContent();
+                        ButtonTemplate.LoadContent();
 
                     if (button == null)
                     {
@@ -314,24 +315,26 @@ namespace PhoneGuitarTab.Controls
                     }
 
                     button.DataContext = buttonSource;
-                    this.buttonsSourceButtons.Add(button);
+                    buttonsSourceButtons.Add(button);
                 }
             }
         }
+
         #endregion
 
         #region GenerateMenuItemsFromSource()
+
         private void GenerateMenuItemsFromSource()
         {
-            this.menuItemsSourceMenuItems.Clear();
+            menuItemsSourceMenuItems.Clear();
 
-            if (this.MenuItemsSource != null &&
-                this.MenuItemTemplate != null)
+            if (MenuItemsSource != null &&
+                MenuItemTemplate != null)
             {
-                foreach (var menuItemSource in this.MenuItemsSource)
+                foreach (var menuItemSource in MenuItemsSource)
                 {
                     var menuItem = (BindableApplicationBarMenuItem)
-                        this.MenuItemTemplate.LoadContent();
+                        MenuItemTemplate.LoadContent();
 
                     if (menuItem == null)
                     {
@@ -340,125 +343,129 @@ namespace PhoneGuitarTab.Controls
                     }
 
                     menuItem.DataContext = menuItemSource;
-                    this.menuItemsSourceMenuItems.Add(menuItem);
+                    menuItemsSourceMenuItems.Add(menuItem);
                 }
             }
         }
+
         #endregion
 
         #region ButtonTemplate
+
         /// <summary>
-        /// ButtonTemplate Dependency Property
+        ///     ButtonTemplate Dependency Property
         /// </summary>
         public static readonly DependencyProperty ButtonTemplateProperty =
             DependencyProperty.Register(
                 "ButtonTemplate",
-                typeof(DataTemplate),
-                typeof(BindableApplicationBar),
+                typeof (DataTemplate),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(null, OnButtonTemplateChanged));
 
         /// <summary>
-        /// Gets or sets the ButtonTemplate property.
-        /// This dependency property indicates the template for a
-        /// <see cref="BindableApplicationBarButton"/> that is used together
-        /// with the <see cref="ButtonsSource"/> collection
-        /// to create the application bar buttons.
+        ///     Gets or sets the ButtonTemplate property.
+        ///     This dependency property indicates the template for a
+        ///     <see cref="BindableApplicationBarButton" /> that is used together
+        ///     with the <see cref="ButtonsSource" /> collection
+        ///     to create the application bar buttons.
         /// </summary>
         /// <remarks>
-        /// The default template defines the property names to match
-        /// the names of properties of a BindableApplicationBarButton.
+        ///     The default template defines the property names to match
+        ///     the names of properties of a BindableApplicationBarButton.
         /// </remarks>
         public DataTemplate ButtonTemplate
         {
-            get { return (DataTemplate)GetValue(ButtonTemplateProperty); }
+            get { return (DataTemplate) GetValue(ButtonTemplateProperty); }
             set { SetValue(ButtonTemplateProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the ButtonTemplate property.
+        ///     Handles changes to the ButtonTemplate property.
         /// </summary>
         /// <param name="d">
-        /// The dependency property.
+        ///     The dependency property.
         /// </param>
         /// <param name="e">
-        /// The event arguments.
+        ///     The event arguments.
         /// </param>
         private static void OnButtonTemplateChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            DataTemplate oldButtonTemplate = (DataTemplate)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            DataTemplate oldButtonTemplate = (DataTemplate) e.OldValue;
             DataTemplate newButtonTemplate = target.ButtonTemplate;
             target.OnButtonTemplateChanged(
                 oldButtonTemplate, newButtonTemplate);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the ButtonTemplate property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the ButtonTemplate property.
         /// </summary>
         /// <param name="oldButtonTemplate">The old button template.</param>
         /// <param name="newButtonTemplate">The new button template.</param>
         protected virtual void OnButtonTemplateChanged(
             DataTemplate oldButtonTemplate, DataTemplate newButtonTemplate)
         {
-            this.GenerateButtonsFromSource();
+            GenerateButtonsFromSource();
         }
+
         #endregion
 
         #region MenuItemsSource
+
         /// <summary>
-        /// MenuItemsSource Dependency Property
+        ///     MenuItemsSource Dependency Property
         /// </summary>
         public static readonly DependencyProperty MenuItemsSourceProperty =
             DependencyProperty.Register(
                 "MenuItemsSource",
-                typeof(IEnumerable),
-                typeof(BindableApplicationBar),
+                typeof (IEnumerable),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(null, OnMenuItemsSourceChanged));
 
         /// <summary>
-        /// Gets or sets the MenuItemsSource property.
-        /// This dependency property indicates the collection from which
-        /// to build the MenuItem objects,
-        /// using the <see cref="MenuItemTemplate"/> DataTemplate.
+        ///     Gets or sets the MenuItemsSource property.
+        ///     This dependency property indicates the collection from which
+        ///     to build the MenuItem objects,
+        ///     using the <see cref="MenuItemTemplate" /> DataTemplate.
         /// </summary>
         public IEnumerable MenuItemsSource
         {
-            get { return (IEnumerable)GetValue(MenuItemsSourceProperty); }
+            get { return (IEnumerable) GetValue(MenuItemsSourceProperty); }
             set { SetValue(MenuItemsSourceProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the MenuItemsSource property.
+        ///     Handles changes to the MenuItemsSource property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnMenuItemsSourceChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            IEnumerable oldMenuItemsSource = (IEnumerable)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            IEnumerable oldMenuItemsSource = (IEnumerable) e.OldValue;
             IEnumerable newMenuItemsSource = target.MenuItemsSource;
             target.OnMenuItemsSourceChanged(
                 oldMenuItemsSource, newMenuItemsSource);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the MenuItemsSource property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the MenuItemsSource property.
         /// </summary>
         /// <param name="oldMenuItemsSource">
-        /// The old MenuItemsSource value.
+        ///     The old MenuItemsSource value.
         /// </param>
         /// <param name="newMenuItemsSource">
-        /// The new MenuItemsSource value.
+        ///     The new MenuItemsSource value.
         /// </param>
         protected virtual void OnMenuItemsSourceChanged(
             IEnumerable oldMenuItemsSource, IEnumerable newMenuItemsSource)
@@ -466,19 +473,19 @@ namespace PhoneGuitarTab.Controls
             if (oldMenuItemsSource != null &&
                 oldMenuItemsSource is INotifyCollectionChanged)
             {
-                ((INotifyCollectionChanged)oldMenuItemsSource)
+                ((INotifyCollectionChanged) oldMenuItemsSource)
                     .CollectionChanged -=
-                        this.MenuItemsSourceCollectionChanged;
+                    MenuItemsSourceCollectionChanged;
             }
 
-            this.GenerateMenuItemsFromSource();
+            GenerateMenuItemsFromSource();
 
             if (newMenuItemsSource != null &&
                 newMenuItemsSource is INotifyCollectionChanged)
             {
-                ((INotifyCollectionChanged)newMenuItemsSource)
+                ((INotifyCollectionChanged) newMenuItemsSource)
                     .CollectionChanged +=
-                    this.MenuItemsSourceCollectionChanged;
+                    MenuItemsSourceCollectionChanged;
             }
         }
 
@@ -492,24 +499,24 @@ namespace PhoneGuitarTab.Controls
                     // Copy item reference to prevent access to modified closure
                     var dataContext = menuItemSource;
                     var menuItem =
-                        this.menuItemsSourceMenuItems.FirstOrDefault(
+                        menuItemsSourceMenuItems.FirstOrDefault(
                             b => b.DataContext == dataContext);
 
                     if (menuItem != null)
                     {
-                        this.menuItemsSourceMenuItems.Remove(menuItem);
+                        menuItemsSourceMenuItems.Remove(menuItem);
                     }
                 }
             }
 
-            if (this.MenuItemsSource != null &&
-                this.MenuItemTemplate != null &&
+            if (MenuItemsSource != null &&
+                MenuItemTemplate != null &&
                 e.NewItems != null)
             {
                 foreach (var menuItemSource in e.NewItems)
                 {
                     var menuItem = (BindableApplicationBarMenuItem)
-                        this.MenuItemTemplate.LoadContent();
+                        MenuItemTemplate.LoadContent();
 
                     if (menuItem == null)
                     {
@@ -518,545 +525,563 @@ namespace PhoneGuitarTab.Controls
                     }
 
                     menuItem.DataContext = menuItemSource;
-                    this.menuItemsSourceMenuItems.Add(menuItem);
+                    menuItemsSourceMenuItems.Add(menuItem);
                 }
             }
         }
+
         #endregion
 
         #region MenuItemTemplate
+
         /// <summary>
-        /// MenuItemTemplate Dependency Property
+        ///     MenuItemTemplate Dependency Property
         /// </summary>
         public static readonly DependencyProperty MenuItemTemplateProperty =
             DependencyProperty.Register(
                 "MenuItemTemplate",
-                typeof(DataTemplate),
-                typeof(BindableApplicationBar),
+                typeof (DataTemplate),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(null, OnMenuItemTemplateChanged));
 
         /// <summary>
-        /// Gets or sets the MenuItemTemplate property.
-        /// This dependency property indicates the template
-        /// for a <see cref="BindableApplicationBarMenuItem"/> that is used
-        /// together with the <see cref="MenuItemsSource"/> collection
-        /// to create the application bar MenuItems.
+        ///     Gets or sets the MenuItemTemplate property.
+        ///     This dependency property indicates the template
+        ///     for a <see cref="BindableApplicationBarMenuItem" /> that is used
+        ///     together with the <see cref="MenuItemsSource" /> collection
+        ///     to create the application bar MenuItems.
         /// </summary>
         /// <remarks>
-        /// The default template defines the property names to match
-        /// the names of properties of a BindableApplicationBarMenuItem.
+        ///     The default template defines the property names to match
+        ///     the names of properties of a BindableApplicationBarMenuItem.
         /// </remarks>
         public DataTemplate MenuItemTemplate
         {
-            get { return (DataTemplate)GetValue(MenuItemTemplateProperty); }
+            get { return (DataTemplate) GetValue(MenuItemTemplateProperty); }
             set { SetValue(MenuItemTemplateProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the MenuItemTemplate property.
+        ///     Handles changes to the MenuItemTemplate property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnMenuItemTemplateChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            DataTemplate oldMenuItemTemplate = (DataTemplate)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            DataTemplate oldMenuItemTemplate = (DataTemplate) e.OldValue;
             DataTemplate newMenuItemTemplate = target.MenuItemTemplate;
             target.OnMenuItemTemplateChanged(
                 oldMenuItemTemplate, newMenuItemTemplate);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the MenuItemTemplate property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the MenuItemTemplate property.
         /// </summary>
         /// <param name="oldMenuItemTemplate">
-        /// The old MenuItemTemplate value.
+        ///     The old MenuItemTemplate value.
         /// </param>
         /// <param name="newMenuItemTemplate">
-        /// The new MenuItemTemplate value.
+        ///     The new MenuItemTemplate value.
         /// </param>
         protected virtual void OnMenuItemTemplateChanged(
             DataTemplate oldMenuItemTemplate,
             DataTemplate newMenuItemTemplate)
         {
-            this.GenerateMenuItemsFromSource();
+            GenerateMenuItemsFromSource();
         }
+
         #endregion
 
         #region IsVisible
+
         /// <summary>
-        /// IsVisible Dependency Property
+        ///     IsVisible Dependency Property
         /// </summary>
         public static readonly DependencyProperty IsVisibleProperty =
             DependencyProperty.Register(
                 "IsVisible",
-                typeof(bool),
-                typeof(BindableApplicationBar),
+                typeof (bool),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(true, OnIsVisibleChanged));
 
         /// <summary>
-        /// Gets or sets a value indicating whether
-        /// the attached ApplicationBar is visible.
+        ///     Gets or sets a value indicating whether
+        ///     the attached ApplicationBar is visible.
         /// </summary>
         public bool IsVisible
         {
-            get { return (bool)GetValue(IsVisibleProperty); }
+            get { return (bool) GetValue(IsVisibleProperty); }
             set { SetValue(IsVisibleProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the IsVisible property.
+        ///     Handles changes to the IsVisible property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnIsVisibleChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            bool oldIsVisible = (bool)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            bool oldIsVisible = (bool) e.OldValue;
             bool newIsVisible = target.IsVisible;
             target.OnIsVisibleChanged(oldIsVisible, newIsVisible);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the IsVisible property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the IsVisible property.
         /// </summary>
         /// <param name="oldIsVisible">The old IsVisible value.</param>
         /// <param name="newIsVisible">The new IsVisible value.</param>
         protected virtual void OnIsVisibleChanged(
             bool oldIsVisible, bool newIsVisible)
         {
-            if (this.applicationBar != null)
+            if (applicationBar != null)
             {
-                this.applicationBar.IsVisible = newIsVisible;
+                applicationBar.IsVisible = newIsVisible;
             }
 
-            this.isVisibleChanged = true;
+            isVisibleChanged = true;
         }
+
         #endregion
 
         #region IsMenuEnabled
+
         /// <summary>
-        /// IsMenuEnabled Dependency Property
+        ///     IsMenuEnabled Dependency Property
         /// </summary>
         public static readonly DependencyProperty IsMenuEnabledProperty =
             DependencyProperty.Register(
                 "IsMenuEnabled",
-                typeof(bool),
-                typeof(BindableApplicationBar),
+                typeof (bool),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(true, OnIsMenuEnabledChanged));
 
         /// <summary>
-        /// Gets or sets a value indicating whether the menu is enabled.
+        ///     Gets or sets a value indicating whether the menu is enabled.
         /// </summary>
         public bool IsMenuEnabled
         {
-            get { return (bool)GetValue(IsMenuEnabledProperty); }
+            get { return (bool) GetValue(IsMenuEnabledProperty); }
             set { SetValue(IsMenuEnabledProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the IsMenuEnabled property.
+        ///     Handles changes to the IsMenuEnabled property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnIsMenuEnabledChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            bool oldIsMenuEnabled = (bool)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            bool oldIsMenuEnabled = (bool) e.OldValue;
             bool newIsMenuEnabled = target.IsMenuEnabled;
             target.OnIsMenuEnabledChanged(
                 oldIsMenuEnabled, newIsMenuEnabled);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the IsMenuEnabled property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the IsMenuEnabled property.
         /// </summary>
         /// <param name="oldIsMenuEnabled">
-        /// The old IsMenuEnabled value.
+        ///     The old IsMenuEnabled value.
         /// </param>
         /// <param name="newIsMenuEnabled">
-        /// The new IsMenuEnabled value.
+        ///     The new IsMenuEnabled value.
         /// </param>
         protected virtual void OnIsMenuEnabledChanged(
             bool oldIsMenuEnabled, bool newIsMenuEnabled)
         {
-            if (this.applicationBar != null)
+            if (applicationBar != null)
             {
-                this.applicationBar.IsMenuEnabled = newIsMenuEnabled;
+                applicationBar.IsMenuEnabled = newIsMenuEnabled;
             }
 
-            this.isMenuEnabledChanged = true;
+            isMenuEnabledChanged = true;
         }
+
         #endregion
 
         #region IsMenuVisible
+
         /// <summary>
-        /// IsMenuVisible Dependency Property
+        ///     IsMenuVisible Dependency Property
         /// </summary>
         public static readonly DependencyProperty IsMenuVisibleProperty =
             DependencyProperty.Register(
                 "IsMenuVisible",
-                typeof(bool),
-                typeof(BindableApplicationBar),
+                typeof (bool),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(false, OnIsMenuVisibleChanged));
 
         /// <summary>
-        /// Gets or sets a value indicating whether the menu is visible.
+        ///     Gets or sets a value indicating whether the menu is visible.
         /// </summary>
         public bool IsMenuVisible
         {
-            get { return (bool)GetValue(IsMenuVisibleProperty); }
+            get { return (bool) GetValue(IsMenuVisibleProperty); }
             set { SetValue(IsMenuVisibleProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the IsMenuVisible property.
+        ///     Handles changes to the IsMenuVisible property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnIsMenuVisibleChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            bool oldIsMenuVisible = (bool)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            bool oldIsMenuVisible = (bool) e.OldValue;
             bool newIsMenuVisible = target.IsMenuVisible;
             target.OnIsMenuVisibleChanged(
                 oldIsMenuVisible, newIsMenuVisible);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the IsMenuVisible property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the IsMenuVisible property.
         /// </summary>
         /// <param name="oldIsMenuVisible">
-        /// The old IsMenuVisible value.
+        ///     The old IsMenuVisible value.
         /// </param>
         /// <param name="newIsMenuVisible">
-        /// The new IsMenuVisible value.
+        ///     The new IsMenuVisible value.
         /// </param>
         protected virtual void OnIsMenuVisibleChanged(
             bool oldIsMenuVisible, bool newIsMenuVisible)
         {
-            if (this.isMenuVisible != newIsMenuVisible)
+            if (isMenuVisible != newIsMenuVisible)
             {
                 // Make sure the property is read-only.
-                this.IsMenuVisible = this.isMenuVisible;
+                IsMenuVisible = isMenuVisible;
             }
         }
 
         /// <summary>
-        /// Used to make sure the dependency property is read-only.
+        ///     Used to make sure the dependency property is read-only.
         /// </summary>
         private bool isMenuVisible;
+
         #endregion
 
         #region BackgroundColor
+
         /// <summary>
-        /// BackgroundColor Dependency Property
+        ///     BackgroundColor Dependency Property
         /// </summary>
         public static readonly DependencyProperty BackgroundColorProperty =
             DependencyProperty.Register(
                 "BackgroundColor",
-                typeof(Color),
-                typeof(BindableApplicationBar),
+                typeof (Color),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(
                     Colors.Magenta, OnBackgroundColorChanged));
 
         /// <summary>
-        /// Gets or sets the BackgroundColor property.
-        /// This dependency property indicates the BackgroundColor
-        /// of the ApplicationBar.
+        ///     Gets or sets the BackgroundColor property.
+        ///     This dependency property indicates the BackgroundColor
+        ///     of the ApplicationBar.
         /// </summary>
         public Color BackgroundColor
         {
-            get { return (Color)GetValue(BackgroundColorProperty); }
+            get { return (Color) GetValue(BackgroundColorProperty); }
             set { SetValue(BackgroundColorProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the BackgroundColor property.
+        ///     Handles changes to the BackgroundColor property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnBackgroundColorChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            Color oldBackgroundColor = (Color)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            Color oldBackgroundColor = (Color) e.OldValue;
             Color newBackgroundColor = target.BackgroundColor;
             target.OnBackgroundColorChanged(
                 oldBackgroundColor, newBackgroundColor);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the BackgroundColor property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the BackgroundColor property.
         /// </summary>
         /// <param name="oldBackgroundColor">
-        /// The old BackgroundColor value.
+        ///     The old BackgroundColor value.
         /// </param>
         /// <param name="newBackgroundColor">
-        /// The new BackgroundColor value.
+        ///     The new BackgroundColor value.
         /// </param>
         protected virtual void OnBackgroundColorChanged(
             Color oldBackgroundColor, Color newBackgroundColor)
         {
-            if (this.applicationBar != null)
+            if (applicationBar != null)
             {
-                this.applicationBar.BackgroundColor = this.BackgroundColor;
+                applicationBar.BackgroundColor = BackgroundColor;
             }
 
-            this.backgroundColorChanged = true;
+            backgroundColorChanged = true;
         }
+
         #endregion
 
         #region ForegroundColor
+
         /// <summary>
-        /// ForegroundColor Dependency Property
+        ///     ForegroundColor Dependency Property
         /// </summary>
         public static readonly DependencyProperty ForegroundColorProperty =
             DependencyProperty.Register(
                 "ForegroundColor",
-                typeof(Color),
-                typeof(BindableApplicationBar),
+                typeof (Color),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(
                     Colors.Magenta, OnForegroundColorChanged));
 
         /// <summary>
-        /// Gets or sets the ForegroundColor property. This dependency
-        /// property indicates the ForegroundColor of the ApplicationBar.
+        ///     Gets or sets the ForegroundColor property. This dependency
+        ///     property indicates the ForegroundColor of the ApplicationBar.
         /// </summary>
         public Color ForegroundColor
         {
-            get { return (Color)GetValue(ForegroundColorProperty); }
+            get { return (Color) GetValue(ForegroundColorProperty); }
             set { SetValue(ForegroundColorProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the ForegroundColor property.
+        ///     Handles changes to the ForegroundColor property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnForegroundColorChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            Color oldForegroundColor = (Color)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            Color oldForegroundColor = (Color) e.OldValue;
             Color newForegroundColor = target.ForegroundColor;
             target.OnForegroundColorChanged(
                 oldForegroundColor, newForegroundColor);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the ForegroundColor property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the ForegroundColor property.
         /// </summary>
         /// <param name="oldForegroundColor">
-        /// The old ForegroundColor value.
+        ///     The old ForegroundColor value.
         /// </param>
         /// <param name="newForegroundColor">
-        /// The new ForegroundColor value.
+        ///     The new ForegroundColor value.
         /// </param>
         protected virtual void OnForegroundColorChanged(
             Color oldForegroundColor, Color newForegroundColor)
         {
-            if (this.applicationBar != null)
+            if (applicationBar != null)
             {
-                this.applicationBar.ForegroundColor = this.ForegroundColor;
+                applicationBar.ForegroundColor = ForegroundColor;
             }
 
-            this.foregroundColorChanged = true;
+            foregroundColorChanged = true;
         }
+
         #endregion
 
         #region Mode
+
         /// <summary>
-        /// Mode Dependency Property
+        ///     Mode Dependency Property
         /// </summary>
         public static readonly DependencyProperty ModeProperty =
             DependencyProperty.Register(
                 "Mode",
-                typeof(ApplicationBarMode),
-                typeof(BindableApplicationBar),
+                typeof (ApplicationBarMode),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(
                     ApplicationBarMode.Default, OnModeChanged));
 
         /// <summary>
-        /// Gets or sets the Mode property. This dependency property 
-        /// indicates the Mode of the ApplicationBar.
+        ///     Gets or sets the Mode property. This dependency property
+        ///     indicates the Mode of the ApplicationBar.
         /// </summary>
         public ApplicationBarMode Mode
         {
-            get { return (ApplicationBarMode)GetValue(ModeProperty); }
+            get { return (ApplicationBarMode) GetValue(ModeProperty); }
             set { SetValue(ModeProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the Mode property.
+        ///     Handles changes to the Mode property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnModeChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            ApplicationBarMode oldMode = (ApplicationBarMode)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            ApplicationBarMode oldMode = (ApplicationBarMode) e.OldValue;
             ApplicationBarMode newMode = target.Mode;
             target.OnModeChanged(oldMode, newMode);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the Mode property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the Mode property.
         /// </summary>
         /// <param name="oldMode">The old Mode value.</param>
         /// <param name="newMode">The new Mode value.</param>
         protected virtual void OnModeChanged(
             ApplicationBarMode oldMode, ApplicationBarMode newMode)
         {
-            if (this.applicationBar != null)
+            if (applicationBar != null)
             {
-                this.applicationBar.Mode = newMode;
+                applicationBar.Mode = newMode;
             }
 
-            this.modeChanged = true;
+            modeChanged = true;
         }
+
         #endregion
 
         #region BindableOpacity
+
         /// <summary>
-        /// BindableOpacity Dependency Property
+        ///     BindableOpacity Dependency Property
         /// </summary>
         public static readonly DependencyProperty BindableOpacityProperty =
             DependencyProperty.Register(
                 "BindableOpacity",
-                typeof(double),
-                typeof(BindableApplicationBar),
+                typeof (double),
+                typeof (BindableApplicationBar),
                 new PropertyMetadata(1.0, OnBindableOpacityChanged));
 
         /// <summary>
-        /// Gets or sets the BindableOpacity property.
-        /// This dependency property indicates the Opacity of
-        /// the ApplicationBar.
-        /// The <see cref="UIElement.Opacity"/> property can be used instead,
-        /// since BindableOpacity is only used to allow handling changes to
-        /// <see cref="UIElement.Opacity"/>.
+        ///     Gets or sets the BindableOpacity property.
+        ///     This dependency property indicates the Opacity of
+        ///     the ApplicationBar.
+        ///     The <see cref="UIElement.Opacity" /> property can be used instead,
+        ///     since BindableOpacity is only used to allow handling changes to
+        ///     <see cref="UIElement.Opacity" />.
         /// </summary>
         public double BindableOpacity
         {
-            get { return (double)GetValue(BindableOpacityProperty); }
+            get { return (double) GetValue(BindableOpacityProperty); }
             set { SetValue(BindableOpacityProperty, value); }
         }
 
         /// <summary>
-        /// Handles changes to the BindableOpacity property.
+        ///     Handles changes to the BindableOpacity property.
         /// </summary>
         /// <param name="d">
-        /// The <see cref="DependencyObject"/> on which
-        /// the property has changed value.
+        ///     The <see cref="DependencyObject" /> on which
+        ///     the property has changed value.
         /// </param>
         /// <param name="e">
-        /// Event data that is issued by any event that
-        /// tracks changes to the effective value of this property.
+        ///     Event data that is issued by any event that
+        ///     tracks changes to the effective value of this property.
         /// </param>
         private static void OnBindableOpacityChanged(
             DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BindableApplicationBar target = (BindableApplicationBar)d;
-            double oldBindableOpacity = (double)e.OldValue;
+            BindableApplicationBar target = (BindableApplicationBar) d;
+            double oldBindableOpacity = (double) e.OldValue;
             double newBindableOpacity = target.BindableOpacity;
             target.OnBindableOpacityChanged(
                 oldBindableOpacity, newBindableOpacity);
         }
 
         /// <summary>
-        /// Provides derived classes an opportunity to handle changes to
-        /// the BindableOpacity property.
+        ///     Provides derived classes an opportunity to handle changes to
+        ///     the BindableOpacity property.
         /// </summary>
         /// <param name="oldBindableOpacity">
-        /// The old BindableOpacity value.
+        ///     The old BindableOpacity value.
         /// </param>
         /// <param name="newBindableOpacity">
-        /// The new BindableOpacity value.
+        ///     The new BindableOpacity value.
         /// </param>
         protected virtual void OnBindableOpacityChanged(
             double oldBindableOpacity, double newBindableOpacity)
         {
-            if (this.applicationBar != null)
+            if (applicationBar != null)
             {
-                this.applicationBar.Opacity = newBindableOpacity;
+                applicationBar.Opacity = newBindableOpacity;
             }
 
-            this.bindableOpacityChanged = true;
+            bindableOpacityChanged = true;
         }
+
         #endregion
 
         #region CTOR
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="BindableApplicationBar"/> class.
+        ///     Initializes a new instance of the <see cref="BindableApplicationBar" /> class.
         /// </summary>
         public BindableApplicationBar()
         {
-            this.Buttons = new DependencyObjectCollection<BindableApplicationBarButton>();
-            this.MenuItems = new DependencyObjectCollection<BindableApplicationBarMenuItem>();
+            Buttons = new DependencyObjectCollection<BindableApplicationBarButton>();
+            MenuItems = new DependencyObjectCollection<BindableApplicationBarMenuItem>();
 
-            DefaultStyleKey = typeof(BindableApplicationBar);
-            this.Buttons.CollectionChanged +=
-                this.ButtonsCollectionChanged;
-            this.MenuItems.CollectionChanged +=
-                this.MenuItemsCollectionChanged;
-            this.buttonsSourceButtons.CollectionChanged +=
-                this.ButtonsCollectionChanged;
-            this.menuItemsSourceMenuItems.CollectionChanged +=
-                this.MenuItemsCollectionChanged;
+            DefaultStyleKey = typeof (BindableApplicationBar);
+            Buttons.CollectionChanged +=
+                ButtonsCollectionChanged;
+            MenuItems.CollectionChanged +=
+                MenuItemsCollectionChanged;
+            buttonsSourceButtons.CollectionChanged +=
+                ButtonsCollectionChanged;
+            menuItemsSourceMenuItems.CollectionChanged +=
+                MenuItemsCollectionChanged;
             SetBinding(
                 BindableOpacityProperty,
                 new Binding("Opacity")
@@ -1065,186 +1090,198 @@ namespace PhoneGuitarTab.Controls
                         new RelativeSource(RelativeSourceMode.Self)
                 });
         }
+
         #endregion
 
         #region Attach()
+
         /// <summary>
-        /// Attaches the BindableApplicationBar to the specified page,
-        /// creating the ApplicationBar if required and adding the buttons
-        /// and menu items specified in the Buttons and MenuItems properties.
+        ///     Attaches the BindableApplicationBar to the specified page,
+        ///     creating the ApplicationBar if required and adding the buttons
+        ///     and menu items specified in the Buttons and MenuItems properties.
         /// </summary>
         /// <param name="parentPage">The parentPage to attach to.</param>
         public void Attach(PhoneApplicationPage parentPage)
         {
-            this.page = parentPage;
-            this.applicationBar =
-                (ApplicationBar)(//parentPage.ApplicationBar ?? 
-                (parentPage.ApplicationBar = new ApplicationBar()));
-            this.applicationBar.StateChanged +=
-                this.ApplicationBarStateChanged;
+            page = parentPage;
+            applicationBar =
+                (ApplicationBar) ( //parentPage.ApplicationBar ?? 
+                    (parentPage.ApplicationBar = new ApplicationBar()));
+            applicationBar.StateChanged +=
+                ApplicationBarStateChanged;
 
-            if (this.GetBindingExpression(DataContextProperty) == null &&
-                this.DataContext == null)
+            if (GetBindingExpression(DataContextProperty) == null &&
+                DataContext == null)
             {
-                this.SetBinding(
+                SetBinding(
                     DataContextProperty,
-                    new Binding("DataContext") { Source = this.page });
+                    new Binding("DataContext") {Source = page});
             }
 
-            this.SynchronizeProperties();
-            this.AttachButtons(this.Buttons);
-            this.AttachButtons(this.buttonsSourceButtons);
-            this.AttachMenuItems(this.MenuItems);
-            this.AttachMenuItems(this.menuItemsSourceMenuItems);
+            SynchronizeProperties();
+            AttachButtons(Buttons);
+            AttachButtons(buttonsSourceButtons);
+            AttachMenuItems(MenuItems);
+            AttachMenuItems(menuItemsSourceMenuItems);
         }
+
         #endregion
 
         #region SynchronizeProperties()
+
         private void SynchronizeProperties()
         {
-            if (this.isVisibleChanged)
+            if (isVisibleChanged)
             {
-                this.applicationBar.IsVisible = this.IsVisible;
+                applicationBar.IsVisible = IsVisible;
             }
             else if (GetBindingExpression(IsVisibleProperty) == null)
             {
-                this.IsVisible = this.applicationBar.IsVisible;
+                IsVisible = applicationBar.IsVisible;
             }
 
-            if (this.isMenuEnabledChanged)
+            if (isMenuEnabledChanged)
             {
-                this.applicationBar.IsMenuEnabled = this.IsMenuEnabled;
+                applicationBar.IsMenuEnabled = IsMenuEnabled;
             }
             else if (GetBindingExpression(IsMenuEnabledProperty) == null)
             {
-                this.IsMenuEnabled = this.applicationBar.IsMenuEnabled;
+                IsMenuEnabled = applicationBar.IsMenuEnabled;
             }
 
-            if (this.backgroundColorChanged)
+            if (backgroundColorChanged)
             {
-                this.applicationBar.BackgroundColor = this.BackgroundColor;
+                applicationBar.BackgroundColor = BackgroundColor;
             }
             else if (GetBindingExpression(BackgroundColorProperty) == null)
             {
-                this.BackgroundColor = this.applicationBar.BackgroundColor;
+                BackgroundColor = applicationBar.BackgroundColor;
             }
 
-            if (this.foregroundColorChanged)
+            if (foregroundColorChanged)
             {
-                this.applicationBar.ForegroundColor = this.ForegroundColor;
+                applicationBar.ForegroundColor = ForegroundColor;
             }
             else if (GetBindingExpression(ForegroundColorProperty) == null)
             {
-                this.ForegroundColor = this.applicationBar.ForegroundColor;
+                ForegroundColor = applicationBar.ForegroundColor;
             }
 
-            if (this.modeChanged)
+            if (modeChanged)
             {
-                this.applicationBar.Mode = this.Mode;
+                applicationBar.Mode = Mode;
             }
             else if (GetBindingExpression(ModeProperty) == null)
             {
-                this.Mode = this.applicationBar.Mode;
+                Mode = applicationBar.Mode;
             }
 
-            if (this.bindableOpacityChanged)
+            if (bindableOpacityChanged)
             {
-                this.applicationBar.Opacity = this.BindableOpacity;
+                applicationBar.Opacity = BindableOpacity;
             }
             else if (GetBindingExpression(BindableOpacityProperty) == null)
             {
-                this.BindableOpacity = this.applicationBar.Opacity;
+                BindableOpacity = applicationBar.Opacity;
             }
         }
+
         #endregion
 
         #region AttachButtons()
+
         private void AttachButtons(
             IEnumerable<BindableApplicationBarButton> buttons)
         {
-            int i = this.applicationBar.Buttons.Count;
+            int i = applicationBar.Buttons.Count;
 
             foreach (var button in buttons)
             {
-                button.Attach(this.applicationBar, i++);
+                button.Attach(applicationBar, i++);
 
                 if (button.GetBindingExpression(
-                        FrameworkElement.DataContextProperty) == null &&
+                    FrameworkElement.DataContextProperty) == null &&
                     button.DataContext == null)
                 {
                     button.SetBinding(
                         FrameworkElement.DataContextProperty,
-                        new Binding("DataContext") { Source = this });
+                        new Binding("DataContext") {Source = this});
                 }
             }
         }
+
         #endregion
 
         #region AttachMenuItems()
+
         private void AttachMenuItems(
             IEnumerable<BindableApplicationBarMenuItem> menuItems)
         {
-            int j = this.applicationBar.MenuItems.Count;
+            int j = applicationBar.MenuItems.Count;
 
             foreach (var menuItem in menuItems)
             {
-                menuItem.Attach(this.applicationBar, j++);
+                menuItem.Attach(applicationBar, j++);
 
                 if (menuItem.GetBindingExpression(
-                        FrameworkElement.DataContextProperty) == null &&
+                    FrameworkElement.DataContextProperty) == null &&
                     menuItem.DataContext == null)
                 {
                     menuItem.SetBinding(
                         FrameworkElement.DataContextProperty,
-                        new Binding("DataContext") { Source = this });
+                        new Binding("DataContext") {Source = this});
                 }
             }
         }
+
         #endregion
 
         #region Detach()
+
         /// <summary>
-        /// Detaches from the specified page, removing all the buttons
-        /// and menu items specified in the Buttons and MenuItems properties.
+        ///     Detaches from the specified page, removing all the buttons
+        ///     and menu items specified in the Buttons and MenuItems properties.
         /// </summary>
         /// <remarks>
-        /// Note: The code in this method has not been tested and is likely
-        /// not to work properly, will possibly raise exceptions
-        /// and leak memory.
+        ///     Note: The code in this method has not been tested and is likely
+        ///     not to work properly, will possibly raise exceptions
+        ///     and leak memory.
         /// </remarks>
         /// <param name="parentPage">The parentPage.</param>
         public void Detach(PhoneApplicationPage parentPage)
         {
-            if (parentPage != this.page)
+            if (parentPage != page)
             {
                 throw new InvalidOperationException();
             }
 
-            if (this.page != parentPage)
+            if (page != parentPage)
             {
                 return;
             }
 
-            var binding = this.GetBindingExpression(DataContextProperty);
+            var binding = GetBindingExpression(DataContextProperty);
 
             if (binding != null &&
-                binding.ParentBinding.Source == this.page)
+                binding.ParentBinding.Source == page)
             {
-                this.DataContext = null;
+                DataContext = null;
             }
 
-            this.DetachButtons(this.buttonsSourceButtons);
-            this.DetachButtons(this.Buttons);
-            this.DetachMenuItems(this.menuItemsSourceMenuItems);
-            this.DetachMenuItems(this.MenuItems);
+            DetachButtons(buttonsSourceButtons);
+            DetachButtons(Buttons);
+            DetachMenuItems(menuItemsSourceMenuItems);
+            DetachMenuItems(MenuItems);
 
-            this.applicationBar.StateChanged -=
-                this.ApplicationBarStateChanged;
-            this.applicationBar = null;
+            applicationBar.StateChanged -=
+                ApplicationBarStateChanged;
+            applicationBar = null;
         }
+
         #endregion
 
         #region DetachButtons()
+
         private void DetachButtons(
             IEnumerable<BindableApplicationBarButton> buttons)
         {
@@ -1258,13 +1295,15 @@ namespace PhoneGuitarTab.Controls
                 if (binding != null &&
                     binding.ParentBinding.Source == this)
                 {
-                    this.DataContext = null;
+                    DataContext = null;
                 }
             }
         }
+
         #endregion
 
         #region DetachMenuItems()
+
         private void DetachMenuItems(
             IEnumerable<BindableApplicationBarMenuItem> menuItems)
         {
@@ -1278,83 +1317,95 @@ namespace PhoneGuitarTab.Controls
                 if (binding != null &&
                     binding.ParentBinding.Source == this)
                 {
-                    this.DataContext = null;
+                    DataContext = null;
                 }
             }
         }
+
         #endregion
 
         #region AttachButton()
+
         private void AttachButton(BindableApplicationBarButton button, int i)
         {
             if (button.GetBindingExpression(
-                    FrameworkElement.DataContextProperty) == null &&
+                FrameworkElement.DataContextProperty) == null &&
                 button.GetValue(
                     FrameworkElement.DataContextProperty) == null)
             {
-                button.DataContext = this.DataContext;
+                button.DataContext = DataContext;
             }
 
-            button.Attach(this.applicationBar, i);
+            button.Attach(applicationBar, i);
         }
+
         #endregion
 
         #region DetachButton()
+
         private void DetachButton(BindableApplicationBarButton button)
         {
             if (button.GetBindingExpression(DataContextProperty) == null &&
-                button.GetValue(DataContextProperty) == this.DataContext)
+                button.GetValue(DataContextProperty) == DataContext)
             {
                 button.DataContext = null;
             }
 
             button.Detach();
         }
+
         #endregion
 
         #region AttachMenuItem()
+
         private void AttachMenuItem(
             BindableApplicationBarMenuItem menuItem, int i)
         {
             if (menuItem.GetBindingExpression(
-                    FrameworkElement.DataContextProperty) == null &&
+                FrameworkElement.DataContextProperty) == null &&
                 menuItem.GetValue(
                     FrameworkElement.DataContextProperty) == null)
             {
-                menuItem.DataContext = this.DataContext;
+                menuItem.DataContext = DataContext;
             }
 
-            menuItem.Attach(this.applicationBar, i);
+            menuItem.Attach(applicationBar, i);
         }
+
         #endregion
 
         #region DetachMenuItem()
+
         private void DetachMenuItem(BindableApplicationBarMenuItem menuItem)
         {
             if (menuItem.GetBindingExpression(DataContextProperty) == null &&
-                menuItem.GetValue(DataContextProperty) == this.DataContext)
+                menuItem.GetValue(DataContextProperty) == DataContext)
             {
                 menuItem.DataContext = null;
             }
 
             menuItem.Detach();
         }
+
         #endregion
 
         #region ApplicationBarStateChanged()
+
         private void ApplicationBarStateChanged(
             object sender, ApplicationBarStateChangedEventArgs e)
         {
-            this.isMenuVisible = e.IsMenuVisible;
-            this.IsMenuVisible = this.isMenuVisible;
+            isMenuVisible = e.IsMenuVisible;
+            IsMenuVisible = isMenuVisible;
         }
+
         #endregion
 
         #region ButtonsCollectionChanged()
+
         private void ButtonsCollectionChanged(
             object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (this.applicationBar == null)
+            if (applicationBar == null)
             {
                 return;
             }
@@ -1363,7 +1414,7 @@ namespace PhoneGuitarTab.Controls
             {
                 foreach (var oldItem in e.OldItems)
                 {
-                    this.DetachButton((BindableApplicationBarButton)oldItem);
+                    DetachButton((BindableApplicationBarButton) oldItem);
                 }
             }
 
@@ -1373,19 +1424,21 @@ namespace PhoneGuitarTab.Controls
 
                 foreach (var newItem in e.NewItems)
                 {
-                    this.AttachButton(
-                        (BindableApplicationBarButton)newItem,
+                    AttachButton(
+                        (BindableApplicationBarButton) newItem,
                         e.NewStartingIndex + i++);
                 }
             }
         }
+
         #endregion
 
         #region MenuItemsCollectionChanged()
+
         private void MenuItemsCollectionChanged(
             object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (this.applicationBar == null)
+            if (applicationBar == null)
             {
                 return;
             }
@@ -1394,8 +1447,8 @@ namespace PhoneGuitarTab.Controls
             {
                 foreach (var oldItem in e.OldItems)
                 {
-                    this.DetachMenuItem(
-                        (BindableApplicationBarMenuItem)oldItem);
+                    DetachMenuItem(
+                        (BindableApplicationBarMenuItem) oldItem);
                 }
             }
 
@@ -1405,12 +1458,13 @@ namespace PhoneGuitarTab.Controls
 
                 foreach (var newItem in e.NewItems)
                 {
-                    this.AttachMenuItem(
-                        (BindableApplicationBarMenuItem)newItem,
+                    AttachMenuItem(
+                        (BindableApplicationBarMenuItem) newItem,
                         e.NewStartingIndex + i++);
                 }
             }
         }
+
         #endregion
     }
 }

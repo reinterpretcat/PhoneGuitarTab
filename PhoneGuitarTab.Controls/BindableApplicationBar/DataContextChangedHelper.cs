@@ -10,7 +10,8 @@ namespace PhoneGuitarTab.Controls
     }
 
     /// <summary>
-    /// Allows controls that implement IDataContextChanged to subscribe to an event triggered when their DataContext changes.
+    ///     Allows controls that implement IDataContextChanged to subscribe to an event triggered when their DataContext
+    ///     changes.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public static class DataContextChangedHelper<T> where T : FrameworkElement, IDataContextChangedHandler<T>
@@ -19,20 +20,20 @@ namespace PhoneGuitarTab.Controls
 
         public static readonly DependencyProperty InternalDataContextProperty =
             DependencyProperty.Register(InternalDataContextPropertyName,
-                                        typeof(Object),
-                                        typeof(T),
-                                        new PropertyMetadata(InternalDataContextChanged));
+                typeof (Object),
+                typeof (T),
+                new PropertyMetadata(InternalDataContextChanged));
 
         private static void InternalDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            T control = (T)sender;
+            T control = (T) sender;
 
             // Invoking IDataContextChangedHandler.DataContextChanged
             control.DataContextChanged(control, e);
         }
 
         /// <summary>
-        /// Subscribes a control that implements IDataContextChangedHandler to receive DataContextChange events.
+        ///     Subscribes a control that implements IDataContextChangedHandler to receive DataContextChange events.
         /// </summary>
         /// <param name="control"></param>
         public static void SubscribeToDataContextChanged(T control)

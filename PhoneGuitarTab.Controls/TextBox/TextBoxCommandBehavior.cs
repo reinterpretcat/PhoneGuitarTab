@@ -10,16 +10,16 @@ namespace PhoneGuitarTab.Controls
             : base(textBoxObject)
         {
             textBoxObject.KeyUp += (s, e) =>
-                                       {
-                                           string input = (s as TextBox).Text;
-                                           //TODO validate user input here
-                                           if ((e.Key == Key.Enter) 
-                                               && (!String.IsNullOrEmpty(input)))
-                                           {
-                                               this.CommandParameter = input;
-                                               ExecuteCommand();
-                                           }
-                                       };
+            {
+                string input = (s as TextBox).Text;
+                //TODO validate user input here
+                if ((e.Key == Key.Enter)
+                    && (!String.IsNullOrEmpty(input)))
+                {
+                    CommandParameter = input;
+                    ExecuteCommand();
+                }
+            };
         }
     }
 }
