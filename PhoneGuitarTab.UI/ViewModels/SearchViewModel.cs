@@ -24,7 +24,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Fields
 
-        private UltimateGuitarTabSearcher groupSearch;
+        private ITabSearcher _tabSearcher;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
         private HorizontalAlignment _pagesListAlignment;
@@ -54,7 +54,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         #region Constructors
 
         [Dependency]
-        public SearchViewModel(IDataContextService database, MessageHub hub)
+        public SearchViewModel(ITabSearcher tabSearcher, IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
             CreateCommands();
@@ -65,6 +65,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             HeaderPagingVisibility = Visibility.Collapsed;
 
             _searchGroupTabs = new TabsByName(database, true);
+            _tabSearcher = tabSearcher;
         }
 
         #endregion Constructors
@@ -590,7 +591,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             //TODO examine e.Error 
             if (e.Error == null)
             {
-                var groupTabs = groupSearch.Entries.Where(FilterTab).
+                var groupTabs = _tabSearcher.Entries.Where(FilterTab).
                     Select(entry => new TabEntity
                     {
                         SearchId = entry.Id,
@@ -608,14 +609,14 @@ namespace PhoneGuitarTab.UI.ViewModels
                 Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {
-                        Pages = Enumerable.Range(1, groupSearch.Summary.PageCount).Select(p => p.ToString());
+                        Pages = Enumerable.Range(1, _tabSearcher.Summary.PageCount).Select(p => p.ToString());
 
                         SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
                         FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
                         if (Pages.Any())
                             SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
                         RaisePropertyChanged("SelectedPage");
-                        AssignHeaderPagingUI(groupSearch.Summary.PageCount);
+                        AssignHeaderPagingUI(_tabSearcher.Summary.PageCount);
                         IsSearching = false;
                     });
             }
@@ -681,15 +682,13 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
 
             SearchGroupTabs = null;
-            groupSearch = new UltimateGuitarTabSearcher(bandName, songName);
-
             IsHintVisible = false;
             IsNothingFound = false;
-            groupSearch.SearchComplete += (s, e) => { SearchCompletedHandler(e); };
+            _tabSearcher.SearchComplete += (s, e) => { SearchCompletedHandler(e); };
 
             IsSearching = true;
 
-            groupSearch.Run(CurrentPageIndex, SearchTabType);
+            _tabSearcher.Run(bandName, songName, CurrentPageIndex, SearchTabType);
         }
 
         private void AssignHeaderPagingUI(int pageCount)

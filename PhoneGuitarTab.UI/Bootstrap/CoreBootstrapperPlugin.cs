@@ -2,6 +2,8 @@
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
+using PhoneGuitarTab.Search;
+using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.Bootstrap
@@ -30,6 +32,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
 
             Container.Register(Component.For<RatingService>().Use<RatingService>().Singleton());
             Container.Register(Component.For<IDialogController>().Use<ToastDialogController>().Singleton());
+
+            Container.Register(Component.For<ITabSearcher>().Use<UltimateGuitarTabSearcher>());
 
             return true;
         }

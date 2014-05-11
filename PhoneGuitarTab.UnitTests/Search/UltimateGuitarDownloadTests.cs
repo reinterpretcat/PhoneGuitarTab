@@ -31,7 +31,7 @@ namespace PhoneGuitarTab.UnitTests.Search
         {
             var destination = Guid.NewGuid().ToString();
 
-            var searcher = new UltimateGuitarTabSearcher(SearchContext.DefaulGroupName, SearchContext.DefaultSongName);
+            var searcher = new UltimateGuitarTabSearcher();
             var mre = new ManualResetEvent(false);
             searcher.SearchComplete += (sender, args) =>
             {
@@ -43,7 +43,7 @@ namespace PhoneGuitarTab.UnitTests.Search
 
             };
 
-            searcher.Run(0, type);
+            searcher.Run(SearchContext.DefaulGroupName, SearchContext.DefaultSongName, 0, type);
 
             mre.WaitOne(SearchContext.SearchTimeout);
 

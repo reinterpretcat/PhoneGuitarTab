@@ -15,11 +15,11 @@ namespace PhoneGuitarTab.UnitTests.Search
         [TestMethod]
         public void CanSearchForBand()
         {
-            var searcher = new UltimateGuitarTabSearcher(SearchContext.DefaulGroupName, "");
+            var searcher = new UltimateGuitarTabSearcher();
             var mre = new ManualResetEvent(false);
             searcher.SearchComplete += (sender, args) => mre.Set();
             
-            searcher.Run(0, TabulatureType.All);
+            searcher.Run(SearchContext.DefaulGroupName, "", 0, TabulatureType.All);
 
             mre.WaitOne(SearchContext.SearchTimeout); // NOTE wait only two minutes
 
@@ -31,11 +31,11 @@ namespace PhoneGuitarTab.UnitTests.Search
         [TestMethod]
         public void CanSearchForBandByPage()
         {
-            var searcher = new UltimateGuitarTabSearcher(SearchContext.DefaulGroupName, "");
+            var searcher = new UltimateGuitarTabSearcher();
             var mre = new ManualResetEvent(false);
             searcher.SearchComplete += (sender, args) => mre.Set();
 
-            searcher.Run(1, TabulatureType.All);
+            searcher.Run(SearchContext.DefaulGroupName, "", 1, TabulatureType.All);
 
             mre.WaitOne(SearchContext.SearchTimeout);
 
@@ -46,11 +46,11 @@ namespace PhoneGuitarTab.UnitTests.Search
         [TestMethod]
         public void CanSearchForSong()
         {
-            var searcher = new UltimateGuitarTabSearcher(SearchContext.DefaulGroupName, SearchContext.DefaultSongName);
+            var searcher = new UltimateGuitarTabSearcher();
             var mre = new ManualResetEvent(false);
             searcher.SearchComplete += (sender, args) => mre.Set();
-            
-            searcher.Run(0, TabulatureType.All);
+
+            searcher.Run(SearchContext.DefaulGroupName, SearchContext.DefaultSongName, 0, TabulatureType.All);
 
             mre.WaitOne(SearchContext.SearchTimeout); 
 

@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace PhoneGuitarTab.Search.UltimateGuitar
 {
-    public class UltimateGuitarTabSearcher
+    public class UltimateGuitarTabSearcher: ITabSearcher
     {
         private const string RequestTemplateAll =
             "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=300&type[]=400&type[]=500&type[]=700&type[]=800&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC&tab_type_group=all";
@@ -31,19 +31,8 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             {"tab pro", "guitar pro"}
         };
 
-        public SearchTabResultSummary Summary;
-        public List<SearchTabResultEntry> Entries;
-
-        private readonly string _group;
-        private readonly string _song;
-
-        public UltimateGuitarTabSearcher(string group, string song)
-        {
-            _group = group;
-            _song = song;
-            Summary = new SearchTabResultSummary();
-            Entries = new List<SearchTabResultEntry>();
-        }
+        public SearchTabResultSummary Summary { get; private set; }
+        public List<SearchTabResultEntry> Entries { get; private set; }
 
         public event DownloadStringCompletedEventHandler SearchComplete;
 
@@ -57,7 +46,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
         ///     Handler for WebClient that parses xml data into specific objects
         ///     throws specific exceptions if error occurs
         /// </summary>
-        public void Run(int pageNumber, TabulatureType type)
+        public void Run(string group, string song, int pageNumber, TabulatureType type)
         {
             WebClient client = new WebClient();
             client.DownloadStringCompleted += (s, e) =>
@@ -87,7 +76,9 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                     InvokeSearchComplete(e);
                 }
             };
-            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(type), _group, _song, pageNumber)));
+            Summary = new SearchTabResultSummary();
+            Entries = new List<SearchTabResultEntry>();
+            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(type), group, song, pageNumber)));
         }
 
         #region Factory methods
@@ -108,7 +99,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             };
         }
 
-        public SearchTabResultSummary CreateResultSummary(XmlReader reader)
+        private SearchTabResultSummary CreateResultSummary(XmlReader reader)
         {
             return new SearchTabResultSummary
             {
