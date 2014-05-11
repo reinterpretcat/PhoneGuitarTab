@@ -1,0 +1,86 @@
+﻿<Views:ViewPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls" x:Class="PhoneGuitarTab.UI.Views.StaveTabView"  
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    DataContext="{Binding StaveTab, Source={StaticResource Locator}}"
+    Style="{StaticResource TransitionPageStyle}"
+    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded" OrientationChanged="ViewPage_OrientationChanged">
+
+
+    <!-- ApplicationBar -->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default" Opacity="0.6">
+            <shell:ApplicationBarIconButton x:Name ="InstrumentApplicationBarIconButton" IconUri="/Images/instrument/instruments.png" IsEnabled="True" Text="instruments" Click="InstrumentApplicationBar_Click"/>
+            <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
+            <shell:ApplicationBarIconButton x:Name ="ScaleApplicationBarIconButton"  IconUri="/Images/dark/scale.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
+            <!--shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" Text="pin to start" Click="PinToStartIconButton_Click"/-->
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="PinToStartMenuButton" IsEnabled="True" Text="pin this tab.." Click="PinToStartIconButton_Click"/>
+            </shell:ApplicationBar.MenuItems>
+            </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="175*"/>
+            <RowDefinition Height="454*"/>
+            <RowDefinition Height="139*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="563*"/>
+            <ColumnDefinition Width="14*"/>
+            <ColumnDefinition Width="142*"/>
+        </Grid.ColumnDefinitions>
+
+        <phone:WebBrowser x:Name="Browser"
+			IsScriptEnabled="True"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			Loaded="Browser_Loaded"
+            LoadCompleted="Browser_LoadCompleted"
+            MouseLeftButtonUp="Browser_MouseLeftButtonUp"
+			ScriptNotify="Browser_ScriptNotify"
+			NavigationFailed="Browser_NavigationFailed" Grid.ColumnSpan="4" Grid.RowSpan="3" RenderTransformOrigin="0.504,0.578"/>
+        <Controls:AutoScroll x:Name="slider" 
+                             HorizontalAlignment="Left" 
+                             Margin="19,105,0,0" 
+                             VerticalAlignment="Top" 
+                             Height="176" 
+                             Width="60" Grid.Column="3" Grid.RowSpan="2" Visibility="Collapsed"/>
+        <toolkit:ListPicker x:Name="ListPickerInstrument" FullModeHeader="Select Instrument"
+                            Margin="4,104,5,20"
+                            ExpansionMode ="FullScreenOnly"
+                            Visibility="Collapsed" Opacity="0.5"
+                            ItemsSource="{Binding}" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Grid.RowSpan="2" 
+                            Background="{StaticResource PhoneBackgroundBrush}" 
+                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+
+            <toolkit:ListPicker.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding InstrumentName}" />
+                </DataTemplate>
+            </toolkit:ListPicker.ItemTemplate>
+
+            <toolkit:ListPicker.FullModeItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding InstrumentName}" Margin="16 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                </DataTemplate>
+            </toolkit:ListPicker.FullModeItemTemplate>
+        </toolkit:ListPicker>
+
+
+    </Grid>
+
+</Views:ViewPage>

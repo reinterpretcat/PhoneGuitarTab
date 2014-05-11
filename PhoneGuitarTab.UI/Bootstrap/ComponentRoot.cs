@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Linq;
+using PhoneGuitarTab.Core.Bootstrap;
+using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.UI.ViewModels;
 
 namespace PhoneGuitarTab.UI.Bootstrap
 {
-    using System.Linq;
-    using PhoneGuitarTab.Core.Bootstrap;
-    using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Views;
-    using PhoneGuitarTab.UI.ViewModel;
 
     /// <summary>
     /// Represents an application bootstrapper.

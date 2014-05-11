@@ -1,0 +1,367 @@
+﻿<Views:ViewPage x:Class="PhoneGuitarTab.UI.Views.SearchView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                    xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+                    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core"
+                    xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    x:Name="root"
+                    DataContext="{Binding Search, Source={StaticResource Locator}}"
+                    Style="{StaticResource TransitionPageStyle}"
+                    mc:Ignorable="d" >
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="BackKeyPress">
+            <Command:ExecuteCommandAction Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Views:ViewPage.Resources>
+        <Infrastructure:SearchTabTypeImageConverter x:Key="SearchTabTypeImageConverter" />
+
+        <Storyboard x:Name="tabsFadeIn">
+            <DoubleAnimation Storyboard.TargetName="tabsList"
+        		Storyboard.TargetProperty="Opacity" From="0.0"
+        		To="1" Duration="0:0:0.7"/>
+        </Storyboard>
+
+
+        <DataTemplate x:Key="SearchHeaderTemplate">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="8" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock 
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   FontFamily="Segoe UI"
+                   FontSize="18"
+                        Margin="10,-6"
+                  Foreground="{StaticResource PhoneForegroundBrush}"
+                   Text="TAB SEARCH">
+
+                    </TextBlock>
+                    <TextBox  x:Name="searchTextBox" InputScope="Search"
+                                 Grid.ColumnSpan="2" Margin="0,7"
+                                 Text="{Binding Path=DataContext.CurrentSearchText,
+                                                ElementName=root,
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=Explicit}"
+                                 TextChanged="OnSearchTextBoxTextChanged"
+                                 custom:KeyUp.Command="{Binding Path=DataContext.LaunchSearch,
+                                                                ElementName=root}">
+                        <Interactivity:Interaction.Behaviors>
+                            <Infrastructure:Watermark x:Name="waterMark" FontStyle="Italic"
+                                                          Foreground="Gray"
+                                                          Text=" type here.." />
+                        </Interactivity:Interaction.Behaviors>
+                       
+                    </TextBox>
+
+                    <TextBlock x:Name="searchBy"
+                                   Grid.Row="1"
+                                   Margin="12,0,0,-14"
+                                   FontSize="16"
+                                   Opacity="0.7"
+                                   Text="search by "/>
+                    <toolkit:ListPicker x:Name="searchPicker" Grid.Row="2"
+                                         HorizontalContentAlignment="Center"    
+                                        ItemsSource="{Binding Path=DataContext.SearchMethodOptions,ElementName=root}"
+                                            SelectedItem="{Binding Path=DataContext.SearchMethod,ElementName=root,Mode=TwoWay}" >
+                        <toolkit:ListPicker.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </toolkit:ListPicker.ItemTemplate>
+                    </toolkit:ListPicker>
+                    <TextBlock x:Name="selectedType" Grid.Row="1"
+                                   Grid.Column="1"
+                                   Margin="12,0,0,-14"
+                                   FontSize="16"
+                                   Opacity="0.7"
+                                   Text="selected type "  />
+                    <toolkit:ListPicker     x:Name="searchPicker2" 
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            FullModeHeader="Select Tab Type"
+                                            HorizontalContentAlignment="Center"
+                                            ItemsSource="{Binding Path=DataContext.SearchTabTypeOptions, ElementName=root}"
+                                            SelectedItem="{Binding Path=DataContext.SearchTabType,ElementName=root,Mode=TwoWay}">
+
+                        <toolkit:ListPicker.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                    <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="32" Height="32" HorizontalAlignment="Left" >
+                                        <Rectangle.OpacityMask>
+
+                                            <ImageBrush ImageSource="{Binding Converter={StaticResource SearchTabTypeImageConverter}}"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Text="{Binding Converter={StaticResource searchTabTypeConverter}}" HorizontalAlignment="Right" />
+
+                                </StackPanel>
+                               
+                            </DataTemplate>
+                        </toolkit:ListPicker.ItemTemplate>
+
+                        <toolkit:ListPicker.FullModeItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Rectangle VerticalAlignment="Bottom" Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                                        <Rectangle.OpacityMask>
+
+                                            <ImageBrush ImageSource="{Binding Converter={StaticResource SearchTabTypeImageConverter}}"/>
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource searchTabTypeConverter}}" Margin="20 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </toolkit:ListPicker.FullModeItemTemplate>
+                    </toolkit:ListPicker>
+                </Grid>
+
+                <StackPanel Margin="-15,-20,-15,0" HorizontalAlignment="Stretch" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
+                                             ElementName=root}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0"
+                            x:Name="PreviousButton" 
+                            HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                            BorderThickness="0">
+                            <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="/Images/light/previous.png" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="previous" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                        <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <ListBox x:Name="pagesList" HorizontalContentAlignment="Center" 
+                                 ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
+                                 ItemsSource="{Binding Path=DataContext.Pages,ElementName=root}"
+                                 SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <toolkit:WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock x:Name="pageHyperlink"
+                                               FontSize="30"
+                                               Padding=  "{Binding Path=DataContext.PagingListPadding,ElementName=root}"
+                                               Text="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
+                        </StackPanel>
+
+                        <Button Grid.Column="2" x:Name="NextButton" HorizontalAlignment="Right" HorizontalContentAlignment="Right" 
+                        BorderThickness="0">
+                            <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="/Images/light/next.png" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="next" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+                    </Grid>
+
+                </StackPanel>
+
+                <TextBlock Margin="0,80"
+                               HorizontalAlignment="Center"
+                               FontSize="25"
+                               Opacity="0.5"
+                               Text="Sorry, nothing found. &#x0a;Try Searching with a comma: &#x0a;band name, song name"
+                               Visibility="{Binding Path=DataContext.IsNothingFound,
+                                                    ElementName=root,
+                                                    Converter={StaticResource boolVisibility}}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SearchFooterTemplate">
+
+            <StackPanel HorizontalAlignment="Left" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
+                                             ElementName=root}">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            x:Name="PreviousButton" 
+                            HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                            BorderThickness="0">
+                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="/Images/light/previous.png" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="previous" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                    <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                        <ListBox x:Name="pagesList" HorizontalContentAlignment="Center" 
+                                 ItemContainerStyle="{StaticResource PagesListBoxItemStyle}"
+                                 ItemsSource="{Binding Path=DataContext.Pages,ElementName=root}"
+                                 SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <toolkit:WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock x:Name="pageHyperlink"
+                                               FontSize="30"
+                                               Padding=  "{Binding Path=DataContext.PagingListPadding,ElementName=root}"
+                                               Text="{Binding}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+
+                        </ListBox>
+                    </StackPanel>
+
+                    <Button Grid.Column="2" x:Name="NextButton" HorizontalAlignment="Right" HorizontalContentAlignment="Right" 
+                        BorderThickness="0">
+                        <Rectangle Fill="{StaticResource PhoneForegroundBrush}" Width="48" Height="48" >
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="/Images/light/next.png" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="next" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                </Grid>
+
+            </StackPanel>
+
+        </DataTemplate>
+    </Views:ViewPage.Resources>
+    <Grid >
+        <StackPanel Orientation="Vertical" Margin="0,308">
+            <TextBlock x:Name="textBlock2" 
+                   VerticalAlignment="Top" HorizontalAlignment="Center"
+                   FontFamily="Segoe UI Light"
+                   FontSize="22"
+                  
+                  Foreground="{StaticResource PhoneForegroundBrush}"
+                   Text="{Binding Search.SearchInfoTextBlock,Source={StaticResource Locator}}"
+                   Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+            </TextBlock>
+            <ProgressBar x:Name="performanceBar2" 
+                                        VerticalAlignment="Top"
+                                        IsIndeterminate="{Binding Search.IsSearching,
+                                                                  Source={StaticResource Locator},
+                                                                  Mode=TwoWay}"
+                                        Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}" >
+
+            </ProgressBar>
+        </StackPanel>
+        <phone:LongListSelector x:Name="tabsList"
+                            toolkit:TiltEffect.IsTiltEnabled="True"
+                              Background="Transparent" IsGroupingEnabled="True" HideEmptyGroups="True"
+                              ListHeaderTemplate="{StaticResource SearchHeaderTemplate}"
+                              ListFooterTemplate="{StaticResource SearchFooterTemplate}"
+                              GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
+                              JumpListStyle="{StaticResource SearchListJumpListStyle}"
+                              ItemTemplate="{StaticResource SearchTabItemTemplate}"
+                              ItemsSource="{Binding SearchGroupTabs}"
+                              Tag="{Binding FirstTabInList}" Margin="-4,32,-4,0">
+        </phone:LongListSelector>
+        <TextBlock x:Name="textBlock" 
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   FontFamily="Segoe UI Light"
+                   FontSize="20"
+                   Margin="20,2"
+                   Foreground="{StaticResource PhoneForegroundBrush}"
+                   Text="{Binding Search.SearchInfoTextBlock,Source={StaticResource Locator}}"
+                   Visibility="{Binding Search.IsDownloading,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+        </TextBlock>
+        <ProgressBar x:Name="performanceBar" 
+                                        VerticalAlignment="Top"
+                                        IsIndeterminate="{Binding Search.IsDownloading,
+                                                                  Source={StaticResource Locator},
+                                                                  Mode=TwoWay}"
+                                        Visibility="{Binding Search.IsDownloading,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+
+        </ProgressBar>
+    </Grid>
+    <custom:Bindable.ApplicationBar >
+        <custom:BindableApplicationBar Name="Search" Mode="Default">
+            <custom:BindableApplicationBarButton 
+                                                     Command="{Binding Search.LaunchSearch, Source={StaticResource Locator}}"
+                                                     CommandParameter="{Binding Search.CurrentTypedText, Source={StaticResource Locator}}"
+                                                     IsEnabled="{Binding Search.IsSearchButtonEnabled, Source={StaticResource Locator}}"
+                                                     IconUri="/Images/light/go.png"
+                                                     Text="search">
+            </custom:BindableApplicationBarButton>
+        </custom:BindableApplicationBar>
+    </custom:Bindable.ApplicationBar>
+
+
+</Views:ViewPage >

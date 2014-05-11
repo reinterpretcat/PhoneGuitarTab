@@ -1,4 +1,5 @@
 ﻿using PhoneGuitarTab.Core.Services;
+using PhoneGuitarTab.UI.ViewModels;
 
 namespace PhoneGuitarTab.UI.Bootstrap
 {
@@ -9,8 +10,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
     using PhoneGuitarTab.Core.Bootstrap;
     using PhoneGuitarTab.Core.Dependencies;
     using PhoneGuitarTab.Core.Views;
-    using PhoneGuitarTab.UI.ViewModel;
-    
+
     /// <summary>
     /// Processes navigation-specific staff
     /// </summary>

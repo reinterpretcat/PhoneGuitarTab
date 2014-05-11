@@ -149,32 +149,32 @@
     <Compile Include="Infrastructure\TabSyncService.cs" />
     <Compile Include="Infrastructure\TextTabAdapter.cs" />
     <Compile Include="Strings.cs" />
-    <Compile Include="ViewModel\CollectionViewModel.cs" />
-    <Compile Include="ViewModel\SynchronizeViewModel.cs" />
-    <Compile Include="ViewModel\StaveTabViewModel.cs" />
-    <Compile Include="ViewModel\TabViewModelBase.cs" />
-    <Compile Include="View\ErrorView.xaml.cs">
+    <Compile Include="ViewModels\CollectionViewModel.cs" />
+    <Compile Include="ViewModels\SynchronizeViewModel.cs" />
+    <Compile Include="ViewModels\StaveTabViewModel.cs" />
+    <Compile Include="ViewModels\TabViewModelBase.cs" />
+    <Compile Include="Views\ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SynchronizeView.xaml.cs">
+    <Compile Include="Views\SynchronizeView.xaml.cs">
       <DependentUpon>SynchronizeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StaveTabView.xaml.cs">
+    <Compile Include="Views\StaveTabView.xaml.cs">
       <DependentUpon>StaveTabView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PanaromaItems\Bands.xaml.cs">
+    <Compile Include="Views\PanaromaItems\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PanaromaItems\Other.xaml.cs">
+    <Compile Include="Views\PanaromaItems\Other.xaml.cs">
       <DependentUpon>Other.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PanaromaItems\Tabs.xaml.cs">
+    <Compile Include="Views\PanaromaItems\Tabs.xaml.cs">
       <DependentUpon>Tabs.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SearchView.xaml.cs">
+    <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PanaromaItems\History.xaml.cs">
+    <Compile Include="Views\PanaromaItems\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\BandByName.cs" />
@@ -195,26 +195,26 @@
     <Compile Include="Infrastructure\Converters.cs" />
     <Compile Include="Infrastructure\TabFileStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\AboutViewModel.cs" />
-    <Compile Include="ViewModel\DataContextViewModel.cs" />
-    <Compile Include="ViewModel\GroupViewModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\DataContextViewModel.cs" />
+    <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="Infrastructure\SearchType.cs" />
-    <Compile Include="ViewModel\SearchViewModel.cs" />
-    <Compile Include="ViewModel\StartupViewModel.cs" />
-    <Compile Include="ViewModel\TextTabViewModel.cs" />
-    <Compile Include="View\AboutView.xaml.cs">
+    <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\StartupViewModel.cs" />
+    <Compile Include="ViewModels\TextTabViewModel.cs" />
+    <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GroupView.xaml.cs">
+    <Compile Include="Views\GroupView.xaml.cs">
       <DependentUpon>GroupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SearchForBandView.xaml.cs">
+    <Compile Include="Views\SearchForBandView.xaml.cs">
       <DependentUpon>SearchForBandView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StartupView.xaml.cs">
+    <Compile Include="Views\StartupView.xaml.cs">
       <DependentUpon>StartupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TextTabView.xaml.cs">
+    <Compile Include="Views\TextTabView.xaml.cs">
       <DependentUpon>TextTabView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -227,35 +227,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ErrorView.xaml">
+    <Page Include="Views\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SynchronizeView.xaml">
+    <Page Include="Views\SynchronizeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StaveTabView.xaml">
+    <Page Include="Views\StaveTabView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PanaromaItems\Bands.xaml">
+    <Page Include="Views\PanaromaItems\Bands.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PanaromaItems\Other.xaml">
+    <Page Include="Views\PanaromaItems\Other.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PanaromaItems\Tabs.xaml">
+    <Page Include="Views\PanaromaItems\Tabs.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\SearchView.xaml">
+    <Page Include="Views\SearchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PanaromaItems\History.xaml">
+    <Page Include="Views\PanaromaItems\History.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -267,23 +267,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AboutView.xaml">
+    <Page Include="Views\AboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\GroupView.xaml">
+    <Page Include="Views\GroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\SearchForBandView.xaml">
+    <Page Include="Views\SearchForBandView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\StartupView.xaml">
+    <Page Include="Views\StartupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\TextTabView.xaml">
+    <Page Include="Views\TextTabView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
