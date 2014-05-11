@@ -3,10 +3,10 @@
     public class EffectTremoloPicking
     {
         public Duration Duration { get; set; }
-	
-	    public EffectTremoloPicking() 
+
+        public EffectTremoloPicking()
         {
-		    Duration = new Duration();
-	    }
+            Duration = new Duration();
+        }
     }
 }

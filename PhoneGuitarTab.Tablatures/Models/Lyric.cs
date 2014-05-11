@@ -1,5 +1,4 @@
-﻿
-namespace PhoneGuitarTab.Tablatures.Models
+﻿namespace PhoneGuitarTab.Tablatures.Models
 {
     public class Lyric
     {
@@ -8,16 +7,13 @@ namespace PhoneGuitarTab.Tablatures.Models
 
         public bool IsEmpty
         {
-            get
-            {
-                return string.IsNullOrEmpty(Lyrics);
-            }
+            get { return string.IsNullOrEmpty(Lyrics); }
         }
-	
-	    public Lyric()
+
+        public Lyric()
         {
-		    From = 1;
-		    Lyrics = "";
-	    } 
+            From = 1;
+            Lyrics = "";
+        }
     }
 }

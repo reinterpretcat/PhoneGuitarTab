@@ -25,7 +25,7 @@ namespace PhoneGuitarTab.Tablatures.Models
             Value = Quarter;
             IsDotted = false;
             IsDoubleDotted = false;
-            Division = new DivisionType(); 
+            Division = new DivisionType();
         }
     }
 }

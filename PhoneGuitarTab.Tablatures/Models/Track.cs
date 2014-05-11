@@ -1,13 +1,12 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+
 namespace PhoneGuitarTab.Tablatures.Models
 {
-    using System;
-    using System.Collections.Generic;
-
     public class Track
     {
         public static int MaxOffset = 24;
-	    public static int MinOffset = -24;
+        public static int MinOffset = -24;
 
         public int Number { get; set; }
         public int Offset { get; set; }
@@ -19,26 +18,24 @@ namespace PhoneGuitarTab.Tablatures.Models
         public Channel Channel { get; set; }
         public Color Color { get; set; }
         public Lyric Lyrics { get; set; }
-	
-	    public Track() {
-		    Number = 0;
-		    Offset = 0;
-		    Solo = false;
-		    Mute = false;
-		    Name = "";
+
+        public Track()
+        {
+            Number = 0;
+            Offset = 0;
+            Solo = false;
+            Mute = false;
+            Name = "";
             Measures = new List<Measure>();
             Strings = new List<GuitarString>();
-		    Channel = new Channel();
-		    Color = new Color();
-		    Lyrics = new Lyric();
-	    }
+            Channel = new Channel();
+            Color = new Color();
+            Lyrics = new Lyric();
+        }
 
         public bool IsPercussionTrack
         {
-            get
-            {
-                return Channel.IsPercussionChannel;
-            }
-        } 
+            get { return Channel.IsPercussionChannel; }
+        }
     }
 }

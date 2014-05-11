@@ -1,5 +1,4 @@
-﻿
-namespace PhoneGuitarTab.Tablatures.Models
+﻿namespace PhoneGuitarTab.Tablatures.Models
 {
     public class Chord
     {
@@ -24,6 +23,5 @@ namespace PhoneGuitarTab.Tablatures.Models
             }
             return -1;
         }
-	 
     }
 }

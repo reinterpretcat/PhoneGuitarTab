@@ -1,5 +1,4 @@
-﻿
-namespace PhoneGuitarTab.Tablatures.Models
+﻿namespace PhoneGuitarTab.Tablatures.Models
 {
     public class Channel
     {
@@ -36,12 +35,9 @@ namespace PhoneGuitarTab.Tablatures.Models
             Tremolo = DefaultTremolo;
         }
 
-        public  bool IsPercussionChannel
+        public bool IsPercussionChannel
         {
-            get
-            {
-                return (ChannelCode == DefaultPercussionChannel);
-            }
-        } 
+            get { return (ChannelCode == DefaultPercussionChannel); }
+        }
     }
 }

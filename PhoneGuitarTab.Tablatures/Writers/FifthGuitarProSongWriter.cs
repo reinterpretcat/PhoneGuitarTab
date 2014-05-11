@@ -1,12 +1,11 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using PhoneGuitarTab.Tablatures.Models;
+using PhoneGuitarTab.Tablatures.Models.Effects;
+
 namespace PhoneGuitarTab.Tablatures.Writers
 {
-    using System;
-    using System.IO;
-    using System.Collections.Generic;
-    using PhoneGuitarTab.Tablatures.Models;
-    using PhoneGuitarTab.Tablatures.Models.Effects;
-
     public class FifthGuitarProSongWriter : GuitarProSongWriter
     {
         private const string Gp5Version = "FICHIER GUITAR PRO v5.00";
@@ -16,13 +15,13 @@ namespace PhoneGuitarTab.Tablatures.Writers
         private const int GpBendPosition = 60;
 
         private static readonly string[] PageSetupLines =
-            {
-                "%TITLE%", "%SUBTITLE%", "%ARTIST%", "%ALBUM%", "Words by %WORDS%",
-                "Music by %MUSIC%", "Words & Music by %WORDSMUSIC%",
-                "Copyright %COPYRIGHT%",
-                "All Rights Reserved - International Copyright Secured",
-                "Page %N%/%P%", "Moderate"
-            };
+        {
+            "%TITLE%", "%SUBTITLE%", "%ARTIST%", "%ALBUM%", "Words by %WORDS%",
+            "Music by %MUSIC%", "Words & Music by %WORDSMUSIC%",
+            "Copyright %COPYRIGHT%",
+            "All Rights Reserved - International Copyright Secured",
+            "Page %N%/%P%", "Moderate"
+        };
 
         public FifthGuitarProSongWriter(BinaryWriter sw)
             : base(sw)
@@ -43,7 +42,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
             WritePageSetup();
             WriteInt(header.Tempo.Value);
             WriteInt(0);
-            WriteByte((byte)0);
+            WriteByte((byte) 0);
             WriteChannels(song);
             for (int i = 0; i < 42; i++)
             {
@@ -61,9 +60,9 @@ namespace PhoneGuitarTab.Tablatures.Writers
         private void WriteInfo(Song song)
         {
             var comments = ToCommentLines(song.Comments);
-            
+
             WriteStringByteSizeOfInteger(song.Name);
-            
+
             WriteStringByteSizeOfInteger("");
             WriteStringByteSizeOfInteger(song.Artist);
             WriteStringByteSizeOfInteger(song.Album);
@@ -114,7 +113,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
                 WriteByte(ToChannelByte(channels[i].Reverb));
                 WriteByte(ToChannelByte(channels[i].Phaser));
                 WriteByte(ToChannelByte(channels[i].Tremolo));
-                WriteBytes(new sbyte[] { 0, 0 });
+                WriteBytes(new sbyte[] {0, 0});
             }
         }
 
@@ -122,14 +121,14 @@ namespace PhoneGuitarTab.Tablatures.Writers
         {
             WriteInt(210); // Page width
             WriteInt(297); // Page height
-            WriteInt(10);  // Margin left
-            WriteInt(10);  // Margin right
-            WriteInt(15);  // Margin top
-            WriteInt(10);  // Margin bottom
+            WriteInt(10); // Margin left
+            WriteInt(10); // Margin right
+            WriteInt(15); // Margin top
+            WriteInt(10); // Margin bottom
             WriteInt(100); // Score size percent
 
-            WriteByte((byte)0xff); // View flags
-            WriteByte((byte)0x01); // View flags
+            WriteByte(0xff); // View flags
+            WriteByte((byte) 0x01); // View flags
 
             for (int i = 0; i < PageSetupLines.Length; i++)
             {
@@ -165,7 +164,9 @@ namespace PhoneGuitarTab.Tablatures.Writers
             {
                 flags |= 0x40;
             }
-            if (measure.Number == 0 || !(measure.TimeSignature.Denominator.Value == timeSignature.Denominator.Value && measure.TimeSignature.Numerator == timeSignature.Numerator))
+            if (measure.Number == 0 ||
+                !(measure.TimeSignature.Denominator.Value == timeSignature.Denominator.Value &&
+                  measure.TimeSignature.Numerator == timeSignature.Numerator))
             {
                 flags |= 0x01;
                 flags |= 0x02;
@@ -191,15 +192,15 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
             if ((flags & 0x01) != 0)
             {
-                WriteByte((byte)measure.TimeSignature.Numerator);
+                WriteByte((byte) measure.TimeSignature.Numerator);
             }
             if ((flags & 0x02) != 0)
             {
-                WriteByte((byte)measure.TimeSignature.Denominator.Value);
+                WriteByte((byte) measure.TimeSignature.Denominator.Value);
             }
             if ((flags & 0x08) != 0)
             {
-                WriteByte((byte)(measure.RepeatClose + 1));
+                WriteByte((byte) (measure.RepeatClose + 1));
             }
             if ((flags & 0x20) != 0)
             {
@@ -207,7 +208,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
             }
             if ((flags & 0x10) != 0)
             {
-                WriteByte((byte)measure.RepeatAlternative);
+                WriteByte((byte) measure.RepeatAlternative);
             }
             if ((flags & 0x40) != 0)
             {
@@ -219,19 +220,19 @@ namespace PhoneGuitarTab.Tablatures.Writers
             }
             if ((flags & 0x10) == 0)
             {
-                WriteByte((byte)0);
+                WriteByte((byte) 0);
             }
             if (measure.TripletFeel == MeasureHeader.TripletFeelNone)
             {
-                WriteByte((byte)0);
+                WriteByte((byte) 0);
             }
             else if (measure.TripletFeel == MeasureHeader.TripletFeelEighth)
             {
-                WriteByte((byte)1);
+                WriteByte((byte) 1);
             }
             else if (measure.TripletFeel == MeasureHeader.TripletFeelSixteenth)
             {
-                WriteByte((byte)2);
+                WriteByte((byte) 2);
             }
         }
 
@@ -252,7 +253,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
                 flags |= 0x01;
             }
             WriteUnsignedByte(flags);
-            WriteByte((byte)8);
+            WriteByte((byte) 8);
             WriteStringByte(track.Name, 40);
             WriteInt(track.Strings.Count);
             for (int i = 0; i < 7; i++)
@@ -272,7 +273,11 @@ namespace PhoneGuitarTab.Tablatures.Writers
             WriteInt(track.Offset);
             WriteColor(track.Color);
 
-            WriteBytes(new sbyte[] { 67, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 });
+            WriteBytes(new sbyte[]
+            {
+                67, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, 3, -1, -1, -1, -1,
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+            });
         }
 
         private void WriteMeasures(Song song, Tempo tempo)
@@ -385,7 +390,8 @@ namespace PhoneGuitarTab.Tablatures.Writers
             {
                 flags |= 0x08;
             }
-            else if (effect.TremoloBar != null || effect.IsTapping || effect.IsSlapping || effect.IsPopping || effect.IsFadeIn)
+            else if (effect.TremoloBar != null || effect.IsTapping || effect.IsSlapping || effect.IsPopping ||
+                     effect.IsFadeIn)
             {
                 flags |= 0x08;
             }
@@ -406,7 +412,6 @@ namespace PhoneGuitarTab.Tablatures.Writers
             if ((flags & 0x40) != 0)
             {
                 WriteUnsignedByte((voice.IsEmpty ? 0x00 : 0x02));
-
             }
             WriteByte(ParseDuration(duration));
             if ((flags & 0x20) != 0)
@@ -510,11 +515,11 @@ namespace PhoneGuitarTab.Tablatures.Writers
             }
             if ((flags & 0x10) != 0)
             {
-                WriteByte((byte)(((note.Velocity - Velocities.MinVelocity) / Velocities.VelocityIncrement) + 1));
+                WriteByte((byte) (((note.Velocity - Velocities.MinVelocity)/Velocities.VelocityIncrement) + 1));
             }
             if ((flags & 0x20) != 0)
             {
-                WriteByte((byte)note.Value);
+                WriteByte((byte) note.Value);
             }
             SkipBytes(1);
             if ((flags & 0x08) != 0)
@@ -555,7 +560,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
         private void WriteChord(Chord chord)
         {
-            WriteBytes(new sbyte[] { 1, 1, 0, 0, 0, 12, 0, 0, -1, -1, -1, -1, 0, 0, 0, 0, 0 });
+            WriteBytes(new sbyte[] {1, 1, 0, 0, 0, 12, 0, 0, -1, -1, -1, -1, 0, 0, 0, 0, 0});
             WriteStringByte(chord.Name, 21);
             SkipBytes(4);
             WriteInt(chord.FirstFret);
@@ -679,55 +684,54 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
             if ((flags2 & 0x08) != 0)
             {
-                WriteByte((byte)1);
+                WriteByte((byte) 1);
             }
 
             if ((flags2 & 0x10) != 0)
             {
-                WriteByte((byte)1);
+                WriteByte((byte) 1);
             }
 
             if ((flags2 & 0x20) != 0)
             {
                 WriteTrill(effect.Trill);
             }
-
         }
 
         private void WriteBend(EffectBend bend)
         {
             int points = bend.Points.Count;
-            WriteByte((byte)1);
+            WriteByte((byte) 1);
             WriteInt(0);
             WriteInt(points);
             for (int i = 0; i < points; i++)
             {
-                EffectBend.BendPoint point = (EffectBend.BendPoint)bend.Points[i];
-                WriteInt((point.Position * GpBendPosition / EffectBend.MaxPositionLength));
-                WriteInt((point.Value * GpBendSemitone / EffectBend.SemitoneLength));
-                WriteByte((byte)0);
+                EffectBend.BendPoint point = bend.Points[i];
+                WriteInt((point.Position*GpBendPosition/EffectBend.MaxPositionLength));
+                WriteInt((point.Value*GpBendSemitone/EffectBend.SemitoneLength));
+                WriteByte((byte) 0);
             }
         }
 
         private void WriteTremoloBar(EffectTremoloBar tremoloBar)
         {
             int points = tremoloBar.Points.Count;
-            WriteByte((byte)1);
+            WriteByte((byte) 1);
             WriteInt(0);
             WriteInt(points);
             for (int i = 0; i < points; i++)
             {
-                EffectTremoloBar.TremoloBarPoint point = (EffectTremoloBar.TremoloBarPoint)tremoloBar.Points[i];
-                WriteInt((point.Position * GpBendPosition / EffectBend.MaxPositionLength));
-                WriteInt((point.Value * (GpBendSemitone * 2)));
-                WriteByte((byte)0);
+                EffectTremoloBar.TremoloBarPoint point = tremoloBar.Points[i];
+                WriteInt((point.Position*GpBendPosition/EffectBend.MaxPositionLength));
+                WriteInt((point.Value*(GpBendSemitone*2)));
+                WriteByte((byte) 0);
             }
         }
 
         private void WriteGrace(EffectGrace grace)
         {
             WriteUnsignedByte(grace.Fret);
-            WriteUnsignedByte(((grace.Dynamic - Velocities.MinVelocity) / Velocities.VelocityIncrement) + 1);
+            WriteUnsignedByte(((grace.Dynamic - Velocities.MinVelocity)/Velocities.VelocityIncrement) + 1);
             if (grace.Transition == EffectGrace.TransitionNone)
             {
                 WriteUnsignedByte(0);
@@ -750,18 +754,18 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
         private void WriteTrill(EffectTrill trill)
         {
-            WriteByte((byte)trill.Fret);
+            WriteByte((byte) trill.Fret);
             if (trill.Duration.Value == Duration.Sixteenth)
             {
-                WriteByte((byte)1);
+                WriteByte((byte) 1);
             }
             else if (trill.Duration.Value == Duration.ThirtySecond)
             {
-                WriteByte((byte)2);
+                WriteByte((byte) 2);
             }
             else if (trill.Duration.Value == Duration.SixtyFourth)
             {
-                WriteByte((byte)3);
+                WriteByte((byte) 3);
             }
         }
 
@@ -769,15 +773,15 @@ namespace PhoneGuitarTab.Tablatures.Writers
         {
             if (tremoloPicking.Duration.Value == Duration.Eighth)
             {
-                WriteByte((byte)1);
+                WriteByte((byte) 1);
             }
             else if (tremoloPicking.Duration.Value == Duration.Sixteenth)
             {
-                WriteByte((byte)2);
+                WriteByte((byte) 2);
             }
             else if (tremoloPicking.Duration.Value == Duration.ThirtySecond)
             {
-                WriteByte((byte)3);
+                WriteByte((byte) 3);
             }
         }
 
@@ -788,25 +792,25 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
         private void WriteMixChange(Tempo tempo)
         {
-            WriteByte((byte)0xff);
+            WriteByte(0xff);
             for (int i = 0; i < 16; i++)
             {
-                WriteByte((byte)0xff);
+                WriteByte(0xff);
             }
-            WriteByte((byte)0xff); //volume
-            WriteByte((byte)0xff); //int pan
-            WriteByte((byte)0xff); //int chorus
-            WriteByte((byte)0xff); //int reverb
-            WriteByte((byte)0xff); //int phaser
-            WriteByte((byte)0xff); //int tremolo
+            WriteByte(0xff); //volume
+            WriteByte(0xff); //int pan
+            WriteByte(0xff); //int chorus
+            WriteByte(0xff); //int reverb
+            WriteByte(0xff); //int phaser
+            WriteByte(0xff); //int tremolo
             WriteStringByteSizeOfInteger(""); //tempo name
             WriteInt((tempo != null) ? tempo.Value : -1); //tempo value
             if ((tempo != null))
             {
                 SkipBytes(1);
             }
-            WriteByte((byte)1);
-            WriteByte((byte)0xff);
+            WriteByte((byte) 1);
+            WriteByte(0xff);
         }
 
         private void WriteMarker(Marker marker)
@@ -820,7 +824,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
             WriteUnsignedByte(color.R);
             WriteUnsignedByte(color.G);
             WriteUnsignedByte(color.B);
-            WriteByte((byte)0);
+            WriteByte((byte) 0);
         }
 
         #endregion
@@ -845,7 +849,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
         private byte ToChannelByte(short s)
         {
-            return (byte)((s + 1) / 8);
+            return (byte) ((s + 1)/8);
         }
 
         private Channel[] MakeChannels(Song song)
@@ -854,15 +858,15 @@ namespace PhoneGuitarTab.Tablatures.Writers
             for (int i = 0; i < channels.Length; i++)
             {
                 channels[i] = new Channel();
-                channels[i].ChannelCode = ((short)i);
-                channels[i].EffectChannel = ((short)i);
-                channels[i].Instrument = ((short)24);
-                channels[i].Volume = ((short)13);
-                channels[i].Balance = ((short)8);
-                channels[i].Chorus = ((short)0);
-                channels[i].Reverb = ((short)0);
-                channels[i].Phaser = ((short)0);
-                channels[i].Tremolo = ((short)0);
+                channels[i].ChannelCode = ((short) i);
+                channels[i].EffectChannel = ((short) i);
+                channels[i].Instrument = 24;
+                channels[i].Volume = 13;
+                channels[i].Balance = 8;
+                channels[i].Chorus = 0;
+                channels[i].Reverb = 0;
+                channels[i].Phaser = 0;
+                channels[i].Tremolo = 0;
             }
 
             var it = song.Tracks.GetEnumerator();
@@ -882,20 +886,20 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
         private sbyte[] MakeBeamEighthNoteBytes(TimeSignature ts)
         {
-            sbyte[] bytes = new sbyte[] { 0, 0, 0, 0 };
+            sbyte[] bytes = {0, 0, 0, 0};
             if (ts.Denominator.Value <= Duration.Eighth)
             {
-                int eighthsInDenominator = (Duration.Eighth / ts.Denominator.Value);
-                int total = (eighthsInDenominator * ts.Numerator);
-                int byteValue = (total / 4);
-                int missingValue = (total - (4 * byteValue));
+                int eighthsInDenominator = (Duration.Eighth/ts.Denominator.Value);
+                int total = (eighthsInDenominator*ts.Numerator);
+                int byteValue = (total/4);
+                int missingValue = (total - (4*byteValue));
                 for (int i = 0; i < bytes.Length; i++)
                 {
-                    bytes[i] = (sbyte)byteValue;
+                    bytes[i] = (sbyte) byteValue;
                 }
                 if (missingValue > 0)
                 {
-                    bytes[0] += (sbyte)missingValue;
+                    bytes[0] += (sbyte) missingValue;
                 }
             }
             return bytes;

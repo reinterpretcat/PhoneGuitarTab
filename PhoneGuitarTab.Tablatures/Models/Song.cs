@@ -1,9 +1,9 @@
-﻿namespace PhoneGuitarTab.Tablatures.Models
-{
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace PhoneGuitarTab.Tablatures.Models
+{
     public class Song
     {
         public string Name { get; set; }
@@ -45,11 +45,7 @@
 
         public bool IsEmpty
         {
-            get
-            {
-                return (!Tracks.Any() || !MeasureHeaders.Any());
-            }
-
+            get { return (!Tracks.Any() || !MeasureHeaders.Any()); }
         }
     }
 }

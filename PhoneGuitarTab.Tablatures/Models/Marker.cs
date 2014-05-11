@@ -8,12 +8,12 @@
         public int Measure { get; set; }
         public string Title { get; set; }
         public Color Color { get; set; }
-	
-	    public Marker() 
+
+        public Marker()
         {
-		    Measure = 0;
-		    Title = DefaultTitle;
-		    Color = DefaultColor;
-	    }
+            Measure = 0;
+            Title = DefaultTitle;
+            Color = DefaultColor;
+        }
     }
 }

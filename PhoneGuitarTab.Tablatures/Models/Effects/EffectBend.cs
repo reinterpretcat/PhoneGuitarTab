@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PhoneGuitarTab.Tablatures.Models.Effects
 {
@@ -9,7 +6,7 @@ namespace PhoneGuitarTab.Tablatures.Models.Effects
     {
         public static int SemitoneLength = 1;
         public static int MaxPositionLength = 12;
-        public static int MaxValueLength = (SemitoneLength * 12);
+        public static int MaxValueLength = (SemitoneLength*12);
 
         public List<BendPoint> Points { get; set; }
 
@@ -32,7 +29,7 @@ namespace PhoneGuitarTab.Tablatures.Models.Effects
             {
                 Position = position;
                 Value = value;
-            }          
+            }
         }
     }
 }

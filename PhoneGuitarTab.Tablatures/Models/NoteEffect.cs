@@ -23,8 +23,8 @@ namespace PhoneGuitarTab.Tablatures.Models
         public bool IsSlapping { get; set; }
         public bool IsPopping { get; set; }
         public bool IsFadeIn { get; set; }
-	
-	    public NoteEffect()
+
+        public NoteEffect()
         {
             Bend = null;
             TremoloBar = null;
@@ -44,7 +44,7 @@ namespace PhoneGuitarTab.Tablatures.Models
             IsTapping = false;
             IsSlapping = false;
             IsPopping = false;
-            IsFadeIn = false; 
+            IsFadeIn = false;
         }
     }
 }

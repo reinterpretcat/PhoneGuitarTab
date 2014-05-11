@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using PhoneGuitarTab.Tablatures.Models;
 using Newtonsoft.Json.Linq;
+using PhoneGuitarTab.Tablatures.Helpers;
+using PhoneGuitarTab.Tablatures.Models;
+using PhoneGuitarTab.Tablatures.Models.Effects;
 
 namespace PhoneGuitarTab.Tablatures.Readers
 {
-    using PhoneGuitarTab.Tablatures.Helpers;
-    using PhoneGuitarTab.Tablatures.Models.Effects;
-
     /// <summary>
-    /// Converts json tab representation to tab domain model
+    ///     Converts json tab representation to tab domain model
     /// </summary>
     public class JsonSongReader
     {
         private const int DefaultTemp = 120;
-        private Song _song;
+        private readonly Song _song;
 
         private readonly string _jsonSong;
 
@@ -45,7 +44,7 @@ namespace PhoneGuitarTab.Tablatures.Readers
         {
             _song.Name = json["name"].SafeValue<string>();
             _song.Artist = json["artist"].SafeValue<string>();
-            _tempo = json["tempo"].SafeValue<int>(DefaultTemp);
+            _tempo = json["tempo"].SafeValue(DefaultTemp);
         }
 
         private void ParseTracks(JObject json)
@@ -59,25 +58,25 @@ namespace PhoneGuitarTab.Tablatures.Readers
 
         private Track ParseTrack(JObject jTrack)
         {
-            Track track = new Track()
-                {
-                    Name = jTrack["name"].SafeValue<string>(),
-                    Offset = jTrack["offset"].SafeValue<int>(),
-                    Channel = ParseChannel(jTrack),
-                    Strings = ParseGuitarStrings(jTrack["strings"].Value<JArray>()),
-                    Measures = ParseMeasures(jTrack["measures"].Value<JArray>())
-                };
+            Track track = new Track
+            {
+                Name = jTrack["name"].SafeValue<string>(),
+                Offset = jTrack["offset"].SafeValue<int>(),
+                Channel = ParseChannel(jTrack),
+                Strings = ParseGuitarStrings(jTrack["strings"].Value<JArray>()),
+                Measures = ParseMeasures(jTrack["measures"].Value<JArray>())
+            };
             return track;
         }
 
         private Channel ParseChannel(JObject jTrack)
         {
-            return new Channel()
-                {
-                    //ChannelCode = jTrack["midiindex"].SafeValue<short>(),
-                    Instrument = jTrack["midiindex"].SafeValue<short>(),
-                    Volume = jTrack["volume"].SafeValue<short>(),
-                };
+            return new Channel
+            {
+                //ChannelCode = jTrack["midiindex"].SafeValue<short>(),
+                Instrument = jTrack["midiindex"].SafeValue<short>(),
+                Volume = jTrack["volume"].SafeValue<short>(),
+            };
         }
 
         private List<GuitarString> ParseGuitarStrings(JArray jStrings)
@@ -86,7 +85,7 @@ namespace PhoneGuitarTab.Tablatures.Readers
             int counter = 0;
             foreach (var jString in jStrings)
             {
-                guitarStrings.Add(new GuitarString() { Number = counter++, Value = jString.SafeValue<int>() });
+                guitarStrings.Add(new GuitarString {Number = counter++, Value = jString.SafeValue<int>()});
             }
 
             return guitarStrings;
@@ -108,23 +107,23 @@ namespace PhoneGuitarTab.Tablatures.Readers
         private Measure ParseMeasure(JObject jMeasure)
         {
             if (jMeasure["numerator"] != null)
-                _currentTimeSignature = new TimeSignature()
-                    {
-                        Numerator = jMeasure["numerator"].SafeValue<int>(),
-                        Denominator = new Duration() { Value = jMeasure["denominator"].SafeValue<int>(), }
-                    };
-            _tempo = jMeasure["tempo"].SafeValue<int>(_tempo);
-            MeasureHeader header = new MeasureHeader()
+                _currentTimeSignature = new TimeSignature
                 {
-                    IsRepeatOpen = jMeasure["repeatopen"].SafeValue<bool>(),
-                    RepeatClose = jMeasure["repeatcount"].SafeValue<int>(),
-                    Tempo = new Tempo() { Value = _tempo, },
-                    TimeSignature = _currentTimeSignature
+                    Numerator = jMeasure["numerator"].SafeValue<int>(),
+                    Denominator = new Duration {Value = jMeasure["denominator"].SafeValue<int>(),}
                 };
+            _tempo = jMeasure["tempo"].SafeValue(_tempo);
+            MeasureHeader header = new MeasureHeader
+            {
+                IsRepeatOpen = jMeasure["repeatopen"].SafeValue<bool>(),
+                RepeatClose = jMeasure["repeatcount"].SafeValue<int>(),
+                Tempo = new Tempo {Value = _tempo,},
+                TimeSignature = _currentTimeSignature
+            };
             Measure measure = new Measure(header)
-                {
-                    Beats = ParseBeats(jMeasure["beats"].Value<JArray>())
-                };
+            {
+                Beats = ParseBeats(jMeasure["beats"].Value<JArray>())
+            };
             return measure;
         }
 
@@ -140,13 +139,13 @@ namespace PhoneGuitarTab.Tablatures.Readers
 
         private Beat ParseBeat(JObject jBeat)
         {
-            Beat beat = new Beat()
-                {
-                    Stroke = new Stroke() { Value = jBeat["stroke"].SafeValue<int>() },
-                    Chord = null, //TODO
-                    Start = jBeat["start"].SafeValue<long>(), // TODO not sure
-                    Text = new Text() { Value = jBeat["text"].SafeValue<string>() },
-                };
+            Beat beat = new Beat
+            {
+                Stroke = new Stroke {Value = jBeat["stroke"].SafeValue<int>()},
+                Chord = null, //TODO
+                Start = jBeat["start"].SafeValue<long>(), // TODO not sure
+                Text = new Text {Value = jBeat["text"].SafeValue<string>()},
+            };
             beat.Voices = ParseVoices(beat, jBeat["voices"].Value<JArray>()).ToArray();
             return beat;
         }
@@ -165,14 +164,14 @@ namespace PhoneGuitarTab.Tablatures.Readers
         private Voice ParseVoice(Beat beat, JObject jVoice, int index)
         {
             Voice voice = new Voice(index)
-                {
-                    IsEmpty = jVoice["empty"].SafeValue<bool>(),
-                    Beat = beat,
-                    Duration = ParseDuration(jVoice),
-                };
+            {
+                IsEmpty = jVoice["empty"].SafeValue<bool>(),
+                Beat = beat,
+                Duration = ParseDuration(jVoice),
+            };
             // (cent) no 'direction' or/and 'notes' in jVoice causes unhandled exception, 
             // so I'am moving it out of init block
-            if (jVoice ["notes"] != null)
+            if (jVoice["notes"] != null)
                 voice.Notes = ParseNotes(jVoice["notes"].Value<JArray>());
             if (jVoice["direction"] != null)
                 voice.Direction = jVoice["direction"].SafeValue<int>(); // TODO not sure
@@ -184,7 +183,7 @@ namespace PhoneGuitarTab.Tablatures.Readers
         {
             int value = 0;
             bool isDotted = jVoice["dotted"].SafeValue<bool>();
-            int tuplet = jVoice["tuplet"].SafeValue<int>(1);
+            int tuplet = jVoice["tuplet"].SafeValue(1);
             var duration = (sbyte) jVoice["duration"].SafeValue<byte>();
             switch (duration)
             {
@@ -211,15 +210,15 @@ namespace PhoneGuitarTab.Tablatures.Readers
                     break;
             }
 
-            return new Duration()
+            return new Duration
+            {
+                IsDotted = isDotted,
+                Value = value,
+                Division = new DivisionType
                 {
-                    IsDotted = isDotted,
-                    Value = value,
-                    Division = new DivisionType()
-                        {
-                            Enters = tuplet
-                        }
-                };
+                    Enters = tuplet
+                }
+            };
         }
 
         private List<Note> ParseNotes(JArray jNotes)
@@ -234,14 +233,14 @@ namespace PhoneGuitarTab.Tablatures.Readers
 
         private Note ParseNote(JObject jNote)
         {
-            Note note = new Note()
-                {
-                    Effect = ParseEffect(jNote),
-                    Str = jNote["string"].SafeValue<int>(),
-                    Value = jNote["fret"].SafeValue<int>(),
-                    IsTiedNote = default(bool), //TODO
-                    Velocity = default(int) // TODO
-                };
+            Note note = new Note
+            {
+                Effect = ParseEffect(jNote),
+                Str = jNote["string"].SafeValue<int>(),
+                Value = jNote["fret"].SafeValue<int>(),
+                IsTiedNote = default(bool), //TODO
+                Velocity = default(int) // TODO
+            };
             return note;
         }
 
@@ -269,7 +268,6 @@ namespace PhoneGuitarTab.Tablatures.Readers
 
             if (flag == 512)
             {
-
             }
 
             if (flag == 2048)
@@ -282,8 +280,8 @@ namespace PhoneGuitarTab.Tablatures.Readers
                 effect.IsSlide = true;
             }
 
-            
-            if (jNote["harmonic"]!= null)
+
+            if (jNote["harmonic"] != null)
             {
                 effect.Harmonic = new EffectHarmonic();
                 effect.Harmonic.Type = jNote["harmonic"]["type"].SafeValue<int>();
@@ -295,7 +293,6 @@ namespace PhoneGuitarTab.Tablatures.Readers
                 effect.TremoloPicking = new EffectTremoloPicking(); // TODO duration
             }
             return effect;
-
         }
     }
 }

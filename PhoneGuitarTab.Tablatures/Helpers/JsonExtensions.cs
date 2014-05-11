@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace PhoneGuitarTab.Tablatures.Helpers
 {
@@ -7,7 +6,7 @@ namespace PhoneGuitarTab.Tablatures.Helpers
     {
         public static T SafeValue<T>(this JObject json)
         {
-            return json == null? default(T): json.Value<T>();
+            return json == null ? default(T) : json.Value<T>();
         }
 
         public static T SafeValue<T>(this JToken json)

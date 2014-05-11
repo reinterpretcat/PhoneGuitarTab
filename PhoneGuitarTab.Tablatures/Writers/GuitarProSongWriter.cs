@@ -1,12 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Text;
+using PhoneGuitarTab.Tablatures.Models;
 
 namespace PhoneGuitarTab.Tablatures.Writers
 {
-    using System.IO;
-    using System.Text;
-
-    using PhoneGuitarTab.Tablatures.Models;
-
     public abstract class GuitarProSongWriter
     {
         protected BinaryWriter StreamWriter;
@@ -24,7 +22,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
         {
             for (int i = 0; i < count; i++)
             {
-                StreamWriter.Write((byte)0);
+                StreamWriter.Write((byte) 0);
             }
         }
 
@@ -40,7 +38,7 @@ namespace PhoneGuitarTab.Tablatures.Writers
 
         protected void WriteUnsignedByte(int v)
         {
-            StreamWriter.Write((byte)v);
+            StreamWriter.Write((byte) v);
         }
 
         protected void WriteBytes(sbyte[] v)
@@ -49,23 +47,22 @@ namespace PhoneGuitarTab.Tablatures.Writers
             {
                 StreamWriter.Write(@sbyte);
             }
-           
         }
 
         protected void WriteBoolean(bool v)
         {
-            StreamWriter.Write((byte)(v ? 1 : 0));
+            StreamWriter.Write((byte) (v ? 1 : 0));
         }
 
         protected void WriteInt(int v)
         {
             byte[] bytes =
-                {
-                    (byte)(v & 0x00FF), 
-                    (byte)((v >> 8) & 0x000000FF), 
-                    (byte)((v >> 16) & 0x000000FF),
-                    (byte)((v >> 24) & 0x000000FF)
-                };
+            {
+                (byte) (v & 0x00FF),
+                (byte) ((v >> 8) & 0x000000FF),
+                (byte) ((v >> 16) & 0x000000FF),
+                (byte) ((v >> 24) & 0x000000FF)
+            };
             StreamWriter.Write(bytes);
         }
 
@@ -81,15 +78,15 @@ namespace PhoneGuitarTab.Tablatures.Writers
         protected void WriteStringInteger(String s)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(s);
-            this.WriteInt(bytes.Length);
-            this.WriteString(bytes, 0);
+            WriteInt(bytes.Length);
+            WriteString(bytes, 0);
         }
 
 
         protected void WriteStringByte(String s, int size)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(s);
-            WriteByte((byte)(size == 0 || size > bytes.Length ? bytes.Length : size));
+            WriteByte((byte) (size == 0 || size > bytes.Length ? bytes.Length : size));
             WriteString(bytes, size);
             SkipBytes(size - bytes.Length);
         }
@@ -110,6 +107,5 @@ namespace PhoneGuitarTab.Tablatures.Writers
         }
 
         #endregion
-
     }
 }

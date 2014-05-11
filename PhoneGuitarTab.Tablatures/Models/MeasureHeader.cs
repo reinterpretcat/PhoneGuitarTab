@@ -3,8 +3,8 @@ namespace PhoneGuitarTab.Tablatures.Models
     public class MeasureHeader
     {
         public static int TripletFeelNone = 1;
-	    public static int TripletFeelEighth = 2;
-	    public static int TripletFeelSixteenth = 3;
+        public static int TripletFeelEighth = 2;
+        public static int TripletFeelSixteenth = 3;
 
         public int Number { get; set; }
 

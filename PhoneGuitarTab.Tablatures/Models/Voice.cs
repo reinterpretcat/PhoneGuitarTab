@@ -1,8 +1,8 @@
-﻿namespace PhoneGuitarTab.Tablatures.Models
-{
-    using System.Linq;
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
+namespace PhoneGuitarTab.Tablatures.Models
+{
     public class Voice
     {
         public static int DirectionNone = 0;
@@ -18,10 +18,7 @@
 
         public bool IsRestVoice
         {
-            get
-            {
-                return !Notes.Any();
-            }
+            get { return !Notes.Any(); }
         }
 
         public Voice(int index)

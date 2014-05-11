@@ -8,14 +8,14 @@
         public bool IsTiedNote { get; set; }
         public NoteEffect Effect { get; set; }
         public Voice Voice { get; set; }
-	
-	    public Note() 
+
+        public Note()
         {
-		    Value = 0;
-		    Velocity = Velocities.Default;
-		    Str = 1;
-		    IsTiedNote = false;
-		    Effect = new NoteEffect();
-	    } 
+            Value = 0;
+            Velocity = Velocities.Default;
+            Str = 1;
+            IsTiedNote = false;
+            Effect = new NoteEffect();
+        }
     }
 }

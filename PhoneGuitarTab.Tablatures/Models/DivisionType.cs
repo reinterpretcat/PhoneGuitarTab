@@ -19,7 +19,6 @@ namespace PhoneGuitarTab.Tablatures.Models
             divisionType.Enters = enters;
             divisionType.Times = times;
             return divisionType;
-        } 
-
+        }
     }
 }
