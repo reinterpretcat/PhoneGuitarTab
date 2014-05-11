@@ -1,24 +1,21 @@
 using System;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using PhoneGuitarTab.Tablatures.Readers;
+using PhoneGuitarTab.Tablatures.Writers;
+using SharpGIS;
 
 namespace PhoneGuitarTab.Search.UltimateGuitar
 {
-    using System.IO;
-    using System.Net;
-    using System.Security;
-    using System.Threading.Tasks;
-    using System.Xml.Linq;
-
-    using PhoneGuitarTab.Tablatures.Readers;
-    using PhoneGuitarTab.Tablatures.Writers;
-
-    using SharpGIS;
-
-    public class UltimateGuitarFileDownloader: FileDownloader
+    public class UltimateGuitarFileDownloader : FileDownloader
     {
         // This url points to "dirty" gp file. don't know how to restore original one.
         //private const string UrlTemplateFile = "http://ultimate-guitar.com/tab_download.php?tab_id={0}";
 
-        private const string GuitarProDetailsUrlTemplate = "http://app.ultimate-guitar.com/iphone/tab.php?app_platform=&id={0}";
+        private const string GuitarProDetailsUrlTemplate =
+            "http://app.ultimate-guitar.com/iphone/tab.php?app_platform=&id={0}";
 
         private SearchTabResultEntry Entry { get; set; }
 
@@ -30,24 +27,25 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
         private Task<string> GetGuitarProDownloadUrl(string id)
         {
             var request = WebRequest.Create(string.Format(GuitarProDetailsUrlTemplate, id));
-            return Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null).ContinueWith(t =>
-                {
-                    // TODO handle errors
-                    try
+            return
+                Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null)
+                    .ContinueWith(t =>
                     {
-                        var response = t.Result;
-                        using (var responseStream = response.GetResponseStream())
+                        // TODO handle errors
+                        try
                         {
-                            var xDoc = XDocument.Load(responseStream);
-                            return xDoc.Root.Attribute("gp_url").Value;
+                            var response = t.Result;
+                            using (var responseStream = response.GetResponseStream())
+                            {
+                                var xDoc = XDocument.Load(responseStream);
+                                return xDoc.Root.Attribute("gp_url").Value;
+                            }
                         }
-                    }
-                    catch (AggregateException)
-                    {
-                        return String.Empty;
-                    }
-                });
-            
+                        catch (AggregateException)
+                        {
+                            return String.Empty;
+                        }
+                    });
         }
 
         public override void Download()
@@ -57,7 +55,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
             // unfortunately, these files are json-serialized representation of gp, so we need to perform additional manipulations 
             if (Entry.Type == "guitar pro")
             {
-                GetGuitarProDownloadUrl(this.Entry.Id).ContinueWith(task =>
+                GetGuitarProDownloadUrl(Entry.Id).ContinueWith(task =>
                 {
                     var link = task.Result;
                     if (link != string.Empty)
@@ -66,26 +64,22 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
 
                         client.DownloadStringAsync(new Uri(link));
                         client.DownloadStringCompleted += (o, e) =>
-                            {
-                                // convert from json to guitar pro format
-                                var songReader = new JsonSongReader(e.Result);
-                                var song = songReader.ReadSong();
+                        {
+                            // convert from json to guitar pro format
+                            var songReader = new JsonSongReader(e.Result);
+                            var song = songReader.ReadSong();
 
-                                var songWriter = new FifthGuitarProSongWriter(new BinaryWriter(GetOutputStream()));
-                                songWriter.WriteSong(song);
+                            var songWriter = new FifthGuitarProSongWriter(new BinaryWriter(GetOutputStream()));
+                            songWriter.WriteSong(song);
 
-                                InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
-                            };
-                    }
-                    else
-                    {
-                        //**it happened, TODO: handle appropriately
+                            InvokeDownloadComplete(new DownloadCompletedEventArgs(false));
+                        };
                     }
                 });
             }
             else
             {
-                Download(WebRequest.Create(this.Entry.Url));
+                Download(WebRequest.Create(Entry.Url));
             }
         }
     }

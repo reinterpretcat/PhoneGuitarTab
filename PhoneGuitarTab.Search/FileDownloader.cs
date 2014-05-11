@@ -1,15 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
+using System.Text;
 using System.Windows;
 
 namespace PhoneGuitarTab.Search
 {
-    using System.Text;
-
     /// <summary>
-    /// Downloads files and stores it to destination
+    ///     Downloads files and stores it to destination
     /// </summary>
     public class FileDownloader
     {
@@ -18,8 +16,8 @@ namespace PhoneGuitarTab.Search
         protected string destination;
 
         public delegate void DownloadEventHandler(object sender, DownloadCompletedEventArgs e);
-        public event DownloadEventHandler DownloadComplete;
 
+        public event DownloadEventHandler DownloadComplete;
 
         #region Constructors
 
@@ -35,7 +33,6 @@ namespace PhoneGuitarTab.Search
 
         #endregion Constructors
 
-
         #region Public methods
 
         public virtual void Download()
@@ -45,7 +42,7 @@ namespace PhoneGuitarTab.Search
         }
 
         /// <summary>
-        /// Download via HttpWebRequest
+        ///     Download via HttpWebRequest
         /// </summary>
         /// <param name="url"></param>
         public void Download(string url)
@@ -55,11 +52,11 @@ namespace PhoneGuitarTab.Search
         }
 
         /// <summary>
-        /// Download via decorated WebRequest
+        ///     Download via decorated WebRequest
         /// </summary>
         /// <typeparam name="T">type of WebRequest</typeparam>
         /// <param name="request">decorated WebRequest</param>
-        public void Download<T>(T request) where T: WebRequest
+        public void Download<T>(T request) where T : WebRequest
         {
             request.BeginGetResponse(r =>
             {
@@ -75,25 +72,24 @@ namespace PhoneGuitarTab.Search
                 catch (WebException e)
                 {
                     Deployment.Current.Dispatcher.BeginInvoke(
-                    () =>
-                    {
-                        if (e.Status == WebExceptionStatus.RequestCanceled)
-                            MessageBox.Show("Looks like your request was interrupted by tombstoning");
-                        else
+                        () =>
                         {
-                            using (HttpWebResponse response = (HttpWebResponse)e.Response)
+                            if (e.Status == WebExceptionStatus.RequestCanceled)
+                                MessageBox.Show("Looks like your request was interrupted by tombstoning");
+                            else
                             {
-                                MessageBox.Show("I got an http error of: " + response.StatusCode.ToString());
+                                using (HttpWebResponse response = (HttpWebResponse) e.Response)
+                                {
+                                    MessageBox.Show("I got an http error of: " + response.StatusCode);
+                                }
                             }
-                        }
-                    });
+                        });
                     InvokeDownloadComplete(new DownloadCompletedEventArgs(true));
                 }
             }, null);
         }
 
         #endregion Public methods
-
 
         protected Stream GetOutputStream()
         {
@@ -108,7 +104,7 @@ namespace PhoneGuitarTab.Search
 
         protected void SaveToFile(Stream content)
         {
-            //TODO: catch error here
+            // TODO: catch error here
             // Create a 4K buffer to chunk the file
             byte[] myBuffer = new byte[4096];
             int bytesRead;

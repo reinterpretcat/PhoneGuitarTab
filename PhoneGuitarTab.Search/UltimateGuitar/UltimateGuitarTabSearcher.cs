@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
 using System.IO;
+using System.Net;
 using System.Xml;
 
 namespace PhoneGuitarTab.Search.UltimateGuitar
@@ -27,19 +26,21 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
         private const string RequestTemplateDrum =
             "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=700&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
 
-        private readonly Dictionary<string, string> _tabTypeMapping = new Dictionary<string, string>()
-            { { "tab pro", "guitar pro" } };
+        private readonly Dictionary<string, string> _tabTypeMapping = new Dictionary<string, string>
+        {
+            {"tab pro", "guitar pro"}
+        };
 
         public SearchTabResultSummary Summary;
         public List<SearchTabResultEntry> Entries;
 
-        private string _group;
-        private string _song;
+        private readonly string _group;
+        private readonly string _song;
 
         public UltimateGuitarTabSearcher(string group, string song)
         {
-            this._group = group;
-            this._song = song;
+            _group = group;
+            _song = song;
             Summary = new SearchTabResultSummary();
             Entries = new List<SearchTabResultEntry>();
         }
@@ -53,42 +54,39 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
         }
 
         /// <summary>
-        /// Handler for WebClient that parses xml data into specific objects
-        /// throws specific exceptions if error occurs
+        ///     Handler for WebClient that parses xml data into specific objects
+        ///     throws specific exceptions if error occurs
         /// </summary>
         public void Run(int pageNumber, TabulatureType type)
         {
             WebClient client = new WebClient();
             client.DownloadStringCompleted += (s, e) =>
+            {
+                try
                 {
-                    try
+                    if (e.Error == null)
                     {
-                        if (e.Error == null)
+                        using (XmlReader reader = XmlReader.Create(new StringReader(e.Result)))
                         {
-                            using (XmlReader reader = XmlReader.Create(new StringReader(e.Result)))
+                            while (reader.Read())
                             {
-                                while (reader.Read())
-                                {
-                                    if ((reader.Name == "results") && (reader.IsStartElement()))
-                                        Summary = CreateResultSummary(reader);
+                                if ((reader.Name == "results") && (reader.IsStartElement()))
+                                    Summary = CreateResultSummary(reader);
 
-                                    if ((reader.Name == "result") && (reader.IsStartElement()))
-                                        Entries.Add(this.CreateResultEntry(reader));
-                                }
+                                if ((reader.Name == "result") && (reader.IsStartElement()))
+                                    Entries.Add(CreateResultEntry(reader));
                             }
-
                         }
                     }
-                    catch/* (Exception ex)*/
-                    {
-                        /*throw new SearchExceptions(SR.SearchResultRunUnexpected,
-                                                    ex);*/
-                    }
-                    finally
-                    {
-                        InvokeSearchComplete(e);
-                    }
-                };
+                }
+                catch
+                {
+                }
+                finally
+                {
+                    InvokeSearchComplete(e);
+                }
+            };
             client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(type), _group, _song, pageNumber)));
         }
 
@@ -106,7 +104,7 @@ namespace PhoneGuitarTab.Search.UltimateGuitar
                 Url = reader["url"],
                 Rating = reader["rating"],
                 Votes = Int32.Parse(reader["votes"] ?? "0"),
-                Type = _tabTypeMapping.ContainsKey(type)? _tabTypeMapping[type]: type
+                Type = _tabTypeMapping.ContainsKey(type) ? _tabTypeMapping[type] : type
             };
         }
 
