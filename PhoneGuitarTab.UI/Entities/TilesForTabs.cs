@@ -7,7 +7,7 @@ namespace PhoneGuitarTab.UI.Entities
 {
     public static class TilesForTabs
     {
-        private const string TileNavigationUrl = "/View/StartupView.xaml?";
+        private const string TileNavigationUrl = "/Views/StartupView.xaml?";
 
         private static FlipTileData GetSecondaryTileData(Tab tab)
         {
