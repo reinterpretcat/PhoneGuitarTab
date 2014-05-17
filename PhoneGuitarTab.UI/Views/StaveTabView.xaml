@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls" x:Class="PhoneGuitarTab.UI.Views.StaveTabView"  
+    xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
+    xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls" x:Class="PhoneGuitarTab.UI.Views.StaveTabView"  
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -20,12 +21,15 @@
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default" Opacity="0.6">
-            <shell:ApplicationBarIconButton x:Name ="InstrumentApplicationBarIconButton" IconUri="/Images/instrument/instruments.png" IsEnabled="True" Text="instruments" Click="InstrumentApplicationBar_Click"/>
-            <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
-            <shell:ApplicationBarIconButton x:Name ="ScaleApplicationBarIconButton"  IconUri="/Images/dark/scale.png" IsEnabled="True" Text="scale" Click="ScaleApplicationBar_Click"/>
-            <!--shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" Text="pin to start" Click="PinToStartIconButton_Click"/-->
+            <shell:ApplicationBarIconButton x:Name ="InstrumentApplicationBarIconButton" IconUri="/Images/instrument/instruments.png" IsEnabled="True" 
+                                            Text="{Binding Path=LocalizedResources.Stave_Instruments, Source={StaticResource LocalizedStrings}}" Click="InstrumentApplicationBar_Click"/>
+            <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True"
+                                            Text="{Binding Path=LocalizedResources.Stave_Autoscroll, Source={StaticResource LocalizedStrings}}" Click="AutoScrollApplicationBarIconButton_OnClick"/>
+            <shell:ApplicationBarIconButton x:Name ="ScaleApplicationBarIconButton"  IconUri="/Images/dark/scale.png" IsEnabled="True" 
+                                            Text="{Binding Path=LocalizedResources.Stave_Scale, Source={StaticResource LocalizedStrings}}" Click="ScaleApplicationBar_Click"/>
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="PinToStartMenuButton" IsEnabled="True" Text="pin this tab.." Click="PinToStartIconButton_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="PinToStartMenuButton" IsEnabled="True" 
+                                              Text="{Binding Path=LocalizedResources.Stave_Pin, Source={StaticResource LocalizedStrings}}" Click="PinToStartIconButton_Click"/>
             </shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

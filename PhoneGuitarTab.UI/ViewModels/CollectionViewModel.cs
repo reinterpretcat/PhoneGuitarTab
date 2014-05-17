@@ -207,7 +207,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 Group group = (selector.SelectedItem as ObservableTuple<int, Group>).Item2;
                 this.BackGroundImage = group.ExtraLargeImageUrl;
                 Hub.RaiseBackGroundImageChangeActivity(group.ExtraLargeImageUrl);
-                NavigationService.NavigateTo(Strings.Group, new Dictionary<string, object> { { "group", group } });
+                NavigationService.NavigateTo(NavigationViewNames.Group, new Dictionary<string, object> { { "group", group } });
             }
         }
 
@@ -306,7 +306,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void CreateCommands()
         {
-            SearchCommand = new ExecuteCommand(() => NavigationService.NavigateTo(Strings.Search));
+            SearchCommand = new ExecuteCommand(() => NavigationService.NavigateTo(NavigationViewNames.Search));
           
             RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
             RemoveTabs = new ExecuteCommand(DoRemoveTabs);

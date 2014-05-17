@@ -1,6 +1,6 @@
-﻿namespace PhoneGuitarTab.UI
+﻿namespace PhoneGuitarTab.UI.Infrastructure
 {
-    internal static class Strings
+    internal static class NavigationViewNames
     {
         public const string Startup = "Startup";
         public const string MainSearch = "MainSearch";
@@ -12,8 +12,5 @@
         public const string Group = "Group";
         public const string Collection = "Collection";
         public const string Synchronize = "Synchronize";
-
-        public const string GuitarPro = "guitar pro";
-        public const string MusicXml = "musicxml";
     }
 }

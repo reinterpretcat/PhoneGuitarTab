@@ -1,7 +1,6 @@
 ﻿<Views:ViewPage
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               xmlns:Core="clr-namespace:PhoneGuitarTab.Core;assembly=PhoneGuitarTab.Core"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -19,14 +18,14 @@
                d:DesignWidth="480"
                shell:SystemTray.IsVisible="False"
                mc:Ignorable="d"
-     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit" OrientationChanged="root_OrientationChanged">
-  
-
+               OrientationChanged="root_OrientationChanged">
     <!-- ApplicationBar -->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Default" Opacity="0.5">
-            <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" Text="autoscroll" Click="AutoScrollApplicationBarIconButton_OnClick"/>
-            <shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" Text="pin this tab" Click="PinToStartIconButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" 
+                                            Text="{Binding Path=LocalizedResources.TextTab_Autoscroll, Source={StaticResource LocalizedStrings}}" Click="AutoScrollApplicationBarIconButton_OnClick"/>
+            <shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" 
+                                            Text="{Binding Path=LocalizedResources.TextTab_Pin, Source={StaticResource LocalizedStrings}}" Click="PinToStartIconButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     <!--  LayoutRoot is the root grid where all page content is placed  -->

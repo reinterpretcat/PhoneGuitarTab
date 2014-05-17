@@ -14,24 +14,19 @@
                     x:Name="root"
                     DataContext="{Binding Search, Source={StaticResource Locator}}"
                     Style="{StaticResource TransitionPageStyle}"
-                    mc:Ignorable="d" >
-
+                    mc:Ignorable="d">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="BackKeyPress">
             <Command:ExecuteCommandAction Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-
     <Views:ViewPage.Resources>
         <Infrastructure:SearchTabTypeImageConverter x:Key="SearchTabTypeImageConverter" />
-
         <Storyboard x:Name="tabsFadeIn">
             <DoubleAnimation Storyboard.TargetName="tabsList"
         		Storyboard.TargetProperty="Opacity" From="0.0"
         		To="1" Duration="0:0:0.7"/>
         </Storyboard>
-
-
         <DataTemplate x:Key="SearchHeaderTemplate">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                 <Grid>
@@ -67,7 +62,7 @@
                         <Interactivity:Interaction.Behaviors>
                             <Infrastructure:Watermark x:Name="waterMark" FontStyle="Italic"
                                                           Foreground="Gray"
-                                                          Text=" type here.." />
+                                                          Text="{Binding Path=LocalizedResources.Search_TypePrompt, Source={StaticResource LocalizedStrings}}" />
                         </Interactivity:Interaction.Behaviors>
                        
                     </TextBox>
@@ -77,11 +72,11 @@
                                    Margin="12,0,0,-14"
                                    FontSize="16"
                                    Opacity="0.7"
-                                   Text="search by "/>
+                                   Text="{Binding Path=LocalizedResources.Search_SearchBy, Source={StaticResource LocalizedStrings}}"/>
                     <toolkit:ListPicker x:Name="searchPicker" Grid.Row="2"
-                                         HorizontalContentAlignment="Center"    
+                                        HorizontalContentAlignment="Center"    
                                         ItemsSource="{Binding Path=DataContext.SearchMethodOptions,ElementName=root}"
-                                            SelectedItem="{Binding Path=DataContext.SearchMethod,ElementName=root,Mode=TwoWay}" >
+                                        SelectedItem="{Binding Path=DataContext.SearchMethod,ElementName=root,Mode=TwoWay}" >
                         <toolkit:ListPicker.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource searchTypeConverter}}" HorizontalAlignment="Center"/>
@@ -93,7 +88,7 @@
                                    Margin="12,0,0,-14"
                                    FontSize="16"
                                    Opacity="0.7"
-                                   Text="selected type "  />
+                                   Text="{Binding Path=LocalizedResources.Search_SelectedType, Source={StaticResource LocalizedStrings}}"  />
                     <toolkit:ListPicker     x:Name="searchPicker2" 
                                             Grid.Row="2"
                                             Grid.Column="1"
@@ -127,7 +122,9 @@
                                             <ImageBrush ImageSource="{Binding Converter={StaticResource SearchTabTypeImageConverter}}"/>
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource searchTabTypeConverter}}" Margin="20 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource searchTabTypeConverter}}"
+                                               Margin="20 0 0 0" FontSize="{StaticResource PhoneFontSizeExtraLarge}" 
+                                               FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
 
                                 </StackPanel>
                             </DataTemplate>
@@ -155,7 +152,8 @@
                             </Rectangle>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
-                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="previous" />
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
+                                                                  CommandParameter="previous" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
@@ -168,7 +166,8 @@
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
-                                        <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                        <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" 
+                                                                      CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <ListBox.ItemsPanel>
@@ -180,7 +179,7 @@
                                     <DataTemplate>
                                         <TextBlock x:Name="pageHyperlink"
                                                FontSize="30"
-                                               Padding=  "{Binding Path=DataContext.PagingListPadding,ElementName=root}"
+                                               Padding="{Binding Path=DataContext.PagingListPadding,ElementName=root}"
                                                Text="{Binding}" />
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -197,28 +196,24 @@
                             </Rectangle>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
-                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="next" />
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
+                                                                  CommandParameter="next" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
-
                     </Grid>
-
                 </StackPanel>
-
                 <TextBlock Margin="0,80"
                                HorizontalAlignment="Center"
                                FontSize="25"
                                Opacity="0.5"
-                               Text="Sorry, nothing found. &#x0a;Try Searching with a comma: &#x0a;band name, song name"
+                               Text="{Binding Path=LocalizedResources.Search_NothingFound, Source={StaticResource LocalizedStrings}}"
                                Visibility="{Binding Path=DataContext.IsNothingFound,
                                                     ElementName=root,
                                                     Converter={StaticResource boolVisibility}}" />
             </StackPanel>
         </DataTemplate>
-
         <DataTemplate x:Key="SearchFooterTemplate">
-
             <StackPanel HorizontalAlignment="Left" Visibility="{Binding Path=DataContext.HeaderPagingVisibility,
                                              ElementName=root}">
                 <Grid HorizontalAlignment="Stretch">
@@ -227,7 +222,6 @@
                         <ColumnDefinition Width="260" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
                     <Button Grid.Column="0"
                             x:Name="PreviousButton" 
                             HorizontalAlignment="Left" HorizontalContentAlignment="Left"
@@ -239,11 +233,11 @@
                         </Rectangle>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
-                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="previous" />
+                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
+                                                              CommandParameter="previous" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
-
                     <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                         <ListBox x:Name="pagesList" HorizontalContentAlignment="Center" 
@@ -252,7 +246,8 @@
                                  SelectedItem="{Binding Path=DataContext.SelectedPage,ElementName=root, Mode=TwoWay}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
-                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" 
+                                                                  CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                             <ListBox.ItemsPanel>
@@ -264,11 +259,10 @@
                                 <DataTemplate>
                                     <TextBlock x:Name="pageHyperlink"
                                                FontSize="30"
-                                               Padding=  "{Binding Path=DataContext.PagingListPadding,ElementName=root}"
+                                               Padding="{Binding Path=DataContext.PagingListPadding,ElementName=root}"
                                                Text="{Binding}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
-
                         </ListBox>
                     </StackPanel>
 
@@ -281,15 +275,13 @@
                         </Rectangle>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
-                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" CommandParameter="next" />
+                                <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
+                                                              CommandParameter="next" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
-
                 </Grid>
-
             </StackPanel>
-
         </DataTemplate>
     </Views:ViewPage.Resources>
     <Grid >
@@ -304,7 +296,6 @@
                    Visibility="{Binding Search.IsSearching,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}">
-
             </TextBlock>
             <ProgressBar x:Name="performanceBar2" 
                                         VerticalAlignment="Top"
@@ -314,7 +305,6 @@
                                         Visibility="{Binding Search.IsSearching,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}" >
-
             </ProgressBar>
         </StackPanel>
         <phone:LongListSelector x:Name="tabsList"
@@ -338,7 +328,6 @@
                    Visibility="{Binding Search.IsDownloading,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}">
-
         </TextBlock>
         <ProgressBar x:Name="performanceBar" 
                                         VerticalAlignment="Top"
@@ -348,7 +337,6 @@
                                         Visibility="{Binding Search.IsDownloading,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}">
-
         </ProgressBar>
     </Grid>
     <custom:Bindable.ApplicationBar >
@@ -358,10 +346,8 @@
                                                      CommandParameter="{Binding Search.CurrentTypedText, Source={StaticResource Locator}}"
                                                      IsEnabled="{Binding Search.IsSearchButtonEnabled, Source={StaticResource Locator}}"
                                                      IconUri="/Images/light/go.png"
-                                                     Text="search">
+                                                     Text="{Binding Path=LocalizedResources.Search_SearchButton, Source={StaticResource LocalizedStrings}}">
             </custom:BindableApplicationBarButton>
         </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>
-
-
 </Views:ViewPage >

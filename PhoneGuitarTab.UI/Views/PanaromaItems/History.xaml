@@ -15,7 +15,6 @@
     
     <phone:PanoramaItem.Resources>
         <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
-        
     </phone:PanoramaItem.Resources>
     <Grid>
         <phone:LongListSelector x:Name="TabList"
@@ -29,7 +28,6 @@
                     <Command:ExecuteCommandAction Command="{Binding GoToTabView}" CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-
             <phone:LongListSelector.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="60,20,60,20">
@@ -64,8 +62,8 @@
                             <TextBlock Margin="5,0,0,19"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    FontSize="14"
-                                    Foreground="White"
-                                       TextWrapping="Wrap"
+                                   Foreground="White"
+                                   TextWrapping="Wrap"
                                    Style="{StaticResource PhoneTextNormalStyle}">
                             <Run Text="{Binding Group}"   />
                             </TextBlock>
@@ -79,27 +77,17 @@
                                 <StackPanel  Orientation="Vertical" >
                                     <uiControls:RatingControl 
                                               VerticalAlignment="Bottom"
-                                              Rating="{Binding Rating,
-                                                               Converter={StaticResource stringToInt}}" />
+                                              Rating="{Binding Rating, Converter={StaticResource stringToInt}}" />
                                     <TextBlock
-                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                               Foreground="{StaticResource PhoneAccentBrush}"
-                               
-                               Text="{Binding Type}"/>
+                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                        Foreground="{StaticResource PhoneAccentBrush}"
+                                        Text="{Binding Type}"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                       
-                      
-
                     </Grid>
                 </DataTemplate>
             </phone:LongListSelector.ItemTemplate>
-
-
         </phone:LongListSelector >
-
-       
     </Grid>
-
 </phone:PanoramaItem>

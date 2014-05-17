@@ -11,6 +11,7 @@ using PhoneGuitarTab.Search.SoundCloud;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI.ViewModels
 {
@@ -46,12 +47,6 @@ namespace PhoneGuitarTab.UI.ViewModels
             });
         }
 
-        public override void LoadStateFrom(IDictionary<string, object> state)
-        {
-            base.LoadStateFrom(state);
-            PhoneApplicationService phoneAppService = PhoneApplicationService.Current; // ??? 
-        }
-
         public override void SaveStateTo(IDictionary<string, object> state)
         {
             PhoneApplicationService phoneAppService = PhoneApplicationService.Current;
@@ -77,7 +72,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             var browser = sender as WebBrowser;
             if (e.Value.StartsWith("onStreamUrlRetrieved"))
             {
-                SoundCloudSearch soundCloudSearch = new SoundCloudSearch((string) browser.InvokeScript("getTrackUrl"));
+                var soundCloudSearch = new SoundCloudSearch((string) browser.InvokeScript("getTrackUrl"));
                 soundCloudSearch.SearchCompleted += SoundCloudSearchCompleted;
                 soundCloudSearch.Run();
             }
@@ -91,7 +86,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         public void StopAudioPlayer(WebBrowser browser)
         {
             System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(
-                () => { browser.InvokeScript("stopAudioPlayer"); });
+                () => browser.InvokeScript("stopAudioPlayer"));
         }
 
         #region helpers
@@ -101,17 +96,18 @@ namespace PhoneGuitarTab.UI.ViewModels
             if (NetworkInterface.GetIsNetworkAvailable())
             {
                 System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(
-                    () => { browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name + " " + Tablature.Name); });
+                    () => browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name + " " + Tablature.Name));
             }
             else
-                browser.InvokeScript("setLabel", "Connect your device to internet to play", " this song");
+                browser.InvokeScript("setLabel", AppResources.Tab_ConnectDevicePhraseStart, 
+                    AppResources.Tab_ConnectDevicePhraseEnd);
         }
 
         private void RunRating()
         {
             if (!RatingService.IsAppRated() && RatingService.IsNeedShowMessage())
             {
-                MessageBoxResult result = MessageBox.Show(AppResources.ReviewTheApp, AppResources.RateTheApp,
+                MessageBoxResult result = MessageBox.Show(AppResources.Tab_ReviewTheApp, AppResources.Tab_RateTheApp,
                     MessageBoxButton.OKCancel);
                 //show message.
                 if (result == MessageBoxResult.OK)

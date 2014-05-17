@@ -11,6 +11,7 @@ using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI.ViewModels
 {
@@ -24,7 +25,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Fields
 
-        private ITabSearcher _tabSearcher;
+        private readonly ITabSearcher _tabSearcher;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
         private HorizontalAlignment _pagesListAlignment;
@@ -169,7 +170,6 @@ namespace PhoneGuitarTab.UI.ViewModels
             get { return !IsDownloading; }
         }
 
-        //helpers properties
         public string CurrentSearchText
         {
             get { return currentSearchText; }
@@ -316,7 +316,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         }
 
         /// <summary>
-        ///     used for "jump to top" feature
+        ///     Used for "jump to top" feature
         /// </summary>
         public TabEntity FirstTabInList
         {
@@ -438,7 +438,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
-            SearchInfoTextBlock = "Searching for " + CurrentTypedText + "..";
+            SearchInfoTextBlock = String.Format(AppResources.Search_SearchFor, CurrentTypedText);
             RunSearch(bandName, songName);
         }
 
@@ -460,7 +460,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             int pageNumber;
             if (Int32.TryParse(index, out pageNumber))
             {
-                SearchInfoTextBlock = "Page " + index + " for " + CurrentTypedText + "..";
+                SearchInfoTextBlock = String.Format(AppResources.Search_PageFor, index, CurrentTypedText);
                 CurrentPageIndex = pageNumber;
 
                 string bandName = string.Empty,
@@ -507,14 +507,14 @@ namespace PhoneGuitarTab.UI.ViewModels
 
             if (direction == "next")
             {
-                if (!(Pages.Count() == CurrentPageIndex))
+                if (Pages.Count() != CurrentPageIndex)
                 {
                     DoSelectPage((CurrentPageIndex + 1).ToString());
                 }
             }
             else if (direction == "previous")
             {
-                if (!(CurrentPageIndex == 1))
+                if (CurrentPageIndex != 1)
                 {
                     DoSelectPage((CurrentPageIndex - 1).ToString());
                 }
@@ -527,13 +527,13 @@ namespace PhoneGuitarTab.UI.ViewModels
 
             if (IsDownloading)
             {
-                Dialog.Show("Sorry, you cannot download the tab right now.");
+                Dialog.Show(AppResources.Search_DownloadFailed);
                 return;
             }
             TabEntity tab = SearchGroupTabs.Tabs.FirstOrDefault(t => t.SearchId == arg);
 
             //TODO create converter
-            SearchTabResultEntry entry = new SearchTabResultEntry
+            var entry = new SearchTabResultEntry
             {
                 Id = tab.SearchId,
                 Url = tab.SearchUrl,
@@ -554,7 +554,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 else
                     DownloadTabComplete(tab, filePath);
             };
-            SearchInfoTextBlock = "Downloading " + tab.Name + "..";
+            SearchInfoTextBlock = String.Format(AppResources.Search_Downloading, tab.Name);
             IsDownloading = true;
             try
             {
@@ -562,7 +562,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
             catch (Exception ex)
             {
-                Dialog.Show(String.Format("Error: {0}", ex));
+                Dialog.Show(String.Format(AppResources.Search_Error, ex));
                 IsDownloading = false;
             }
         }
@@ -579,7 +579,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private void DoHome()
         {
             Hub.RaiseTabsRefreshed();
-            NavigationService.NavigateTo(Strings.Startup);
+            NavigationService.NavigateTo(NavigationViewNames.Startup);
         }
 
         #endregion Command handlers
@@ -623,7 +623,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             else
             {
                 IsSearching = false;
-                Dialog.Show("Sorry,", "can't reach the server right now.");
+                Dialog.Show(AppResources.Search_Sorry, AppResources.Search_ServerUnavailable);
             }
         }
 
@@ -647,10 +647,10 @@ namespace PhoneGuitarTab.UI.ViewModels
                     CurrentTabEntity.IsDownloaded = true;
                     IsDownloading = false;
 
-                    Dialog.Show(" was downloaded", "\"" + CurrentTabEntity.Name + "\" by " + CurrentTabEntity.Group,
+                    Dialog.Show(AppResources.Search_TabDownloadedText, AppResources.Search_TabDownloadedTitle,
                         new DialogActionContainer
                         {
-                            OnTapAction = (o, e) => { DoGoToTabView(CurrentTab.Id); }
+                            OnTapAction = (o, e) => DoGoToTabView(CurrentTab.Id)
                         });
 
 
@@ -677,14 +677,14 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
-                Dialog.Show("No internet connection available.", "Can not perform operation");
+                Dialog.Show(AppResources.Search_NoInternetConnection, AppResources.Search_OperationFailed);
                 return;
             }
 
             SearchGroupTabs = null;
             IsHintVisible = false;
             IsNothingFound = false;
-            _tabSearcher.SearchComplete += (s, e) => { SearchCompletedHandler(e); };
+            _tabSearcher.SearchComplete += (s, e) => SearchCompletedHandler(e);
 
             IsSearching = true;
 
@@ -693,9 +693,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void AssignHeaderPagingUI(int pageCount)
         {
-            PagesListAlignment = pageCount < 7
-                ? HorizontalAlignment.Center
-                : HorizontalAlignment.Center;
+            PagesListAlignment = HorizontalAlignment.Center;
 
             PagingListPadding = pageCount < 8
                 ? new Thickness(14)
@@ -708,15 +706,12 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void DoGoToTabView(int id)
         {
-            if (id != null)
-            {
-                Tab tab = (from Tab t in Database.Tabs
-                    where t.Id == id
-                    select t).Single();
-                NavigationService.NavigateToTab(new Dictionary<string, object> {{"Tab", tab}});
-                Hub.RaiseBackGroundImageChangeActivity(tab.Group.ExtraLargeImageUrl);
-                Hub.RaiseTabBrowsed();
-            }
+            Tab tab = (from Tab t in Database.Tabs
+                where t.Id == id
+                select t).Single();
+            NavigationService.NavigateToTab(new Dictionary<string, object> {{"Tab", tab}});
+            Hub.RaiseBackGroundImageChangeActivity(tab.Group.ExtraLargeImageUrl);
+            Hub.RaiseTabBrowsed();
         }
 
         #endregion Helper methods

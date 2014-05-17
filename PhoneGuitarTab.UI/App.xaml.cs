@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI
 {
     public partial class App : Application
     {
+        public static String AppForceCulture = "";
         /// <summary>
         ///     Constructor for the Application object.
         /// </summary>
@@ -43,6 +48,53 @@ namespace PhoneGuitarTab.UI
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+            }
+            // Language display initialization
+            InitializeLanguage();
+        }
+
+        private void InitializeLanguage()
+        {
+            try
+            {
+                // Change locale to appForceCulture if it is not empty
+                if (String.IsNullOrWhiteSpace(AppForceCulture) == false)
+                {
+                    // Force app globalization to follow appForceCulture
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo(AppForceCulture);
+
+                    // Force app UI culture to follow appForceCulture
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(AppForceCulture);
+                }
+                // Set the font to match the display language defined by the
+                // ResourceLanguage resource string for each supported language.
+                //
+                // Fall back to the font of the neutral language if the display
+                // language of the phone is not supported.
+                //
+                // If a compiler error occurs, ResourceLanguage is missing from
+                // the resource file.
+                RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
+                // Set the FlowDirection of all elements under the root frame based
+                // on the ResourceFlowDirection resource string for each
+                // supported language.
+                //
+                // If a compiler error occurs, ResourceFlowDirection is missing from
+                // the resource file.
+                var flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection, false);
+                RootFrame.FlowDirection = flow;
+            }
+            catch
+            {
+                // If an exception is caught here it is most likely due to either
+                // ResourceLangauge not being correctly set to a supported language
+                // code or ResourceFlowDirection is set to a value other than LeftToRight
+                // or RightToLeft.
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Break();
+                }
+                throw;
             }
         }
 

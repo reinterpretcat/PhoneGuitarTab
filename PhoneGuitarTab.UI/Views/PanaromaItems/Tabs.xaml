@@ -11,14 +11,11 @@
                     DataContext="{Binding Collection, Source={StaticResource Locator}}"
                     Header="tabs"
                     mc:Ignorable="d">
-   
-   
     <phone:PanoramaItem.Resources>
         <Infrastructure:TabsGroupsCollectionToVisibilityConverter x:Key="tabsGroupsCollectionToVisibility" />
     </phone:PanoramaItem.Resources>
-
     <toolkit:LongListMultiSelector x:Name="TabList"
-                                toolkit:TiltEffect.IsTiltEnabled="True"
+                              toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="true" HideEmptyGroups ="true"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
@@ -31,19 +28,17 @@
                 <Command:ExecuteCommandAction Command="{Binding SetSelectedItems}" CommandParameter="{Binding ElementName=TabList}" />
             </i:EventTrigger>        
         </i:Interaction.Triggers>
-        
         <toolkit:LongListMultiSelector.ListHeaderTemplate>
             <DataTemplate>
                 <TextBlock Margin="0,80"
                            HorizontalAlignment="Center"
                            FontSize="26"
                            Opacity="0.5"
-                           Text="You have nothing downloaded yet."
+                           Text="{Binding Path=LocalizedResources.PanaramaTabs_NoTabs, Source={StaticResource LocalizedStrings}}"
                            Visibility="{Binding DataContext.AllTabs,
                                                 ElementName=TabList,
                                                 Converter={StaticResource tabsGroupsCollectionToVisibility}}" />
             </DataTemplate>
         </toolkit:LongListMultiSelector.ListHeaderTemplate>
     </toolkit:LongListMultiSelector>
-
 </phone:PanoramaItem>

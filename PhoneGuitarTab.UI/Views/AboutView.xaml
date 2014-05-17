@@ -47,10 +47,12 @@
                 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
                 	FontSize="{StaticResource PhoneFontSizeLarge}"
                 	Foreground="White"
-                	Text="Phone Guitar Tab" Margin="0,0,55,65" Height="43" Grid.Column="1" />
+                	Text="{Binding Path=LocalizedResources.AppTitle_Lower, Source={StaticResource LocalizedStrings}}" 
+                           Margin="0,0,55,65" Height="43" Grid.Column="1" />
                 <TextBlock VerticalAlignment="Center"
                 	FontFamily="{StaticResource PhoneFontFamilyLight}"
-                	Text="version" Margin="3,66,272,41"  Grid.Column="1" FontSize="16" Height="21" />
+                	Text="{Binding Path=LocalizedResources.About_Version, Source={StaticResource LocalizedStrings}}"
+                           Margin="3,66,272,41"  Grid.Column="1" FontSize="16" Height="21" />
                 <TextBlock Margin="65,61,136,28"
                 		VerticalAlignment="Center"
                 		FontFamily="{StaticResource PhoneFontFamilySemiLight}"
@@ -62,12 +64,12 @@
         <StackPanel Margin="0,0,2,0" Grid.Row="1">
             <TextBlock Margin="20,15,0,6"
         		TextWrapping="Wrap" Foreground="White" Height="140" >
-        		<Run FontFamily="Segoe WP Semibold" Text="Phone Guitar Tab "/>
-        		<Run Text="is an open source project and is licensed under Microsoft Public License (Ms-PL). "/>
+        		<Run FontFamily="Segoe WP Semibold" Text="{Binding Path=LocalizedResources.About_AppTitle, Source={StaticResource LocalizedStrings}}"/>
+        		<Run Text="{Binding Path=LocalizedResources.About_AppDescription, Source={StaticResource LocalizedStrings}}"/>
         		<LineBreak/>
         		<Run/>
         		<LineBreak/>
-        		<Run Text="Our team invites developers &amp; designers to join us to improve the best tablature app on the Store."/>
+        		<Run Text="{Binding Path=LocalizedResources.About_AppInvitation, Source={StaticResource LocalizedStrings}}"/>
             </TextBlock>
         </StackPanel>
 
@@ -109,7 +111,10 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button BorderThickness="0" Grid.Column="3" Content="fb page" Margin="0,97,45,0" Width="90" FlowDirection="LeftToRight" Padding="15,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="48" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
+                <Button BorderThickness="0" Grid.Column="3" Content="fb page" Margin="0,97,45,0" Width="90"
+                        FlowDirection="LeftToRight" Padding="15,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Height="48" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontStretch="UltraExpanded" 
+                        FontSize="16" Grid.RowSpan="2" Foreground="White">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
@@ -151,7 +156,9 @@
                     </i:Interaction.Triggers>
 
                 </Button>
-                <Button BorderThickness="0" Content="project page &#xD;&#xA;on CodePlex" Margin="0,61,173,0" Width="103" FlowDirection="LeftToRight" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" Foreground="White" >
+                <Button BorderThickness="0" Content="project page &#xD;&#xA;on CodePlex" Margin="0,61,173,0" Width="103" FlowDirection="LeftToRight"
+                        Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" 
+                        TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" Foreground="White" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"

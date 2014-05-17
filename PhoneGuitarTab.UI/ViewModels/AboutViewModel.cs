@@ -5,48 +5,41 @@ using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views;
 using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI.ViewModels
 {
-    public class AboutViewModel: ViewModel
+    public class AboutViewModel : ViewModel
     {
         [Dependency]
         public AboutViewModel(RatingService ratingService)
         {
-            Help = AppResources.Help;
-            AppTitle = AppResources.AppTitle;
-            CompanyUrl = AppResources.CompanyUrl;
-            FacebookUrl = AppResources.FacebookUrl;
-            Copyright = AppResources.Copyright;
-            SupportEmail = AppResources.SupportEmail;
-            Support = AppResources.Support;
-            SupportMessage = AppResources.SupportMessage;
-            Review = AppResources.Review;
-            ReviewTheApp = AppResources.ReviewTheApp;
+            AppTitle = AppResources.About_AppTitle;
+            CompanyUrl = AppResources.About_CompanyUrl;
+            FacebookUrl = AppResources.About_FacebookUrl;
+            Copyright = AppResources.About_Copyright;
+            SupportEmail = AppResources.About_SupportEmail;
+            Support = AppResources.About_Support;
             ApplicationVersion = App.Version;
-            _ratingService = ratingService;  
+            _ratingService = ratingService;
         }
-       
-        public string Help { get; set; }
+
         public string CompanyUrl { get; set; }
         public string FacebookUrl { get; set; }
         public string Copyright { get; set; }
         public string SupportEmail { get; set; }
         public string Support { get; set; }
-        public string SupportMessage { get; set; }
         public string AppTitle { get; set; }
         public string ApplicationVersion { get; set; }
-        public string Review { get; set; }
-        public string ReviewTheApp { get; set; }
 
-        private readonly  RatingService _ratingService; 
+        private readonly RatingService _ratingService;
 
         public ICommand ViewWebsiteCommand
         {
             get
             {
-                return new ExecuteCommand<string>( url =>
-                  new WebBrowserTask { Uri = new Uri(url) }.Show());
+                return new ExecuteCommand<string>(url =>
+                    new WebBrowserTask {Uri = new Uri(url)}.Show());
             }
         }
 
@@ -60,8 +53,8 @@ namespace PhoneGuitarTab.UI.ViewModels
                     {
                         To = SupportEmail,
                         Subject =
-                          Support + " " + AppTitle + " " +
-                          ApplicationVersion
+                            Support + " " + AppTitle + " " +
+                            ApplicationVersion
                     };
                     emailComposeTask.Show();
                 });
@@ -75,7 +68,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 _ratingService.RateApp();
 
                 return new ExecuteCommand(() =>
-                  new MarketplaceReviewTask().Show());
+                    new MarketplaceReviewTask().Show());
             }
         }
     }

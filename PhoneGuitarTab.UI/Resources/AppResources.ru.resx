@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_AppDescription" xml:space="preserve">
+    <value> это проект с открытым исходным кодом под лицензией Microsoft Public License (Ms-PL).</value>
+  </data>
+  <data name="About_AppInvitation" xml:space="preserve">
+    <value>Наша команда приглашает разработчиков присоединиться к нам для работы над лучшей, в своем роде, программе в магазине приложений</value>
+  </data>
+  <data name="About_AppTitle" xml:space="preserve">
+    <value>PhoneGuitarTab</value>
+  </data>
+  <data name="About_CompanyUrl" xml:space="preserve">
+    <value>http://phoneguitartab.codeplex.com</value>
+  </data>
+  <data name="About_Copyright" xml:space="preserve">
+    <value>Copyright © 2011-2014 Phone guitar tab</value>
+  </data>
+  <data name="About_FacebookUrl" xml:space="preserve">
+    <value>http://facebook.com/PhoneGuitarTab</value>
+  </data>
+  <data name="About_Support" xml:space="preserve">
+    <value>техподдержка</value>
+  </data>
+  <data name="About_SupportEmail" xml:space="preserve">
+    <value>phoneguitartab@gmail.com</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>версия</value>
+  </data>
+  <data name="AppTitle_Lower" xml:space="preserve">
+    <value>Phone Guitar Tab</value>
+  </data>
+  <data name="AppTitle_Upper" xml:space="preserve">
+    <value>PHONE GUITAR TAB</value>
+  </data>
+  <data name="Error_Message" xml:space="preserve">
+    <value>К сожалению, мы не можем обработать эту ошибку. Если она будет повторяться, попробуйте, пожалуйста, переустановить приложение. Затем, вы можете скачать предварительно синхронизированные табулатуры назад. Ошибка:</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>ошибка</value>
+  </data>
+  <data name="Group_More" xml:space="preserve">
+    <value>еще</value>
+  </data>
+  <data name="PanaramaTabs_NoTabs" xml:space="preserve">
+    <value>Вы ничего не скачали</value>
+  </data>
+  <data name="ResourceFlowDirection" xml:space="preserve">
+    <value>LeftToRight</value>
+  </data>
+  <data name="ResourceLanguage" xml:space="preserve">
+    <value>ru-RU</value>
+  </data>
+  <data name="SearchForBand_Online" xml:space="preserve">
+    <value>онлайн</value>
+  </data>
+  <data name="Search_DownloadFailed" xml:space="preserve">
+    <value>Извините, вы не можете скачать прямо сейчас</value>
+  </data>
+  <data name="Search_Downloading" xml:space="preserve">
+    <value>Скачивание {0}..</value>
+  </data>
+  <data name="Search_Error" xml:space="preserve">
+    <value>Ошибка: {0}</value>
+  </data>
+  <data name="Search_NoInternetConnection" xml:space="preserve">
+    <value>Нет интернет соединения</value>
+  </data>
+  <data name="Search_NothingFound" xml:space="preserve">
+    <value>К сожалению, ничего не найдено. &amp;#x0a;Попробуйте поискать через запятую: &amp;#x0a;имя группы, имя песни</value>
+  </data>
+  <data name="Search_OperationFailed" xml:space="preserve">
+    <value>Ошибка выполенения</value>
+  </data>
+  <data name="Search_PageFor" xml:space="preserve">
+    <value>Страница {0} для {1}..</value>
+  </data>
+  <data name="Search_SearchButton" xml:space="preserve">
+    <value>поиск</value>
+  </data>
+  <data name="Search_SearchBy" xml:space="preserve">
+    <value>поиск по</value>
+  </data>
+  <data name="Search_SearchFor" xml:space="preserve">
+    <value>Поиск для {0}..</value>
+  </data>
+  <data name="Search_SelectedType" xml:space="preserve">
+    <value>тип</value>
+  </data>
+  <data name="Search_ServerUnavailable" xml:space="preserve">
+    <value>нет ответа от сервера.</value>
+  </data>
+  <data name="Search_Sorry" xml:space="preserve">
+    <value>Извините,</value>
+  </data>
+  <data name="Search_TabDownloadedText" xml:space="preserve">
+    <value>скачана</value>
+  </data>
+  <data name="Search_TabDownloadedTitle" xml:space="preserve">
+    <value>"{0}" от {1}</value>
+  </data>
+  <data name="Search_TypePrompt" xml:space="preserve">
+    <value>искать..</value>
+  </data>
+  <data name="Startup_About" xml:space="preserve">
+    <value>о программе</value>
+  </data>
+  <data name="Startup_Delete" xml:space="preserve">
+    <value>удалить</value>
+  </data>
+  <data name="Startup_RateApp" xml:space="preserve">
+    <value>оценить</value>
+  </data>
+  <data name="Startup_Select" xml:space="preserve">
+    <value>выбор</value>
+  </data>
+  <data name="Startup_Syncronize" xml:space="preserve">
+    <value>синхронизировать..</value>
+  </data>
+  <data name="Startup_TabSearch" xml:space="preserve">
+    <value>поиск</value>
+  </data>
+  <data name="Stave_Autoscroll" xml:space="preserve">
+    <value>автопрокрутка</value>
+  </data>
+  <data name="Stave_Instruments" xml:space="preserve">
+    <value>инструменты</value>
+  </data>
+  <data name="Stave_Loading" xml:space="preserve">
+    <value>Закрузка guitar pro..</value>
+  </data>
+  <data name="Stave_NavigationFailed" xml:space="preserve">
+    <value>Не могу перейти на страницу, проверьте интернет соединение</value>
+  </data>
+  <data name="Stave_Pin" xml:space="preserve">
+    <value>закладка</value>
+  </data>
+  <data name="Stave_Scale" xml:space="preserve">
+    <value>масштаб</value>
+  </data>
+  <data name="Synchronize_Message" xml:space="preserve">
+    <value>Данная настройка полезна, если вы удалили все свои табулатуры и хотите восстановить их из oneDrive</value>
+  </data>
+  <data name="Synchronize_OneDrive" xml:space="preserve">
+    <value>OneDrive</value>
+  </data>
+  <data name="Synchronize_RestoreAll" xml:space="preserve">
+    <value>восстановить табулатуры</value>
+  </data>
+  <data name="Synchronize_Start" xml:space="preserve">
+    <value>Пуск!</value>
+  </data>
+  <data name="Synchronize_TabProcessed" xml:space="preserve">
+    <value>{0} скачано - {1} закачано.</value>
+  </data>
+  <data name="Synchronize_Title" xml:space="preserve">
+    <value>СИНХРОНИЗИРОВАТЬ</value>
+  </data>
+  <data name="Syncronize_Connecting" xml:space="preserve">
+    <value>Соединение с OneDrive...</value>
+  </data>
+  <data name="Tab_ConnectDevicePhraseEnd" xml:space="preserve">
+    <value>этой песни</value>
+  </data>
+  <data name="Tab_ConnectDevicePhraseStart" xml:space="preserve">
+    <value>Необходимо интернет соединение для проигрывания</value>
+  </data>
+  <data name="Tab_RateTheApp" xml:space="preserve">
+    <value>Оценить приложение?</value>
+  </data>
+  <data name="Tab_ReviewTheApp" xml:space="preserve">
+    <value>Нравится приложение? Помогите нам, оценив его.</value>
+  </data>
+  <data name="TextTab_Autoscroll" xml:space="preserve">
+    <value>автопрокрутка</value>
+  </data>
+  <data name="TextTab_Pin" xml:space="preserve">
+    <value>закладка</value>
+  </data>
+</root>

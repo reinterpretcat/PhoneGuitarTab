@@ -11,7 +11,6 @@
                     DataContext="{Binding Collection, Source={StaticResource Locator}}"
                     Header="bands"
                     mc:Ignorable="d">
-    
     <phone:PanoramaItem.Resources>
         <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush"/>
         <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
@@ -37,7 +36,6 @@
             </Setter>
         </Style>
     </phone:PanoramaItem.Resources>
-
     <phone:LongListSelector x:Name="GroupList"  
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               IsGroupingEnabled="True" LayoutMode="Grid" GridCellSize="200,200"
@@ -50,10 +48,7 @@
                 <Command:ExecuteCommandAction Command="{Binding GoToGroup}" CommandParameter="{Binding ElementName=GroupList}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
-   
-       
-        <phone:LongListSelector.ItemTemplate>
-            
+        <phone:LongListSelector.ItemTemplate>   
             <DataTemplate>
                 <Grid Margin="10,10,10,10">
                     <Grid.RowDefinitions>
@@ -80,7 +75,7 @@
                         <TextBlock Margin="5,0,0,19"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    FontSize="14"
-                                    Foreground="White"
+                                   Foreground="White"
                                    Style="{StaticResource PhoneTextNormalStyle}">
                             <Run Text="Tabs: " />
                             <Run Text="{Binding Item1}" />
@@ -89,7 +84,5 @@
                 </Grid>
             </DataTemplate>
         </phone:LongListSelector.ItemTemplate>
-
     </phone:LongListSelector>
-
 </phone:PanoramaItem>

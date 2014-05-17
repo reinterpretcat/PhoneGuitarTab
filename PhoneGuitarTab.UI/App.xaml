@@ -4,7 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-             xmlns:core="clr-namespace:PhoneGuitarTab.UI.Bootstrap" mc:Ignorable="d">
+             xmlns:core="clr-namespace:PhoneGuitarTab.UI.Bootstrap"
+             mc:Ignorable="d">
     <!--  Application Resources  -->
     <Application.ApplicationLifetimeObjects>
         <!--  Required object that handles lifetime events for the application  -->
@@ -16,6 +17,7 @@
     </Application.ApplicationLifetimeObjects>
     <Application.Resources>
         <ResourceDictionary>
+            <local:LocalizedStrings xmlns:local="clr-namespace:PhoneGuitarTab.UI.Resources" x:Key="LocalizedStrings"/>
             <core:ComponentRoot x:Key="Locator" d:IsDataSource="True"  />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CommonResources/Templates.xaml" />

@@ -2,6 +2,7 @@
 using PhoneGuitarTab.Core.Bootstrap;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.UI.Data;
+using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.Bootstrap
 {
@@ -25,8 +26,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
         {
             Action<IDataContextService> onCreateDb = service =>
             {
-                service.TabTypes.InsertOnSubmit(new TabType {Name = Strings.MusicXml, ImageUrl = "/Images/instrument/MusicXML"});
-                service.TabTypes.InsertOnSubmit(new TabType {Name = Strings.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro"});
+                service.TabTypes.InsertOnSubmit(new TabType {Name = TabTypeNames.MusicXml, ImageUrl = "/Images/instrument/MusicXML"});
+                service.TabTypes.InsertOnSubmit(new TabType {Name = TabTypeNames.GuitarPro, ImageUrl = "/Images/instrument/Guitarpro"});
                 service.TabTypes.InsertOnSubmit(new TabType {Name = "tab", ImageUrl = "/Images/instrument/Electric-Guitar"});
                 service.TabTypes.InsertOnSubmit(new TabType {Name = "bass", ImageUrl = "/Images/instrument/Bass"});
                 service.TabTypes.InsertOnSubmit(new TabType {Name = "chords", ImageUrl = "/Images/instrument/Chords"});

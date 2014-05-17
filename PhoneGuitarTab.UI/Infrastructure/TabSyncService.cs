@@ -278,9 +278,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
         {
             switch (type.Name)
             {
-                case Strings.GuitarPro:
+                case TabTypeNames.GuitarPro:
                     return "gp5";
-                case Strings.MusicXml:
+                case TabTypeNames.MusicXml:
                     return "xml";
                 default:
                     return "txt";
@@ -290,10 +290,10 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private TabType GetTabTypeByName(string name)
         {
             if (name.Contains(".gp"))
-                return DataService.TabTypes.Single(t => t.Name == Strings.GuitarPro);
+                return DataService.TabTypes.Single(t => t.Name == TabTypeNames.GuitarPro);
 
             if (name.Contains(".xml"))
-                return DataService.TabTypes.Single(t => t.Name == Strings.MusicXml);
+                return DataService.TabTypes.Single(t => t.Name == TabTypeNames.MusicXml);
 
             return DataService.TabTypes.Single(t => t.Name == "tab");
         }

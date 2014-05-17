@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.Phone.Data.Linq;
+using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.Data
 {
@@ -67,10 +68,10 @@ namespace PhoneGuitarTab.UI.Data
         private void CheckAndUpdateToVersion2_0(DatabaseSchemaUpdater dbUpdater)
         {
             // Release 2.0
-            if (!_dbService.TabTypes.Any(type => type.Name == Strings.GuitarPro))
+            if (!_dbService.TabTypes.Any(type => type.Name == TabTypeNames.GuitarPro))
                 _dbService.TabTypes.InsertOnSubmit(new TabType
                 {
-                    Name = Strings.GuitarPro,
+                    Name = TabTypeNames.GuitarPro,
                     ImageUrl = "/Images/instrument/Guitarpro"
                 });
         }
@@ -101,7 +102,7 @@ namespace PhoneGuitarTab.UI.Data
 
             _dbService.TabTypes.InsertOnSubmit(new TabType
             {
-                Name = Strings.MusicXml,
+                Name = TabTypeNames.MusicXml,
                 ImageUrl = "/Images/instrument/MusicXML"
             });
 
@@ -110,7 +111,7 @@ namespace PhoneGuitarTab.UI.Data
             _dbService.TabTypes.Single(tt => tt.Name == "bass").ImageUrl = "/Images/instrument/Bass";
             _dbService.TabTypes.Single(tt => tt.Name == "chords").ImageUrl = "/Images/instrument/Chords";
             _dbService.TabTypes.Single(tt => tt.Name == "drums").ImageUrl = "/Images/instrument/Drums";
-            _dbService.TabTypes.Single(tt => tt.Name == Strings.GuitarPro).ImageUrl = "/Images/instrument/Guitarpro";
+            _dbService.TabTypes.Single(tt => tt.Name == TabTypeNames.GuitarPro).ImageUrl = "/Images/instrument/Guitarpro";
 
             foreach (Group g in _dbService.Groups)
             {

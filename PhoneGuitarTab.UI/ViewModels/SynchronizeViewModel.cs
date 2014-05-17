@@ -5,6 +5,7 @@ using Microsoft.Phone.Shell;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.UI.Infrastructure;
+using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI.ViewModels
 {
@@ -101,8 +102,8 @@ namespace PhoneGuitarTab.UI.ViewModels
                 hub.RaiseTabsDownloaded();
                 hub.RaiseTabsRefreshed();
                 IsSyncNotRunning = true;
-                SetProgressIndicator(true, DownloadedTabs.ToString() + " tabs downloaded - "
-                    + UploadedTabs.ToString() + " tabs uploaded.");
+                SetProgressIndicator(true, String.Format(
+                    AppResources.Synchronize_TabProcessed, DownloadedTabs, UploadedTabs));
                 SystemTray.ProgressIndicator.IsIndeterminate = false;
             };
             IsSyncNotRunning = true;
@@ -116,7 +117,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 {
                     this.ProgressIndicator = new ProgressIndicator();
                     IsSyncNotRunning = false;
-                    SetProgressIndicator(!IsSyncNotRunning, "Connecting to OneDrive..."); 
+                    SetProgressIndicator(!IsSyncNotRunning, AppResources.Syncronize_Connecting); 
                     SyncService.Synchronize(DownloadAll);
                 });
             }

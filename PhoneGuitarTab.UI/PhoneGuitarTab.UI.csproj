@@ -18,8 +18,7 @@
     </TargetFrameworkProfile>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>
-    </SupportedCultures>
+    <SupportedCultures>ru</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>PhoneGuitarTab.UI_$(Configuration)_$(Platform).xap</XapFilename>
@@ -122,7 +121,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppResources.Designer.cs">
+    <Compile Include="Infrastructure\TabTypeNames.cs" />
+    <Compile Include="Resources\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
@@ -148,7 +148,8 @@
     <Compile Include="Infrastructure\NavigationExtensions.cs" />
     <Compile Include="Infrastructure\TabSyncService.cs" />
     <Compile Include="Infrastructure\TextTabAdapter.cs" />
-    <Compile Include="Strings.cs" />
+    <Compile Include="Resources\LocalizedStrings.cs" />
+    <Compile Include="Infrastructure\NavigationViewNames.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\SynchronizeViewModel.cs" />
     <Compile Include="ViewModels\StaveTabViewModel.cs" />
@@ -449,10 +450,12 @@
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AppResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="Resources\AppResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AppResources.ru.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhoneGuitarTab.Controls\PhoneGuitarTab.Controls.csproj">

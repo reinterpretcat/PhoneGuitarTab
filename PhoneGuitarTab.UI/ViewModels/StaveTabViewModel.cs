@@ -16,7 +16,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public void NavigateToHome()
         {
-            NavigationService.NavigateTo(Strings.Startup);
+            NavigationService.NavigateTo(NavigationViewNames.Startup);
         }
 
         protected override void ReadNavigationParameters()

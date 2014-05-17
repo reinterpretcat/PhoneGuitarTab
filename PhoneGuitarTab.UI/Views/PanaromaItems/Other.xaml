@@ -41,21 +41,17 @@
                             <Border Margin="{StaticResource PhoneHorizontalMargin}"
                                     Background="{TemplateBinding Background}"
                                     Padding="20">
-                                     <TextBlock x:Name="TextElement"
+                                <TextBlock x:Name="TextElement"
                                            FontSize="{TemplateBinding FontSize}"
                                            Text="{TemplateBinding Content}"
                                            TextWrapping="Wrap" />
-                              
-                              
                             </Border>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
     </phone:PivotItem.Resources>
-
     <Grid Margin="28,40,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -63,7 +59,6 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     Orientation="Vertical">
-
             <HyperlinkButton Content="synchronize" Style="{StaticResource HyperlinkButtonContentStyle}" Margin="0,20">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -83,8 +78,6 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </HyperlinkButton>
-
         </StackPanel>
     </Grid>
-
 </phone:PivotItem>

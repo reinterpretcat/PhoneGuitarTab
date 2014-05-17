@@ -5,6 +5,7 @@ using PhoneGuitarTab.Core.Bootstrap;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Core.Views;
+using PhoneGuitarTab.UI.Infrastructure;
 using PhoneGuitarTab.UI.ViewModels;
 
 namespace PhoneGuitarTab.UI.Bootstrap
@@ -16,16 +17,16 @@ namespace PhoneGuitarTab.UI.Bootstrap
     {
         private readonly Dictionary<Tuple<string, Uri>, Type> _pageMapping = new Dictionary<Tuple<string, Uri>, Type>
         {
-            { new Tuple<string, Uri>(Strings.Startup, new Uri(@"/Views/StartupView.xaml", UriKind.Relative)), typeof (StartupViewModel) },
-            { new Tuple<string, Uri>(Strings.Search, new Uri(@"/Views/SearchForBandView.xaml", UriKind.Relative)), typeof (SearchViewModel) },
-            { new Tuple<string, Uri>(Strings.MainSearch, new Uri(@"/Views/SearchView.xaml", UriKind.Relative)), typeof (SearchViewModel) },
-            { new Tuple<string, Uri>(Strings.TextTab, new Uri(@"/Views/TextTabView.xaml", UriKind.Relative)), typeof (TextTabViewModel) },
-            { new Tuple<string, Uri>(Strings.StaveTab, new Uri(@"/Views/StaveTabView.xaml", UriKind.Relative)),typeof (StaveTabViewModel) },
-            { new Tuple<string, Uri>(Strings.About, new Uri(@"/Views/AboutView.xaml", UriKind.Relative)), typeof (AboutViewModel) },
-            { new Tuple<string, Uri>(Strings.Group, new Uri(@"/Views/GroupView.xaml", UriKind.Relative)), typeof (GroupViewModel) },
-            { new Tuple<string, Uri>(Strings.Synchronize, new Uri(@"/Views/SynchronizeView.xaml", UriKind.Relative)), typeof (SynchronizeViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.Startup, new Uri(@"/Views/StartupView.xaml", UriKind.Relative)), typeof (StartupViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.Search, new Uri(@"/Views/SearchForBandView.xaml", UriKind.Relative)), typeof (SearchViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.MainSearch, new Uri(@"/Views/SearchView.xaml", UriKind.Relative)), typeof (SearchViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.TextTab, new Uri(@"/Views/TextTabView.xaml", UriKind.Relative)), typeof (TextTabViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.StaveTab, new Uri(@"/Views/StaveTabView.xaml", UriKind.Relative)),typeof (StaveTabViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.About, new Uri(@"/Views/AboutView.xaml", UriKind.Relative)), typeof (AboutViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.Group, new Uri(@"/Views/GroupView.xaml", UriKind.Relative)), typeof (GroupViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.Synchronize, new Uri(@"/Views/SynchronizeView.xaml", UriKind.Relative)), typeof (SynchronizeViewModel) },
             // TODO restyling artefact?
-            { new Tuple<string, Uri>(Strings.Collection, new Uri(@"/Views/CollectionView.xaml", UriKind.Relative)),typeof (CollectionViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.Collection, new Uri(@"/Views/CollectionView.xaml", UriKind.Relative)),typeof (CollectionViewModel) },
         };
 
         public string Name

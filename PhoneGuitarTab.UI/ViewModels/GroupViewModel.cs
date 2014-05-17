@@ -226,7 +226,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void DoSearch(Group group)
         {
-            NavigationService.NavigateTo(Strings.Search, new Dictionary<string, object> {{"SearchTerm", group.Name}});
+            NavigationService.NavigateTo(NavigationViewNames.Search, new Dictionary<string, object> {{"SearchTerm", group.Name}});
         }
 
         private void DoRefreshInfo(Group group)
@@ -236,7 +236,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void DoHome()
         {
-            NavigationService.NavigateTo(Strings.Startup);
+            NavigationService.NavigateTo(NavigationViewNames.Startup);
         }
 
         private void DoPinTabToStart(int id)

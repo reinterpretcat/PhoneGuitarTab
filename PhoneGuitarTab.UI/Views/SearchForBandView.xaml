@@ -3,7 +3,6 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -32,7 +31,7 @@
         <TextBlock Margin="2,0,2,8">
             <Run Text="Results for" />
             <Run Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Path=DataContext.CurrentSearchText, ElementName=root}" />
-            <Run Text="online" />
+            <Run Text="{Binding Path=LocalizedResources.SearchForBand_Online, Source={StaticResource LocalizedStrings}}" />
         </TextBlock>
 
         <phone:LongListSelector x:Name="tabsList"
@@ -73,7 +72,8 @@
                                                             ElementName=root}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
-                                        <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
+                                        <Command:ExecuteCommandAction Command="{Binding Path=DataContext.SelectPage, ElementName=root}" 
+                                                                      CommandParameter="{Binding Path=SelectedItem, ElementName=pagesList}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <ListBox.ItemsPanel>
@@ -109,15 +109,11 @@
             </phone:LongListSelector.ListFooterTemplate>
 
         </phone:LongListSelector>
-
         <ProgressBar x:Name="performanceBar"
                                         VerticalAlignment="Top"
-                                        IsIndeterminate="{Binding IsSearching,
-                                                                  Mode=TwoWay}"
+                                        IsIndeterminate="{Binding IsSearching, Mode=TwoWay}"
                                         Visibility="{Binding Search.IsSearching,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}" />
-
-       
     </Grid>
 </Views:ViewPage>

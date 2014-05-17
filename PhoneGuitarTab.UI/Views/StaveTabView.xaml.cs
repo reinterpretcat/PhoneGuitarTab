@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PhoneGuitarTab.Core.Views;
+using PhoneGuitarTab.UI.Resources;
 using PhoneGuitarTab.UI.ViewModels;
 
 namespace PhoneGuitarTab.UI.Views
@@ -55,7 +56,7 @@ namespace PhoneGuitarTab.UI.Views
         private void ScaleApplicationBar_Click(object sender, EventArgs e)
         {
             Browser.InvokeScript("scaleChange");
-            if (!(ApplicationBar.Mode == ApplicationBarMode.Minimized))
+            if (ApplicationBar.Mode != ApplicationBarMode.Minimized)
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
@@ -64,7 +65,7 @@ namespace PhoneGuitarTab.UI.Views
         {
             ListPickerInstrument.Open();
 
-            if (!(ApplicationBar.Mode == ApplicationBarMode.Minimized))
+            if (ApplicationBar.Mode != ApplicationBarMode.Minimized)
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
@@ -77,7 +78,7 @@ namespace PhoneGuitarTab.UI.Views
         // Handle navigation failures.
         private void Browser_NavigationFailed(object sender, System.Windows.Navigation.NavigationFailedEventArgs e)
         {
-            MessageBox.Show("Navigation to this page failed, check your internet connection");
+            MessageBox.Show(AppResources.Stave_NavigationFailed);
         }
 
         private void Browser_ScriptNotify(object sender, NotifyEventArgs e)
@@ -109,7 +110,7 @@ namespace PhoneGuitarTab.UI.Views
             //Collapse ListPicker.
             ListPickerInstrument.Visibility = Visibility.Collapsed;
 
-            if (!(ApplicationBar.Mode == ApplicationBarMode.Minimized))
+            if (ApplicationBar.Mode != ApplicationBarMode.Minimized)
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 
@@ -152,7 +153,7 @@ namespace PhoneGuitarTab.UI.Views
                 SystemTray.SetOpacity(this, 0.7);
                 var progressIndicator = new ProgressIndicator();
                 SystemTray.SetProgressIndicator(this, progressIndicator);
-                SetProgressIndicator(true, "Loading guitar pro content...");
+                SetProgressIndicator(true, AppResources.Stave_Loading);
             }
         }
 
@@ -195,7 +196,7 @@ namespace PhoneGuitarTab.UI.Views
                 slider.invokeAutoScroll(sender);
             }
 
-            if (!(ApplicationBar.Mode == ApplicationBarMode.Minimized))
+            if (ApplicationBar.Mode != ApplicationBarMode.Minimized)
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
         }
 

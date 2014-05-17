@@ -15,23 +15,20 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
-      Style="{StaticResource TransitionPageStyle}"
+    Style="{StaticResource TransitionPageStyle}"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
-   
-    <!--LayoutRoot is the root grid where all page content is placed-->
+
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="SYNCHRONIZE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="OneDrive" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="{Binding Path=LocalizedResources.Synchronize_Title, Source={StaticResource LocalizedStrings}}" 
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="{Binding Path=LocalizedResources.Synchronize_OneDrive, Source={StaticResource LocalizedStrings}}" 
+                       Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
-
-        <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel Orientation="Vertical">
                 <Button HorizontalAlignment="Stretch" 
@@ -39,29 +36,23 @@
                     VerticalAlignment="Top" 
                     IsEnabled="{Binding IsSyncNotRunning}"
                     Height="80"
-                    Content="Start!">
+                    Content="{Binding Path=LocalizedResources.Synchronize_Start, Source={StaticResource LocalizedStrings}}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <commands:ExecuteCommandAction Command="{Binding LaunchSync, Mode=OneWay}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-
-
-              
                 <CheckBox IsChecked="{Binding DownloadAll, Mode=TwoWay}" 
                           IsEnabled="{Binding IsSyncNotRunning}"
                           toolkit:TiltEffect.IsTiltEnabled="True"
-                          Content="Restore all tabs" />
-                <TextBlock Margin="56,-12,12,0" Text="This option is useful if you removed all tabs from your phone and want to get them back from OneDrive"
+                          Content="{Binding Path=LocalizedResources.Synchronize_RestoreAll, Source={StaticResource LocalizedStrings}}" />
+                <TextBlock Margin="56,-12,12,0" Text="{Binding Path=LocalizedResources.Synchronize_Message, Source={StaticResource LocalizedStrings}}"
                            TextWrapping="Wrap"  
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   Style="{StaticResource PhoneTextSmallStyle}">
+                           Style="{StaticResource PhoneTextSmallStyle}">
                 </TextBlock>
             </StackPanel>
-            
-            
         </Grid>
-        
     </Grid>
 </phone:PhoneApplicationPage>

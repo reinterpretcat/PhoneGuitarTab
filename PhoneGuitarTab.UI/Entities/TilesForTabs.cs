@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.Phone.Shell;
 using PhoneGuitarTab.UI.Data;
+using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.Entities
 {
@@ -49,9 +50,9 @@ namespace PhoneGuitarTab.UI.Entities
                     return "/Images/instrument/chords_tile.png";
                 case "drums":
                     return "/Images/instrument/drums_tile.png";
-                case Strings.GuitarPro:
+                case TabTypeNames.GuitarPro:
                     return "/Images/instrument/guitarpro_tile.png";
-                case Strings.MusicXml:
+                case TabTypeNames.MusicXml:
                     return "/Images/instrument/musicxml_tile.png";
                 default:
                     return "/Images/instrument/default.png";
