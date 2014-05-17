@@ -12,9 +12,16 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private Brush _textBoxForeground;
         private FontStyle _textBoxFontStyle;
 
-        public String Text { get; set; }
+        public String Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
         public Brush Foreground { get; set; }
         public FontStyle FontStyle { get; set; }
+
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(Watermark), new PropertyMetadata((o, args) => { }));
 
         protected override void OnAttached()
         {
