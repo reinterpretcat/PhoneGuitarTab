@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using PhoneGuitarTab.Search;
 using PhoneGuitarTab.UI.Entities;
+using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
@@ -161,24 +162,19 @@ namespace PhoneGuitarTab.UI.Infrastructure
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string returnString = string.Empty;
-            SearchType searchType = (SearchType) value;
-
+            var searchType = (SearchType) value;
             switch (searchType)
             {
                 case SearchType.ByBand:
-                    returnString = "band name";
+                    returnString = AppResources.SearchType_Band;
                     break;
                 case SearchType.BySong:
-                    returnString = "song name";
+                    returnString = AppResources.SearchType_Song;
                     break;
                 case SearchType.BandSong:
-                    returnString = "band, song";
-                    break;
-                default:
-
+                    returnString = AppResources.SearchType_BandSong;
                     break;
             }
-
             return returnString;
         }
 
@@ -193,32 +189,28 @@ namespace PhoneGuitarTab.UI.Infrastructure
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string returnString = string.Empty;
-            TabulatureType searchType = (TabulatureType) value;
-
+            var searchType = (TabulatureType) value;
             switch (searchType)
             {
                 case TabulatureType.All:
-                    returnString = "all tabs";
+                    returnString = AppResources.SearchTabType_All;
                     break;
                 case TabulatureType.Guitar:
-                    returnString = "guitar tabs";
+                    returnString = AppResources.SearchTabType_Guitar;
                     break;
                 case TabulatureType.Bass:
-                    returnString = "bass tabs";
+                    returnString = AppResources.SearchTabType_Bass;
                     break;
                 case TabulatureType.Chords:
-                    returnString = "chords";
+                    returnString = AppResources.SearchTabType_Chords;
                     break;
                 case TabulatureType.Drum:
-                    returnString = "drum tabs";
+                    returnString = AppResources.SearchTabType_Drum;
                     break;
                 case TabulatureType.GuitarPro:
-                    returnString = "guitar pro";
-                    break;
-                default:
+                    returnString = AppResources.SearchTabType_GuitarPro;
                     break;
             }
-
             return returnString;
         }
 
@@ -232,8 +224,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            TabulatureType searchType = (TabulatureType) value;
-
+            var searchType = (TabulatureType) value;
             switch (searchType)
             {
                 case TabulatureType.All:
@@ -283,18 +274,18 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private readonly Dictionary<long, Func<TimeSpan, string>> thresholds = new Dictionary
             <long, Func<TimeSpan, string>>
         {
-            {2, t => "a second ago"},
-            {Minute, t => String.Format("{0} seconds ago", (int) t.TotalSeconds)},
-            {Minute*2, t => "a minute ago"},
-            {Hour, t => String.Format("{0} minutes ago", (int) t.TotalMinutes)},
-            {Hour*2, t => "an hour ago"},
-            {Day, t => String.Format("{0} hours ago", (int) t.TotalHours)},
-            {Day*2, t => "yesterday"},
-            {Day*30, t => String.Format("{0} days ago", (int) t.TotalDays)},
-            {Day*60, t => "last month"},
-            {Year, t => String.Format("{0} months ago", (int) t.TotalDays/30)},
-            {Year*2, t => "last year"},
-            {Int64.MaxValue, t => String.Format("{0} years ago", (int) t.TotalDays/365)}
+            {2, t => AppResources.RelativeDate_Second},
+            {Minute, t => String.Format(AppResources.RelativeDate_Seconds, (int) t.TotalSeconds)},
+            {Minute*2, t => AppResources.RelativeDate_Minute},
+            {Hour, t => String.Format(AppResources.RelativeDate_Minutes, (int) t.TotalMinutes)},
+            {Hour*2, t => AppResources.RelativeDate_Hour},
+            {Day, t => String.Format(AppResources.RelativeDate_Hours, (int) t.TotalHours)},
+            {Day*2, t => AppResources.RelativeDate_Day},
+            {Day*30, t => String.Format(AppResources.RelativeDate_Days, (int) t.TotalDays)},
+            {Day*60, t => AppResources.RelativeDate_Month},
+            {Year, t => String.Format(AppResources.RelativeDate_Months, (int) t.TotalDays/30)},
+            {Year*2, t => AppResources.RelativeDate_Year},
+            {Int64.MaxValue, t => String.Format(AppResources.RelativeDate_Years, (int) t.TotalDays/365)}
         };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

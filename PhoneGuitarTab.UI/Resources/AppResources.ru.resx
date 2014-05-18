@@ -174,6 +174,42 @@
   <data name="Panarama_Tabs" xml:space="preserve">
     <value>табы</value>
   </data>
+  <data name="RelativeDate_Day" xml:space="preserve">
+    <value>вчера</value>
+  </data>
+  <data name="RelativeDate_Days" xml:space="preserve">
+    <value>{0} дн. назад</value>
+  </data>
+  <data name="RelativeDate_Hour" xml:space="preserve">
+    <value>час назад</value>
+  </data>
+  <data name="RelativeDate_Hours" xml:space="preserve">
+    <value>{0} ч. назад</value>
+  </data>
+  <data name="RelativeDate_Minute" xml:space="preserve">
+    <value>минута назад</value>
+  </data>
+  <data name="RelativeDate_Minutes" xml:space="preserve">
+    <value> {0} мин. назад</value>
+  </data>
+  <data name="RelativeDate_Month" xml:space="preserve">
+    <value>месяц назад</value>
+  </data>
+  <data name="RelativeDate_Months" xml:space="preserve">
+    <value>{0} мес. назад</value>
+  </data>
+  <data name="RelativeDate_Second" xml:space="preserve">
+    <value>секунда назад</value>
+  </data>
+  <data name="RelativeDate_Seconds" xml:space="preserve">
+    <value>{0} сек. назад</value>
+  </data>
+  <data name="RelativeDate_Year" xml:space="preserve">
+    <value>в этом году</value>
+  </data>
+  <data name="RelativeDate_Years" xml:space="preserve">
+    <value>{0} лет назад</value>
+  </data>
   <data name="ResourceFlowDirection" xml:space="preserve">
     <value>LeftToRight</value>
   </data>
@@ -182,6 +218,33 @@
   </data>
   <data name="SearchForBand_Online" xml:space="preserve">
     <value>онлайн</value>
+  </data>
+  <data name="SearchTabType_All" xml:space="preserve">
+    <value>все табы</value>
+  </data>
+  <data name="SearchTabType_Bass" xml:space="preserve">
+    <value>бас</value>
+  </data>
+  <data name="SearchTabType_Chords" xml:space="preserve">
+    <value>аккорды</value>
+  </data>
+  <data name="SearchTabType_Drum" xml:space="preserve">
+    <value>ударные</value>
+  </data>
+  <data name="SearchTabType_Guitar" xml:space="preserve">
+    <value>гитара</value>
+  </data>
+  <data name="SearchTabType_GuitarPro" xml:space="preserve">
+    <value>guitar pro</value>
+  </data>
+  <data name="SearchType_Band" xml:space="preserve">
+    <value>группа</value>
+  </data>
+  <data name="SearchType_BandSong" xml:space="preserve">
+    <value>группа, песня</value>
+  </data>
+  <data name="SearchType_Song" xml:space="preserve">
+    <value>песня</value>
   </data>
   <data name="Search_DownloadFailed" xml:space="preserve">
     <value>Извините, вы не можете скачать прямо сейчас</value>
@@ -196,7 +259,9 @@
     <value>Нет интернет соединения</value>
   </data>
   <data name="Search_NothingFound" xml:space="preserve">
-    <value>К сожалению, ничего не найдено. &amp;#x0a;Попробуйте поискать через запятую: &amp;#x0a;имя группы, имя песни</value>
+    <value>К сожалению, ничего не найдено. 
+Попробуйте поискать через запятую: 
+имя группы, имя песни</value>
   </data>
   <data name="Search_OperationFailed" xml:space="preserve">
     <value>Ошибка выполенения</value>
@@ -223,10 +288,13 @@
     <value>Извините,</value>
   </data>
   <data name="Search_TabDownloadedText" xml:space="preserve">
-    <value>скачана</value>
+    <value>загрузка завершена</value>
   </data>
   <data name="Search_TabDownloadedTitle" xml:space="preserve">
-    <value>"{0}" от {1}</value>
+    <value>"{0}" от {1}:</value>
+  </data>
+  <data name="Search_TabSearchTitle" xml:space="preserve">
+    <value>ПОИСК ТАБУЛАТУР</value>
   </data>
   <data name="Search_TypePrompt" xml:space="preserve">
     <value>искать..</value>
@@ -299,6 +367,18 @@
   </data>
   <data name="Tab_ReviewTheApp" xml:space="preserve">
     <value>Нравится приложение? Помогите нам, оценив его.</value>
+  </data>
+  <data name="TemplateSearch_Download" xml:space="preserve">
+    <value>Скачать</value>
+  </data>
+  <data name="TemplateSearch_Downloaded" xml:space="preserve">
+    <value>Скачано</value>
+  </data>
+  <data name="TemplateSearch_Version" xml:space="preserve">
+    <value>версия:</value>
+  </data>
+  <data name="TemplateSearch_Votes" xml:space="preserve">
+    <value>голосов:</value>
   </data>
   <data name="TextTab_Autoscroll" xml:space="preserve">
     <value>автопрокрутка</value>

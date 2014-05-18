@@ -174,6 +174,42 @@
   <data name="Panarama_Tabs" xml:space="preserve">
     <value>tabs</value>
   </data>
+  <data name="RelativeDate_Day" xml:space="preserve">
+    <value>yesterday</value>
+  </data>
+  <data name="RelativeDate_Days" xml:space="preserve">
+    <value>{0} days ago</value>
+  </data>
+  <data name="RelativeDate_Hour" xml:space="preserve">
+    <value> an hour ago</value>
+  </data>
+  <data name="RelativeDate_Hours" xml:space="preserve">
+    <value>{0} hours ago</value>
+  </data>
+  <data name="RelativeDate_Minute" xml:space="preserve">
+    <value> a minute ago</value>
+  </data>
+  <data name="RelativeDate_Minutes" xml:space="preserve">
+    <value> {0} minutes ago</value>
+  </data>
+  <data name="RelativeDate_Month" xml:space="preserve">
+    <value>last month</value>
+  </data>
+  <data name="RelativeDate_Months" xml:space="preserve">
+    <value>{0} months ago</value>
+  </data>
+  <data name="RelativeDate_Second" xml:space="preserve">
+    <value>a second ago</value>
+  </data>
+  <data name="RelativeDate_Seconds" xml:space="preserve">
+    <value>{0} seconds ago</value>
+  </data>
+  <data name="RelativeDate_Year" xml:space="preserve">
+    <value>last year</value>
+  </data>
+  <data name="RelativeDate_Years" xml:space="preserve">
+    <value>{0} years ago</value>
+  </data>
   <data name="ResourceFlowDirection" xml:space="preserve">
     <value>LeftToRight</value>
   </data>
@@ -182,6 +218,33 @@
   </data>
   <data name="SearchForBand_Online" xml:space="preserve">
     <value>online</value>
+  </data>
+  <data name="SearchTabType_All" xml:space="preserve">
+    <value>all tabs</value>
+  </data>
+  <data name="SearchTabType_Bass" xml:space="preserve">
+    <value>bass tabs</value>
+  </data>
+  <data name="SearchTabType_Chords" xml:space="preserve">
+    <value>chords</value>
+  </data>
+  <data name="SearchTabType_Drum" xml:space="preserve">
+    <value>drum tabs</value>
+  </data>
+  <data name="SearchTabType_Guitar" xml:space="preserve">
+    <value>guitar tabs</value>
+  </data>
+  <data name="SearchTabType_GuitarPro" xml:space="preserve">
+    <value>guitar pro</value>
+  </data>
+  <data name="SearchType_Band" xml:space="preserve">
+    <value>band name</value>
+  </data>
+  <data name="SearchType_BandSong" xml:space="preserve">
+    <value>band, song</value>
+  </data>
+  <data name="SearchType_Song" xml:space="preserve">
+    <value>song name</value>
   </data>
   <data name="Search_DownloadFailed" xml:space="preserve">
     <value>Sorry, you cannot download the tab right now.</value>
@@ -196,7 +259,9 @@
     <value>No internet connection available.</value>
   </data>
   <data name="Search_NothingFound" xml:space="preserve">
-    <value>Sorry, nothing found. &amp;#x0a;Try Searching with a comma: &amp;#x0a;band name, song name</value>
+    <value>Sorry, nothing found. 
+Try Searching with a comma: 
+band name, song name</value>
   </data>
   <data name="Search_OperationFailed" xml:space="preserve">
     <value>Can not perform operation</value>
@@ -227,6 +292,9 @@
   </data>
   <data name="Search_TabDownloadedTitle" xml:space="preserve">
     <value>"{0}" by {1}</value>
+  </data>
+  <data name="Search_TabSearchTitle" xml:space="preserve">
+    <value>TAB SEARCH</value>
   </data>
   <data name="Search_TypePrompt" xml:space="preserve">
     <value>type here..</value>
@@ -299,6 +367,18 @@
   </data>
   <data name="Tab_ReviewTheApp" xml:space="preserve">
     <value>Enjoying the app? Motivate us by rating and reviewing it.</value>
+  </data>
+  <data name="TemplateSearch_Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="TemplateSearch_Downloaded" xml:space="preserve">
+    <value>Downloaded</value>
+  </data>
+  <data name="TemplateSearch_Version" xml:space="preserve">
+    <value>version:</value>
+  </data>
+  <data name="TemplateSearch_Votes" xml:space="preserve">
+    <value>votes:</value>
   </data>
   <data name="TextTab_Autoscroll" xml:space="preserve">
     <value>autoscroll</value>

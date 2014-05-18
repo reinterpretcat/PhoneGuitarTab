@@ -229,7 +229,7 @@
                                Foreground="Gray"
                                Visibility="{Binding Votes,
                                                     Converter={StaticResource intToVisibility}}">
-                        <Run Text="votes:" />
+                        <Run Text="{Binding Path=LocalizedResources.TemplateSearch_Votes, Source={StaticResource LocalizedStrings}}" />
                         <Run Text="{Binding Votes}" />
                     </TextBlock>
 
@@ -251,7 +251,7 @@
                            FontStyle="Italic"
                            Foreground="Gray"
                            Style="{StaticResource PhoneTextNormalStyle}">
-                    <Run Text="Version:" />
+                    <Run Text="{Binding Path=LocalizedResources.TemplateSearch_Version, Source={StaticResource LocalizedStrings}}" />
                     <Run Text="{Binding Version}" />
                 </TextBlock>
 
@@ -259,7 +259,7 @@
                         Command="{Binding Path=DataContext.DownloadTab,
                                           ElementName=root}"
                         CommandParameter="{Binding SearchId}"
-                        Content="Download"
+                        Content="{Binding Path=LocalizedResources.TemplateSearch_Download, Source={StaticResource LocalizedStrings}}"
                         IsEnabled="{Binding Path=DataContext.CanDownload,
                                             ElementName=root}"
                         Visibility="{Binding IsNotDownloaded,
@@ -270,7 +270,7 @@
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                            Foreground="{StaticResource PhoneAccentBrush}"
                            Style="{StaticResource PhoneTextNormalStyle}"
-                           Text="Downloaded"
+                           Text="{Binding Path=LocalizedResources.TemplateSearch_Downloaded, Source={StaticResource LocalizedStrings}}"
                            Visibility="{Binding IsDownloaded,Mode=TwoWay,
                                                 Converter={StaticResource boolVisibility}}" />
 

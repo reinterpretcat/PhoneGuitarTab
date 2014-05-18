@@ -232,6 +232,114 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to yesterday.
+        /// </summary>
+        public static string RelativeDate_Day {
+            get {
+                return ResourceManager.GetString("RelativeDate_Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} days ago.
+        /// </summary>
+        public static string RelativeDate_Days {
+            get {
+                return ResourceManager.GetString("RelativeDate_Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  an hour ago.
+        /// </summary>
+        public static string RelativeDate_Hour {
+            get {
+                return ResourceManager.GetString("RelativeDate_Hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} hours ago.
+        /// </summary>
+        public static string RelativeDate_Hours {
+            get {
+                return ResourceManager.GetString("RelativeDate_Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  a minute ago.
+        /// </summary>
+        public static string RelativeDate_Minute {
+            get {
+                return ResourceManager.GetString("RelativeDate_Minute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  {0} minutes ago.
+        /// </summary>
+        public static string RelativeDate_Minutes {
+            get {
+                return ResourceManager.GetString("RelativeDate_Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to last month.
+        /// </summary>
+        public static string RelativeDate_Month {
+            get {
+                return ResourceManager.GetString("RelativeDate_Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} months ago.
+        /// </summary>
+        public static string RelativeDate_Months {
+            get {
+                return ResourceManager.GetString("RelativeDate_Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a second ago.
+        /// </summary>
+        public static string RelativeDate_Second {
+            get {
+                return ResourceManager.GetString("RelativeDate_Second", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} seconds ago.
+        /// </summary>
+        public static string RelativeDate_Seconds {
+            get {
+                return ResourceManager.GetString("RelativeDate_Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to last year.
+        /// </summary>
+        public static string RelativeDate_Year {
+            get {
+                return ResourceManager.GetString("RelativeDate_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} years ago.
+        /// </summary>
+        public static string RelativeDate_Years {
+            get {
+                return ResourceManager.GetString("RelativeDate_Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LeftToRight.
         /// </summary>
         public static string ResourceFlowDirection {
@@ -286,7 +394,9 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, nothing found. &amp;#x0a;Try Searching with a comma: &amp;#x0a;band name, song name.
+        ///   Looks up a localized string similar to Sorry, nothing found. 
+        ///Try Searching with a comma: 
+        ///band name, song name.
         /// </summary>
         public static string Search_NothingFound {
             get {
@@ -385,6 +495,15 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TAB SEARCH.
+        /// </summary>
+        public static string Search_TabSearchTitle {
+            get {
+                return ResourceManager.GetString("Search_TabSearchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to type here...
         /// </summary>
         public static string Search_TypePrompt {
@@ -399,6 +518,87 @@ namespace PhoneGuitarTab.UI.Resources {
         public static string SearchForBand_Online {
             get {
                 return ResourceManager.GetString("SearchForBand_Online", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to all tabs.
+        /// </summary>
+        public static string SearchTabType_All {
+            get {
+                return ResourceManager.GetString("SearchTabType_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bass tabs.
+        /// </summary>
+        public static string SearchTabType_Bass {
+            get {
+                return ResourceManager.GetString("SearchTabType_Bass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to chords.
+        /// </summary>
+        public static string SearchTabType_Chords {
+            get {
+                return ResourceManager.GetString("SearchTabType_Chords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to drum tabs.
+        /// </summary>
+        public static string SearchTabType_Drum {
+            get {
+                return ResourceManager.GetString("SearchTabType_Drum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to guitar tabs.
+        /// </summary>
+        public static string SearchTabType_Guitar {
+            get {
+                return ResourceManager.GetString("SearchTabType_Guitar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to guitar pro.
+        /// </summary>
+        public static string SearchTabType_GuitarPro {
+            get {
+                return ResourceManager.GetString("SearchTabType_GuitarPro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to band name.
+        /// </summary>
+        public static string SearchType_Band {
+            get {
+                return ResourceManager.GetString("SearchType_Band", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to band, song.
+        /// </summary>
+        public static string SearchType_BandSong {
+            get {
+                return ResourceManager.GetString("SearchType_BandSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to song name.
+        /// </summary>
+        public static string SearchType_Song {
+            get {
+                return ResourceManager.GetString("SearchType_Song", resourceCulture);
             }
         }
         
@@ -606,6 +806,42 @@ namespace PhoneGuitarTab.UI.Resources {
         public static string Tab_ReviewTheApp {
             get {
                 return ResourceManager.GetString("Tab_ReviewTheApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string TemplateSearch_Download {
+            get {
+                return ResourceManager.GetString("TemplateSearch_Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloaded.
+        /// </summary>
+        public static string TemplateSearch_Downloaded {
+            get {
+                return ResourceManager.GetString("TemplateSearch_Downloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version:.
+        /// </summary>
+        public static string TemplateSearch_Version {
+            get {
+                return ResourceManager.GetString("TemplateSearch_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to votes:.
+        /// </summary>
+        public static string TemplateSearch_Votes {
+            get {
+                return ResourceManager.GetString("TemplateSearch_Votes", resourceCulture);
             }
         }
         

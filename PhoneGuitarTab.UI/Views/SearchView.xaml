@@ -47,7 +47,7 @@
                    FontSize="18"
                         Margin="10,-6"
                   Foreground="{StaticResource PhoneForegroundBrush}"
-                   Text="TAB SEARCH">
+                   Text="{Binding Path=LocalizedResources.Search_TabSearchTitle, Source={StaticResource LocalizedStrings}}">
 
                     </TextBlock>
                     <TextBox  x:Name="searchTextBox" InputScope="Search"

@@ -647,7 +647,8 @@ namespace PhoneGuitarTab.UI.ViewModels
                     CurrentTabEntity.IsDownloaded = true;
                     IsDownloading = false;
 
-                    Dialog.Show(AppResources.Search_TabDownloadedText, AppResources.Search_TabDownloadedTitle,
+                    Dialog.Show(AppResources.Search_TabDownloadedText, 
+                        String.Format(AppResources.Search_TabDownloadedTitle, CurrentTabEntity.Name, CurrentTabEntity.Group),
                         new DialogActionContainer
                         {
                             OnTapAction = (o, e) => DoGoToTabView(CurrentTab.Id)
