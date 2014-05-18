@@ -9,7 +9,7 @@
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     DataContext="{Binding Collection, Source={StaticResource Locator}}"
-                    Header="tabs"
+                    Header="{Binding Path=LocalizedResources.Panarama_Tabs, Source={StaticResource LocalizedStrings}}"
                     mc:Ignorable="d">
     <phone:PanoramaItem.Resources>
         <Infrastructure:TabsGroupsCollectionToVisibilityConverter x:Key="tabsGroupsCollectionToVisibility" />

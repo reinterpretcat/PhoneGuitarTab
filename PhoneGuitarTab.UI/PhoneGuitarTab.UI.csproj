@@ -163,19 +163,19 @@
     <Compile Include="Views\StaveTabView.xaml.cs">
       <DependentUpon>StaveTabView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PanaromaItems\Bands.xaml.cs">
+    <Compile Include="Views\PanaramaItems\Bands.xaml.cs">
       <DependentUpon>Bands.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PanaromaItems\Other.xaml.cs">
+    <Compile Include="Views\PanaramaItems\Other.xaml.cs">
       <DependentUpon>Other.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PanaromaItems\Tabs.xaml.cs">
+    <Compile Include="Views\PanaramaItems\Tabs.xaml.cs">
       <DependentUpon>Tabs.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PanaromaItems\History.xaml.cs">
+    <Compile Include="Views\PanaramaItems\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\BandByName.cs" />
@@ -240,15 +240,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PanaromaItems\Bands.xaml">
+    <Page Include="Views\PanaramaItems\Bands.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PanaromaItems\Other.xaml">
+    <Page Include="Views\PanaramaItems\Other.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PanaromaItems\Tabs.xaml">
+    <Page Include="Views\PanaramaItems\Tabs.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -256,7 +256,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PanaromaItems\History.xaml">
+    <Page Include="Views\PanaramaItems\History.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -187,6 +187,42 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to bands.
+        /// </summary>
+        public static string Panarama_Bands {
+            get {
+                return ResourceManager.GetString("Panarama_Bands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to recent.
+        /// </summary>
+        public static string Panarama_History {
+            get {
+                return ResourceManager.GetString("Panarama_History", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to other.
+        /// </summary>
+        public static string Panarama_Other {
+            get {
+                return ResourceManager.GetString("Panarama_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tabs.
+        /// </summary>
+        public static string Panarama_Tabs {
+            get {
+                return ResourceManager.GetString("Panarama_Tabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You have nothing downloaded yet..
         /// </summary>
         public static string PanaramaTabs_NoTabs {

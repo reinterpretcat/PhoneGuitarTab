@@ -9,7 +9,7 @@
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     DataContext="{Binding Collection, Source={StaticResource Locator}}"
-                    Header="bands"
+                    Header="{Binding Path=LocalizedResources.Panarama_Bands, Source={StaticResource LocalizedStrings}}"
                     mc:Ignorable="d">
     <phone:PanoramaItem.Resources>
         <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush"/>

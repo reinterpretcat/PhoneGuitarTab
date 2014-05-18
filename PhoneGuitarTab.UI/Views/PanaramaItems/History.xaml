@@ -10,7 +10,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:uiControls="clr-namespace:PhoneGuitarTab.UI.Controls"
                     DataContext="{Binding Collection, Source={StaticResource Locator}}"
-                    Header="recent"
+                    Header="{Binding Path=LocalizedResources.Panarama_History, Source={StaticResource LocalizedStrings}}"
                     mc:Ignorable="d">
     
     <phone:PanoramaItem.Resources>
