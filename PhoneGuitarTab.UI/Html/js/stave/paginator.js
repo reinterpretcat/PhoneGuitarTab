@@ -27,19 +27,24 @@ MusicTab.Stave.Paginator = klass(null, {
             root.appendChild(div);
 
             try {
-			var view = new MusicTab.Stave.View({
+                var view = new MusicTab.Stave.View({
                     selector: $("#" + id),
                     page: page,
                     track: track,
                     context: context
                 });
-				views.push(view);
-                $("#" + id).waypoint(function() {
-                    if (!view.isShown) {
-                        view.show();
-                        view.isShown = true;
-                    }
-                });
+                views.push(view);
+                // NOTE this is the check of first page: 
+                // we've aready incremented pageNumber from 1 to 2 above
+                if (pageNumber == 2) {
+                    view.show();
+                } else {
+                    $("#" + id).waypoint(function() {
+                        if (!view.isShown) {
+                            view.show();
+                        }
+                    });
+                }
             } catch(err) {
                 console.log(err.message);
             }

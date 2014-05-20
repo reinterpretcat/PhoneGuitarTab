@@ -63,7 +63,7 @@ MusicTab.Stave.View = klass(null, {
     },
 
     show: function () {
-
+        this.isShown = true;
         this.resize(this.width, this.height);
         this.ctx.clear();
         this.ctx.setFont("Arial", 10, "");
