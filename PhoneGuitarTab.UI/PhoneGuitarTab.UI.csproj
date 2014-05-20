@@ -308,6 +308,7 @@
     <Content Include="Html\css\tabdiv.css" />
     <Content Include="Html\js\sandbox\jquery-1.10.2.min.js" />
     <Content Include="Html\js\sandbox\tabs.js" />
+    <Content Include="Html\js\sandbox\waypoints.min.js" />
     <Content Include="Html\js\stave\context.js" />
     <Content Include="Html\js\stave\helper.js" />
     <Content Include="Html\js\stave\paginator.js" />

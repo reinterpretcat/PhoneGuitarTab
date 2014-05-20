@@ -34,7 +34,12 @@ MusicTab.Stave.Paginator = klass(null, {
                     context: context
                 });
 				views.push(view);
-                view.show();
+                $("#" + id).waypoint(function() {
+                    if (!view.isShown) {
+                        view.show();
+                        view.isShown = true;
+                    }
+                });
             } catch(err) {
                 console.log(err.message);
             }
