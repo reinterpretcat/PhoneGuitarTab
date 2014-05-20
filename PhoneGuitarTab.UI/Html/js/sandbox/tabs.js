@@ -1,6 +1,6 @@
 var context;var staveHelper;var paginator;var tab;
 var scales = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3];var scale = 0.6;
-var trackCount = 0;var currentTrackIndex = 0;var tracks = [];var views;$(document).ready(function () {    initEnvironment();    window.external.notify("onReady");});function initEnvironment() {
+var trackCount = 0;var currentTrackIndex = 0;var tracks = [];var views;$(document).ready(function () {    initEnvironment();    //window.external.notify("onReady");});function initEnvironment() {
     clearTab();	var height = $(document).height();
     var width = $(document).width();	context = new MusicTab.Stave.Context({						height: height,						width: width,						scale: scale,						placeHolderId: "body",						tabDivClass:"vex-tabdiv"					});	staveHelper = new MusicTab.Stave.Helper(context);	paginator = new MusicTab.Stave.Paginator({		context: context,		staveHelper: staveHelper	});}function readBase64(base64File) {   
     (new MusicTab.Utils.FileReader()).read(base64File, function (data) {
