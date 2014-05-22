@@ -58,6 +58,17 @@ function nextTrack() {
 }
 
 function clearTab() {
+
+    if (views) {
+        for (var j = 0; j < views.length; j++) {
+            var view = views[j];
+           /* $("#" + view.id).waypoint(function () {
+                this.destroy();
+            });*/
+            view.destroy();
+        }
+    }
+
     var elems = $('#body div');
     for (var i = 0, elem; (elem = elems[i]) != null; i++) {
         jQuery.event.remove(elem);
@@ -90,18 +101,34 @@ function clearTab() {
         }
     }
 }function processTab() {	// create tracks	for (var i = 0; i < tab.tracks.length; i++) {		tracks.push(new MusicTab.Tablatures.Track({			name: tab.tracks[i].name,			instrument: tab.tracks[i].instrument,			selected: tab.tracks[i].selected,			index: i		}));			}
-    trackCount = tracks.length;	//show tab	showTab();}function showTab(){	initEnvironment();	var actualWidth = staveHelper.getActualWidth();	var linePerPage = staveHelper.getLinePerPage();		var measures = tab.tracks[currentTrackIndex].measures;	var chunks = paginator.split(measures, actualWidth);    	var pages = paginator.doPaging(chunks, linePerPage);
-    //insertTitle();	views = paginator.insertPages(pages, tab.tracks[currentTrackIndex]);}/*function insertTitle() {
+    trackCount = tracks.length;}
 
-    var tracks = [{
-        artist: tab.header.artist,
-        album: tab.header.album,
-        title: tab.header.title,
-        music: tab.header.music,
-        words: tab.header.words,
-        notice: tab.header.notice,
-        instrument: tab.tracks[currentTrackIndex].instrument
-    }];
-    
-    $("#trackTmpl").tmpl(tracks).appendTo("#body");
-}*/
+
+function showTab() {
+    initEnvironment();
+    var actualWidth = staveHelper.getActualWidth();
+    var linePerPage = staveHelper.getLinePerPage();
+
+    var measures = tab.tracks[currentTrackIndex].measures;
+    var chunks = paginator.split(measures, actualWidth);
+
+    var pages = paginator.doPaging(chunks, linePerPage);
+    //insertTitle();
+    views = paginator.createViews(pages, tab.tracks[currentTrackIndex]);
+    for (var i = 0; i < views.length; i++) {
+        var view = views[i];
+        if (i == 0) {
+            view.show();
+        } else {
+            $("#" + view.id).waypoint(function() {
+                var index = parseInt(this.id.substring("vex-page".length, this.id.length)) - 1;
+                if (!views[index].isShown) {
+                    views[index].show();
+                }
+            },
+            {
+                offset: '50%'
+            });
+        }
+    }
+}

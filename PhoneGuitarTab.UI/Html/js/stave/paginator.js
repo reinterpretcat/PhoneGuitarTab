@@ -11,7 +11,7 @@ MusicTab.Stave.Paginator = klass(null, {
     },
     
     // insert tab pages
-    insertPages: function(pages, track) {
+    createViews: function(pages, track) {
         var root = document.getElementById(this.context.placeHolderId);
         var pageNumber = 1;
         var count = pages.length;
@@ -33,18 +33,8 @@ MusicTab.Stave.Paginator = klass(null, {
                     track: track,
                     context: context
                 });
+                view.id = id;
                 views.push(view);
-                // NOTE this is the check of first page: 
-                // we've aready incremented pageNumber from 1 to 2 above
-                if (pageNumber == 2) {
-                    view.show();
-                } else {
-                    $("#" + id).waypoint(function() {
-                        if (!view.isShown) {
-                            view.show();
-                        }
-                    });
-                }
             } catch(err) {
                 console.log(err.message);
             }

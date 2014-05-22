@@ -122,6 +122,10 @@ MusicTab.Stave.View = klass(null, {
 
         return this;
     },
+    
+    destroy: function() {
+        this.ctx.clear();
+    },
 
     genTabStave: function (params) {
        
