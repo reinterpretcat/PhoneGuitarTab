@@ -39,8 +39,12 @@ function nextTrack() {
 
     showTab();
 }//show the instrument with the specified indexfunction changeInstrument(trackIndex) {
-   currentTrackIndex = parseInt(trackIndex);
-   showTab();
+    try {
+        currentTrackIndex = parseInt(trackIndex);
+        showTab();
+    } catch(err) {
+        alert(err.message)
+    }
 }//get instrument namefunction getInstrumentName(i) {
    return tracks[i].name;
 }//get the lenght of the track arrayfunction getTrackCount() {
@@ -61,7 +65,9 @@ function clearTab() {
 
     if (views) {
         for (var j = 0; j < views.length; j++) {
-            views[j].destroy();
+            var view = views[j];
+            $("#" + view.id).waypoint('destroy');
+            view.destroy();
         }
     }
 
