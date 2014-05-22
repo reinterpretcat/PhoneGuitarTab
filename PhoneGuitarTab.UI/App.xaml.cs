@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
+using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI
 {
@@ -27,8 +28,9 @@ namespace PhoneGuitarTab.UI
 
             // Phone-specific initialization
             InitializePhoneApplication();
-
-
+#if DEBUG
+            Utilities.BeginRecording();
+#endif
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
             {
