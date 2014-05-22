@@ -37,7 +37,6 @@
         <Grid.Resources>
             <Infrastructure:UpperStringConverter x:Name="UpperStr" />
             <Infrastructure:IntToStringConverter x:Name="IntToStr" />
-            <Infrastructure:StringToIntConverter x:Key="stringToInt" />
             <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
             <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
             

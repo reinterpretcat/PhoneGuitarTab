@@ -40,6 +40,27 @@ namespace PhoneGuitarTab.UI.Views
 
             //subscribe to AudioURLretrieved event.
             viewModel.AudioUrlRetrieved += AudioUrlRetrievedHandler;
+            viewModel.PropertyChanged += viewModel_PropertyChanged;
+        }
+
+        void viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+           //Note that Bindable Application Bar does not support binding with Element name.
+
+            if (e.PropertyName == "AutoScrollToggled")
+            {
+                this.ToggleSlider();
+            }
+
+            if (e.PropertyName == "ScaleRequested")
+            {
+                this.ScaleTabs();
+            }
+
+            if (e.PropertyName == "InstrumentsDemanded")
+            {
+                this.ShowInstruments();
+            }
         }
 
         private void Browser_Loaded(object sender, RoutedEventArgs e)
@@ -53,7 +74,7 @@ namespace PhoneGuitarTab.UI.Views
             }
         }
 
-        private void ScaleApplicationBar_Click(object sender, EventArgs e)
+        private void ScaleTabs()
         {
             Browser.InvokeScript("scaleChange");
             if (ApplicationBar.Mode != ApplicationBarMode.Minimized)
@@ -61,7 +82,7 @@ namespace PhoneGuitarTab.UI.Views
         }
 
         ////Appbar button to visible / hide for listpicker.
-        private void InstrumentApplicationBar_Click(object sender, EventArgs e)
+        private void ShowInstruments()
         {
             ListPickerInstrument.Open();
 
@@ -182,28 +203,22 @@ namespace PhoneGuitarTab.UI.Views
             ListPickerInstrument.Visibility = Visibility.Collapsed;
         }
 
-        private void AutoScrollApplicationBarIconButton_OnClick(object sender, EventArgs e)
+        private void ToggleSlider()
         {
             //Control Autoscroll behaviour
             if (slider.Visibility == Visibility.Visible)
             {
                 slider.Visibility = Visibility.Collapsed;
-                slider.stopAutoScroll(sender);
+                slider.stopAutoScroll(slider.Browser);
             }
             else
             {
                 slider.Visibility = Visibility.Visible;
-                slider.invokeAutoScroll(sender);
+                slider.invokeAutoScroll(slider.Browser);
             }
 
             if (ApplicationBar.Mode != ApplicationBarMode.Minimized)
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
-        }
-
-        private void PinToStartIconButton_Click(object sender, EventArgs e)
-        {
-            var viewModel = DataContext as StaveTabViewModel;
-            viewModel.PinTabToStart();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

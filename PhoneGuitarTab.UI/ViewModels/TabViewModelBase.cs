@@ -7,7 +7,9 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.Search.SoundCloud;
+using PhoneGuitarTab.UI.Controls;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
@@ -20,6 +22,17 @@ namespace PhoneGuitarTab.UI.ViewModels
         public string TabContent { get; set; }
 
         public Tab Tablature { get; set; }
+
+        private bool _autoScrollToggled;
+        public bool AutoScrollToggled
+        {
+            get { return _autoScrollToggled; }
+            set
+            {
+                _autoScrollToggled = value;
+                RaisePropertyChanged("AutoScrollToggled");
+            }
+        }
 
         public RatingService RatingService { get; private set; }
 
@@ -34,7 +47,10 @@ namespace PhoneGuitarTab.UI.ViewModels
             : base(database, hub)
         {
             RatingService = ratingService;
+            CreateCommands();
         }
+
+      
 
         protected override void ReadNavigationParameters()
         {
@@ -78,16 +94,33 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
         }
 
-        public void PinTabToStart()
-        {
-            TilesForTabs.PinTabToStart(Tablature);
-        }
 
         public void StopAudioPlayer(WebBrowser browser)
         {
             System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(
                 () => browser.InvokeScript("stopAudioPlayer"));
         }
+
+        #region Commands
+
+       public ExecuteCommand<object> ToggleSlide { get; private set; }
+
+        public ExecuteCommand PinToStart{ get; private set; }
+
+        #endregion Commands
+
+        #region Command handlers
+    
+        private void DoPinToStart()
+        {
+            TilesForTabs.PinTabToStart(Tablature);
+        }
+
+        private void DoToggleSlide(object arg)
+        {
+            this.AutoScrollToggled = true;
+        }
+        #endregion Command handlers
 
         #region helpers
 
@@ -116,6 +149,12 @@ namespace PhoneGuitarTab.UI.ViewModels
                     new MarketplaceReviewTask().Show();
                 }
             }
+        }
+
+        private void CreateCommands()
+        {
+            PinToStart = new ExecuteCommand(DoPinToStart);
+            ToggleSlide = new ExecuteCommand<object>(DoToggleSlide);
         }
 
         #endregion

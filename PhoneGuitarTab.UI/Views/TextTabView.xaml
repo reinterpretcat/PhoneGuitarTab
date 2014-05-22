@@ -5,8 +5,10 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls" x:Class="PhoneGuitarTab.UI.TextTabView"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
+               xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls" x:Class="PhoneGuitarTab.UI.TextTabView"
                x:Name="root"
+               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                DataContext="{Binding TextTab, Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -20,14 +22,16 @@
                mc:Ignorable="d"
                OrientationChanged="root_OrientationChanged">
     <!-- ApplicationBar -->
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Default" Opacity="0.5">
-            <shell:ApplicationBarIconButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" 
-                                            Text="{Binding Path=LocalizedResources.TextTab_Autoscroll, Source={StaticResource LocalizedStrings}}" Click="AutoScrollApplicationBarIconButton_OnClick"/>
-            <shell:ApplicationBarIconButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" 
-                                            Text="{Binding Path=LocalizedResources.TextTab_Pin, Source={StaticResource LocalizedStrings}}" Click="PinToStartIconButton_Click"/>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    <custom:Bindable.ApplicationBar>
+        <custom:BindableApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Default" BindableOpacity="0.5" >
+            <custom:BindableApplicationBarButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" 
+                                                 Text="{Binding Path=LocalizedResources.TextTab_Autoscroll, Source={StaticResource LocalizedStrings}}" 
+                                                 Command="{Binding ToggleSlide}"  CommandParameter="true"/>
+
+            <custom:BindableApplicationBarButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" 
+                                            Text="{Binding Path=LocalizedResources.TextTab_Pin, Source={StaticResource LocalizedStrings}}" Command="{Binding PinToStart}"/>
+        </custom:BindableApplicationBar>
+    </custom:Bindable.ApplicationBar>
     <!--  LayoutRoot is the root grid where all page content is placed  -->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>

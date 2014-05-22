@@ -22,7 +22,16 @@ namespace PhoneGuitarTab.UI
 
             tabWebBrowser.LoadCompleted += viewModel.Browser_LoadCompleted;
             tabWebBrowser.ScriptNotify += viewModel.Browser_ScriptNotify;
+            viewModel.PropertyChanged += viewModel_PropertyChanged;
             viewModel.AudioUrlRetrieved += AudioUrlRetrievedHandler;
+        }
+
+        void viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "AutoScrollToggled")
+            {
+                this.ToggleSlider();
+            }
         }
 
         /// <summary>
@@ -63,28 +72,21 @@ namespace PhoneGuitarTab.UI
             tabWebBrowser.Navigate(new Uri(TextTabUri, UriKind.Relative));
         }
 
-        private void AutoScrollApplicationBarIconButton_OnClick(object sender, EventArgs e)
+        private void ToggleSlider()
         {
             //Control Autoscroll behaviour
             if (slider.Visibility == Visibility.Visible)
             {
                 slider.Visibility = Visibility.Collapsed;
-                slider.stopAutoScroll(sender);
+                slider.stopAutoScroll(slider.Browser);
             }
             else
             {
                 slider.Visibility = Visibility.Visible;
-                slider.invokeAutoScroll(sender);
+                slider.invokeAutoScroll(slider.Browser);
             }
-
             if (!(ApplicationBar.Mode == ApplicationBarMode.Minimized))
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
-        }
-
-        private void PinToStartIconButton_Click(object sender, EventArgs e)
-        {
-            var viewModel = DataContext as TextTabViewModel;
-            viewModel.PinTabToStart();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

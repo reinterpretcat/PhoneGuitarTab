@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Infrastructure;
 
@@ -8,10 +9,34 @@ namespace PhoneGuitarTab.UI.ViewModels
 {
     public class StaveTabViewModel : TabViewModelBase
     {
+
+        private bool _scaleRequested;
+        public bool ScaleRequested
+        {
+            get { return _scaleRequested; }
+            set
+            {
+                _scaleRequested = value;
+                RaisePropertyChanged("ScaleRequested");
+            }
+        }
+
+        private bool _instrumentsDemanded;
+        public bool InstrumentsDemanded
+        {
+            get { return _instrumentsDemanded; }
+            set
+            {
+                _instrumentsDemanded = value;
+                RaisePropertyChanged("InstrumentsDemanded");
+            }
+        }
+
         [Dependency]
         public StaveTabViewModel(IDataContextService database, RatingService ratingService, MessageHub hub)
             : base(database, ratingService, hub)
         {
+            CreateCommands();
         }
 
         public void NavigateToHome()
@@ -63,5 +88,37 @@ namespace PhoneGuitarTab.UI.ViewModels
                 Scale = scale;
             }
         }
+
+
+
+        #region Commands
+
+        public ExecuteCommand Scale { get; private set; }
+        public ExecuteCommand ToggleShowInstruments { get; private set; }
+        #endregion Commands
+
+        #region Command handlers
+
+        private void DoScale()
+        {
+            this.ScaleRequested = true;
+        }
+        private void DoToggleShowInstruments()
+        {
+            this.InstrumentsDemanded = true;
+        }
+
+        #endregion Command handlers
+
+        #region helpers
+       
+
+        private void CreateCommands()
+        {
+            Scale = new ExecuteCommand(DoScale);
+            ToggleShowInstruments = new ExecuteCommand(DoToggleShowInstruments);
+        }
+
+        #endregion
     }
 }
