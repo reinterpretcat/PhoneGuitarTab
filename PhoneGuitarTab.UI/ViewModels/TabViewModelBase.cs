@@ -36,6 +36,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public RatingService RatingService { get; private set; }
 
+        [Dependency]
         protected IDialogController Dialog { get; set; }
 
         public event AudioUrlRetrievedHandler AudioUrlRetrieved;
