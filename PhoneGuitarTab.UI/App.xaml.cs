@@ -8,6 +8,7 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using PhoneGuitarTab.UI.Infrastructure;
 using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI
@@ -28,8 +29,9 @@ namespace PhoneGuitarTab.UI
 
             // Phone-specific initialization
             InitializePhoneApplication();
-
-
+#if DEBUG
+            Utilities.BeginRecording();
+#endif
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
             {

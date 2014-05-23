@@ -1,14 +1,14 @@
 var context;var staveHelper;var paginator;var tab;
 var scales = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3];var scale = 0.6;
-var trackCount = 0;var currentTrackIndex = 0;var tracks = [];var views;$(document).ready(function () {    initEnvironment();    window.external.notify("onReady");});function initEnvironment() {
+var trackCount = 0;var currentTrackIndex = 0;var tracks = [];var views;$(document).ready(function () {    initEnvironment();});function initEnvironment() {
     clearTab();	var height = $(document).height();
-    var width = $(document).width();	context = new MusicTab.Stave.Context({						height: height,						width: width,						scale: scale,						placeHolderId: "body",						tabDivClass:"vex-tabdiv"					});	staveHelper = new MusicTab.Stave.Helper(context);	paginator = new MusicTab.Stave.Paginator({		context: context,		staveHelper: staveHelper	});}function readBase64(base64File) {   
+    var width = $(document).width();	context = new MusicTab.Stave.Context({						height: height,						width: width,						scale: scale,						placeHolderId: "body",						tabDivClass:"vex-tabdiv"					});	staveHelper = new MusicTab.Stave.Helper(context);	paginator = new MusicTab.Stave.Paginator({		context: context,		staveHelper: staveHelper	});}function readBase64(base64File) {
     (new MusicTab.Utils.FileReader()).read(base64File, function (data) {
         MusicTab.Tablatures.TabFactory.create({
                 data: data,
                 helper: staveHelper
             },
-            function (tablature) {
+            function(tablature) {
                 currentTrackIndex = 0;
                 tab = tablature;
                 processTab();
@@ -39,13 +39,17 @@ function nextTrack() {
 
     showTab();
 }//show the instrument with the specified indexfunction changeInstrument(trackIndex) {
-   currentTrackIndex = parseInt(trackIndex);
-   showTab();
+    try {
+        currentTrackIndex = parseInt(trackIndex);
+        showTab();
+    } catch(err) {
+        alert(err.message)
+    }
 }//get instrument namefunction getInstrumentName(i) {
    return tracks[i].name;
 }//get the lenght of the track arrayfunction getTrackCount() {
     return trackCount.toString();
-}function scaleChange() {
+}function scaleChange() {
     var i = 0;
     for(;i< scales.length;) {
         if(scales[i++] == scale) break;
@@ -57,19 +61,78 @@ function nextTrack() {
     showTab();
 }
 
-function clearTab(){	$('#body div').html('');}function processTab() {	// create tracks	for (var i = 0; i < tab.tracks.length; i++) {		tracks.push(new MusicTab.Tablatures.Track({			name: tab.tracks[i].name,			instrument: tab.tracks[i].instrument,			selected: tab.tracks[i].selected,			index: i		}));			}
-    trackCount = tracks.length;	//show tab	showTab();}function showTab(){	initEnvironment();	var actualWidth = staveHelper.getActualWidth();	var linePerPage = staveHelper.getLinePerPage();		var measures = tab.tracks[currentTrackIndex].measures;	var chunks = paginator.split(measures, actualWidth);	var pages = paginator.doPaging(chunks, linePerPage);
-    //insertTitle();	views = paginator.insertPages(pages, tab.tracks[currentTrackIndex]);}/*function insertTitle() {
+function clearTab() {
 
-    var tracks = [{
-        artist: tab.header.artist,
-        album: tab.header.album,
-        title: tab.header.title,
-        music: tab.header.music,
-        words: tab.header.words,
-        notice: tab.header.notice,
-        instrument: tab.tracks[currentTrackIndex].instrument
-    }];
-    
-    $("#trackTmpl").tmpl(tracks).appendTo("#body");
-}*/
+    if (views) {
+        for (var j = 0; j < views.length; j++) {
+            var view = views[j];
+            $("#" + view.id).waypoint('destroy');
+            view.destroy();
+        }
+    }
+
+    var elems = $('#body div');
+    for (var i = 0, elem; (elem = elems[i]) != null; i++) {
+        jQuery.event.remove(elem);
+        jQuery.removeData(elem);
+        purge(elem);
+    }
+}function purge(d) {
+    var a = d.childNodes;
+    if (a) {
+        var remove = false;
+        while (!remove) {
+            var l = a.length;
+            for (i = 0; i < l; i += 1) {
+                var child = a[i];
+                if (child.childNodes.length == 0) {
+                    jQuery.event.remove(child);
+                    d.removeChild(child);
+                    remove = true;
+                    break;
+                }
+                else {
+                    jQuery.purge(child);
+                }
+            }
+            if (remove) {
+                remove = false;
+            } else {
+                break;
+            }
+        }
+    }
+}function processTab() {	// create tracks	for (var i = 0; i < tab.tracks.length; i++) {		tracks.push(new MusicTab.Tablatures.Track({			name: tab.tracks[i].name,			instrument: tab.tracks[i].instrument,			selected: tab.tracks[i].selected,			index: i		}));			}
+    trackCount = tracks.length;}
+
+function showTab() {
+    initEnvironment();
+    var actualWidth = staveHelper.getActualWidth();
+    var linePerPage = staveHelper.getLinePerPage();
+
+    var measures = tab.tracks[currentTrackIndex].measures;
+    var chunks = paginator.split(measures, actualWidth);
+
+    var pages = paginator.doPaging(chunks, linePerPage);
+    views = paginator.createViews(pages, tab.tracks[currentTrackIndex]);
+
+    showViews();
+}function showViews() {
+    for (var i = 0; i < views.length; i++) {
+        var view = views[i];
+        if (i == 0) {
+            view.show();
+        } else {
+            $("#" + view.id).waypoint(function () {
+                // get index from id
+                var index = parseInt(this.id.substring("vex-page".length, this.id.length)) - 1;
+                if (!views[index].isShown) {
+                    views[index].show();
+                }
+            },
+            {
+                offset: '50%'
+            });
+        }
+    }
+}

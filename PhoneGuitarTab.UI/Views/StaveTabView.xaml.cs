@@ -106,9 +106,7 @@ namespace PhoneGuitarTab.UI.Views
         {
             if (e.Value.StartsWith("onReady"))
             {
-                string[] parameters = {(DataContext as StaveTabViewModel).TabContent};
-                // TODO json tab is specific for ug. Convert it to gp through download step 
-
+                string[] parameters = { (DataContext as StaveTabViewModel).TabContent };
                 Browser.InvokeScript("readBase64", parameters);
                 OrientationChanged += (_, __) => Browser.InvokeScript("showTab");
             }

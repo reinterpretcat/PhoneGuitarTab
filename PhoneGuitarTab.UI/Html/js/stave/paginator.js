@@ -11,7 +11,7 @@ MusicTab.Stave.Paginator = klass(null, {
     },
     
     // insert tab pages
-    insertPages: function(pages, track) {
+    createViews: function(pages, track) {
         var root = document.getElementById(this.context.placeHolderId);
         var pageNumber = 1;
         var count = pages.length;
@@ -27,14 +27,14 @@ MusicTab.Stave.Paginator = klass(null, {
             root.appendChild(div);
 
             try {
-			var view = new MusicTab.Stave.View({
+                var view = new MusicTab.Stave.View({
                     selector: $("#" + id),
                     page: page,
                     track: track,
                     context: context
                 });
-				views.push(view);
-                view.show();
+                view.id = id;
+                views.push(view);
             } catch(err) {
                 console.log(err.message);
             }
