@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About_AppDescription" xml:space="preserve">
-    <value> is an open source project and is licensed under Microsoft Public License (Ms-PL).</value>
+    <value> açık kaynak kodlu bir proje olup Microsoft Public License (Ms-PL) ile lisanslanmıştır.</value>
   </data>
   <data name="About_AppInvitation" xml:space="preserve">
-    <value>Our team invites developers &amp; designers to join us to improve the best tablature app on the Store.</value>
+    <value>Yazılım geliştirmeye veya tasarıma hevesli herkesi ekibimize bekliyoruz.</value>
   </data>
   <data name="About_AppTitle" xml:space="preserve">
     <value>PhoneGuitarTab</value>
@@ -136,13 +136,13 @@
     <value>http://facebook.com/PhoneGuitarTab</value>
   </data>
   <data name="About_Support" xml:space="preserve">
-    <value>support</value>
+    <value>destek</value>
   </data>
   <data name="About_SupportEmail" xml:space="preserve">
     <value>phoneguitartab@gmail.com</value>
   </data>
   <data name="About_Version" xml:space="preserve">
-    <value>version</value>
+    <value>versiyon</value>
   </data>
   <data name="AppTitle_Lower" xml:space="preserve">
     <value>Phone Guitar Tab</value>
@@ -157,233 +157,233 @@
     <value>app error</value>
   </data>
   <data name="Group_More" xml:space="preserve">
-    <value>more online</value>
+    <value>daha fazla tab</value>
   </data>
   <data name="PanaramaTabs_NoTabs" xml:space="preserve">
-    <value>You have nothing downloaded yet.</value>
+    <value>Henüz tab indirmediniz.</value>
   </data>
   <data name="Panarama_Bands" xml:space="preserve">
-    <value>bands</value>
+    <value>gruplar</value>
   </data>
   <data name="Panarama_History" xml:space="preserve">
-    <value>recent</value>
+    <value>son çalınanlar</value>
   </data>
   <data name="Panarama_Other" xml:space="preserve">
-    <value>other</value>
+    <value>diğer</value>
   </data>
   <data name="Panarama_Tabs" xml:space="preserve">
-    <value>tabs</value>
+    <value>tablar</value>
   </data>
   <data name="RelativeDate_Day" xml:space="preserve">
-    <value>yesterday</value>
+    <value>dün</value>
   </data>
   <data name="RelativeDate_Days" xml:space="preserve">
-    <value>{0} days ago</value>
+    <value>{0} gün önce</value>
   </data>
   <data name="RelativeDate_Hour" xml:space="preserve">
-    <value> an hour ago</value>
+    <value>bir saat önce</value>
   </data>
   <data name="RelativeDate_Hours" xml:space="preserve">
-    <value>{0} hours ago</value>
+    <value>{0} saat önce</value>
   </data>
   <data name="RelativeDate_Minute" xml:space="preserve">
-    <value> a minute ago</value>
+    <value>bir dakika önce</value>
   </data>
   <data name="RelativeDate_Minutes" xml:space="preserve">
-    <value> {0} minutes ago</value>
+    <value> {0} dakika önce</value>
   </data>
   <data name="RelativeDate_Month" xml:space="preserve">
-    <value>last month</value>
+    <value>geçtiğimiz ay</value>
   </data>
   <data name="RelativeDate_Months" xml:space="preserve">
-    <value>{0} months ago</value>
+    <value>{0} ay önce</value>
   </data>
   <data name="RelativeDate_Second" xml:space="preserve">
-    <value>a second ago</value>
+    <value>bir saniye önce</value>
   </data>
   <data name="RelativeDate_Seconds" xml:space="preserve">
-    <value>{0} seconds ago</value>
+    <value>{0} saniye önce</value>
   </data>
   <data name="RelativeDate_Year" xml:space="preserve">
-    <value>last year</value>
+    <value>geçen sene</value>
   </data>
   <data name="RelativeDate_Years" xml:space="preserve">
-    <value>{0} years ago</value>
+    <value>{0} yıl önce</value>
   </data>
   <data name="ResourceFlowDirection" xml:space="preserve">
     <value>LeftToRight</value>
   </data>
   <data name="ResourceLanguage" xml:space="preserve">
-    <value>en-US</value>
+    <value>tr</value>
   </data>
   <data name="SearchForBand_Online" xml:space="preserve">
     <value>online</value>
   </data>
   <data name="SearchTabType_All" xml:space="preserve">
-    <value>all tabs</value>
+    <value>bütün  tablar</value>
   </data>
   <data name="SearchTabType_Bass" xml:space="preserve">
-    <value>bass tabs</value>
+    <value>bas</value>
   </data>
   <data name="SearchTabType_Chords" xml:space="preserve">
-    <value>chords</value>
+    <value>akor</value>
   </data>
   <data name="SearchTabType_Drum" xml:space="preserve">
-    <value>drum tabs</value>
+    <value>drum</value>
   </data>
   <data name="SearchTabType_Guitar" xml:space="preserve">
-    <value>guitar tabs</value>
+    <value>gitar</value>
   </data>
   <data name="SearchTabType_GuitarPro" xml:space="preserve">
     <value>guitar pro</value>
   </data>
   <data name="SearchType_Band" xml:space="preserve">
-    <value>band name</value>
+    <value>artist adı</value>
   </data>
   <data name="SearchType_BandSong" xml:space="preserve">
-    <value>band, song</value>
+    <value>artist, şarkı</value>
   </data>
   <data name="SearchType_Song" xml:space="preserve">
-    <value>song name</value>
+    <value>şarkı adı</value>
   </data>
   <data name="Search_DownloadFailed" xml:space="preserve">
-    <value>Sorry, you cannot download the tab right now.</value>
+    <value>Şu anda indiremiyoruz..</value>
   </data>
   <data name="Search_Downloading" xml:space="preserve">
-    <value>Downloading {0}..</value>
+    <value>İndriliyor: {0}..</value>
   </data>
   <data name="Search_Error" xml:space="preserve">
-    <value>Error: {0}</value>
+    <value>Hata: {0}</value>
   </data>
   <data name="Search_NoInternetConnection" xml:space="preserve">
-    <value>No internet connection available.</value>
+    <value>İnternet bağlantınız aktif değil.</value>
   </data>
   <data name="Search_NothingFound" xml:space="preserve">
-    <value>Sorry, nothing found. 
-Try Searching with a comma: 
-band name, song name</value>
+    <value>Sonuç bulunamadı.
+Virgülle ayırarak deneyebilirsiniz: 
+grup adı, şarkı adı</value>
   </data>
   <data name="Search_OperationFailed" xml:space="preserve">
-    <value>Can not perform operation</value>
+    <value>Bu operasyon gerçekleştirilemiyor.</value>
   </data>
   <data name="Search_PageFor" xml:space="preserve">
-    <value>Page {0} for {1}..</value>
+    <value>{1} için sayfa {0}..</value>
   </data>
   <data name="Search_SearchButton" xml:space="preserve">
-    <value>search</value>
+    <value>ara</value>
   </data>
   <data name="Search_SearchBy" xml:space="preserve">
-    <value>search by</value>
+    <value>arama kriteri</value>
   </data>
   <data name="Search_SearchFor" xml:space="preserve">
-    <value>Searching for {0}..</value>
+    <value>{0} için aranıyor..</value>
   </data>
   <data name="Search_SelectedType" xml:space="preserve">
-    <value>selected type</value>
+    <value>tab tipi</value>
   </data>
   <data name="Search_ServerUnavailable" xml:space="preserve">
-    <value>can't reach the server right now.</value>
+    <value>Şu anda sunucuya erişemiyoruz.</value>
   </data>
   <data name="Search_Sorry" xml:space="preserve">
-    <value>Sorry,</value>
+    <value>Üzgünüz,</value>
   </data>
   <data name="Search_TabDownloadedText" xml:space="preserve">
-    <value> was downloaded</value>
+    <value>indirildi</value>
   </data>
   <data name="Search_TabDownloadedTitle" xml:space="preserve">
-    <value>"{0}" by {1}</value>
+    <value>"{0}" - {1}</value>
   </data>
   <data name="Search_TabSearchTitle" xml:space="preserve">
-    <value>TAB SEARCH</value>
+    <value>TAB ARA</value>
   </data>
   <data name="Search_TypePrompt" xml:space="preserve">
-    <value>type here..</value>
+    <value>buray yazınız..</value>
   </data>
   <data name="Startup_About" xml:space="preserve">
-    <value>about</value>
+    <value>hakkımızda</value>
   </data>
   <data name="Startup_Delete" xml:space="preserve">
-    <value>delete</value>
+    <value>sil</value>
   </data>
   <data name="Startup_RateApp" xml:space="preserve">
-    <value>rate the app</value>
+    <value>oyla ve yorum yaz</value>
   </data>
   <data name="Startup_Select" xml:space="preserve">
-    <value>select</value>
+    <value>seç</value>
   </data>
   <data name="Startup_Syncronize" xml:space="preserve">
-    <value>sync with OneDrive</value>
+    <value>OneDrive ile senkronize et</value>
   </data>
   <data name="Startup_TabSearch" xml:space="preserve">
-    <value>tab search</value>
+    <value>tab arama</value>
   </data>
   <data name="Stave_Autoscroll" xml:space="preserve">
-    <value>autoscroll</value>
+    <value>oto-kaydır</value>
   </data>
   <data name="Stave_Instruments" xml:space="preserve">
-    <value>instruments</value>
+    <value>enstrümanlar</value>
   </data>
   <data name="Stave_Loading" xml:space="preserve">
-    <value>Loading guitar pro content..</value>
+    <value>Guitar Pro açılıyor...</value>
   </data>
   <data name="Stave_NavigationFailed" xml:space="preserve">
-    <value>Navigation to this page failed, check your internet connection</value>
+    <value>Sayfaya erişilemiyor. İnternet bağlantınızı kontrol ediniz.</value>
   </data>
   <data name="Stave_Pin" xml:space="preserve">
-    <value>pin this tab</value>
+    <value>bu tabı pinle</value>
   </data>
   <data name="Stave_Scale" xml:space="preserve">
-    <value>scale</value>
+    <value>yakınlaş</value>
   </data>
   <data name="Synchronize_Message" xml:space="preserve">
-    <value>This option is useful if you removed all tabs from your phone and want to get them back from OneDrive</value>
+    <value>Eğer tablarınızı bir şekilde kaybettiniz ve OneDrive üzerinden tekrar almak istiyorsanız bunu seçin.</value>
   </data>
   <data name="Synchronize_OneDrive" xml:space="preserve">
     <value>OneDrive</value>
   </data>
   <data name="Synchronize_RestoreAll" xml:space="preserve">
-    <value>restore all tabs</value>
+    <value>bütün tabları geri yükle</value>
   </data>
   <data name="Synchronize_Start" xml:space="preserve">
-    <value>Start!</value>
+    <value>Başla!</value>
   </data>
   <data name="Synchronize_TabProcessed" xml:space="preserve">
-    <value>{0} tabs downloaded - {1} tabs uploaded.</value>
+    <value>{0} tab indirildi - {1} tab gönderildi.</value>
   </data>
   <data name="Synchronize_Title" xml:space="preserve">
-    <value>SYNCHRONIZE</value>
+    <value>SENKRONİZE ET</value>
   </data>
   <data name="Syncronize_Connecting" xml:space="preserve">
-    <value>Connecting to OneDrive...</value>
+    <value>OneDrive'a bağlanıyor...</value>
   </data>
   <data name="Tab_ConnectDevicePhraseEnd" xml:space="preserve">
-    <value> this song</value>
+    <value>.</value>
   </data>
   <data name="Tab_ConnectDevicePhraseStart" xml:space="preserve">
-    <value>Connect your device to internet to play</value>
+    <value>Bu şarkıyı dinlemek için cihazınızın internete bağlı olması gerekir.</value>
   </data>
   <data name="Tab_RateTheApp" xml:space="preserve">
-    <value>Rate the app?</value>
+    <value>Oylasan süper olur aslında?</value>
   </data>
   <data name="Tab_ReviewTheApp" xml:space="preserve">
-    <value>Enjoying the app? Motivate us by rating and reviewing it.</value>
+    <value>Uygulama güzel değil mi? Yorum yapıp oylarsanız güncellemeler için bizi motive etmiş olursunuz.</value>
   </data>
   <data name="TemplateSearch_Download" xml:space="preserve">
-    <value>Download</value>
+    <value>İndir</value>
   </data>
   <data name="TemplateSearch_Downloaded" xml:space="preserve">
-    <value>Downloaded</value>
+    <value>İndirildi</value>
   </data>
   <data name="TemplateSearch_Version" xml:space="preserve">
-    <value>version:</value>
+    <value>versiyon:</value>
   </data>
   <data name="TemplateSearch_Votes" xml:space="preserve">
-    <value>votes:</value>
+    <value>oylar:</value>
   </data>
   <data name="TextTab_Autoscroll" xml:space="preserve">
-    <value>autoscroll</value>
+    <value>oto-kaydır</value>
   </data>
   <data name="TextTab_Pin" xml:space="preserve">
-    <value>pin this tab</value>
+    <value>bu tabı pinle</value>
   </data>
 </root>

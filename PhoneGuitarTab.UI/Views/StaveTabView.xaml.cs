@@ -229,6 +229,7 @@ namespace PhoneGuitarTab.UI.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
+            PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
             if (isBrowserReady)
             {
                 var viewModel = DataContext as StaveTabViewModel;

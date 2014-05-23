@@ -70,7 +70,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Our team invites developers &amp;amp; designers to join us to improve the best tablature app on the Store..
+        ///   Looks up a localized string similar to Our team invites developers &amp; designers to join us to improve the best tablature app on the Store..
         /// </summary>
         public static string About_AppInvitation {
             get {

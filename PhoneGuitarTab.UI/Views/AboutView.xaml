@@ -27,10 +27,10 @@
             </SolidColorBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="156" />
-            <RowDefinition Height="45*" />
-            <RowDefinition Height="60*"/>
-            <RowDefinition Height="56*"/>
+            <RowDefinition Height="Auto" MinHeight="144" />
+            <RowDefinition Height="249*" />
+            <RowDefinition Height="186*"/>
+            <RowDefinition Height="221*"/>
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="TitlePanel"
@@ -62,8 +62,8 @@
         </StackPanel>
 
         <StackPanel Margin="0,0,2,0" Grid.Row="1">
-            <TextBlock Margin="20,15,0,6"
-        		TextWrapping="Wrap" Foreground="White" Height="140" >
+            <TextBlock Margin="23,15,0,6"
+        		TextWrapping="Wrap" Foreground="White" Height="231" >
         		<Run FontFamily="Segoe WP Semibold" Text="{Binding Path=LocalizedResources.About_AppTitle, Source={StaticResource LocalizedStrings}}"/>
         		<Run Text="{Binding Path=LocalizedResources.About_AppDescription, Source={StaticResource LocalizedStrings}}"/>
         		<LineBreak/>
@@ -129,7 +129,7 @@
                             <Command:ExecuteCommandAction Command="{Binding SupportQuestionCommand, Mode=OneWay}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <Image x:Name="feedback" Source="/Images/about/feedback.png" Height="75" Width="80"/>
+                    <Image x:Name="feedback" Source="/Images/about/feedback.png" Height="63" Width="64"/>
                 </Button>
 
                 <Button BorderThickness="0" Content="   give &#xD;&#xA;feedback " Grid.Column="2"  Margin="30,88,16,52"  FontWeight="ExtraLight" FontStretch="UltraExpanded" FontSize="16" Grid.RowSpan="2" Foreground="White">
@@ -142,35 +142,38 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel Margin="0,0,2,0" Grid.Row="3" toolkit:TiltEffect.IsTiltEnabled="True">
-            <Grid Height="222" >
+        <StackPanel Margin="2,5,0,0" Grid.Row="3" toolkit:TiltEffect.IsTiltEnabled="True">
+            <Grid Height="215" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="197*"/>
+                </Grid.RowDefinitions>
 
-                <Button  BorderThickness="0" Margin="199,3,176,119">
-                    <Image x:Name="codeplex" Source="/Images/about/codeplex.png" Height="55" Width="45"  >
-                    </Image>
+                <Button  BorderThickness="0" Margin="199,27,176,87" Grid.Row="1">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
-        				CommandParameter="{Binding CompanyUrl}"/>
+            					CommandParameter="{Binding CompanyUrl}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
 
+                    <Image x:Name="codeplex" Source="/Images/about/codeplex.png" Height="55" Width="45"  />
+
                 </Button>
-                <Button BorderThickness="0" Content="project page &#xD;&#xA;on CodePlex" Margin="0,61,173,0" Width="103" FlowDirection="LeftToRight"
-                        Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" 
-                        TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" Foreground="White" >
+                <Button BorderThickness="0" Content="project page &#xA;on CodePlex" Margin="0,83,176,0" Width="103" FlowDirection="LeftToRight"
+            		Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" 
+            		TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" Foreground="White" Grid.Row="1" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
-        				CommandParameter="{Binding CompanyUrl}"/>
+            					CommandParameter="{Binding CompanyUrl}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
 
-                <TextBlock Margin="140,176,24,10" Foreground="White"
-                       Text="{Binding Copyright}"
-                       TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="14"  >
-                </TextBlock>
+                <TextBlock Margin="126,146,0,10" Foreground="White"
+            		Text="{Binding Copyright}"
+            		TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="14" Grid.Row="1"  />
             </Grid>
         </StackPanel>
 

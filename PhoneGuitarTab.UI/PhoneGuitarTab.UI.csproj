@@ -18,7 +18,7 @@
     </TargetFrameworkProfile>
     <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
     <SilverlightApplication>true</SilverlightApplication>
-    <SupportedCultures>ru</SupportedCultures>
+    <SupportedCultures>ru%3btr</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>PhoneGuitarTab.UI_$(Configuration)_$(Platform).xap</XapFilename>
@@ -458,6 +458,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AppResources.ru.resx" />
+    <EmbeddedResource Include="Resources\AppResources.tr.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhoneGuitarTab.Controls\PhoneGuitarTab.Controls.csproj">

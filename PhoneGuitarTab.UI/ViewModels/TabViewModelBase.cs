@@ -79,8 +79,8 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             var browser = sender as WebBrowser;
             GetAudioStreamUrl(browser);
-
             RunRating();
+            PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
         }
 
         public void Browser_ScriptNotify(object sender, NotifyEventArgs e)
