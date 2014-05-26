@@ -5,6 +5,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PhoneGuitarTab.Core.Views;
 using PhoneGuitarTab.UI.ViewModels;
+using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 
 namespace PhoneGuitarTab.UI
 {
@@ -19,6 +20,7 @@ namespace PhoneGuitarTab.UI
             InitializeComponent();
             slider.Browser = tabWebBrowser;
             viewModel = DataContext as TextTabViewModel;
+            viewModel.Browser = tabWebBrowser;
 
             tabWebBrowser.LoadCompleted += viewModel.Browser_LoadCompleted;
             tabWebBrowser.ScriptNotify += viewModel.Browser_ScriptNotify;

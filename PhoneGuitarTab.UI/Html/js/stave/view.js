@@ -16,6 +16,9 @@ MusicTab.Stave.View = klass(null, {
         this.scale = context.scale;
         this.stringCount = track.strings.length >= 4 && track.strings.length <= 6 ? track.strings.length : 6; // 4-6 is valid for vexflow
 
+        this.backgroundColor = context.backgroundColor;
+        this.fontColor = context.fontColor;
+        
         this.staveHelper = new MusicTab.Stave.Helper({
             height: this.height,
             width: this.width,
@@ -29,8 +32,9 @@ MusicTab.Stave.View = klass(null, {
 
         // initilize context
         this.ctx_sel = $(selector).find(".vex-canvas");
+        this.ctx_sel.css("background-color", context.backgroundColor);
         this.ctx = this.renderer.getContext();
-        this.ctx.setBackgroundFillStyle(this.ctx_sel.css("background-color"));
+        
         this.ctx.scale(this.scale, this.scale);
 
 
@@ -68,6 +72,8 @@ MusicTab.Stave.View = klass(null, {
         this.ctx.clear();
         this.ctx.setFont("Arial", 10, "");
 
+        this.ctx.setFillStyle(this.fontColor);
+        
         var hasStandardNotation = true;
         var hasTablature = true;
         var staveClef = this.stringCount < 6 ? "bass" : "treble";

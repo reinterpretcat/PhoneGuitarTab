@@ -2,14 +2,7 @@
 var trackUrl;
 var trackTitle;
 var isNetworkAvailable = false;
-
-
-
-$(document).ready(function () {
-    window.external.notify("onReady");
-});
  
-
 function slide(interval) {
    clearInterval(delay);
     delay = setInterval( function () {
@@ -65,27 +58,24 @@ $("#audioSection").sticky({topSpacing:-20});
 }
 
 
- $(function (){
-	
-	var aud = document.getElementById("audio1");
-	
-			aud.addEventListener('playing', function(){
-				if(isNetworkAvailable)
-				{					
-					setLabel("Playing " , trackTitle );
-					
-				}
-				else
-				{
-					setLabel("Please check your network connection.." , "" );
-				}
-			});
+$(function() {
 
-			aud.addEventListener('pause', function(){
-			setLabel("Paused " ,trackTitle );
-			});
+    var aud = document.getElementById("audio1");
 
-   });
+    aud.addEventListener('playing', function() {
+        if (isNetworkAvailable) {
+            setLabel("Playing ", trackTitle);
+
+        } else {
+            setLabel("Please check your network connection..", "");
+        }
+    });
+
+    aud.addEventListener('pause', function() {
+        setLabel("Paused ", trackTitle);
+    });
+
+});
 
 
 		

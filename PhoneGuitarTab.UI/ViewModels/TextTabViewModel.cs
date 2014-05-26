@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Infrastructure;

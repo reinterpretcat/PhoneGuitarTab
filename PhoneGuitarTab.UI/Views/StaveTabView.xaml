@@ -31,6 +31,8 @@
             <custom:BindableApplicationBar.MenuItems>
                 <custom:BindableApplicationBarMenuItem x:Name="PinToStartMenuButton" IsEnabled="True" 
                                               Text="{Binding Path=LocalizedResources.Stave_Pin, Source={StaticResource LocalizedStrings}}" Command="{Binding PinToStart}"/>
+                <custom:BindableApplicationBarMenuItem x:Name="LightMode" IsEnabled="True" 
+                                              Text="LightMode" Command="{Binding ToggleLightMode}" />
             </custom:BindableApplicationBar.MenuItems>
             </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>

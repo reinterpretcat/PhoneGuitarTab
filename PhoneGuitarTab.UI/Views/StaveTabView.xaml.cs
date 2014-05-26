@@ -37,6 +37,7 @@ namespace PhoneGuitarTab.UI.Views
             slider.Browser = Browser;
 
             var viewModel = DataContext as StaveTabViewModel;
+            viewModel.Browser = Browser;
 
             //subscribe to AudioURLretrieved event.
             viewModel.AudioUrlRetrieved += AudioUrlRetrievedHandler;

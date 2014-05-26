@@ -23,13 +23,17 @@
                OrientationChanged="root_OrientationChanged">
     <!-- ApplicationBar -->
     <custom:Bindable.ApplicationBar>
-        <custom:BindableApplicationBar IsVisible="True" IsMenuEnabled="False" Mode="Default" BindableOpacity="0.5" >
+        <custom:BindableApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Default" BindableOpacity="0.5" >
             <custom:BindableApplicationBarButton x:Name ="AutoScrollApplicationBarIconButton" IconUri="/Images/light/AutoScroll_Light.png" IsEnabled="True" 
                                                  Text="{Binding Path=LocalizedResources.TextTab_Autoscroll, Source={StaticResource LocalizedStrings}}" 
                                                  Command="{Binding ToggleSlide}"  CommandParameter="true"/>
 
             <custom:BindableApplicationBarButton x:Name ="PinToStartIconButton" IconUri="/Images/light/pinTab.png" IsEnabled="True" 
                                             Text="{Binding Path=LocalizedResources.TextTab_Pin, Source={StaticResource LocalizedStrings}}" Command="{Binding PinToStart}"/>
+            <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem x:Name="LightMode" IsEnabled="True" 
+                                              Text="LightMode" Command="{Binding ToggleLightMode}" />
+            </custom:BindableApplicationBar.MenuItems>
         </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>
     <!--  LayoutRoot is the root grid where all page content is placed  -->

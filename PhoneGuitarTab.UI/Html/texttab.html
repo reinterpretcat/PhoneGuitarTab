@@ -1,34 +1,33 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width;"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>PhoneGuitarTab</title>
+    <head>
+        <meta name="viewport" content="width=device-width;"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>PhoneGuitarTab</title>
+        <style>
+            #audioSection {  }
+            #audio1{opacity:0.4;  margin-left: -8px; margin-top: -5px;}
+            #info {font: 10px Segoe UI; color:black;}
+            .day {
+                color: black;
+                background-color: white;
+            }
+            .night {
+                color: white;
+                background-color: black;
+            }
+        </style>
+        <script src="js/sandbox/jquery-1.10.2.min.js"></script>
+        <script src="js/shared/jquery.sticky.js"></script>
+        <script src="js/shared/interaction.js"></script>
+        <script src="js/texttab/init.js"></script>
+    </head>
+    <body>
   
-
-
-    <style>
-
-      #audioSection {  }
-      #audio1{opacity:0.4;  margin-left: -8px; margin-top: -5px;}
-      #info {font: 10px Segoe UI; color:black;}
-
-    </style>
-  
-    <script src="js/sandbox/jquery-1.10.2.min.js"></script>
-    <script src="js/texttab/jquery.sticky.js"></script>
-    <script src="js/texttab/interaction.js"></script>
-</head>
-  
-<body>
-  
-  <div id="audioSection">
-    <label id="info"></label>
-    <audio id="audio1"  src="" controls="">  </audio>
-  </div>  
-  
-  <div id="textContainer"></div>
-   
- 
-</body>
+        <div id="audioSection">
+            <label id="info"></label>
+            <audio id="audio1"  src="" controls="">  </audio>
+        </div>  
+        <div id="textContainer"></div>
+    </body>
 </html>

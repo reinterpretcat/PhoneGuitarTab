@@ -9,6 +9,8 @@ MusicTab.Stave.Context = klass(null, {
         this.scale = params.scale;
         this.height = params.height;
         this.width = params.width;
+        this.backgroundColor = params.backgroundColor;
+        this.fontColor = params.fontColor;
         this.placeHolderId = params.placeHolderId; //s3-flexbox
         this.tabDivClass = params.tabDivClass; //vex-tabdiv
     }

@@ -9,7 +9,6 @@ using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.Search.SoundCloud;
-using PhoneGuitarTab.UI.Controls;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
@@ -23,7 +22,12 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public Tab Tablature { get; set; }
 
+        public WebBrowser Browser { get; set; }
+
+        private bool _isNightMode;
+
         private bool _autoScrollToggled;
+
         public bool AutoScrollToggled
         {
             get { return _autoScrollToggled; }
@@ -51,7 +55,6 @@ namespace PhoneGuitarTab.UI.ViewModels
             CreateCommands();
         }
 
-      
 
         protected override void ReadNavigationParameters()
         {
@@ -104,14 +107,16 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Commands
 
-       public ExecuteCommand<object> ToggleSlide { get; private set; }
+        public ExecuteCommand<object> ToggleSlide { get; private set; }
 
-        public ExecuteCommand PinToStart{ get; private set; }
+        public ExecuteCommand PinToStart { get; private set; }
+
+        public ExecuteCommand ToggleLightMode { get; private set; }
 
         #endregion Commands
 
         #region Command handlers
-    
+
         private void DoPinToStart()
         {
             TilesForTabs.PinTabToStart(Tablature);
@@ -119,11 +124,18 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void DoToggleSlide(object arg)
         {
-            this.AutoScrollToggled = true;
+            AutoScrollToggled = true;
         }
+
+        private void DoToggleLightMode()
+        {
+            _isNightMode = !_isNightMode;
+            Browser.InvokeScript("toggleLightMode", _isNightMode.ToString());
+        }
+
         #endregion Command handlers
 
-        #region helpers
+        #region Helpers
 
         private void GetAudioStreamUrl(WebBrowser browser)
         {
@@ -133,7 +145,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                     () => browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name + " " + Tablature.Name));
             }
             else
-                browser.InvokeScript("setLabel", AppResources.Tab_ConnectDevicePhraseStart, 
+                browser.InvokeScript("setLabel", AppResources.Tab_ConnectDevicePhraseStart,
                     AppResources.Tab_ConnectDevicePhraseEnd);
         }
 
@@ -156,6 +168,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             PinToStart = new ExecuteCommand(DoPinToStart);
             ToggleSlide = new ExecuteCommand<object>(DoToggleSlide);
+            ToggleLightMode = new ExecuteCommand(DoToggleLightMode);
         }
 
         #endregion
