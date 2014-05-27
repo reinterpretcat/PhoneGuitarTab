@@ -13,7 +13,8 @@ function toggleLightMode(isNight) {
     showTab();
 }
 
-function readBase64(base64File) {
+function pullTabContent(base64File, isNight) {
+    isNightMode = isNight == "True";
     (new MusicTab.Utils.FileReader()).read(base64File, function (data) {
         MusicTab.Tablatures.TabFactory.create({
                 data: data,

@@ -24,7 +24,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public WebBrowser Browser { get; set; }
 
-        private bool _isNightMode;
+        public bool IsNightMode { get; private set; }
 
         private bool _autoScrollToggled;
 
@@ -129,8 +129,8 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void DoToggleLightMode()
         {
-            _isNightMode = !_isNightMode;
-            Browser.InvokeScript("toggleLightMode", _isNightMode.ToString());
+            IsNightMode = !IsNightMode;
+            Browser.InvokeScript("toggleLightMode", IsNightMode.ToString());
         }
 
         #endregion Command handlers

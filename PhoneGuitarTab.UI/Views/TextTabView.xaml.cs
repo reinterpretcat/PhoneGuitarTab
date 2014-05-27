@@ -63,7 +63,8 @@ namespace PhoneGuitarTab.UI
 
                 if (viewModel.TabContent != null)
                 {
-                    tabWebBrowser.InvokeScript("pullTabContent", viewModel.TabContent);
+                    tabWebBrowser.InvokeScript("pullTabContent", viewModel.TabContent, 
+                        viewModel.IsNightMode.ToString());
                 }
                 isBrowserReady = true;
             }

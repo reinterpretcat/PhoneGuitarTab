@@ -105,14 +105,13 @@ namespace PhoneGuitarTab.UI.Views
 
         private void Browser_ScriptNotify(object sender, NotifyEventArgs e)
         {
+            var viewModel = DataContext as StaveTabViewModel;
             if (e.Value.StartsWith("onReady"))
             {
-                string[] parameters = { (DataContext as StaveTabViewModel).TabContent };
-                Browser.InvokeScript("readBase64", parameters);
+                Browser.InvokeScript("pullTabContent", viewModel.TabContent, viewModel.IsNightMode.ToString());
                 OrientationChanged += (_, __) => Browser.InvokeScript("showTab");
             }
             isBrowserReady = true;
-            var viewModel = DataContext as StaveTabViewModel;
             viewModel.Browser_ScriptNotify(sender, e);
         }
 

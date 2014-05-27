@@ -14,10 +14,6 @@ function stopSlide() {
     clearInterval(delay);
 }
 
-function pullTabContent(content) {
-    document.getElementById('textContainer').innerHTML = content;
-    }
-
 function getAudioStreamUrl(bandAndSongName){
 		setLabel("Loading " , bandAndSongName);
   		var url = 'https://api.soundcloud.com/tracks.json?client_id=5ca9c93662aaa8d953a421ce53500bae&q=' + bandAndSongName;

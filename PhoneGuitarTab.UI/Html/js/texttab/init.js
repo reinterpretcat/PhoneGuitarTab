@@ -12,3 +12,9 @@ function toggleLightMode(isNight) {
     $('body').removeClass(removeClass);
     $('body').addClass(addClass);
 }
+
+
+function pullTabContent(content, isNight) {
+    document.getElementById('textContainer').innerHTML = content;
+    toggleLightMode(isNight);
+}
