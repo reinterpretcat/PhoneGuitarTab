@@ -603,6 +603,15 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to day/night mode.
+        /// </summary>
+        public static string Shared_LightMode {
+            get {
+                return ResourceManager.GetString("Shared_LightMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to about.
         /// </summary>
         public static string Startup_About {

@@ -32,7 +32,7 @@
                                             Text="{Binding Path=LocalizedResources.TextTab_Pin, Source={StaticResource LocalizedStrings}}" Command="{Binding PinToStart}"/>
             <custom:BindableApplicationBar.MenuItems>
                 <custom:BindableApplicationBarMenuItem x:Name="LightMode" IsEnabled="True" 
-                                              Text="LightMode" Command="{Binding ToggleLightMode}" />
+                                              Text="{Binding Path=LocalizedResources.Shared_LightMode, Source={StaticResource LocalizedStrings}}" Command="{Binding ToggleLightMode}" />
             </custom:BindableApplicationBar.MenuItems>
         </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>

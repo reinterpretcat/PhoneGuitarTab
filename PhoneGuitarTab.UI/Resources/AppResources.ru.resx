@@ -299,6 +299,9 @@
   <data name="Search_TypePrompt" xml:space="preserve">
     <value>искать..</value>
   </data>
+  <data name="Shared_LightMode" xml:space="preserve">
+    <value>день/ночь режим</value>
+  </data>
   <data name="Startup_About" xml:space="preserve">
     <value>о программе</value>
   </data>

@@ -299,6 +299,9 @@ band name, song name</value>
   <data name="Search_TypePrompt" xml:space="preserve">
     <value>type here..</value>
   </data>
+  <data name="Shared_LightMode" xml:space="preserve">
+    <value>day/night mode</value>
+  </data>
   <data name="Startup_About" xml:space="preserve">
     <value>about</value>
   </data>
