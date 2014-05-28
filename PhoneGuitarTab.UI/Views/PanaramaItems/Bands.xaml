@@ -36,7 +36,7 @@
             </Setter>
         </Style>
     </phone:PanoramaItem.Resources>
-    <phone:LongListSelector x:Name="GroupList"  
+    <phone:LongListSelector x:Name="GroupList" Margin="0,0,0,70" 
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               IsGroupingEnabled="True" LayoutMode="Grid" GridCellSize="200,200"
                               HideEmptyGroups="True"                          
@@ -77,7 +77,7 @@
                                    FontSize="14"
                                    Foreground="White"
                                    Style="{StaticResource PhoneTextNormalStyle}">
-                            <Run Text="Tabs: " />
+                            <Run Text="{Binding Path=LocalizedResources.Bands_Tabs, Source={StaticResource LocalizedStrings}}" />
                             <Run Text="{Binding Item1}" />
                         </TextBlock>
                     </StackPanel>

@@ -106,11 +106,38 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to fb page.
+        /// </summary>
+        public static string About_FacebookPage {
+            get {
+                return ResourceManager.GetString("About_FacebookPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://facebook.com/PhoneGuitarTab.
         /// </summary>
         public static string About_FacebookUrl {
             get {
                 return ResourceManager.GetString("About_FacebookUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to give feedback.
+        /// </summary>
+        public static string About_GiveFeedback {
+            get {
+                return ResourceManager.GetString("About_GiveFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to rate and review.
+        /// </summary>
+        public static string About_RateAndReview {
+            get {
+                return ResourceManager.GetString("About_RateAndReview", resourceCulture);
             }
         }
         
@@ -160,6 +187,15 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tabs: .
+        /// </summary>
+        public static string Bands_Tabs {
+            get {
+                return ResourceManager.GetString("Bands_Tabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:.
         /// </summary>
         public static string Error_Message {
@@ -178,11 +214,38 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to more online.
+        ///   Looks up a localized string similar to info.
+        /// </summary>
+        public static string Group_Info {
+            get {
+                return ResourceManager.GetString("Group_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More.
         /// </summary>
         public static string Group_More {
             get {
                 return ResourceManager.GetString("Group_More", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to more online.
+        /// </summary>
+        public static string Group_MoreOnline {
+            get {
+                return ResourceManager.GetString("Group_MoreOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tabs.
+        /// </summary>
+        public static string Group_Tabs {
+            get {
+                return ResourceManager.GetString("Group_Tabs", resourceCulture);
             }
         }
         

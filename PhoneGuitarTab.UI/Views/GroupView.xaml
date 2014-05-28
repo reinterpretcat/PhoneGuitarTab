@@ -43,8 +43,8 @@
         </Grid.Resources>
         <controls:Panorama x:Name="PivotControl" 
                         Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource SmallPanoramaTitle}">
-           
-            <controls:PanoramaItem Header="tabs">
+
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_Tabs, Source={StaticResource LocalizedStrings}}">
                
                 <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
                          ItemTemplate="{StaticResource TabItemLightDataTemplate}"
@@ -58,7 +58,7 @@
                 </ListBox>
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem x:Name="InfoPivotItem" Header="info">
+            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}">
                 <ScrollViewer>
                     <StackPanel>
                         <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"
@@ -82,7 +82,7 @@
 
                         <HyperlinkButton Margin="0,0,0,50"
                                          HorizontalAlignment="Right"
-                                         Content="More.."
+                                         Content="{Binding Path=LocalizedResources.Group_More, Source={StaticResource LocalizedStrings}}"
                                          Visibility="{Binding InfoLoaded, Converter={StaticResource boolVisibility}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
@@ -111,7 +111,7 @@
             <custom:BindableApplicationBarButton Command="{Binding SearchCommand}"
                                                      CommandParameter="{Binding CurrentGroup}"
                                                      IconUri="/Images/dark/appbar.feature.search.rest.png"
-                                                     Text="{Binding Path=LocalizedResources.Group_More, Source={StaticResource LocalizedStrings}}" />
+                                                     Text="{Binding Path=LocalizedResources.Group_MoreOnline, Source={StaticResource LocalizedStrings}}" />
 
         </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>

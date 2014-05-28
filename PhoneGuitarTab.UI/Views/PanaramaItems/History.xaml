@@ -17,7 +17,7 @@
         <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
     </phone:PanoramaItem.Resources>
     <Grid>
-        <phone:LongListSelector x:Name="TabList"
+        <phone:LongListSelector x:Name="TabList" Margin="0,0,0,70"
                  toolkit:TiltEffect.IsTiltEnabled="True"
                  IsGroupingEnabled="False" LayoutMode="Grid" GridCellSize="400,350"
                  HideEmptyGroups="True"  

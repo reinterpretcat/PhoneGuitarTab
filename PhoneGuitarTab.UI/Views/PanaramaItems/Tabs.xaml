@@ -14,7 +14,7 @@
     <phone:PanoramaItem.Resources>
         <Infrastructure:TabsGroupsCollectionToVisibilityConverter x:Key="tabsGroupsCollectionToVisibility" />
     </phone:PanoramaItem.Resources>
-    <toolkit:LongListMultiSelector x:Name="TabList"
+    <toolkit:LongListMultiSelector x:Name="TabList" Margin="0,0,0,70"
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="true" HideEmptyGroups ="true"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"

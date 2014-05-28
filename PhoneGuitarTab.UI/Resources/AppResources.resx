@@ -132,8 +132,17 @@
   <data name="About_Copyright" xml:space="preserve">
     <value>Copyright © 2011-2014 Phone guitar tab</value>
   </data>
+  <data name="About_FacebookPage" xml:space="preserve">
+    <value>fb page</value>
+  </data>
   <data name="About_FacebookUrl" xml:space="preserve">
     <value>http://facebook.com/PhoneGuitarTab</value>
+  </data>
+  <data name="About_GiveFeedback" xml:space="preserve">
+    <value>give feedback</value>
+  </data>
+  <data name="About_RateAndReview" xml:space="preserve">
+    <value>rate and review</value>
   </data>
   <data name="About_Support" xml:space="preserve">
     <value>support</value>
@@ -150,14 +159,26 @@
   <data name="AppTitle_Upper" xml:space="preserve">
     <value>PHONE GUITAR TAB</value>
   </data>
+  <data name="Bands_Tabs" xml:space="preserve">
+    <value>Tabs: </value>
+  </data>
   <data name="Error_Message" xml:space="preserve">
     <value>Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:</value>
   </data>
   <data name="Error_Title" xml:space="preserve">
     <value>app error</value>
   </data>
+  <data name="Group_Info" xml:space="preserve">
+    <value>info</value>
+  </data>
   <data name="Group_More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="Group_MoreOnline" xml:space="preserve">
     <value>more online</value>
+  </data>
+  <data name="Group_Tabs" xml:space="preserve">
+    <value>tabs</value>
   </data>
   <data name="PanaramaTabs_NoTabs" xml:space="preserve">
     <value>You have nothing downloaded yet.</value>

@@ -122,11 +122,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Infrastructure\TabTypeNames.cs" />
-    <Compile Include="Resources\AppResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Bootstrap\CloudBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\ComponentRoot.cs" />
     <Compile Include="Bootstrap\CoreBootstrapperPlugin.cs" />
@@ -149,6 +144,11 @@
     <Compile Include="Infrastructure\NavigationExtensions.cs" />
     <Compile Include="Infrastructure\TabSyncService.cs" />
     <Compile Include="Infrastructure\TextTabAdapter.cs" />
+    <Compile Include="Resources\AppResources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\LocalizedStrings.cs" />
     <Compile Include="Infrastructure\NavigationViewNames.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
@@ -455,8 +455,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>AppResources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AppResources.ru.resx" />
     <EmbeddedResource Include="Resources\AppResources.tr.resx" />
