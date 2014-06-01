@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Events.cs" />
     <Compile Include="FileDownloader.cs" />
+    <Compile Include="IAudioSearcher.cs" />
     <Compile Include="ITabSearcher.cs" />
     <Compile Include="Lastfm\SearchInfoResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

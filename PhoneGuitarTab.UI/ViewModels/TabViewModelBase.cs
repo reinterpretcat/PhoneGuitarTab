@@ -8,6 +8,7 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
+using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.SoundCloud;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
@@ -18,6 +19,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 {
     public abstract class TabViewModelBase : DataContextViewModel
     {
+        private readonly IAudioSearcher _audioSearcher;
         public string TabContent { get; set; }
 
         public Tab Tablature { get; set; }
@@ -48,9 +50,10 @@ namespace PhoneGuitarTab.UI.ViewModels
         public delegate void AudioUrlRetrievedHandler(string audioUrl);
 
         [Dependency]
-        protected TabViewModelBase(IDataContextService database, RatingService ratingService, MessageHub hub)
+        protected TabViewModelBase(IAudioSearcher audioSearcher, IDataContextService database, RatingService ratingService, MessageHub hub)
             : base(database, hub)
         {
+            _audioSearcher = audioSearcher;
             RatingService = ratingService;
             CreateCommands();
         }
@@ -91,10 +94,9 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             var browser = sender as WebBrowser;
             if (e.Value.StartsWith("onStreamUrlRetrieved"))
-            {
-                var soundCloudSearch = new SoundCloudSearch((string) browser.InvokeScript("getTrackUrl"));
-                soundCloudSearch.SearchCompleted += SoundCloudSearchCompleted;
-                soundCloudSearch.Run();
+            {              
+                _audioSearcher.SearchCompleted += AudioSearchCompleted;
+                _audioSearcher.Run((string)browser.InvokeScript("getTrackUrl"));
             }
         }
 
@@ -175,10 +177,10 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region event handlers
 
-        private void SoundCloudSearchCompleted(object sender)
+        private void AudioSearchCompleted()
         {
-            var result = sender as SoundCloudSearch;
-            AudioUrlRetrieved(result.AudioStreamEndPointUrl);
+            
+            AudioUrlRetrieved(_audioSearcher.AudioStreamEndPointUrl);
         }
 
         #endregion

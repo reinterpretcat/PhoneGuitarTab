@@ -4,6 +4,7 @@ using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.UltimateGuitar;
+using PhoneGuitarTab.Search.SoundCloud;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.Bootstrap
@@ -34,7 +35,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
             Container.Register(Component.For<IDialogController>().Use<ToastDialogController>().Singleton());
 
             Container.Register(Component.For<ITabSearcher>().Use<UltimateGuitarTabSearcher>());
-
+            Container.Register(Component.For<IAudioSearcher>().Use<SoundCloudSearch>());
             return true;
         }
 

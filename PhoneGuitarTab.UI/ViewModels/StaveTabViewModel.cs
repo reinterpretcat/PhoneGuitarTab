@@ -2,6 +2,7 @@
 using System.IO;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
+using PhoneGuitarTab.Search;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Infrastructure;
 
@@ -33,8 +34,8 @@ namespace PhoneGuitarTab.UI.ViewModels
         }
 
         [Dependency]
-        public StaveTabViewModel(IDataContextService database, RatingService ratingService, MessageHub hub)
-            : base(database, ratingService, hub)
+        public StaveTabViewModel(IAudioSearcher audioSearcher, IDataContextService database, RatingService ratingService, MessageHub hub)
+            : base(audioSearcher, database, ratingService, hub)
         {
             CreateCommands();
         }
