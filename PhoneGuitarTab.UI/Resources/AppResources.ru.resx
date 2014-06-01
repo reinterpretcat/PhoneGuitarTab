@@ -133,16 +133,16 @@
     <value>Copyright © 2011-2014 Phone guitar tab</value>
   </data>
   <data name="About_FacebookPage" xml:space="preserve">
-    <value>fb page</value>
+    <value>fb страница</value>
   </data>
   <data name="About_FacebookUrl" xml:space="preserve">
     <value>http://facebook.com/PhoneGuitarTab</value>
   </data>
   <data name="About_GiveFeedback" xml:space="preserve">
-    <value>give feedback</value>
+    <value>обратная связь</value>
   </data>
   <data name="About_RateAndReview" xml:space="preserve">
-    <value>rate and review</value>
+    <value>оставить отзыв</value>
   </data>
   <data name="About_Support" xml:space="preserve">
     <value>техподдержка</value>
@@ -160,7 +160,7 @@
     <value>PHONE GUITAR TAB</value>
   </data>
   <data name="Bands_Tabs" xml:space="preserve">
-    <value>Tabs: </value>
+    <value>Табулатур: </value>
   </data>
   <data name="Error_Message" xml:space="preserve">
     <value>К сожалению, мы не можем обработать эту ошибку. Если она будет повторяться, попробуйте, пожалуйста, переустановить приложение. Затем, вы можете скачать предварительно синхронизированные табулатуры назад. Ошибка:</value>
@@ -169,13 +169,13 @@
     <value>ошибка</value>
   </data>
   <data name="Group_Info" xml:space="preserve">
-    <value>info</value>
+    <value>инфо</value>
   </data>
   <data name="Group_More" xml:space="preserve">
-    <value>More</value>
+    <value>Еще</value>
   </data>
   <data name="Group_MoreOnline" xml:space="preserve">
-    <value>more online</value>
+    <value>еще..</value>
   </data>
   <data name="Group_Tabs" xml:space="preserve">
     <value>tabs</value>
@@ -321,7 +321,7 @@
     <value>искать..</value>
   </data>
   <data name="Shared_LightMode" xml:space="preserve">
-    <value>день/ночь режим</value>
+    <value>день/ночь</value>
   </data>
   <data name="Startup_About" xml:space="preserve">
     <value>о программе</value>
