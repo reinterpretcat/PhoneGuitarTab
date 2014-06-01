@@ -55,7 +55,7 @@ function nextTrack() {
         currentTrackIndex = parseInt(trackIndex);
         showTab();
     } catch(err) {
-        alert(err.message)
+        alert("Error: " + err.message);
     }
 }//get instrument namefunction getInstrumentName(i) {
    return tracks[i].name;
