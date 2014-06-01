@@ -94,7 +94,7 @@ namespace PhoneGuitarTab.UI
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
+            base.OnNavigatedTo(e);                            
             var viewModel = DataContext as TextTabViewModel;
             viewModel.RatingService.IncreaseTabViewCount();
         }

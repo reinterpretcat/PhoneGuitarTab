@@ -75,5 +75,22 @@ namespace PhoneGuitarTab.UI.Views
                     break;
             }
         }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (_isNewPageInstance)
+            {
+                if (!e.IsNavigationInitiator)
+                    State["TabUrl"] = e.Uri.OriginalString;
+                // restore page state
+                if (State.Count > 0)
+                    (DataContext as ViewModel).LoadStateFrom(State);
+            }
+
+            // Set _isNewPageInstance to false. If the user navigates back to this page
+            // and it has remained in memory, this value will continue to be false.
+            _isNewPageInstance = false;
+        }
     }
 }

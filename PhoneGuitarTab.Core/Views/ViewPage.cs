@@ -29,21 +29,7 @@ namespace PhoneGuitarTab.Core.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // If _isNewPageInstance is true, the page constuctor has been called, so
-            // state may need to be restored
-
-            if (_isNewPageInstance)
-            {
-                if (!e.IsNavigationInitiator)
-                    State["TabUrl"] = e.Uri.OriginalString;
-                // restore page state
-                if (State.Count > 0)
-                    (DataContext as ViewModel).LoadStateFrom(State);
-            }
-
-            // Set _isNewPageInstance to false. If the user navigates back to this page
-            // and it has remained in memory, this value will continue to be false.
-            _isNewPageInstance = false;
+           
         }
     }
 }

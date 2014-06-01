@@ -222,6 +222,7 @@ namespace PhoneGuitarTab.UI.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+           
             var viewModel = DataContext as StaveTabViewModel;
             viewModel.RatingService.IncreaseTabViewCount();
         }
