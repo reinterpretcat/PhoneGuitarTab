@@ -14,8 +14,8 @@
         {
             var r = new LastFmSearch(SearchContext.DefaulGroupName);
             var mre = new ManualResetEvent(false);
-            r.SearchCompleted += (sender, args) => mre.Set();
-            r.Run();
+            r.MediaSearchCompleted += (sender, args) => mre.Set();
+            r.RunMediaSearch();
 
             mre.WaitOne(SearchContext.SearchTimeout);
 

@@ -6,6 +6,7 @@ using System.Windows;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
+using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
@@ -17,6 +18,7 @@ namespace PhoneGuitarTab.UI.ViewModels
     {
         #region  Fields
 
+        private readonly IMediaSearcherFactory _mediaSearcherFactory;
         private Group _currentGroup;
         private string _summary;
         private string _imageUrl;
@@ -32,9 +34,10 @@ namespace PhoneGuitarTab.UI.ViewModels
         #region Constructors
 
         [Dependency]
-        public GroupViewModel(IDataContextService database, MessageHub hub)
+        public GroupViewModel(IMediaSearcherFactory mediaSearcherFactory, IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
+            _mediaSearcherFactory = mediaSearcherFactory;
             CreateCommands();
         }
 
@@ -252,43 +255,6 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Event handlers
 
-        private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-            var result = sender as LastFmSearch;
-
-            try
-            {
-                var description = result.Summary;
-
-                if (!string.IsNullOrEmpty(description))
-                {
-                    if (description.Length > 2040)
-                    {
-                        description = description.Substring(0, 2080);
-                        description += "..";
-                    }
-                    Summary = description;
-                    CurrentGroup.Description = Summary;
-                    CurrentGroup.Url = result.Url;
-                    CurrentGroup.ImageUrl = result.ImageUrl;
-                    CurrentGroup.LargeImageUrl = result.LargeImageUrl;
-                    CurrentGroup.ExtraLargeImageUrl = result.ExtraLargeImageUrl;
-                    Database.SubmitChanges();
-                }
-                else
-                {
-                    NothingFound = true;
-                }
-            }
-            catch
-            {
-                // buried intentionally
-            }
-            finally
-            {
-                IsLoading = false;
-            }
-        }
 
         #endregion Event handlers
 
@@ -306,12 +272,50 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void GetCurrentGroupInfo(Group group)
         {
-            var result = new LastFmSearch(group.Name);
-            result.SearchCompleted += SearchCompleted;
-
+            var bandInfoSearch = _mediaSearcherFactory.Create();
+            bandInfoSearch.MediaSearchCompleted += bandInfoSearch_MediaSearchCompleted;
+            bandInfoSearch.RunMediaSearch(group.Name, string.Empty);        
             IsLoading = true;
             NothingFound = false;
-            result.Run();
+
+        }
+
+        void bandInfoSearch_MediaSearchCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            var result = sender as IMediaSearcher;
+            try
+            {
+                var description = result.Entry.Summary;
+
+                if (!string.IsNullOrEmpty(description))
+                {
+                    if (description.Length > 2040)
+                    {
+                        description = description.Substring(0, 2080);
+                        description += "..";
+                    }
+                    Summary = description;
+                    CurrentGroup.Description = Summary;
+                    CurrentGroup.Url = result.Entry.Url;
+                    CurrentGroup.ImageUrl = result.Entry.ImageUrl;
+                    CurrentGroup.LargeImageUrl = result.Entry.LargeImageUrl;
+                    CurrentGroup.ExtraLargeImageUrl = result.Entry.ExtraLargeImageUrl;
+                    Database.SubmitChanges();
+                }
+                else
+                {
+                    NothingFound = true;
+                }
+            }
+            catch
+            {
+                // buried intentionally
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+           
         }
 
         #endregion Helper methods

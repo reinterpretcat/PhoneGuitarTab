@@ -7,14 +7,10 @@ using System.Xml.Linq;
 
 namespace PhoneGuitarTab.Search.Lastfm
 {
-    public class LastFmSearch
+    public class LastFmSearch:IMediaSearcher
     {
-        public string Artist;
-        public string Track;
-
-        private LastFmSearchType searchType;
-
-        public event DownloadStringCompletedEventHandler SearchCompleted;
+      
+        public event DownloadStringCompletedEventHandler MediaSearchCompleted;
 
         public enum ImageSize
         {
@@ -23,82 +19,55 @@ namespace PhoneGuitarTab.Search.Lastfm
             ExtraLarge
         };
 
-        public enum LastFmSearchType
+        public LastFmSearch()
         {
-            Artist,
-            Track
-        };
+            this.Entry = new SearchMediaEntry();
+        }
 
+        public SearchMediaEntry Entry { get; private set; }
         private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
         {
-            DownloadStringCompletedEventHandler handler = SearchCompleted;
+            DownloadStringCompletedEventHandler handler = MediaSearchCompleted;
             if (handler != null) handler(this, e);
         }
 
-        #region Constructors
-
-        public LastFmSearch(string artist)
-        {
-            Artist = artist;
-            SearchType = LastFmSearchType.Artist;
-        }
-
-        public LastFmSearch(string artist, string track)
-        {
-            Artist = artist;
-            Track = track;
-            SearchType = LastFmSearchType.Track;
-        }
-
-        #endregion Constructors
 
         #region Fields
 
-        public string Url { get; private set; }
-        public string ImageUrl { get; private set; }
-        public string LargeImageUrl { get; private set; }
-        public string ExtraLargeImageUrl { get; private set; }
-        public string Summary { get; private set; }
-        public string BandName { get; private set; }
-
-        public LastFmSearchType SearchType
-        {
-            get { return searchType; }
-            private set { searchType = value; }
-        }
+        public MediaSearchType SearchType{ get; set; }
 
         #endregion Fields
 
         #region Override methods
 
-        protected void CreateEntries(XElement root)
+        protected void CreateEntries(XElement root, MediaSearchType searchType)
         {
-            var XMLroot = (SearchType == LastFmSearchType.Artist) ? root.Element("artist") : root.Element("track");
+            var XMLroot = (searchType == MediaSearchType.Artist) ? root.Element("artist") : root.Element("track");
 
             if (XMLroot != null)
             {
-                Url = GetSafeValue(XMLroot.Element("url"));
-                ImageUrl = GetImageUrl(XMLroot, ImageSize.Small);
-                LargeImageUrl = GetImageUrl(XMLroot, ImageSize.Large);
-                ExtraLargeImageUrl = GetImageUrl(XMLroot, ImageSize.ExtraLarge);
+                Entry.Url = GetSafeValue(XMLroot.Element("url"));
+                Entry.ImageUrl = GetImageUrl(XMLroot, ImageSize.Small);
+                Entry.LargeImageUrl = GetImageUrl(XMLroot, ImageSize.Large);
+                Entry.ExtraLargeImageUrl = GetImageUrl(XMLroot, ImageSize.ExtraLarge);
 
-                if (SearchType == LastFmSearchType.Artist)
+                if (searchType == MediaSearchType.Artist)
                 {
-                    BandName = GetSafeValue(XMLroot.Element("name"));
+                    Entry.BandName = GetSafeValue(XMLroot.Element("name"));
                     var bio = XMLroot.Element("bio");
-                    Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));
+                    Entry.Summary = StripAllEscapeSymbols(Unescape(StripTagsCharArray(bio.Element("summary").Value)));
                 }
             }
         }
 
-        protected string GetRequestTemplate(LastFmSearchType type)
+        protected string GetRequestTemplate(MediaSearchType type)
         {
             switch (type)
             {
-                case LastFmSearchType.Artist:
+                case MediaSearchType.Artist:
                     return
                         "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
-                case LastFmSearchType.Track:
+                case MediaSearchType.Track:
                     return
                         "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&track={1}&artist={0}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
                 default:
@@ -108,8 +77,10 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         #endregion Override methods
 
-        public void Run()
+        public void RunMediaSearch(string artist, string track)
         {
+            SearchType = string.IsNullOrEmpty(track) ? MediaSearchType.Artist : MediaSearchType.Track;
+           
             WebClient client = new WebClient();
             client.DownloadStringCompleted += (s, e) =>
             {
@@ -123,7 +94,7 @@ namespace PhoneGuitarTab.Search.Lastfm
                         XElement root = document.Root;
                         if (root.Attribute("status").Value == "ok")
                         {
-                            CreateEntries(root);
+                            CreateEntries(root, SearchType);
                         }
                     }
                 }
@@ -136,7 +107,8 @@ namespace PhoneGuitarTab.Search.Lastfm
                     InvokeSearchComplete(e);
                 }
             };
-            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(SearchType), Artist, Track)));
+
+            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(SearchType), artist, track)));
         }
 
         #region Helper methods
@@ -148,7 +120,7 @@ namespace PhoneGuitarTab.Search.Lastfm
 
         private string GetImageUrl(XElement element, ImageSize imageSize)
         {
-            if (SearchType == LastFmSearchType.Track)
+            if (SearchType == MediaSearchType.Track)
                 element = element.Element("album");
 
             // small, medium, large, extralarge, mega..
@@ -249,7 +221,7 @@ namespace PhoneGuitarTab.Search.Lastfm
             returnString = returnString.Replace("&gt;", ">");
             returnString = returnString.Replace("&lt;", "<");
             returnString = returnString.Replace("&amp;", "and");
-            returnString = returnString.Replace(String.Format("Read more about {0} on Last.fm.", BandName), string.Empty);
+            returnString = returnString.Replace(String.Format("Read more about {0} on Last.fm.", Entry.BandName), string.Empty);
 
             return returnString;
         }

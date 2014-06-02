@@ -3,6 +3,7 @@ using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Search;
+using PhoneGuitarTab.Search.Lastfm;
 using PhoneGuitarTab.Search.UltimateGuitar;
 using PhoneGuitarTab.Search.SoundCloud;
 using PhoneGuitarTab.UI.Infrastructure;
@@ -36,6 +37,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
 
             Container.Register(Component.For<ITabSearcher>().Use<UltimateGuitarTabSearcher>());
             Container.Register(Component.For<IAudioSearcher>().Use<SoundCloudSearch>());
+            Container.Register(Component.For<IMediaSearcherFactory>().Use<MediaSearcherFactory>());
+           
             return true;
         }
 

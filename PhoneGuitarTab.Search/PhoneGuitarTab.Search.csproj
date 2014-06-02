@@ -104,9 +104,13 @@
     <Compile Include="Events.cs" />
     <Compile Include="FileDownloader.cs" />
     <Compile Include="IAudioSearcher.cs" />
+    <Compile Include="IMediaSearcher.cs" />
+    <Compile Include="IMediaSearcherFactory.cs" />
     <Compile Include="ITabSearcher.cs" />
-    <Compile Include="Lastfm\SearchInfoResult.cs" />
+    <Compile Include="Lastfm\LastFmSearch.cs" />
+    <Compile Include="MediaSearcherFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchMediaEntry.cs" />
     <Compile Include="SoundCloud\SoundCloudSearch.cs" />
     <Compile Include="TabulatureType.cs" />
     <Compile Include="UltimateGuitar\UltimateGuitarFileDownloader.cs" />

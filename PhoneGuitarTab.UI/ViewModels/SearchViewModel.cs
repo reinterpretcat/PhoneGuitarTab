@@ -25,6 +25,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Fields
 
+        private readonly IMediaSearcherFactory _mediaSearcherFactory; 
         private readonly ITabSearcher _tabSearcher;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
@@ -55,7 +56,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         #region Constructors
 
         [Dependency]
-        public SearchViewModel(ITabSearcher tabSearcher, IDataContextService database, MessageHub hub)
+        public SearchViewModel(IMediaSearcherFactory mediaSearcherFactory, ITabSearcher tabSearcher, IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
             CreateCommands();
@@ -67,6 +68,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
             _searchGroupTabs = new TabsByName(database, true);
             _tabSearcher = tabSearcher;
+            _mediaSearcherFactory = mediaSearcherFactory;
         }
 
         #endregion Constructors
@@ -327,8 +329,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("FirstTabInList");
             }
         }
-
-
         public Tab CurrentTab
         {
             get { return currentTab; }
@@ -338,8 +338,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("CurrentTab");
             }
         }
-
-
         public TabEntity CurrentTabEntity
         {
             get { return currentTabEntity; }
@@ -642,8 +640,17 @@ namespace PhoneGuitarTab.UI.ViewModels
                         Path = filePath,
                     };
                     Database.InsertTab(CurrentTab);
+                    //run album images search
+                    var tabAlbumSearch = _mediaSearcherFactory.Create();
+                    tabAlbumSearch.MediaSearchCompleted += tabAlbumSearch_MediaSearchCompleted;
+                    tabAlbumSearch.RunMediaSearch(CurrentTab.Group.Name, CurrentTab.Name);
                     Hub.RaiseTabsDownloaded();
-                    Hub.RaiseBackGroundImageChangeActivity(CurrentTab.Group.ExtraLargeImageUrl);
+                    
+                    //run group images search
+                    var groupImagesSearch = _mediaSearcherFactory.Create();
+                    groupImagesSearch.MediaSearchCompleted += groupImagesSearch_MediaSearchCompleted;
+                    groupImagesSearch.RunMediaSearch(CurrentTab.Group.Name, string.Empty);
+                             
                     CurrentTabEntity.IsDownloaded = true;
                     IsDownloading = false;
 
@@ -659,6 +666,53 @@ namespace PhoneGuitarTab.UI.ViewModels
                 });
         }
 
+        void groupImagesSearch_MediaSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        {
+            var result = sender as IMediaSearcher;
+
+            CurrentTab.Group.ImageUrl = result.Entry.ImageUrl;
+            CurrentTab.Group.LargeImageUrl = result.Entry.LargeImageUrl;
+            CurrentTab.Group.ExtraLargeImageUrl = result.Entry.ExtraLargeImageUrl;
+
+            Database.UpdateGroupMediaByName(CurrentTab.Group.Name, result.Entry.ImageUrl,
+            result.Entry.LargeImageUrl, result.Entry.ExtraLargeImageUrl);
+
+            Hub.RaiseBackGroundImageChangeActivity(CurrentTab.Group.ExtraLargeImageUrl);
+        }
+
+        void tabAlbumSearch_MediaSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        {
+            var result = sender as IMediaSearcher;
+          
+            try
+            {
+                var albumCover = result.Entry.ImageUrl;
+
+                if (!string.IsNullOrEmpty(albumCover))
+                {
+                    CurrentTab.AlbumCoverImageUrl = result.Entry.ImageUrl;
+                    Database.UpdateTabMediaById(CurrentTab.Id, albumCover);
+                }
+                else
+                {
+                    if (!String.IsNullOrEmpty(result.Entry.LargeImageUrl))
+                        CurrentTab.AlbumCoverImageUrl = result.Entry.LargeImageUrl;
+                    else if (!String.IsNullOrEmpty(CurrentTab.Group.ImageUrl))
+                        CurrentTab.AlbumCoverImageUrl = CurrentTab.Group.ImageUrl;
+                    else
+                        CurrentTab.AlbumCoverImageUrl = "";
+
+                    Database.UpdateTabMediaById(CurrentTab.Id, CurrentTab.AlbumCoverImageUrl);
+                }
+            }
+            catch
+            {
+                //handle catch
+            }
+               
+        }
+
+       
         #endregion Event handlers
 
         #region Helper methods

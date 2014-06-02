@@ -2,7 +2,7 @@
 using System.Data.Linq;
 using System.Linq;
 using System.Net;
-using PhoneGuitarTab.Search.Lastfm;
+
 
 namespace PhoneGuitarTab.UI.Data
 {
@@ -88,6 +88,16 @@ namespace PhoneGuitarTab.UI.Data
             {
                 throw new NotImplementedException();
             }
+
+            public void UpdateTabMediaById(int tabId, string albumCover)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void UpdateGroupMediaByName(string name, string normal, string large, string extraLarge)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #region ITabDataContextService members
@@ -136,7 +146,7 @@ namespace PhoneGuitarTab.UI.Data
             currentTab = tab;
             Tabs.InsertOnSubmit(tab);
             SubmitChanges();
-            GetTabCover(currentTab);
+           
         }
 
         public void DeleteTabById(int id)
@@ -152,6 +162,28 @@ namespace PhoneGuitarTab.UI.Data
             SubmitChanges();
         }
 
+        public void UpdateGroupMediaByName(string name, string normal, string large, string extraLarge)
+        {
+            Group group = (from Group g in Groups
+                           where g.Name == name
+                           select g).SingleOrDefault();
+            if (group == null)
+            {
+                group.ImageUrl = normal;
+                group.LargeImageUrl = large;
+                group.ExtraLargeImageUrl = extraLarge;
+                Groups.InsertOnSubmit(group);
+                SubmitChanges();
+            }
+        }
+
+        public void UpdateTabMediaById(int tabId, string albumCover)
+        {
+            var tab = this.GetTabById(tabId);
+            tab.AlbumCoverImageUrl = albumCover;
+            SubmitChanges();
+
+        }
         public Group GetOrCreateGroupByName(string name)
         {
             string defaultGroupImageUrl = "/Images/light/band_light.png";
@@ -172,7 +204,7 @@ namespace PhoneGuitarTab.UI.Data
                 Groups.InsertOnSubmit(group);
                 SubmitChanges();
 
-                GetImageUrlOnline(currentGroup);
+               
                 //NOTE: g should be tracked automatically
             }
             else if (String.IsNullOrEmpty(group.ImageUrl))
@@ -180,60 +212,6 @@ namespace PhoneGuitarTab.UI.Data
                 group.ImageUrl = defaultGroupImageUrl;
             }
             return group;
-        }
-
-        private void GetTabCover(Tab tab)
-        {
-            LastFmSearch tabSearch = new LastFmSearch(tab.Group.Name, tab.Name);
-            tabSearch.SearchCompleted += TabAlbumSearchCompleted;
-            tabSearch.Run();
-        }
-
-        private void GetImageUrlOnline(Group band)
-        {
-            LastFmSearch result = new LastFmSearch(band.Name);
-            result.SearchCompleted += SearchCompleted;
-
-            result.Run();
-        }
-
-        private void TabAlbumSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
-        {
-            LastFmSearch result = sender as LastFmSearch;
-
-            try
-            {
-                var albumCover = result.ImageUrl;
-
-                if (!string.IsNullOrEmpty(albumCover))
-                {
-                    currentTab.AlbumCoverImageUrl = result.ImageUrl;
-                    SubmitChanges();
-                }
-                else
-                {
-                    if (!String.IsNullOrEmpty(result.LargeImageUrl))
-                        currentTab.AlbumCoverImageUrl = result.LargeImageUrl;
-                    else if (!String.IsNullOrEmpty(currentTab.Group.ImageUrl))
-                        currentTab.AlbumCoverImageUrl = currentTab.Group.ImageUrl;
-                    else
-                        currentTab.AlbumCoverImageUrl = "";
-                }
-            }
-            catch
-            {
-                //handle catch
-            }
-        }
-
-        private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-            LastFmSearch result = sender as LastFmSearch;
-
-            currentGroup.ImageUrl = result.ImageUrl;
-            currentGroup.LargeImageUrl = result.LargeImageUrl;
-            currentGroup.ExtraLargeImageUrl = result.ExtraLargeImageUrl;
-            SubmitChanges();
         }
 
         public TabType GetTabTypeByName(string name)
@@ -249,5 +227,62 @@ namespace PhoneGuitarTab.UI.Data
                 where t.Id == id
                 select t).Single();
         }
+
+
+        //private void GetImageUrlOnline(Group band)
+        //{
+        //    LastFmSearch result = new LastFmSearch(band.Name);
+        //    result.SearchCompleted += SearchCompleted;
+
+        //    result.Run();
+        //}
+        //private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e)
+        //{
+        //    LastFmSearch result = sender as LastFmSearch;
+
+        //    currentGroup.ImageUrl = result.ImageUrl;
+        //    currentGroup.LargeImageUrl = result.LargeImageUrl;
+        //    currentGroup.ExtraLargeImageUrl = result.ExtraLargeImageUrl;
+        //    SubmitChanges();
+        //}
+
+        //private void GetTabCover(Tab tab)
+        //{
+        //    LastFmSearch tabSearch = new LastFmSearch(tab.Group.Name, tab.Name);
+        //    tabSearch.SearchCompleted += TabAlbumSearchCompleted;
+        //    tabSearch.Run();
+        //}
+        //private void TabAlbumSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        //{
+        //    LastFmSearch result = sender as LastFmSearch;
+
+        //    try
+        //    {
+        //        var albumCover = result.ImageUrl;
+
+        //        if (!string.IsNullOrEmpty(albumCover))
+        //        {
+        //            currentTab.AlbumCoverImageUrl = result.ImageUrl;
+        //            SubmitChanges();
+        //        }
+        //        else
+        //        {
+        //            if (!String.IsNullOrEmpty(result.LargeImageUrl))
+        //                currentTab.AlbumCoverImageUrl = result.LargeImageUrl;
+        //            else if (!String.IsNullOrEmpty(currentTab.Group.ImageUrl))
+        //                currentTab.AlbumCoverImageUrl = currentTab.Group.ImageUrl;
+        //            else
+        //                currentTab.AlbumCoverImageUrl = "";
+        //            SubmitChanges();
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        //handle catch
+        //    }
+        //}
+
+
+//end
     }
 }
