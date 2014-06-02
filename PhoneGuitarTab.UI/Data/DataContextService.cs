@@ -184,6 +184,7 @@ namespace PhoneGuitarTab.UI.Data
             SubmitChanges();
 
         }
+
         public Group GetOrCreateGroupByName(string name)
         {
             string defaultGroupImageUrl = "/Images/light/band_light.png";
@@ -229,60 +230,6 @@ namespace PhoneGuitarTab.UI.Data
         }
 
 
-        //private void GetImageUrlOnline(Group band)
-        //{
-        //    LastFmSearch result = new LastFmSearch(band.Name);
-        //    result.SearchCompleted += SearchCompleted;
-
-        //    result.Run();
-        //}
-        //private void SearchCompleted(object sender, DownloadStringCompletedEventArgs e)
-        //{
-        //    LastFmSearch result = sender as LastFmSearch;
-
-        //    currentGroup.ImageUrl = result.ImageUrl;
-        //    currentGroup.LargeImageUrl = result.LargeImageUrl;
-        //    currentGroup.ExtraLargeImageUrl = result.ExtraLargeImageUrl;
-        //    SubmitChanges();
-        //}
-
-        //private void GetTabCover(Tab tab)
-        //{
-        //    LastFmSearch tabSearch = new LastFmSearch(tab.Group.Name, tab.Name);
-        //    tabSearch.SearchCompleted += TabAlbumSearchCompleted;
-        //    tabSearch.Run();
-        //}
-        //private void TabAlbumSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
-        //{
-        //    LastFmSearch result = sender as LastFmSearch;
-
-        //    try
-        //    {
-        //        var albumCover = result.ImageUrl;
-
-        //        if (!string.IsNullOrEmpty(albumCover))
-        //        {
-        //            currentTab.AlbumCoverImageUrl = result.ImageUrl;
-        //            SubmitChanges();
-        //        }
-        //        else
-        //        {
-        //            if (!String.IsNullOrEmpty(result.LargeImageUrl))
-        //                currentTab.AlbumCoverImageUrl = result.LargeImageUrl;
-        //            else if (!String.IsNullOrEmpty(currentTab.Group.ImageUrl))
-        //                currentTab.AlbumCoverImageUrl = currentTab.Group.ImageUrl;
-        //            else
-        //                currentTab.AlbumCoverImageUrl = "";
-        //            SubmitChanges();
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        //handle catch
-        //    }
-        //}
-
-
-//end
+       
     }
 }
