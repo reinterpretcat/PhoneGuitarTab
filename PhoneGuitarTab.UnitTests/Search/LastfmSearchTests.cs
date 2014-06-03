@@ -12,18 +12,18 @@
         [TestMethod]
         public void CanSearchInfo()
         {
-            var r = new LastFmSearch(SearchContext.DefaulGroupName);
+            var r = new LastFmSearch();
             var mre = new ManualResetEvent(false);
             r.MediaSearchCompleted += (sender, args) => mre.Set();
-            r.RunMediaSearch();
+            r.RunMediaSearch(SearchContext.DefaulGroupName, string.Empty);
 
             mre.WaitOne(SearchContext.SearchTimeout);
 
-            Assert.IsFalse(string.IsNullOrEmpty(r.Url));
-            Assert.IsFalse(string.IsNullOrEmpty(r.Summary));
-            Assert.IsFalse(string.IsNullOrEmpty(r.ImageUrl));
+            Assert.IsFalse(string.IsNullOrEmpty(r.Entry.Url));
+            Assert.IsFalse(string.IsNullOrEmpty(r.Entry.Summary));
+            Assert.IsFalse(string.IsNullOrEmpty(r.Entry.ImageUrl));
 
-            Assert.IsTrue(r.Summary.ToUpper().Contains(SearchContext.DefaulGroupName.ToUpper()));
+            Assert.IsTrue(r.Entry.Summary.ToUpper().Contains(SearchContext.DefaulGroupName.ToUpper()));
         }
     }
 }
