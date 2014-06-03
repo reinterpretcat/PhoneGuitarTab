@@ -2,6 +2,7 @@
 var scales = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3];var scale = 0.6;
 var trackCount = 0;var currentTrackIndex = 0;var tracks = [];var views;
 var isNightMode = false;
+var isParsed = false;
 $(document).ready(function () {
     initEnvironment();    window.external.notify("onReady");});function initEnvironment() {
     clearTab();	var height = $(document).height();
@@ -15,17 +16,25 @@ function toggleLightMode(isNight) {
 
 function pullTabContent(base64File, isNight) {
     isNightMode = isNight == "True";
-    (new MusicTab.Utils.FileReader()).read(base64File, function (data) {
-        MusicTab.Tablatures.TabFactory.create({
-                data: data,
-                helper: staveHelper
-            },
-            function(tablature) {
-                currentTrackIndex = 0;
-                tab = tablature;
-                processTab();
-            });
-    });}function readJson(jsonFile) {
+    (new MusicTab.Utils.FileReader()).read(base64File,
+        function(data) {
+            MusicTab.Tablatures.TabFactory.create({
+                    data: data,
+                    helper: staveHelper
+                },
+                function(tablature) {
+                    currentTrackIndex = 0;
+                    tab = tablature;
+                    processTab();
+                    isParsed = true;
+                });
+        },
+        function(error) {
+            alert("Unable to parse file: " + error.message);
+        });
+}
+
+function readJson(jsonFile) {
     MusicTab.Tablatures.TabFactory.create({
             data: jsonFile,
             helper: staveHelper,
@@ -50,14 +59,14 @@ function nextTrack() {
         currentTrackIndex = trackCount - 1;
 
     showTab();
-}//show the instrument with the specified indexfunction changeInstrument(trackIndex) {
-    try {
-        currentTrackIndex = parseInt(trackIndex);
-        showTab();
-    } catch(err) {
-        alert("Error: " + err.message);
-    }
-}//get instrument namefunction getInstrumentName(i) {
+}//show the instrument with the specified index
+
+function changeInstrument(trackIndex) {
+    currentTrackIndex = parseInt(trackIndex);
+    showTab();
+}
+
+//get instrument namefunction getInstrumentName(i) {
    return tracks[i].name;
 }//get the lenght of the track arrayfunction getTrackCount() {
     return trackCount.toString();
@@ -118,18 +127,26 @@ function clearTab() {
     trackCount = tracks.length;}
 
 function showTab() {
-    initEnvironment();
-    var actualWidth = staveHelper.getActualWidth();
-    var linePerPage = staveHelper.getLinePerPage();
+    try {
+        if (isParsed) {
+            initEnvironment();
+            var actualWidth = staveHelper.getActualWidth();
+            var linePerPage = staveHelper.getLinePerPage();
 
-    var measures = tab.tracks[currentTrackIndex].measures;
-    var chunks = paginator.split(measures, actualWidth);
+            var measures = tab.tracks[currentTrackIndex].measures;
+            var chunks = paginator.split(measures, actualWidth);
 
-    var pages = paginator.doPaging(chunks, linePerPage);
-    views = paginator.createViews(pages, tab.tracks[currentTrackIndex]);
+            var pages = paginator.doPaging(chunks, linePerPage);
+            views = paginator.createViews(pages, tab.tracks[currentTrackIndex]);
 
-    showViews();
-}function showViews() {
+            showViews();
+        }
+    } catch(err) {
+        alert("Unable to show tab: " + err.message);
+    }
+}
+
+function showViews() {
     for (var i = 0; i < views.length; i++) {
         var view = views[i];
         if (i == 0) {
