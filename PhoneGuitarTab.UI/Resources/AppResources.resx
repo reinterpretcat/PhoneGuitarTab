@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About_AppDescription" xml:space="preserve">
-    <value> is an open source project and is licensed under Microsoft Public License (Ms-PL).</value>
+    <value> is an open source project and it is licensed under Microsoft Public License (Ms-PL).</value>
   </data>
   <data name="About_AppInvitation" xml:space="preserve">
     <value>Our team invites developers &amp; designers to join us to improve the best tablature app on the Store.</value>
@@ -181,10 +181,10 @@
     <value>tabs</value>
   </data>
   <data name="PanaramaTabs_NoTabs" xml:space="preserve">
-    <value>You have nothing downloaded yet.</value>
+    <value>You haven't downloaded any tabs yet.</value>
   </data>
   <data name="Panarama_Bands" xml:space="preserve">
-    <value>bands</value>
+    <value>artists</value>
   </data>
   <data name="Panarama_History" xml:space="preserve">
     <value>recent</value>
@@ -303,13 +303,13 @@ band name, song name</value>
     <value>selected type</value>
   </data>
   <data name="Search_ServerUnavailable" xml:space="preserve">
-    <value>can't reach the server right now.</value>
+    <value>Can't reach the server right now.</value>
   </data>
   <data name="Search_Sorry" xml:space="preserve">
     <value>Sorry,</value>
   </data>
   <data name="Search_TabDownloadedText" xml:space="preserve">
-    <value> was downloaded</value>
+    <value>is downloaded</value>
   </data>
   <data name="Search_TabDownloadedTitle" xml:space="preserve">
     <value>"{0}" by {1}</value>

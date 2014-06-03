@@ -32,7 +32,7 @@
             <DataTemplate>
                 <TextBlock Margin="0,80"
                            HorizontalAlignment="Center"
-                           FontSize="26"
+                           FontSize="24"
                            Opacity="0.5"
                            Text="{Binding Path=LocalizedResources.PanaramaTabs_NoTabs, Source={StaticResource LocalizedStrings}}"
                            Visibility="{Binding DataContext.AllTabs,

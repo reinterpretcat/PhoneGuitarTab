@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Xml.Linq;
+using Windows.Foundation.Metadata;
 
 namespace PhoneGuitarTab.Search.Arts
 {
@@ -64,8 +65,11 @@ namespace PhoneGuitarTab.Search.Arts
             switch (type)
             {
                 case MediaSearchType.Artist:
-                    return
-                        "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
+
+                    var lang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+                    return                    
+                        "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&lang="+ lang + "&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
                 case MediaSearchType.Track:
                     return
                         "http://ws.audioscrobbler.com/2.0/?method=track.getinfo&track={1}&artist={0}&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";

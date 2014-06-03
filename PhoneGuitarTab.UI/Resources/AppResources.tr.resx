@@ -318,7 +318,7 @@ grup adı, şarkı adı</value>
     <value>TAB ARA</value>
   </data>
   <data name="Search_TypePrompt" xml:space="preserve">
-    <value>buray yazınız..</value>
+    <value>buraya yazınız..</value>
   </data>
   <data name="Shared_LightMode" xml:space="preserve">
     <value>gündüz/gece modu</value>

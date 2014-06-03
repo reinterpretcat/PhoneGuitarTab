@@ -61,7 +61,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  is an open source project and is licensed under Microsoft Public License (Ms-PL)..
+        ///   Looks up a localized string similar to  is an open source project and it is licensed under Microsoft Public License (Ms-PL)..
         /// </summary>
         public static string About_AppDescription {
             get {
@@ -250,7 +250,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to bands.
+        ///   Looks up a localized string similar to artists.
         /// </summary>
         public static string Panarama_Bands {
             get {
@@ -286,7 +286,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have nothing downloaded yet..
+        ///   Looks up a localized string similar to You haven&apos;t downloaded any tabs yet..
         /// </summary>
         public static string PanaramaTabs_NoTabs {
             get {
@@ -522,7 +522,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to can&apos;t reach the server right now..
+        ///   Looks up a localized string similar to Can&apos;t reach the server right now..
         /// </summary>
         public static string Search_ServerUnavailable {
             get {
@@ -540,7 +540,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  was downloaded.
+        ///   Looks up a localized string similar to is downloaded.
         /// </summary>
         public static string Search_TabDownloadedText {
             get {
