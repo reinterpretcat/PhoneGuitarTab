@@ -1,4 +1,4 @@
-﻿namespace PhoneGuitarTab.Search
+﻿namespace PhoneGuitarTab.Search.Tabs
 {
     public enum TabulatureType
     {

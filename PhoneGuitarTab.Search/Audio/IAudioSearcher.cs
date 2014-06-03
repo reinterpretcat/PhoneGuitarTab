@@ -1,6 +1,4 @@
-﻿
-
-namespace PhoneGuitarTab.Search
+﻿namespace PhoneGuitarTab.Search.Audio
 {
     public delegate void AudioUrlRetrievedHandler();
 

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 
-namespace PhoneGuitarTab.Search.SoundCloud
+namespace PhoneGuitarTab.Search.Audio
 {
-    public class SoundCloudSearch:IAudioSearcher 
+    public class SoundCloudAudioSearcher:IAudioSearcher 
     {
         
         //The concrete stream url of the soundcloud endpoint for the track.
@@ -18,8 +17,8 @@ namespace PhoneGuitarTab.Search.SoundCloud
 
             if (!string.IsNullOrEmpty(trackUrl))
             {
-                HttpWebRequest request =
-                    (HttpWebRequest)WebRequest.Create(trackUrl + ".json?client_id=5ca9c93662aaa8d953a421ce53500bae");
+                var request = (HttpWebRequest)WebRequest
+                    .Create(trackUrl + ".json?client_id=5ca9c93662aaa8d953a421ce53500bae");
                 request.Method = "HEAD";
                 request.AllowReadStreamBuffering = true;
                 request.AllowAutoRedirect = true;
@@ -29,8 +28,8 @@ namespace PhoneGuitarTab.Search.SoundCloud
 
         private void ReadWebRequestCallback(IAsyncResult callbackResult)
         {
-            HttpWebRequest myRequest = (HttpWebRequest) callbackResult.AsyncState;
-            HttpWebResponse myResponse = (HttpWebResponse) myRequest.EndGetResponse(callbackResult);
+            var myRequest = (HttpWebRequest) callbackResult.AsyncState;
+            var myResponse = (HttpWebResponse) myRequest.EndGetResponse(callbackResult);
             AudioStreamEndPointUrl = myResponse.ResponseUri.AbsoluteUri;
             
             SearchCompleted();

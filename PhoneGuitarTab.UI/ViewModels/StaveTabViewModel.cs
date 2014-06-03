@@ -3,6 +3,7 @@ using System.IO;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.Search;
+using PhoneGuitarTab.Search.Audio;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Infrastructure;
 

@@ -1,12 +1,13 @@
 ﻿using System.Net;
 
-namespace PhoneGuitarTab.Search
+namespace PhoneGuitarTab.Search.Arts
 {
     public enum MediaSearchType
     {
         Artist,
         Track
     };
+
     public interface IMediaSearcher
     {
         void RunMediaSearch(string artist, string track);

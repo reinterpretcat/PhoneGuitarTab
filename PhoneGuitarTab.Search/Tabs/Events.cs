@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PhoneGuitarTab.Search
+namespace PhoneGuitarTab.Search.Tabs
 {
     public class DownloadCompletedEventArgs : EventArgs
     {

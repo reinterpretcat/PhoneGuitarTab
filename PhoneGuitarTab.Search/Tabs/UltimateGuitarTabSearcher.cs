@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Xml;
+using PhoneGuitarTab.Search.Arts;
 
-namespace PhoneGuitarTab.Search.UltimateGuitar
+namespace PhoneGuitarTab.Search.Tabs
 {
-    public class UltimateGuitarTabSearcher: ITabSearcher
+    public class UltimateGuitarTabSearcher : ITabSearcher
     {
         private const string RequestTemplateAll =
             "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=300&type[]=400&type[]=500&type[]=700&type[]=800&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC&tab_type_group=all";

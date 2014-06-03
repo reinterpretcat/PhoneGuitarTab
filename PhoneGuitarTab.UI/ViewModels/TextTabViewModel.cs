@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using PhoneGuitarTab.Core.Dependencies;
+using PhoneGuitarTab.Search.Audio;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.Search;
 using PhoneGuitarTab.UI.Infrastructure;

@@ -1,4 +1,4 @@
-namespace PhoneGuitarTab.Search
+namespace PhoneGuitarTab.Search.Arts
 {
     public class SearchTabResultSummary
     {

@@ -5,11 +5,10 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 
-namespace PhoneGuitarTab.Search.Lastfm
+namespace PhoneGuitarTab.Search.Arts
 {
-    public class LastFmSearch:IMediaSearcher
+    public class LastFmMediaSearcher : IMediaSearcher
     {
-      
         public event DownloadStringCompletedEventHandler MediaSearchCompleted;
 
         public enum ImageSize
@@ -19,22 +18,22 @@ namespace PhoneGuitarTab.Search.Lastfm
             ExtraLarge
         };
 
-        public LastFmSearch()
+        public LastFmMediaSearcher()
         {
-            this.Entry = new SearchMediaEntry();
+            Entry = new SearchMediaEntry();
         }
 
         public SearchMediaEntry Entry { get; private set; }
+
         private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
         {
             DownloadStringCompletedEventHandler handler = MediaSearchCompleted;
             if (handler != null) handler(this, e);
         }
 
-
         #region Fields
 
-        public MediaSearchType SearchType{ get; set; }
+        public MediaSearchType SearchType { get; set; }
 
         #endregion Fields
 
@@ -80,7 +79,7 @@ namespace PhoneGuitarTab.Search.Lastfm
         public void RunMediaSearch(string artist, string track)
         {
             SearchType = string.IsNullOrEmpty(track) ? MediaSearchType.Artist : MediaSearchType.Track;
-           
+
             WebClient client = new WebClient();
             client.DownloadStringCompleted += (s, e) =>
             {
@@ -221,7 +220,8 @@ namespace PhoneGuitarTab.Search.Lastfm
             returnString = returnString.Replace("&gt;", ">");
             returnString = returnString.Replace("&lt;", "<");
             returnString = returnString.Replace("&amp;", "and");
-            returnString = returnString.Replace(String.Format("Read more about {0} on Last.fm.", Entry.BandName), string.Empty);
+            returnString = returnString.Replace(String.Format("Read more about {0} on Last.fm.", Entry.BandName),
+                string.Empty);
 
             return returnString;
         }

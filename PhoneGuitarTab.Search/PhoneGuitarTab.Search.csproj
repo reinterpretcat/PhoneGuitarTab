@@ -101,22 +101,21 @@
     <Compile Include="..\AssemblyInfoBase.cs">
       <Link>Properties\AssemblyInfoBase.cs</Link>
     </Compile>
-    <Compile Include="Events.cs" />
-    <Compile Include="FileDownloader.cs" />
-    <Compile Include="IAudioSearcher.cs" />
-    <Compile Include="IMediaSearcher.cs" />
-    <Compile Include="IMediaSearcherFactory.cs" />
-    <Compile Include="ITabSearcher.cs" />
-    <Compile Include="Lastfm\LastFmSearch.cs" />
-    <Compile Include="MediaSearcherFactory.cs" />
+    <Compile Include="Tabs\Events.cs" />
+    <Compile Include="Tabs\FileDownloader.cs" />
+    <Compile Include="Audio\IAudioSearcher.cs" />
+    <Compile Include="Arts\IMediaSearcher.cs" />
+    <Compile Include="Tabs\ITabSearcher.cs" />
+    <Compile Include="Arts\LastFmMediaSearcher.cs" />
+    <Compile Include="Arts\MediaSearcherFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchMediaEntry.cs" />
-    <Compile Include="SoundCloud\SoundCloudSearch.cs" />
-    <Compile Include="TabulatureType.cs" />
-    <Compile Include="UltimateGuitar\UltimateGuitarFileDownloader.cs" />
-    <Compile Include="UltimateGuitar\UltimateGuitarTabSearcher.cs" />
-    <Compile Include="SearchTabResultEntry.cs" />
-    <Compile Include="SearchTabResultSummary.cs" />
+    <Compile Include="Arts\SearchMediaEntry.cs" />
+    <Compile Include="Audio\SoundCloudAudioSearcher.cs" />
+    <Compile Include="Tabs\TabulatureType.cs" />
+    <Compile Include="Tabs\UltimateGuitarFileDownloader.cs" />
+    <Compile Include="Tabs\UltimateGuitarTabSearcher.cs" />
+    <Compile Include="Arts\SearchTabResultEntry.cs" />
+    <Compile Include="Arts\SearchTabResultSummary.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhoneGuitarTab.Core\PhoneGuitarTab.Core.csproj">

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using PhoneGuitarTab.Search;
+using PhoneGuitarTab.Search.Tabs;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Resources;
 

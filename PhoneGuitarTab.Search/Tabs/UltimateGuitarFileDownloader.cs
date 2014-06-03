@@ -3,11 +3,12 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using PhoneGuitarTab.Search.Arts;
 using PhoneGuitarTab.Tablatures.Readers;
 using PhoneGuitarTab.Tablatures.Writers;
 using SharpGIS;
 
-namespace PhoneGuitarTab.Search.UltimateGuitar
+namespace PhoneGuitarTab.Search.Tabs
 {
     public class UltimateGuitarFileDownloader : FileDownloader
     {

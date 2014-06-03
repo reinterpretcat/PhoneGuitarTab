@@ -4,7 +4,7 @@ using System.Net;
 using System.Text;
 using System.Windows;
 
-namespace PhoneGuitarTab.Search
+namespace PhoneGuitarTab.Search.Tabs
 {
     /// <summary>
     ///     Downloads files and stores it to destination

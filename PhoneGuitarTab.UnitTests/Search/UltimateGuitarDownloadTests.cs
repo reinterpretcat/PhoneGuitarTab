@@ -1,4 +1,6 @@
 ﻿
+using PhoneGuitarTab.Search.Tabs;
+
 namespace PhoneGuitarTab.UnitTests.Search
 {
     using System;
@@ -10,7 +12,6 @@ namespace PhoneGuitarTab.UnitTests.Search
     using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
     using PhoneGuitarTab.Search;
-    using PhoneGuitarTab.Search.UltimateGuitar;
 
     [TestClass]
     public class UltimateGuitarDownloadTests

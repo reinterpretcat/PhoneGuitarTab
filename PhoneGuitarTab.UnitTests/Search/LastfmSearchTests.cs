@@ -1,10 +1,10 @@
-﻿namespace PhoneGuitarTab.UnitTests.Search
+﻿using PhoneGuitarTab.Search.Arts;
+
+namespace PhoneGuitarTab.UnitTests.Search
 {
     using System.Threading;
 
     using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-
-    using PhoneGuitarTab.Search.Lastfm;
 
     [TestClass]
     public class LastfmSearchTests
@@ -12,7 +12,7 @@
         [TestMethod]
         public void CanSearchInfo()
         {
-            var r = new LastFmSearch();
+            var r = new LastFmMediaSearcher();
             var mre = new ManualResetEvent(false);
             r.MediaSearchCompleted += (sender, args) => mre.Set();
             r.RunMediaSearch(SearchContext.DefaulGroupName, string.Empty);

@@ -7,7 +7,7 @@ using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.Search;
-using PhoneGuitarTab.Search.Lastfm;
+using PhoneGuitarTab.Search.Arts;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;

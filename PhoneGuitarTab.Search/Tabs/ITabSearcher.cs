@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using PhoneGuitarTab.Search.Arts;
 
-namespace PhoneGuitarTab.Search
+namespace PhoneGuitarTab.Search.Tabs
 {
     public interface ITabSearcher
     {
