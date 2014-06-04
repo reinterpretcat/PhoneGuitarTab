@@ -15,7 +15,7 @@ function stopSlide() {
 }
 
 function getAudioStreamUrl(bandAndSongName){
-		setLabel("Loading " , bandAndSongName);
+		setLabel("Loading Audio" , bandAndSongName);
   		var url = 'https://api.soundcloud.com/tracks.json?client_id=5ca9c93662aaa8d953a421ce53500bae&q=' + bandAndSongName;
 		$.getJSON(url, function(tracks) {
 		
@@ -38,7 +38,7 @@ function setAudioUrl(audioUrl) {
     }
 
 function setLabel(text, title) {
-		var subTitle = ": " + title.substring(0,50) + "..";
+		var subTitle = ": " + title.substring(0,45) + "..";
 		document.getElementById("info").innerHTML = text + subTitle;
 	}
 

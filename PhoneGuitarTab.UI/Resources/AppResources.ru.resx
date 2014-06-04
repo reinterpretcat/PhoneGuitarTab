@@ -159,6 +159,18 @@
   <data name="AppTitle_Upper" xml:space="preserve">
     <value>PHONE GUITAR TAB</value>
   </data>
+  <data name="AutoScroll_Fast" xml:space="preserve">
+    <value>fast</value>
+  </data>
+  <data name="AutoScroll_Paused" xml:space="preserve">
+    <value>paused</value>
+  </data>
+  <data name="AutoScroll_Resume" xml:space="preserve">
+    <value>resume</value>
+  </data>
+  <data name="AutoScroll_Slow" xml:space="preserve">
+    <value>slow</value>
+  </data>
   <data name="Bands_Tabs" xml:space="preserve">
     <value>Табулатур: </value>
   </data>
@@ -358,6 +370,9 @@
   </data>
   <data name="Stave_Scale" xml:space="preserve">
     <value>масштаб</value>
+  </data>
+  <data name="Stave_SelectInstrument" xml:space="preserve">
+    <value>Select Instrument</value>
   </data>
   <data name="Synchronize_Message" xml:space="preserve">
     <value>Данная настройка полезна, если вы удалили все свои табулатуры и хотите восстановить их из oneDrive</value>

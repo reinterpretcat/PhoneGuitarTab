@@ -159,6 +159,18 @@
   <data name="AppTitle_Upper" xml:space="preserve">
     <value>PHONE GUITAR TAB</value>
   </data>
+  <data name="AutoScroll_Fast" xml:space="preserve">
+    <value>hızlı</value>
+  </data>
+  <data name="AutoScroll_Paused" xml:space="preserve">
+    <value>dur</value>
+  </data>
+  <data name="AutoScroll_Resume" xml:space="preserve">
+    <value>devam</value>
+  </data>
+  <data name="AutoScroll_Slow" xml:space="preserve">
+    <value>yavaş</value>
+  </data>
   <data name="Bands_Tabs" xml:space="preserve">
     <value>Tablar: </value>
   </data>
@@ -358,6 +370,9 @@ grup adı, şarkı adı</value>
   </data>
   <data name="Stave_Scale" xml:space="preserve">
     <value>yakınlaş</value>
+  </data>
+  <data name="Stave_SelectInstrument" xml:space="preserve">
+    <value>Enstrüman Seçiniz</value>
   </data>
   <data name="Synchronize_Message" xml:space="preserve">
     <value>Eğer tablarınızı bir şekilde kaybettiniz ve OneDrive üzerinden tekrar almak istiyorsanız bunu seçin.</value>

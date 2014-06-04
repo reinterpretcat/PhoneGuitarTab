@@ -187,6 +187,42 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to fast.
+        /// </summary>
+        public static string AutoScroll_Fast {
+            get {
+                return ResourceManager.GetString("AutoScroll_Fast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to paused.
+        /// </summary>
+        public static string AutoScroll_Paused {
+            get {
+                return ResourceManager.GetString("AutoScroll_Paused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to resume.
+        /// </summary>
+        public static string AutoScroll_Resume {
+            get {
+                return ResourceManager.GetString("AutoScroll_Resume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to slow.
+        /// </summary>
+        public static string AutoScroll_Slow {
+            get {
+                return ResourceManager.GetString("AutoScroll_Slow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tabs: .
         /// </summary>
         public static string Bands_Tabs {
@@ -779,6 +815,15 @@ namespace PhoneGuitarTab.UI.Resources {
         public static string Stave_Scale {
             get {
                 return ResourceManager.GetString("Stave_Scale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Instrument.
+        /// </summary>
+        public static string Stave_SelectInstrument {
+            get {
+                return ResourceManager.GetString("Stave_SelectInstrument", resourceCulture);
             }
         }
         

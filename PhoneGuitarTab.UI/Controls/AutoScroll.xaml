@@ -66,12 +66,15 @@
                 <CompositeTransform Rotation="-180" TranslateX="2" TranslateY="2.604" />
             </Slider.RenderTransform>
         </Slider>
-        <TextBlock x:Name="slow" HorizontalAlignment="Center" Margin="12,-20,10,0" TextWrapping="Wrap" Text="Slow" VerticalAlignment="Top" Width="36" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.01" Height="18" >
+        <TextBlock x:Name="slow" HorizontalAlignment="Stretch" Margin="10,-25,-10,180"  
+                   Text="{Binding Path=LocalizedResources.AutoScroll_Slow, Source={StaticResource LocalizedStrings}}" Width="58" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.01" >
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
             </TextBlock.Foreground>
         </TextBlock>
-        <TextBlock x:Name="fast" HorizontalAlignment="Center" Margin="14,172,8,-14" TextWrapping="Wrap" Text="Fast" VerticalAlignment="Top" Width="36" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.01" Height="18" >
+        <TextBlock x:Name="fast" HorizontalAlignment="Stretch" Margin="13,172,-13,-14" 
+                   Text="{Binding Path=LocalizedResources.AutoScroll_Fast, Source={StaticResource LocalizedStrings}}" 
+                   VerticalAlignment="Top" Width="58" RenderTransformOrigin="1.396,0.333" FontSize="16" Opacity="0.01" Height="18" >
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
             </TextBlock.Foreground>

@@ -1,5 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System.Reflection;
+using System.Windows.Controls;
+using Windows.Phone.System.UserProfile;
 using Microsoft.Phone.Controls;
+using PhoneGuitarTab.UI.Resources;
 
 namespace PhoneGuitarTab.UI.Controls
 {
@@ -43,7 +46,7 @@ namespace PhoneGuitarTab.UI.Controls
                 //if invoked from outside, show info message.
                 if (!sender.GetType().Equals(typeof (AutoScroll)))
                 {
-                    info.Text = "resume";
+                    info.Text = AppResources.AutoScroll_Resume;
                     animateinfo.Begin();
                 }
             }
@@ -59,7 +62,7 @@ namespace PhoneGuitarTab.UI.Controls
             //if invoked from outside, show info message.
             if (!sender.GetType().Equals(typeof (AutoScroll)))
             {
-                info.Text = "paused";
+                info.Text = AppResources.AutoScroll_Paused;
                 animateinfo.Begin();
             }
         }

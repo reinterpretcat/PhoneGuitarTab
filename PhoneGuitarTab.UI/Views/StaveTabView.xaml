@@ -66,7 +66,7 @@
                              VerticalAlignment="Top" 
                              Height="176" 
                              Width="60" Grid.Column="3" Grid.RowSpan="2" Visibility="Collapsed"/>
-        <toolkit:ListPicker x:Name="ListPickerInstrument" FullModeHeader="Select Instrument"
+        <toolkit:ListPicker x:Name="ListPickerInstrument" FullModeHeader="{Binding Path=LocalizedResources.Stave_SelectInstrument, Source={StaticResource LocalizedStrings}}"
                             Margin="4,104,5,20"
                             ExpansionMode ="FullScreenOnly"
                             Visibility="Collapsed" Opacity="0.5"
