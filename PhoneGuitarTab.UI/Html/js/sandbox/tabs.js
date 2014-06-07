@@ -6,7 +6,7 @@ var isParsed = false;
 $(document).ready(function () {
     initEnvironment();    window.external.notify("onReady");});function initEnvironment() {
     clearTab();	var height = $(document).height();
-	var width = $(document).width();	context = new MusicTab.Stave.Context({						height: height,						width: width,						scale: scale,						backgroundColor: isNightMode ? "black" : "#eed",						fontColor: isNightMode ? "#eed" : "black",						placeHolderId: "body",						tabDivClass:"vex-tabdiv"	});	staveHelper = new MusicTab.Stave.Helper(context);	paginator = new MusicTab.Stave.Paginator({		context: context,		staveHelper: staveHelper	});}
+	var width = $(document).width();	context = new MusicTab.Stave.Context({						height: height,						width: width,						scale: scale,						backgroundColor: isNightMode ? "#222" : "#eed",						fontColor: isNightMode ? "#eed" : "black",						placeHolderId: "body",						tabDivClass:"vex-tabdiv"	});	staveHelper = new MusicTab.Stave.Helper(context);	paginator = new MusicTab.Stave.Paginator({		context: context,		staveHelper: staveHelper	});}
 
 function toggleLightMode(isNight) {
     isNightMode = isNight == "True";

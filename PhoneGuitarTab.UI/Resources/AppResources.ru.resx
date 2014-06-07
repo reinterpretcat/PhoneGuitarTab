@@ -181,16 +181,16 @@
     <value>ошибка</value>
   </data>
   <data name="Group_Info" xml:space="preserve">
-    <value>инфо</value>
+    <value>описание</value>
   </data>
   <data name="Group_More" xml:space="preserve">
-    <value>Еще</value>
+    <value>Подробнее</value>
   </data>
   <data name="Group_MoreOnline" xml:space="preserve">
     <value>еще..</value>
   </data>
   <data name="Group_Tabs" xml:space="preserve">
-    <value>tabs</value>
+    <value>табулатуры</value>
   </data>
   <data name="PanaramaTabs_NoTabs" xml:space="preserve">
     <value>Вы ничего не скачали</value>
@@ -372,7 +372,7 @@
     <value>масштаб</value>
   </data>
   <data name="Stave_SelectInstrument" xml:space="preserve">
-    <value>Select Instrument</value>
+    <value>Выбор инструмента</value>
   </data>
   <data name="Synchronize_Message" xml:space="preserve">
     <value>Данная настройка полезна, если вы удалили все свои табулатуры и хотите восстановить их из oneDrive</value>
