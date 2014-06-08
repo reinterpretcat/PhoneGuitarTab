@@ -6,6 +6,7 @@ using System.Windows;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Diagnostic;
 using PhoneGuitarTab.Core.Services;
+using PhoneGuitarTab.Search.Arts;
 using PhoneGuitarTab.UI.Data;
 using Group = PhoneGuitarTab.UI.Data.Group;
 
@@ -27,6 +28,9 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         [Dependency]
         private ITrace Trace { get; set; }
+
+        [Dependency]
+        private IMediaSearcherFactory MediaSearchFactory { get; set; }
 
         private const int HalfOfProgress = 50;
 
@@ -194,6 +198,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 var localFileNamesMapped = group.Tabs.Select(GetCloudName);
                 var cloudFileNames = await CloudService.GetFileNames(String.Format("{0}/{1}", CloudRootPath, groupName));
 
+                //run group images search
+                var groupImagesSearch = MediaSearchFactory.Create();
+                groupImagesSearch.MediaSearchCompleted += groupImagesSearch_MediaSearchCompleted;
+                groupImagesSearch.RunMediaSearch(groupName, string.Empty);
+
                 // get tabs which aren't present in iso
                 var newTabs = cloudFileNames.Except(localFileNamesMapped).ToList();
 
@@ -224,6 +233,13 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 ProgressValue += progressIncrement;
             }
             DataService.SubmitChanges();
+        }
+
+        void groupImagesSearch_MediaSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        {
+            var result = sender as IMediaSearcher;
+            if (!string.IsNullOrEmpty(result.Entry.BandName))
+           DataService.UpdateGroupMediaByName(result.Entry.BandName, result.Entry.ImageUrl, result.Entry.LargeImageUrl,result.Entry.ExtraLargeImageUrl);
         }
 
         private bool IsCloudName(string name, Group @group)
