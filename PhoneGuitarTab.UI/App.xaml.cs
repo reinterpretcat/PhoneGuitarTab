@@ -15,7 +15,7 @@ namespace PhoneGuitarTab.UI
 {
     public partial class App : Application
     {
-        public static String AppForceCulture = "";
+        public static String AppForceCulture = "pl-pl";
         /// <summary>
         ///     Constructor for the Application object.
         /// </summary>

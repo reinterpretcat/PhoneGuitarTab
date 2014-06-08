@@ -167,12 +167,12 @@ namespace PhoneGuitarTab.UI.Data
             Group group = (from Group g in Groups
                            where g.Name == name
                            select g).SingleOrDefault();
-            if (group == null)
+            if (group != null)
             {
                 group.ImageUrl = normal;
                 group.LargeImageUrl = large;
                 group.ExtraLargeImageUrl = extraLarge;
-                Groups.InsertOnSubmit(group);
+               
                 SubmitChanges();
             }
         }
@@ -180,9 +180,11 @@ namespace PhoneGuitarTab.UI.Data
         public void UpdateTabMediaById(int tabId, string albumCover)
         {
             var tab = this.GetTabById(tabId);
+            if( tab!= null)
+            { 
             tab.AlbumCoverImageUrl = albumCover;
             SubmitChanges();
-
+            }
         }
 
         public Group GetOrCreateGroupByName(string name)
