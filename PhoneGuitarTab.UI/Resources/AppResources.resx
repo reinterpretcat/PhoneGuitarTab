@@ -312,7 +312,7 @@ band name, song name</value>
     <value>Searching for {0}..</value>
   </data>
   <data name="Search_SelectedType" xml:space="preserve">
-    <value>selected type</value>
+    <value>tab type</value>
   </data>
   <data name="Search_ServerUnavailable" xml:space="preserve">
     <value>Can't reach the server right now.</value>

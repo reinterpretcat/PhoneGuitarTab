@@ -549,7 +549,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to selected type.
+        ///   Looks up a localized string similar to tab type.
         /// </summary>
         public static string Search_SelectedType {
             get {

@@ -411,7 +411,7 @@ artysta, piosenka</value>
     <value>Pobierz</value>
   </data>
   <data name="TemplateSearch_Downloaded" xml:space="preserve">
-    <value>O</value>
+    <value>Pobrane</value>
   </data>
   <data name="TemplateSearch_Version" xml:space="preserve">
     <value>wersja:</value>
