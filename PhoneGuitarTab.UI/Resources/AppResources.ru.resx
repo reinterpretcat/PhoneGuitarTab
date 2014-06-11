@@ -121,7 +121,7 @@
     <value> это проект с открытым исходным кодом под лицензией Microsoft Public License (Ms-PL).</value>
   </data>
   <data name="About_AppInvitation" xml:space="preserve">
-    <value>Наша команда приглашает разработчиков присоединиться к нам для работы над лучшей, в своем роде, программе в магазине приложений</value>
+    <value>Наша команда приглашает разработчиков присоединиться к нам для работы над лучшей, в своем роде, программе в магазине приложений.</value>
   </data>
   <data name="About_AppTitle" xml:space="preserve">
     <value>PhoneGuitarTab</value>
@@ -160,16 +160,16 @@
     <value>PHONE GUITAR TAB</value>
   </data>
   <data name="AutoScroll_Fast" xml:space="preserve">
-    <value>fast</value>
+    <value>быстр.</value>
   </data>
   <data name="AutoScroll_Paused" xml:space="preserve">
-    <value>paused</value>
+    <value>пауза</value>
   </data>
   <data name="AutoScroll_Resume" xml:space="preserve">
-    <value>resume</value>
+    <value>старт</value>
   </data>
   <data name="AutoScroll_Slow" xml:space="preserve">
-    <value>slow</value>
+    <value>медлен.</value>
   </data>
   <data name="Bands_Tabs" xml:space="preserve">
     <value>Табулатур: </value>
@@ -354,7 +354,7 @@
     <value>поиск</value>
   </data>
   <data name="Stave_Autoscroll" xml:space="preserve">
-    <value>автопрокрутка</value>
+    <value>автопрокр.</value>
   </data>
   <data name="Stave_Instruments" xml:space="preserve">
     <value>инструменты</value>
@@ -420,7 +420,7 @@
     <value>голосов:</value>
   </data>
   <data name="TextTab_Autoscroll" xml:space="preserve">
-    <value>автопрокрутка</value>
+    <value>автопрокр.</value>
   </data>
   <data name="TextTab_Pin" xml:space="preserve">
     <value>закладка</value>
