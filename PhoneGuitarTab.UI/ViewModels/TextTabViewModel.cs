@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Windows;
+using System.Windows.Automation.Provider;
+using System.Windows.Media;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Search.Audio;
 using PhoneGuitarTab.UI.Data;
@@ -32,7 +35,9 @@ namespace PhoneGuitarTab.UI.ViewModels
 
                     if (Tablature.TabType.Name == "chords")
                     {
-                        document = document.Replace("[ch]", "<span>");
+                        var phoneAccentBrush = (Color)Application.Current.Resources["PhoneAccentColor"];
+
+                        document = document.Replace("[ch]", "<span onClick='Chord_onClick((this.textContent || this.innerText))' style='color:#" + phoneAccentBrush.ToString().Substring(3) + ";  font-weight: bold; '>");
                         document = document.Replace("[/ch]", "</span>");
                     }
 

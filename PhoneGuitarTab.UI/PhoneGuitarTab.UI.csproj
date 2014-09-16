@@ -308,6 +308,8 @@
     </Content>
     <Content Include="Html\css\site.css" />
     <Content Include="Html\css\tabdiv.css" />
+    <Content Include="Html\css\vex-theme-os.css" />
+    <Content Include="Html\css\vex.css" />
     <Content Include="Html\js\sandbox\jquery-1.10.2.min.js" />
     <Content Include="Html\js\sandbox\tabs.js" />
     <Content Include="Html\js\sandbox\waypoints.min.js" />
@@ -379,7 +381,10 @@
     <Content Include="Html\js\tablatures\track.js" />
     <Content Include="Html\js\shared\interaction.js" />
     <Content Include="Html\js\shared\jquery.sticky.js" />
+    <Content Include="Html\js\texttab\chords.js" />
+    <Content Include="Html\js\texttab\chordComposer.js" />
     <Content Include="Html\js\texttab\init.js" />
+    <Content Include="Html\js\texttab\vex.combined.min.js" />
     <Content Include="Html\js\utils\core.js" />
     <Content Include="Html\js\utils\filereader.js" />
     <Content Include="Html\sandbox.html" />

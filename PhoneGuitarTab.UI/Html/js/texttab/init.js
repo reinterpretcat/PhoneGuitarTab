@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     window.external.notify("onReady");
+ 
 });
 
 function toggleLightMode(isNight) {
