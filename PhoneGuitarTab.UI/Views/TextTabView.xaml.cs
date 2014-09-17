@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PhoneGuitarTab.Core.Views;
 using PhoneGuitarTab.UI.ViewModels;
-using GestureEventArgs = System.Windows.Input.GestureEventArgs;
+
 
 namespace PhoneGuitarTab.UI
 {
@@ -135,6 +136,17 @@ namespace PhoneGuitarTab.UI
             {
                 //TODO - do some exception handling here  - sometimes the above JS function sucks.               
             }
+        }
+
+        private void TextTabView_OnBackKeyPress(object sender, CancelEventArgs e)
+        {
+            //If a chord pop-up is displayed do not navigate back to the main app menu, stay in the page and close the chord pop-up.
+            if (Convert.ToBoolean(tabWebBrowser.InvokeScript("getChordPopUpVisibility")))
+                {
+                    e.Cancel = true;
+                    tabWebBrowser.InvokeScript("closeChordPopUp");
+
+                }              
         }
     }
 }

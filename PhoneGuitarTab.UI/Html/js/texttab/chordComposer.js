@@ -1,15 +1,41 @@
-﻿function Chord_onClick(chordName) {
+﻿var $vexContent;
+//Keep this boolean variable as a 'magic string boolean' as value types can not be exchanged between JS and C#; only magic strings work through browser.invokescript
+var isChordPopUpOpen = 'false';
+
+function Chord_onClick(chordName) {
     vex.defaultOptions.className = 'vex-theme-os';
    
-        vex.open({
-            content: '<div style="text-align: center; padding:10px;">' + constructChord(chordName) + '</div>'
+    $vexContent = vex.open({
+        content: '<div style="text-align: center; padding:10px;">' + constructChord(chordName) + '</div>',
+
+        afterOpen: function () {
+            isChordPopUpOpen = 'true';
+        },
+        afterClose: function () {
+            isChordPopUpOpen = 'false';
+        }
         });
 
     chords.replace();
+
+   
 }
 
 
+function getChordPopUpVisibility() {
 
+    return isChordPopUpOpen;
+}
+
+//Helper function to close the chord pop-up explicitly with back key navigation.
+function closeChordPopUp() {
+    if (isChordPopUpOpen == 'true') {
+        vex.close($vexContent.data().vex.id);
+        isChordPopUpOpen = 'false'
+    }     
+}
+
+//constructs the chord with the given chord name
 function constructChord(chordName) {
     return '<chord name="' + chordName + '" positions="' + getChordPositions(chordName) + '" fingers="' + getFingers(chordName) + '" size="4"></chord>';
 }
