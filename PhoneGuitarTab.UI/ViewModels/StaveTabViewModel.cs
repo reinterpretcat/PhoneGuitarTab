@@ -35,8 +35,8 @@ namespace PhoneGuitarTab.UI.ViewModels
         }
 
         [Dependency]
-        public StaveTabViewModel(IAudioSearcher audioSearcher, IDataContextService database, RatingService ratingService, MessageHub hub)
-            : base(audioSearcher, database, ratingService, hub)
+        public StaveTabViewModel(IAudioSearcherFactory audioSearcherFactory, IDataContextService database, RatingService ratingService, MessageHub hub)
+            : base(audioSearcherFactory, database, ratingService, hub)
         {
             CreateCommands();
         }

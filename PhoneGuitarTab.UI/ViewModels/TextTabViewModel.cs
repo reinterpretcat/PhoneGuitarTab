@@ -17,8 +17,8 @@ namespace PhoneGuitarTab.UI.ViewModels
         private readonly TextTabAdapter _textTabAdapter;
 
         [Dependency]
-        public TextTabViewModel(IAudioSearcher audioSearcher, IDataContextService database, RatingService ratingService, MessageHub hub)
-            : base(audioSearcher, database, ratingService, hub)
+        public TextTabViewModel(IAudioSearcherFactory audioSearcherFactory, IDataContextService database, RatingService ratingService, MessageHub hub)
+            : base(audioSearcherFactory, database, ratingService, hub)
         {
             _textTabAdapter = new TextTabAdapter();
         }

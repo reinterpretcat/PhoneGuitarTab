@@ -3,6 +3,7 @@ using System.Net;
 
 namespace PhoneGuitarTab.Search.Audio
 {
+    //This class searches for the concrete endpoint stream URL of a given track url on SoundCloud.
     public class SoundCloudAudioSearcher:IAudioSearcher 
     {
         
@@ -11,6 +12,7 @@ namespace PhoneGuitarTab.Search.Audio
         public string AudioStreamEndPointUrl { get; private set; }
 
         public event AudioUrlRetrievedHandler SearchCompleted;
+        public bool IsAudioFound { get; private set; }
 
         public void Run(string trackUrl)
         {
@@ -31,8 +33,8 @@ namespace PhoneGuitarTab.Search.Audio
             var myRequest = (HttpWebRequest) callbackResult.AsyncState;
             var myResponse = (HttpWebResponse) myRequest.EndGetResponse(callbackResult);
             AudioStreamEndPointUrl = myResponse.ResponseUri.AbsoluteUri;
-            
-            SearchCompleted();
+            this.IsAudioFound = true;
+            SearchCompleted(this);
             myResponse.Close();
         }
     }

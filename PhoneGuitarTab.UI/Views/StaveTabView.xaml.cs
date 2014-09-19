@@ -234,7 +234,7 @@ namespace PhoneGuitarTab.UI.Views
             if (isBrowserReady)
             {
                 var viewModel = DataContext as StaveTabViewModel;
-                viewModel.StopAudioPlayer(Browser);
+                viewModel.StopAudioPlayer();
             }
         }
 

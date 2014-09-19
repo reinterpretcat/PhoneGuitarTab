@@ -36,7 +36,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
             Container.Register(Component.For<IDialogController>().Use<ToastDialogController>().Singleton());
 
             Container.Register(Component.For<ITabSearcher>().Use<UltimateGuitarTabSearcher>());
-            Container.Register(Component.For<IAudioSearcher>().Use<SoundCloudAudioSearcher>());
+            Container.Register(Component.For<IAudioSearcherFactory>().Use<AudioSearcherFactory>());
             Container.Register(Component.For<IMediaSearcherFactory>().Use<MediaSearcherFactory>());
            
             return true;

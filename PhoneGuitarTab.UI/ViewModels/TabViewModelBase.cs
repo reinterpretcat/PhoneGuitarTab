@@ -19,7 +19,8 @@ namespace PhoneGuitarTab.UI.ViewModels
 {
     public abstract class TabViewModelBase : DataContextViewModel
     {
-        private readonly IAudioSearcher _audioSearcher;
+        private readonly IAudioSearcherFactory _audioSearcherFactory;
+      
         public string TabContent { get; set; }
 
         public Tab Tablature { get; set; }
@@ -50,10 +51,10 @@ namespace PhoneGuitarTab.UI.ViewModels
         public delegate void AudioUrlRetrievedHandler(string audioUrl);
 
         [Dependency]
-        protected TabViewModelBase(IAudioSearcher audioSearcher, IDataContextService database, RatingService ratingService, MessageHub hub)
+        protected TabViewModelBase(IAudioSearcherFactory audioSearcherFactory, IDataContextService database, RatingService ratingService, MessageHub hub)
             : base(database, hub)
         {
-            _audioSearcher = audioSearcher;
+            _audioSearcherFactory = audioSearcherFactory;
             RatingService = ratingService;
             CreateCommands();
         }
@@ -84,8 +85,8 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
-            var browser = sender as WebBrowser;
-            GetAudioStreamUrl(browser);
+            //TODO: Get Local song at first
+            GetOnlineAudioStreamUrl();
             RunRating();
             PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
         }
@@ -94,17 +95,18 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             var browser = sender as WebBrowser;
             if (e.Value.StartsWith("onStreamUrlRetrieved"))
-            {              
-                _audioSearcher.SearchCompleted += AudioSearchCompleted;
-                _audioSearcher.Run((string)browser.InvokeScript("getTrackUrl"));
+            {
+                var onlineAudioSearcher = _audioSearcherFactory.CreateOnlineSearcher();
+                onlineAudioSearcher.SearchCompleted += AudioSearchCompleted;
+                onlineAudioSearcher.Run((string)browser.InvokeScript("getTrackUrl"));
             }
         }
 
 
-        public void StopAudioPlayer(WebBrowser browser)
+        public void StopAudioPlayer()
         {
-            System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(
-                () => browser.InvokeScript("stopAudioPlayer"));
+           Application.Current.RootVisual.Dispatcher.BeginInvoke(
+                () => Browser.InvokeScript("stopAudioPlayer"));
         }
 
         #region Commands
@@ -139,15 +141,15 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Helpers
 
-        private void GetAudioStreamUrl(WebBrowser browser)
+        private void GetOnlineAudioStreamUrl()
         {
             if (NetworkInterface.GetIsNetworkAvailable())
             {
-                System.Windows.Application.Current.RootVisual.Dispatcher.BeginInvoke(
-                    () => browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name + " " + Tablature.Name));
+               Application.Current.RootVisual.Dispatcher.BeginInvoke(
+                    () => Browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name + " " + Tablature.Name));
             }
             else
-                browser.InvokeScript("setLabel", AppResources.Tab_ConnectDevicePhraseStart,
+                Browser.InvokeScript("setLabel", AppResources.Tab_ConnectDevicePhraseStart,
                     AppResources.Tab_ConnectDevicePhraseEnd);
         }
 
@@ -177,10 +179,10 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region event handlers
 
-        private void AudioSearchCompleted()
+        private void AudioSearchCompleted(object sender)
         {
-            
-            AudioUrlRetrieved(_audioSearcher.AudioStreamEndPointUrl);
+            var searcher = sender as IAudioSearcher;
+            AudioUrlRetrieved(searcher.AudioStreamEndPointUrl);
         }
 
         #endregion

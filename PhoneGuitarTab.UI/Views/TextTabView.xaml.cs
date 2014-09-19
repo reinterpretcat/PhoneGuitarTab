@@ -107,7 +107,7 @@ namespace PhoneGuitarTab.UI
             if (isBrowserReady)
             {
                 var viewModel = DataContext as TextTabViewModel;
-                viewModel.StopAudioPlayer(tabWebBrowser);
+                viewModel.StopAudioPlayer();
             }
         }
 
