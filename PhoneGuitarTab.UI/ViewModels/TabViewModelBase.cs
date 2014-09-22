@@ -93,12 +93,12 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public void Browser_ScriptNotify(object sender, NotifyEventArgs e)
         {
-            var browser = sender as WebBrowser;
+          
             if (e.Value.StartsWith("onStreamUrlRetrieved"))
             {
                 var onlineAudioSearcher = _audioSearcherFactory.CreateOnlineSearcher();
                 onlineAudioSearcher.SearchCompleted += AudioSearchCompleted;
-                onlineAudioSearcher.Run((string)browser.InvokeScript("getTrackUrl"));
+                onlineAudioSearcher.Run((string)Browser.InvokeScript("getTrackUrl"));
             }
         }
 
@@ -146,12 +146,14 @@ namespace PhoneGuitarTab.UI.ViewModels
             if (NetworkInterface.GetIsNetworkAvailable())
             {
                Application.Current.RootVisual.Dispatcher.BeginInvoke(
-                    () => Browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name + " " + Tablature.Name));
+                    () => Browser.InvokeScript("getAudioStreamUrl", Tablature.Group.Name , Tablature.Name));
             }
             else
                 Browser.InvokeScript("setLabel", AppResources.Tab_ConnectDevicePhraseStart,
                     AppResources.Tab_ConnectDevicePhraseEnd);
         }
+
+       
 
         private void RunRating()
         {

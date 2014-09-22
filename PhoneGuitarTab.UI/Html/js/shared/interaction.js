@@ -14,18 +14,49 @@ function stopSlide() {
     clearInterval(delay);
 }
 
-function getAudioStreamUrl(bandAndSongName){
-		setLabel("Loading Audio" , bandAndSongName);
-  		var url = 'https://api.soundcloud.com/tracks.json?client_id=5ca9c93662aaa8d953a421ce53500bae&q=' + bandAndSongName;
+function getAudioStreamUrl(artist, song){
+		setLabel("Loading Audio" , artist + ' - ' + song);
+  		var url = 'https://api.soundcloud.com/tracks.json?client_id=5ca9c93662aaa8d953a421ce53500bae&q=' + artist + ' ' + song ;
 		$.getJSON(url, function(tracks) {
-		
-			trackUrl = tracks[0].stream_url;
-			trackTitle = tracks[0].title;
+        
+		    $.each(tracks, function (i) {
+
+		        if (tracks[i].streamable ) {
+
+		            if (!(wordInString(tracks[i].title, 'cover')
+		                    || wordInString(tracks[i].title, 'remix')
+		                    || wordInString(tracks[i].title, 'dj')
+                            || wordInString(tracks[i].title, 'drumstep')
+                            || wordInString(tracks[i].title, 'dubstep')
+                            || wordInString(tracks[i].title, 'edit')
+                            || wordInString(tracks[i].title, 'rmx')
+                            || wordInString(tracks[i].title, 'arrangement')
+                            || wordInString(tracks[i].title, 'performs')
+                            || wordInString(tracks[i].title, 'symphony')
+		                    || tracks[i].title.toLowerCase().indexOf('cover') >= 0
+                            || tracks[i].title.toLowerCase().indexOf('orchestra') >= 0
+		            )) {
+		                trackUrl = tracks[i].stream_url;
+		                trackTitle = tracks[i].title;
+		               
+		                return false;
+		            }
+                  
+                }    
+
+			});
+
 			isNetworkAvailable = true;
 			setSticky();
 			window.external.notify("onStreamUrlRetrieved");
 		});
     }
+
+function wordInString(s, word) {
+    return new RegExp('\\b' + word + '\\b', 'i').test(s.toLowerCase());
+}
+
+
 
 function getTrackUrl() {
 		return trackUrl;
