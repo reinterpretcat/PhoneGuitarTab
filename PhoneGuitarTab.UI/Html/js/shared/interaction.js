@@ -21,18 +21,23 @@ function getAudioStreamUrl(artist, song){
         
 		    $.each(tracks, function (i) {
 
-		        if (tracks[i].streamable ) {
+		        if (tracks[i].streamable && tracks[i].title.toLowerCase().indexOf(artist.toLowerCase()) >= 0) {
 
-		            if (!(wordInString(tracks[i].title, 'cover')
+		            if (!(     wordInString(tracks[i].title, 'cover')
 		                    || wordInString(tracks[i].title, 'remix')
+                            || wordInString(tracks[i].title, 'ft')
+                            || wordInString(tracks[i].title, 'feat')
+                            || wordInString(tracks[i].title, 'version')
+                            || wordInString(tracks[i].title, 'remake')
 		                    || wordInString(tracks[i].title, 'dj')
                             || wordInString(tracks[i].title, 'drumstep')
                             || wordInString(tracks[i].title, 'dubstep')
                             || wordInString(tracks[i].title, 'edit')
                             || wordInString(tracks[i].title, 'rmx')
                             || wordInString(tracks[i].title, 'arrangement')
+                            || wordInString(tracks[i].title, 'mix')
+                            || wordInString(tracks[i].title, 'mixed')
                             || wordInString(tracks[i].title, 'performs')
-                            || wordInString(tracks[i].title, 'symphony')
 		                    || tracks[i].title.toLowerCase().indexOf('cover') >= 0
                             || tracks[i].title.toLowerCase().indexOf('orchestra') >= 0
 		            )) {
