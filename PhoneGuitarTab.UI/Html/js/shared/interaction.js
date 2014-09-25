@@ -21,7 +21,9 @@ function getAudioStreamUrl(artist, song){
         
 		    $.each(tracks, function (i) {
 
-		        if (tracks[i].streamable && tracks[i].title.toLowerCase().indexOf(artist.toLowerCase()) >= 0) {
+		        if (tracks[i].streamable
+                    && tracks[i].title.toLowerCase().indexOf(artist.toLowerCase()) >= 0
+                     && tracks[i].title.toLowerCase().indexOf(song.toLowerCase()) >= 0 ) {
 
 		            if (!(     wordInString(tracks[i].title, 'cover')
 		                    || wordInString(tracks[i].title, 'remix')
