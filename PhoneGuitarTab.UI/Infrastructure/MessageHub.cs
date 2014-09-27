@@ -71,5 +71,15 @@ namespace PhoneGuitarTab.UI.Infrastructure
             if (handler != null)
                 handler(this, ImageUrl);
         }
+
+        public event EventHandler BandSuggestionRequest;
+
+        public void RaiseBandSuggestionRequest()
+        {
+            var handler = BandSuggestionRequest;
+            if (handler != null)
+                handler(this, new EventArgs());
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Controls;
+﻿
+using Microsoft.Phone.Controls;
 
 namespace PhoneGuitarTab.UI.Views.PanaromaItems
 {
@@ -6,6 +7,7 @@ namespace PhoneGuitarTab.UI.Views.PanaromaItems
     {
         public Discover()
         {
+              
             InitializeComponent();
         }
     }

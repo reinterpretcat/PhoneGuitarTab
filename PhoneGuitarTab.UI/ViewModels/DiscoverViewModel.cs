@@ -22,7 +22,6 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private BandBySuggestion suggestedGroups;
         private bool isLoading;
-        private bool infoFound;
 
         #endregion  Fields
 
@@ -35,6 +34,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             _bandSuggestor = bandSuggestor;
             DataBind();
             CreateCommands();
+            RegisterEvents();
         }
 
         #endregion Constructors
@@ -48,25 +48,10 @@ namespace PhoneGuitarTab.UI.ViewModels
             {
                 isLoading = value;
                 RaisePropertyChanged("IsLoading");
-                RaisePropertyChanged("InfoLoaded");
             }
         }
 
-        public bool InfoLoaded
-        {
-            get { return !IsLoading && infoFound; }
-        }
-
-        public bool NothingFound
-        {
-            get { return !infoFound; }
-            set
-            {
-                infoFound = !value;
-                RaisePropertyChanged("NothingFound");
-                RaisePropertyChanged("InfoLoaded");
-            }
-        }
+  
 
         public BandBySuggestion SuggestedGroups
         {
@@ -80,52 +65,73 @@ namespace PhoneGuitarTab.UI.ViewModels
         #endregion Properties
 
         #region Commands
-        public ExecuteCommand SearchSuggestions { get; private set; }
-
-        private void CreateCommands()
-        {
-           SearchSuggestions = new ExecuteCommand (DoSearchSuggestions);
-        }
+        public ExecuteCommand SearchSuggestions { get; private set; }     
         #endregion Commands
+
+        #region CommandHandlers
 
         private void DoSearchSuggestions()
         {
             this.IsLoading = true;
+            this.SuggestedGroups.Clear();
             var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name).ToList();
             _bandSuggestor.RunBandSuggestor(baseBands);
-            _bandSuggestor.SuggestionSearchCompleted+=_bandSuggestor_SuggestionSearchCompleted;
+            _bandSuggestor.SuggestionSearchCompleted += _bandSuggestor_SuggestionSearchCompleted;
         }
+        
+        #endregion CommandHandlers
+
+        #region HelperMethods
+        private void CreateCommands()
+        {
+            SearchSuggestions = new ExecuteCommand(DoSearchSuggestions);
+        }
+
+        private void RegisterEvents()
+        {
+            Hub.BandSuggestionRequest += (o, args) => DoSearchSuggestions();
+        }
+        #endregion HelperMethods
+
+        #region Override methods
 
         protected override void DataBind()
         {
             this.SuggestedGroups = new BandBySuggestion();        
         }
 
+        #endregion
+
+        #region Event Handlers
         void _bandSuggestor_SuggestionSearchCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+
+            var suggestion = sender as IBandSuggestor;
+            try
             {
- 	
-                 var suggestion = sender as IBandSuggestor;
-                try
+                foreach (var band in suggestion.Results)
                 {
-                    foreach (var band in suggestion.Results)
+                    if (this.SuggestedGroups.All(b => b.Name != band.BandName))
                     {
                         var group = new Group();
                         group.Name = band.BandName;
                         group.ExtraLargeImageUrl = band.ExtraLargeImageUrl;
                         this.SuggestedGroups.Add(group);
-
                     }
-                    this.IsLoading = false;
+                    
                 }
-                catch (Exception)
-                {
-        
-                    throw;
-                }
+                this.IsLoading = false;
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
       
 
-        
+        #endregion  
+               
     }
 }

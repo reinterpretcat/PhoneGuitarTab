@@ -107,6 +107,9 @@
     <Reference Include="Coding4Fun.Toolkit.Controls">
       <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.7\lib\windowsphone8\Coding4Fun.Toolkit.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="InTheHand.UI.Xaml.Controls.ProgressRing">
+      <HintPath>..\packages\InTheHand.UI.Xaml.Controls.ProgressRing.8.2014.9.3\lib\wp8\InTheHand.UI.Xaml.Controls.ProgressRing.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
       <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>

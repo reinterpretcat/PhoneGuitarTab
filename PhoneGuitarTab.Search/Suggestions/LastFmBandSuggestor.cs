@@ -46,24 +46,29 @@ namespace PhoneGuitarTab.Search.Suggestions
         {
             try
             {
+                //Clear existing Results
+                this.Results.Clear();
                 var XMLroot = root.Element("artist");
 
                 if (XMLroot != null)
                 {
                     var similar = XMLroot.Element("similar");
-                    foreach (var artist in similar.Elements())
+                    //If Bands in collection are less than 10, than get suggestions for all the similar artists.
+                    if (BaseBands.Count < 10)
                     {
-                        var artistName = GetSafeValue(artist.Element("name"));
-                        if (!(this.BaseBands.Contains(artistName) || this.SuggestedArtistsSoFar.Contains(artistName)))
+                        foreach (var artist in similar.Elements())
                         {
-                             var Entry = new SearchMediaEntry();
-                            Entry.BandName = artistName;
-                            Entry.ExtraLargeImageUrl = GetImageUrl(artist, ImageSize.ExtraLarge);
-                            SuggestedArtistsSoFar.Add(artistName);
-                            Results.Add(Entry);
-                        }
-                       
+                            this.CreateEntry(artist);
+                        }   
                     }
+                    else //otherwise take only 2 similar artist
+                    {
+                        foreach (var artist in similar.Elements().Take(2))
+                        {
+                            this.CreateEntry(artist);
+                        }   
+                    }
+                                      
                 }
     
             }
@@ -73,6 +78,19 @@ namespace PhoneGuitarTab.Search.Suggestions
            
             }
             
+        }
+
+        private void CreateEntry(XElement elem)
+        {
+            var artistName = GetSafeValue(elem.Element("name"));
+            if (!(this.BaseBands.Contains(artistName) || this.SuggestedArtistsSoFar.Contains(artistName)))
+            {
+                var Entry = new SearchMediaEntry();
+                Entry.BandName = artistName;
+                Entry.ExtraLargeImageUrl = GetImageUrl(elem, ImageSize.ExtraLarge);
+                SuggestedArtistsSoFar.Add(artistName);
+                Results.Add(Entry);
+            }
         }
 
         protected string GetRequestTemplate()
@@ -86,8 +104,9 @@ namespace PhoneGuitarTab.Search.Suggestions
         public void RunBandSuggestor(List<string> bands )
         {
             this.BaseBands = bands;
+            this.SuggestedArtistsSoFar.Clear();
             foreach (string band in bands)
-            {             
+            {  
                   this.RunForSingleBand(band);
             }
            
@@ -118,14 +137,8 @@ namespace PhoneGuitarTab.Search.Suggestions
                     //xml parse exceptions. buried intentionally
                 }
                 finally
-                {
-                    if (artist == BaseBands.LastOrDefault())
-                    {
-                                                                   
-                        InvokeSearchComplete(e);
-                    }
-                     
-                   
+                {               
+                        InvokeSearchComplete(e);                                        
                 }
             };
 

@@ -69,6 +69,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public ExecuteCommand Review { get; private set; }
 
+        public ExecuteCommand RequestBandSuggestion { get; private set; }
 
         public ExecuteCommand<int> RemoveTab { get; private set; }
 
@@ -97,6 +98,11 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             _ratingService.RateApp();
             new MarketplaceReviewTask().Show();
+        }
+
+        private void DoRequestBandSuggestion()
+        {
+            Hub.RaiseBandSuggestionRequest();
         }
 
         #endregion Command handlers
@@ -141,6 +147,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             GoTo = new ExecuteCommand<string>(DoGoTo);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
             Review = new ExecuteCommand(DoReview);
+            RequestBandSuggestion = new ExecuteCommand(DoRequestBandSuggestion);
         }
 
         private void RegisterEvents()

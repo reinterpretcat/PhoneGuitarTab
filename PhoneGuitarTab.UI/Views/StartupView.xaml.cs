@@ -1,5 +1,6 @@
 ﻿using PhoneGuitarTab.Controls;
 using PhoneGuitarTab.Core.Views;
+using PhoneGuitarTab.UI.Infrastructure;
 using PhoneGuitarTab.UI.ViewModels;
 
 namespace PhoneGuitarTab.UI.Views
@@ -50,18 +51,20 @@ namespace PhoneGuitarTab.UI.Views
 
             //Switch appbars depending on the selected pivot.
             switch (MainPanorama.SelectedIndex)
-            {
-                case 3:
+            {  //suggestions
+                case 3: 
                     Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Recent"]);
                     if (MainPanorama.Background.Opacity > 0.21)
                         OpacityFadeOut.Begin();
                     break;
-                //groups
+             
                     //discover
                 case 2:
                     Bindable.SetApplicationBar(this, (BindableApplicationBar) Resources["Default"]);
                     if (MainPanorama.Background.Opacity > 0.21)
                         OpacityFadeOut.Begin();
+                    var viewModel = DataContext as StartupViewModel;
+                    viewModel.RequestBandSuggestion.Execute(null);
                     break;
                     //groups
                 case 1:
