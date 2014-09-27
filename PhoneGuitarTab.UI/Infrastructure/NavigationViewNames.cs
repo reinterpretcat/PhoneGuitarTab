@@ -11,6 +11,7 @@
         public const string About = "About";
         public const string Group = "Group";
         public const string Collection = "Collection";
+        public const string Discover = "Discover";
         public const string Synchronize = "Synchronize";
     }
 }

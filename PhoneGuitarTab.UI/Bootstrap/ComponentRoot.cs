@@ -106,6 +106,15 @@ namespace PhoneGuitarTab.UI.Bootstrap
             get { return _container.Resolve<ViewModel>(NavigationViewNames.Synchronize) as SynchronizeViewModel; }
         }
 
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public DiscoverViewModel Discover
+        {
+            get { return _container.Resolve<ViewModel>(NavigationViewNames.Discover) as DiscoverViewModel; }
+        }
+
         #endregion View models
     }
 }

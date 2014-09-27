@@ -232,6 +232,15 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to discover.
+        /// </summary>
+        public static string Discover_Header {
+            get {
+                return ResourceManager.GetString("Discover_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:.
         /// </summary>
         public static string Error_Message {

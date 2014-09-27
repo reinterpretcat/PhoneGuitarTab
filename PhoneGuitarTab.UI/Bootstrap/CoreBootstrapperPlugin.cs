@@ -5,6 +5,7 @@ using PhoneGuitarTab.Core.Services;
 using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.Arts;
 using PhoneGuitarTab.Search.Audio;
+using PhoneGuitarTab.Search.Suggestions;
 using PhoneGuitarTab.Search.Tabs;
 using PhoneGuitarTab.UI.Infrastructure;
 
@@ -38,6 +39,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
             Container.Register(Component.For<ITabSearcher>().Use<UltimateGuitarTabSearcher>());
             Container.Register(Component.For<IAudioSearcherFactory>().Use<AudioSearcherFactory>());
             Container.Register(Component.For<IMediaSearcherFactory>().Use<MediaSearcherFactory>());
+            Container.Register(Component.For<IBandSuggestor>().Use<LastFmBandSuggestor>());
            
             return true;
         }

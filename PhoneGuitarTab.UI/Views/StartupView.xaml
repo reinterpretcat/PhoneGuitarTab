@@ -101,6 +101,7 @@
         <Controls:Panorama Name="MainPanorama" Title="Phone Guitar Tab" TitleTemplate="{StaticResource EmptyTitleTemplate}" SelectionChanged="MainPanorama_SelectionChanged">        
             <panaromaItems:Tabs />
             <panaromaItems:Bands />
+            <panaromaItems:Discover />
             <panaromaItems:History />            
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">

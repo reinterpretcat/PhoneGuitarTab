@@ -51,9 +51,15 @@ namespace PhoneGuitarTab.UI.Views
             //Switch appbars depending on the selected pivot.
             switch (MainPanorama.SelectedIndex)
             {
-                    //recent
+                case 3:
+                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Recent"]);
+                    if (MainPanorama.Background.Opacity > 0.21)
+                        OpacityFadeOut.Begin();
+                    break;
+                //groups
+                    //discover
                 case 2:
-                    Bindable.SetApplicationBar(this, (BindableApplicationBar) Resources["Recent"]);
+                    Bindable.SetApplicationBar(this, (BindableApplicationBar) Resources["Default"]);
                     if (MainPanorama.Background.Opacity > 0.21)
                         OpacityFadeOut.Begin();
                     break;

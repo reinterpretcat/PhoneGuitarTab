@@ -174,6 +174,9 @@
   <data name="Bands_Tabs" xml:space="preserve">
     <value>Tabs: </value>
   </data>
+  <data name="Discover_Header" xml:space="preserve">
+    <value>discover</value>
+  </data>
   <data name="Error_Message" xml:space="preserve">
     <value>Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:</value>
   </data>

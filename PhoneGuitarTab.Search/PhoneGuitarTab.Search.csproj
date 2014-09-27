@@ -103,6 +103,8 @@
     </Compile>
     <Compile Include="Audio\AudioSearcherFactory.cs" />
     <Compile Include="Audio\LocalAudioSearcher.cs" />
+    <Compile Include="Suggestions\IBandSuggestor.cs" />
+    <Compile Include="Suggestions\LastFmBandSuggestor.cs" />
     <Compile Include="Tabs\Events.cs" />
     <Compile Include="Tabs\FileDownloader.cs" />
     <Compile Include="Audio\IAudioSearcher.cs" />

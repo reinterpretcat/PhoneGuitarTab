@@ -121,6 +121,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Entities\BandBySuggestion.cs" />
     <Compile Include="Infrastructure\TabTypeNames.cs" />
     <Compile Include="Bootstrap\CloudBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\ComponentRoot.cs" />
@@ -152,11 +153,15 @@
     <Compile Include="Resources\LocalizedStrings.cs" />
     <Compile Include="Infrastructure\NavigationViewNames.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
+    <Compile Include="ViewModels\DiscoverViewModel.cs" />
     <Compile Include="ViewModels\SynchronizeViewModel.cs" />
     <Compile Include="ViewModels\StaveTabViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
     <Compile Include="Views\ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PanaromaItems\Discover.xaml.cs">
+      <DependentUpon>Discover.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SynchronizeView.xaml.cs">
       <DependentUpon>SynchronizeView.xaml</DependentUpon>
@@ -232,6 +237,10 @@
     <Page Include="Views\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PanaromaItems\Discover.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SynchronizeView.xaml">
       <SubType>Designer</SubType>
