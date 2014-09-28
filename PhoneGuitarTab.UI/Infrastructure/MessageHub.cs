@@ -81,5 +81,13 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 handler(this, new EventArgs());
         }
 
+        public event EventHandler BandCreated;
+
+        public void RaiseBandCreated()
+        {
+            var handler = BandCreated;
+            if (handler != null)
+                handler(this, new EventArgs());
+        }
     }
 }

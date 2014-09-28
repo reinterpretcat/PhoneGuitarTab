@@ -232,11 +232,29 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download some tabs and we will suggest you artists you will like..
+        /// </summary>
+        public static string Discover_DiscoverTip {
+            get {
+                return ResourceManager.GetString("Discover_DiscoverTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to discover.
         /// </summary>
         public static string Discover_Header {
             get {
                 return ResourceManager.GetString("Discover_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SUGGESTIONS BASED ON YOUR MUSIC TASTE.
+        /// </summary>
+        public static string Discover_SuggestionsTitle {
+            get {
+                return ResourceManager.GetString("Discover_SuggestionsTitle", resourceCulture);
             }
         }
         

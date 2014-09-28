@@ -174,8 +174,14 @@
   <data name="Bands_Tabs" xml:space="preserve">
     <value>Tabs: </value>
   </data>
+  <data name="Discover_DiscoverTip" xml:space="preserve">
+    <value>Download some tabs and we will suggest you artists you will like.</value>
+  </data>
   <data name="Discover_Header" xml:space="preserve">
     <value>discover</value>
+  </data>
+  <data name="Discover_SuggestionsTitle" xml:space="preserve">
+    <value>SUGGESTIONS BASED ON YOUR MUSIC TASTE</value>
   </data>
   <data name="Error_Message" xml:space="preserve">
     <value>Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:</value>

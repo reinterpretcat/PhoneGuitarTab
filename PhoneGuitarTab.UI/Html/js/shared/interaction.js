@@ -107,6 +107,7 @@ function isTitleClean(songTitle) {
         || wordInString(songTitle, 'arrangement')
         || wordInString(songTitle, 'mix')
         || wordInString(songTitle, 'mixed')
+         || wordInString(songTitle, 'by')
         || wordInString(songTitle, 'performs')
         || songTitle.toLowerCase().indexOf('cover') >= 0
         || songTitle.toLowerCase().indexOf('intro') >= 0

@@ -629,9 +629,15 @@ namespace PhoneGuitarTab.UI.ViewModels
         private void DownloadTabComplete(TabEntity tab, string filePath)
         {
             CurrentTabEntity = tab;
+          
             Deployment.Current.Dispatcher.BeginInvoke(
                 () =>
                 {
+                    if (!Database.IsGroupExists(CurrentTabEntity.Group))
+                    {
+                        //Raise Band downloaded
+                        Hub.RaiseBandCreated();
+                    }
                     CurrentTab = new Tab
                     {
                         Name = tab.Name,
@@ -646,12 +652,12 @@ namespace PhoneGuitarTab.UI.ViewModels
                     tabAlbumSearch.MediaSearchCompleted += tabAlbumSearch_MediaSearchCompleted;
                     tabAlbumSearch.RunMediaSearch(CurrentTab.Group.Name, CurrentTab.Name);
                     Hub.RaiseTabsDownloaded();
-                    
+
                     //run group images search
                     var groupImagesSearch = _mediaSearcherFactory.Create();
                     groupImagesSearch.MediaSearchCompleted += groupImagesSearch_MediaSearchCompleted;
-                    groupImagesSearch.RunMediaSearch(CurrentTab.Group.Name, string.Empty);
-                             
+                    groupImagesSearch.RunMediaSearch(tab.Group, string.Empty);
+                                                               
                     CurrentTabEntity.IsDownloaded = true;
                     IsDownloading = false;
 
@@ -677,8 +683,9 @@ namespace PhoneGuitarTab.UI.ViewModels
 
             Database.UpdateGroupMediaByName(CurrentTab.Group.Name, result.Entry.ImageUrl,
             result.Entry.LargeImageUrl, result.Entry.ExtraLargeImageUrl);
-
+            //Request A new background imaage
             Hub.RaiseBackGroundImageChangeActivity(CurrentTab.Group.ExtraLargeImageUrl);
+
         }
 
         void tabAlbumSearch_MediaSearchCompleted(object sender, System.Net.DownloadStringCompletedEventArgs e)

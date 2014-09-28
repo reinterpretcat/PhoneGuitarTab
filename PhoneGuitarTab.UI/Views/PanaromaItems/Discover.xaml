@@ -15,38 +15,40 @@
                     mc:Ignorable="d">
    
     <phone:PanoramaItem.Resources>
-        <Infrastructure:GroupToBrushValueConverter x:Key="groupBrush"/>
+        <Infrastructure:BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <Infrastructure:BooleanToInvertedVisibilityConverter x:Key="BooleanToInvertedVisibility"/>
         <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
-        <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
-            <Setter Property="GridCellSize"  Value="99,99"/>
-            <Setter Property="LayoutMode" Value="Grid" />
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <Border 
-                            Margin="6"
-                            Background="{Binding Converter={StaticResource groupBrush}}"
-                            IsHitTestVisible="{Binding HasItems}">
-                            <TextBlock Margin="{StaticResource PhoneTouchTargetOverhang}"
-                                   VerticalAlignment="Bottom"
-                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   FontSize="36"
+        <DataTemplate x:Key="DiscoverHeaderTemplate">
+            <TextBlock Margin="10,10,10,10"
+                                   FontFamily="{StaticResource PhoneFontFamilyBold}"
+                                   FontSize="16"
                                    Foreground="{StaticResource PhoneForegroundBrush}"
-                                   Text="{Binding Key}" />
-                        </Border>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                 
+                                   Text="{Binding Path=LocalizedResources.Discover_SuggestionsTitle, Source={StaticResource LocalizedStrings}}" />
+           
+        </DataTemplate>
     </phone:PanoramaItem.Resources>
     <Grid>
-        <ring:ProgressRing x:Name="ProgressRing" IsActive="{Binding IsLoading}"> </ring:ProgressRing>
-        <phone:LongListSelector x:Name="GroupList" Margin="0,0,0,70" 
+        <ring:ProgressRing x:Name="ProgressRing" Height="60" Width="60"  IsActive="{Binding IsLoading}"> </ring:ProgressRing>
+        <TextBlock              Margin="0,80"
+                                HorizontalAlignment="Center"
+                                     FontSize="24"
+                                    Opacity="0.5"
+                                   FontFamily="{StaticResource PhoneFontFamilyBold}"                            
+                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                   Style="{StaticResource PhoneTextLargeStyle}"
+                                   TextWrapping="Wrap"
+                                   Visibility="{Binding IsBaseBandAvailable,
+                                                             Converter={StaticResource BooleanToInvertedVisibility}}"
+                                   Text="{Binding Path=LocalizedResources.Discover_DiscoverTip, Source={StaticResource LocalizedStrings}}" />
+        <phone:LongListSelector x:Name="GroupList"  Margin="0,0,0,20" 
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               IsGroupingEnabled="False" LayoutMode="Grid" GridCellSize="200,200"
-                              HideEmptyGroups="True"                          
-                              GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
-                              JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"  
+                              HideEmptyGroups="True"
+                              Visibility="{Binding IsBaseBandAvailable,
+                                                             Converter={StaticResource BooleanToVisibility}}"
+                              ListHeaderTemplate="{StaticResource DiscoverHeaderTemplate}"
                               ItemsSource="{Binding SuggestedGroups}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Tap">
@@ -61,7 +63,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Image VerticalAlignment="Center" HorizontalAlignment="Center" 
-                              Stretch="UniformToFill" MaxHeight="200" MaxWidth="200" Opacity="0.1" Source="/Images/light/band_light.png">
+                              Stretch="UniformToFill" MaxHeight="200" MaxWidth="200" Opacity="0.05" Source="/Images/light/band_light.png">
                         </Image>
                         <Image VerticalAlignment="Center" HorizontalAlignment="Center"
                            Stretch="UniformToFill"
@@ -71,13 +73,13 @@
                             </Image.Source>
                         </Image>
                         <StackPanel  VerticalAlignment="Bottom" HorizontalAlignment="Left">
-                            <TextBlock Margin="5,0,-20,0"
+                            <TextBlock Margin="5,0,0,0"
                                    FontFamily="{StaticResource PhoneFontFamilyBold}"
                                    FontSize="20"
                                    Foreground="White"
                                    Style="{StaticResource PhoneTextLargeStyle}"
                                    Text="{Binding Name}" />
-                            <TextBlock Margin="5,0,0,19"
+                            <TextBlock Margin="5,0,0,4"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    FontSize="14"
                                    Foreground="White"

@@ -60,7 +60,7 @@ namespace PhoneGuitarTab.UI.Views
              
                     //discover
                 case 2:
-                    Bindable.SetApplicationBar(this, (BindableApplicationBar) Resources["Default"]);
+                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Discover"]);
                     if (MainPanorama.Background.Opacity > 0.21)
                         OpacityFadeOut.Begin();
                     var viewModel = DataContext as StartupViewModel;
@@ -75,7 +75,7 @@ namespace PhoneGuitarTab.UI.Views
                     //Tabs
                 case 0:
                     Bindable.SetApplicationBar(this, (BindableApplicationBar) Resources["TabsAppBar"]);
-                    if (MainPanorama.Background.Opacity < 0.5)
+                    if (MainPanorama.Background.Opacity < 0.6)
                         OpacityFadeIn.Begin();
                     break;
 

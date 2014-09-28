@@ -54,6 +54,7 @@ namespace PhoneGuitarTab.Search.Suggestions
                 {
                     var similar = XMLroot.Element("similar");
                     //If Bands in collection are less than 10, than get suggestions for all the similar artists.
+                    //Otherwise take only 3 similar artist for suggestions.
                     if (BaseBands.Count < 10)
                     {
                         foreach (var artist in similar.Elements())
@@ -61,9 +62,9 @@ namespace PhoneGuitarTab.Search.Suggestions
                             this.CreateEntry(artist);
                         }   
                     }
-                    else //otherwise take only 2 similar artist
+                    else //otherwise take only 3 similar artist
                     {
-                        foreach (var artist in similar.Elements().Take(2))
+                        foreach (var artist in similar.Elements().Take(3))
                         {
                             this.CreateEntry(artist);
                         }   
@@ -105,7 +106,8 @@ namespace PhoneGuitarTab.Search.Suggestions
         {
             this.BaseBands = bands;
             this.SuggestedArtistsSoFar.Clear();
-            foreach (string band in bands)
+            //Run Suggestions for a maximum of 20 bands
+            foreach (string band in bands.Take(20))
             {  
                   this.RunForSingleBand(band);
             }

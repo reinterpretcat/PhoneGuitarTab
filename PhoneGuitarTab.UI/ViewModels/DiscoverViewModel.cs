@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Windows;
+using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
@@ -22,7 +23,8 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private BandBySuggestion suggestedGroups;
         private bool isLoading;
-
+        private bool isRefreshNeeded;
+        private bool isBaseBandAvailable;
         #endregion  Fields
 
         #region Constructors
@@ -51,8 +53,15 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
         }
 
-  
-
+        public bool IsBaseBandAvailable
+        {
+            get { return isBaseBandAvailable; }
+            set
+            {
+                isBaseBandAvailable = value;
+                RaisePropertyChanged("IsBaseBandAvailable");
+            }
+        }
         public BandBySuggestion SuggestedGroups
         {
             get { return suggestedGroups; }
@@ -72,13 +81,19 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void DoSearchSuggestions()
         {
-            this.IsLoading = true;
-            this.SuggestedGroups.Clear();
-            var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name).ToList();
-            _bandSuggestor.RunBandSuggestor(baseBands);
-            _bandSuggestor.SuggestionSearchCompleted += _bandSuggestor_SuggestionSearchCompleted;
+            if (NetworkInterface.GetIsNetworkAvailable() && isRefreshNeeded && IsBaseBandAvailable)
+            {
+                this.IsLoading = true;
+                this.isRefreshNeeded = false;
+                this.SuggestedGroups.Clear();
+                var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name).ToList();
+                _bandSuggestor.RunBandSuggestor(baseBands);
+                _bandSuggestor.SuggestionSearchCompleted += _bandSuggestor_SuggestionSearchCompleted;
+            }
+           
         }
-        
+
+       
         #endregion CommandHandlers
 
         #region HelperMethods
@@ -89,7 +104,14 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void RegisterEvents()
         {
+
             Hub.BandSuggestionRequest += (o, args) => DoSearchSuggestions();
+            Hub.BandCreated += (o, args) =>
+            {
+                isRefreshNeeded = true;
+                IsBaseBandAvailable = true;
+            };
+
         }
         #endregion HelperMethods
 
@@ -97,7 +119,9 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         protected override void DataBind()
         {
-            this.SuggestedGroups = new BandBySuggestion();        
+            this.SuggestedGroups = new BandBySuggestion();
+            this.isRefreshNeeded = true;
+            this.IsBaseBandAvailable = Database.Groups.Any();
         }
 
         #endregion
@@ -128,8 +152,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 throw;
             }
         }
-
-      
 
         #endregion  
                

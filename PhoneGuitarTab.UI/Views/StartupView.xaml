@@ -66,6 +66,17 @@
             </custom:BindableApplicationBar.MenuItems>
 
         </custom:BindableApplicationBar>
+        <custom:BindableApplicationBar x:Key="Discover" Mode="Minimized"  BindableOpacity="0.6">
+            <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem 
+                                                     Command="{Binding Review}"                                                   
+                                                     Text="{Binding Path=LocalizedResources.Startup_RateApp, Source={StaticResource LocalizedStrings}}" />
+                <custom:BindableApplicationBarMenuItem  
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="About"
+                                                     Text="{Binding Path=LocalizedResources.Startup_About, Source={StaticResource LocalizedStrings}}" />
+            </custom:BindableApplicationBar.MenuItems>
+        </custom:BindableApplicationBar>
         <custom:BindableApplicationBar x:Key="Recent" Mode="Default" BindableOpacity="0.6">
             <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
                                                      CommandParameter="MainSearch"                                      
@@ -118,7 +129,6 @@
         </Controls:Panorama>
       
     </Grid>
-   
 
     <custom:Bindable.ApplicationBar >
         <custom:BindableApplicationBar x:Name="TabsAppBar"  Mode="Default" BindableOpacity="0.6">
@@ -144,4 +154,5 @@
             </custom:BindableApplicationBar.MenuItems>
         </custom:BindableApplicationBar>
     </custom:Bindable.ApplicationBar>
+
 </Views:ViewPage>

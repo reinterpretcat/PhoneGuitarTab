@@ -35,5 +35,7 @@ namespace PhoneGuitarTab.UI.Data
         Tab GetTabById(int id);
         void UpdateTabMediaById(int tabId, string albumCover);
         void UpdateGroupMediaByName(string name, string normal, string large, string extraLarge);
+
+        bool IsGroupExists(string name);
     }
 }

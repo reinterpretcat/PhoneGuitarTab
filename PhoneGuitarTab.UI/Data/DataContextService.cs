@@ -98,6 +98,12 @@ namespace PhoneGuitarTab.UI.Data
             {
                 throw new NotImplementedException();
             }
+
+
+            public bool IsGroupExists(string name)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #region ITabDataContextService members
@@ -231,7 +237,16 @@ namespace PhoneGuitarTab.UI.Data
                 select t).Single();
         }
 
+        public bool IsGroupExists(string name)
+        {
+            Group group = (from Group g in Groups
+                           where g.Name == name
+                           select g).SingleOrDefault();
 
+            if (group == null)
+                return false;
+            return true;
+        }
        
     }
 }
