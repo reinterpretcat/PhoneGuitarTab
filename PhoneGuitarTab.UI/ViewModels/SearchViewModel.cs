@@ -590,6 +590,10 @@ namespace PhoneGuitarTab.UI.ViewModels
             //TODO examine e.Error 
             if (e.Error == null)
             {
+                Deployment.Current.Dispatcher.BeginInvoke(
+                    () =>
+                    {  });
+             
                 var groupTabs = _tabSearcher.Entries.Where(FilterTab).
                     Select(entry => new TabEntity
                     {
@@ -603,21 +607,23 @@ namespace PhoneGuitarTab.UI.ViewModels
                         Votes = entry.Votes,
                         Version = entry.Version
                     });
-
+               
                 IsNothingFound = !groupTabs.Any();
+                Pages = Enumerable.Range(1, _tabSearcher.Summary.PageCount).Select(p => p.ToString());
+
+                SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
+                FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
+              
                 Deployment.Current.Dispatcher.BeginInvoke(
                     () =>
                     {
-                        Pages = Enumerable.Range(1, _tabSearcher.Summary.PageCount).Select(p => p.ToString());
-
-                        SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
-                        FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
                         if (Pages.Any())
                             SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
-                        RaisePropertyChanged("SelectedPage");
+                        RaisePropertyChanged("SelectedPage");                                
                         AssignHeaderPagingUI(_tabSearcher.Summary.PageCount);
                         IsSearching = false;
                     });
+              
             }
             else
             {

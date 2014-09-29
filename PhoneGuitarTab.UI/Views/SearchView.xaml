@@ -7,6 +7,7 @@
                     xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core"
                     xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+                    xmlns:ring="clr-namespace:InTheHand.UI.Xaml.Controls;assembly=InTheHand.UI.Xaml.Controls.ProgressRing"     
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -151,7 +152,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
+                                <i:EventTrigger EventName="Tap">
                                     <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
                                                                   CommandParameter="previous" />
                                 </i:EventTrigger>
@@ -195,7 +196,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
+                                <i:EventTrigger EventName="Tap">
                                     <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
                                                                   CommandParameter="next" />
                                 </i:EventTrigger>
@@ -232,7 +233,7 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
+                            <i:EventTrigger EventName="Tap">
                                 <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
                                                               CommandParameter="previous" />
                             </i:EventTrigger>
@@ -274,7 +275,7 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
+                            <i:EventTrigger EventName="Tap">
                                 <Command:ExecuteCommandAction Command="{Binding Path=DataContext.NavigatePage, ElementName=root}" 
                                                               CommandParameter="next" />
                             </i:EventTrigger>
@@ -297,15 +298,15 @@
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}">
             </TextBlock>
-            <ProgressBar x:Name="performanceBar2" 
+            <ring:ProgressRing x:Name="performanceBar2" 
                                         VerticalAlignment="Top"
-                                        IsIndeterminate="{Binding Search.IsSearching,
+                                        IsActive="{Binding Search.IsSearching,
                                                                   Source={StaticResource Locator},
                                                                   Mode=TwoWay}"
                                         Visibility="{Binding Search.IsSearching,
                                                              Source={StaticResource Locator},
                                                              Converter={StaticResource boolVisibility}}" >
-            </ProgressBar>
+            </ring:ProgressRing>
         </StackPanel>
         <phone:LongListSelector x:Name="tabsList"
                             toolkit:TiltEffect.IsTiltEnabled="True"
