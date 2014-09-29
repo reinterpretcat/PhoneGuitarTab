@@ -115,6 +115,15 @@ namespace PhoneGuitarTab.UI.Bootstrap
             get { return _container.Resolve<ViewModel>(NavigationViewNames.Discover) as DiscoverViewModel; }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+          "CA1822:MarkMembersAsStatic",
+          Justification = "This non-static member is needed for data binding purposes.")]
+        public SuggestedGroupViewModel SuggestedGroup
+        {
+            get { return _container.Resolve<ViewModel>(NavigationViewNames.SuggestedGroup) as SuggestedGroupViewModel; }
+        }
+
+
         #endregion View models
     }
 }

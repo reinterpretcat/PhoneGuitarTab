@@ -1,0 +1,120 @@
+﻿<Views:ViewPage x:Class="PhoneGuitarTab.UI.Views.SuggestedGroupView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
+               xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
+               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" x:Name="root"
+               DataContext="{Binding SuggestedGroup, Source={StaticResource Locator}}"
+               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+               FontSize="{StaticResource PhoneFontSizeNormal}"
+               Foreground="{StaticResource PhoneForegroundBrush}"
+               Orientation="Portrait"
+               SupportedOrientations="Portrait"
+               d:DesignHeight="768"
+               d:DesignWidth="480"
+               Style="{StaticResource TransitionPageStyle}"
+               shell:SystemTray.IsVisible="False"
+               mc:Ignorable="d">
+
+    <Views:ViewPage.Resources>
+        <DataTemplate x:Key="SmallPanoramaTitle">
+            <ContentPresenter>
+                <TextBlock Text="{Binding}" FontSize="140" Margin="0,0,0,0" />
+            </ContentPresenter>
+        </DataTemplate>
+    </Views:ViewPage.Resources>
+
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
+    <Grid x:Name="LayoutRoot">
+        <!--  Pivot Control  -->
+        <Grid.Resources>
+            <Infrastructure:UpperStringConverter x:Name="UpperStr" />
+            <Infrastructure:IntToStringConverter x:Name="IntToStr" />
+            <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
+            <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+            
+        </Grid.Resources>
+        <controls:Panorama x:Name="PivotControl" 
+                        Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource SmallPanoramaTitle}">
+
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_Tabs, Source={StaticResource LocalizedStrings}}">
+               
+                <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
+                         ItemTemplate="{StaticResource TabItemLightDataTemplate}"
+                         ItemsSource="{Binding Path=Tabs.Tabs}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Tap">
+                            <Command:ExecuteCommandAction Command="{Binding GoToTabView}" 
+                                                          CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}">
+                <ScrollViewer>
+                    <StackPanel>
+                        <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"
+                                     TextAlignment="Justify"
+                                     Visibility="{Binding InfoLoaded, Converter={StaticResource boolVisibility}}">
+                            <Paragraph>
+                                <Run Text="{Binding Summary}" />
+                            </Paragraph>
+                        </RichTextBox>
+
+                        <ProgressBar x:Name="loadingBar"
+                                                        VerticalAlignment="Top"
+                                                        IsIndeterminate="{Binding IsLoading}"
+                                                        Visibility="{Binding IsLoading, Converter={StaticResource boolVisibility}}" />
+                        <TextBlock Margin="0,20"
+                                   HorizontalAlignment="Center"
+                                   FontSize="30"
+                                   Opacity="0.5"
+                                   Text="Sorry, nothing found."
+                                   Visibility="{Binding NothingFound, Converter={StaticResource boolVisibility}}" />
+
+                        <HyperlinkButton Margin="0,0,0,50"
+                                         HorizontalAlignment="Right"
+                                         Content="{Binding Path=LocalizedResources.Group_More, Source={StaticResource LocalizedStrings}}"
+                                         Visibility="{Binding InfoLoaded, Converter={StaticResource boolVisibility}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <Command:ExecuteCommandAction Command="{Binding Path=DataContext.GetMoreInfo, ElementName=root}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </HyperlinkButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PanoramaItem>
+            <controls:Panorama.Background>
+                <ImageBrush Stretch="UniformToFill"  Opacity="0.5" AlignmentX="Center" AlignmentY="Center">
+                    <ImageBrush.ImageSource>
+                        <BitmapImage UriSource="{Binding Collection.BackGroundImage, Source={StaticResource Locator}, Converter={StaticResource ImageUrlToUriConverter}}" 
+                                     CreateOptions="BackgroundCreation" />
+                    </ImageBrush.ImageSource>
+                </ImageBrush>
+            </controls:Panorama.Background>
+        </controls:Panorama>
+       
+    </Grid>
+
+    <custom:Bindable.ApplicationBar>
+        <custom:BindableApplicationBar x:Name="AppBar" Opacity="0.3" Mode ="Minimized">
+            <!--  IsEnabled for this button is changing from codebehind PivotSelectionChangedHandler()  -->
+            <custom:BindableApplicationBarButton Command="{Binding SearchCommand}"
+                                                     CommandParameter="{Binding CurrentGroup}"
+                                                     IconUri="/Images/dark/appbar.feature.search.rest.png"
+                                                     Text="{Binding Path=LocalizedResources.Group_MoreOnline, Source={StaticResource LocalizedStrings}}" />
+
+        </custom:BindableApplicationBar>
+    </custom:Bindable.ApplicationBar>
+   
+
+</Views:ViewPage>

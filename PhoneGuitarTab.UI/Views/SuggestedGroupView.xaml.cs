@@ -2,9 +2,9 @@
 
 namespace PhoneGuitarTab.UI.Views
 {
-    public partial class SuggestedGroupView : ViewPage
+    public partial class GroupView : ViewPage
     {
-        public SuggestedGroupView()
+        public GroupView()
         {
             InitializeComponent();
         }

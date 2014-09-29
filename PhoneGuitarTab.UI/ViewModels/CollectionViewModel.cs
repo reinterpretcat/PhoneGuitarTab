@@ -325,6 +325,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             Hub.TabsDownloaded += (o, args) => isPendingChangesOnCollection = true;
             Hub.TabsRefreshed += (o, args) => DoRefreshData();
             Hub.TabBrowsed += (o, args) => DoRefreshHistroy();
+            Hub.BackGroundImageChangeActivity += (o, image) => { BackGroundImage = image; };
         }
 
         private void RemoveTabFromList(int id)

@@ -42,7 +42,7 @@
                                    Visibility="{Binding IsBaseBandAvailable,
                                                              Converter={StaticResource BooleanToInvertedVisibility}}"
                                    Text="{Binding Path=LocalizedResources.Discover_DiscoverTip, Source={StaticResource LocalizedStrings}}" />
-        <phone:LongListSelector x:Name="GroupList"  Margin="0,0,0,20" 
+        <phone:LongListSelector x:Name="SuggestedGroupList"  Margin="0,0,0,20" 
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               IsGroupingEnabled="False" LayoutMode="Grid" GridCellSize="200,200"
                               HideEmptyGroups="True"
@@ -52,7 +52,7 @@
                               ItemsSource="{Binding SuggestedGroups}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Tap">
-                    <Command:ExecuteCommandAction Command="{Binding GoToGroup}" CommandParameter="{Binding ElementName=GroupList}" />
+                    <Command:ExecuteCommandAction Command="{Binding GoToSuggestedGroup}" CommandParameter="{Binding ElementName=SuggestedGroupList}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <phone:LongListSelector.ItemTemplate>

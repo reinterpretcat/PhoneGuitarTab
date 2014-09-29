@@ -25,6 +25,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private bool isLoading;
         private bool isRefreshNeeded;
         private bool isBaseBandAvailable;
+        private string backGroundImage;
         #endregion  Fields
 
         #region Constructors
@@ -71,10 +72,25 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("SuggestedGroups");
             }
         }
+
+        public string BackGroundImage
+        {
+            get
+            {
+                return backGroundImage;
+            }
+            set
+            {
+                backGroundImage = value;
+                RaisePropertyChanged("BackGroundImage");
+            }
+        }
         #endregion Properties
 
         #region Commands
-        public ExecuteCommand SearchSuggestions { get; private set; }     
+        public ExecuteCommand SearchSuggestions { get; private set; }
+        public ExecuteCommand<object> GoToSuggestedGroup { get; private set; }
+
         #endregion Commands
 
         #region CommandHandlers
@@ -93,6 +109,24 @@ namespace PhoneGuitarTab.UI.ViewModels
            
         }
 
+        private void DoGoToSuggestedGroup(object sender)
+        {
+            var selector = sender as Microsoft.Phone.Controls.LongListSelector;
+            try
+            {
+                Group group = selector.SelectedItem as Group;
+                this.BackGroundImage = group.ExtraLargeImageUrl;
+                Hub.RaiseBackGroundImageChangeActivity(group.ExtraLargeImageUrl);
+                NavigationService.NavigateTo(NavigationViewNames.SuggestedGroup, new Dictionary<string, object> { { "suggestedgroup", group } });
+            }
+            catch (Exception ex)
+            {
+                var m = ex.Message;
+                throw;
+            }
+          
+        }
+
        
         #endregion CommandHandlers
 
@@ -100,6 +134,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private void CreateCommands()
         {
             SearchSuggestions = new ExecuteCommand(DoSearchSuggestions);
+            GoToSuggestedGroup = new ExecuteCommand<object>(DoGoToSuggestedGroup);
         }
 
         private void RegisterEvents()
