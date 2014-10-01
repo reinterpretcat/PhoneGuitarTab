@@ -10,28 +10,29 @@ namespace PhoneGuitarTab.Search.Tabs
     public class UltimateGuitarTabSearcher : ITabSearcher
     {
         private const string RequestTemplateAll =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=300&type[]=400&type[]=500&type[]=700&type[]=800&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC&tab_type_group=all";
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&type[]=300&type[]=400&type[]=500&type[]=700&type[]=800&version_la=&iphone=1&page={2}&tab_type_group=all";
 
         private const string RequestTemplateGuitarPro =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=500&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC&tab_type_group=all";
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=500&version_la=&iphone=1&page={2}&tab_type_group=all";
 
         private const string RequestTemplateGuitar =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=200&version_la=&iphone=1&page={2}";
 
         private const string RequestTemplateBass =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=400&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=400&version_la=&iphone=1&page={2}";
 
         private const string RequestTemplateChords =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=300&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=300&version_la=&iphone=1&page={2}";
 
         private const string RequestTemplateDrum =
-            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=700&version_la=&iphone=1&order=title_srt&page={2}&order_mode=ASC";
+            "http://www.ultimate-guitar.com/search.php?band_name={0}&song_name={1}&type[]=700&version_la=&iphone=1&page={2}";
 
         private readonly Dictionary<string, string> _tabTypeMapping = new Dictionary<string, string>
         {
             {"tab pro", "guitar pro"}
         };
 
+       
         public SearchTabResultSummary Summary { get; private set; }
         public List<SearchTabResultEntry> Entries { get; private set; }
 
@@ -47,7 +48,7 @@ namespace PhoneGuitarTab.Search.Tabs
         ///     Handler for WebClient that parses xml data into specific objects
         ///     throws specific exceptions if error occurs
         /// </summary>
-        public void Run(string group, string song, int pageNumber, TabulatureType type)
+        public void Run(string group, string song, int pageNumber, TabulatureType type, ResultsSortOrder sortBy)
         {
             WebClient client = new WebClient();
             client.DownloadStringCompleted += (s, e) =>
@@ -79,7 +80,7 @@ namespace PhoneGuitarTab.Search.Tabs
             };
             Summary = new SearchTabResultSummary();
             Entries = new List<SearchTabResultEntry>();
-            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(type), group, song, pageNumber)));
+            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(type, sortBy), group, song, pageNumber)));
         }
 
         #region Factory methods
@@ -114,29 +115,47 @@ namespace PhoneGuitarTab.Search.Tabs
 
         #endregion
 
-        private string GetRequestTemplate(TabulatureType tabType)
+        private string GetRequestTemplate(TabulatureType tabType, ResultsSortOrder sortBy)
         {
             string requestTemplate;
-
+            string alphabeticalSortParams = "&order_mode=ASC&order=title_srt";
             switch (tabType)
             {
                 case TabulatureType.All:
-                    requestTemplate = RequestTemplateAll;
+                    if (sortBy == ResultsSortOrder.Alphabetical)
+                        requestTemplate = RequestTemplateAll + alphabeticalSortParams;
+                    else
+                        requestTemplate = RequestTemplateAll;
                     break;
                 case TabulatureType.Guitar:
-                    requestTemplate = RequestTemplateGuitar;
+                    if (sortBy == ResultsSortOrder.Alphabetical)
+                        requestTemplate = RequestTemplateGuitar + alphabeticalSortParams;
+                    else
+                        requestTemplate = RequestTemplateAll;
                     break;
                 case TabulatureType.Bass:
-                    requestTemplate = RequestTemplateBass;
+                    if (sortBy == ResultsSortOrder.Alphabetical)
+                        requestTemplate = RequestTemplateBass + alphabeticalSortParams;
+                    else
+                        requestTemplate = RequestTemplateAll;
                     break;
                 case TabulatureType.Chords:
-                    requestTemplate = RequestTemplateChords;
+                    if (sortBy == ResultsSortOrder.Alphabetical)
+                        requestTemplate = RequestTemplateChords + alphabeticalSortParams;
+                    else
+                        requestTemplate = RequestTemplateAll;
                     break;
                 case TabulatureType.Drum:
-                    requestTemplate = RequestTemplateDrum;
+                    if (sortBy == ResultsSortOrder.Alphabetical)
+                        requestTemplate = RequestTemplateDrum + alphabeticalSortParams;
+                    else
+                        requestTemplate = RequestTemplateAll;
                     break;
                 case TabulatureType.GuitarPro:
-                    requestTemplate = RequestTemplateGuitarPro;
+                    if (sortBy == ResultsSortOrder.Alphabetical)
+                        requestTemplate = RequestTemplateGuitarPro + alphabeticalSortParams;
+                    else
+                        requestTemplate = RequestTemplateAll;
                     break;
                 default:
                     requestTemplate = RequestTemplateAll;

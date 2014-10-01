@@ -115,8 +115,9 @@ namespace PhoneGuitarTab.UI.ViewModels
             try
             {
                 Group group = selector.SelectedItem as Group;
-                this.BackGroundImage = group.ExtraLargeImageUrl;
-                Hub.RaiseBackGroundImageChangeActivity(group.ExtraLargeImageUrl);
+
+                //Setting Background image here is necessary because Background image on the next page is not bindable and should be set before navigating to the page.
+                this.BackGroundImage = group.ExtraLargeImageUrl;              
                 NavigationService.NavigateTo(NavigationViewNames.SuggestedGroup, new Dictionary<string, object> { { "suggestedgroup", group } });
             }
             catch (Exception ex)

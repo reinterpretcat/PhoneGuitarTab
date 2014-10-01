@@ -190,16 +190,6 @@
                    Stretch="None" 
                    Visibility ="Visible" />
 
-            <!--
-            <Image VerticalAlignment="Center"
-                   Source="../Images/light/Document-Download_light.png"
-                   Stretch="None"
-                   Visibility="{StaticResource PhoneLightThemeVisibility}" />
-            <Image VerticalAlignment="Center"
-                   Source="../Images/dark/Document-Download_dark.png"
-                   Stretch="None"
-                   Visibility="{StaticResource PhoneDarkThemeVisibility}" /> -->
-
             <StackPanel Grid.Column="1" VerticalAlignment="Top">
                 <TextBlock Margin="12,0"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"
@@ -256,8 +246,7 @@
                 </TextBlock>
 
                 <Button Grid.Column="1"
-                        Command="{Binding Path=DataContext.DownloadTab,
-                                          ElementName=root}"
+                        Command="{Binding Search.DownloadTab, Source={StaticResource Locator}}"
                         CommandParameter="{Binding SearchId}"
                         Content="{Binding Path=LocalizedResources.TemplateSearch_Download, Source={StaticResource LocalizedStrings}}"
                         IsEnabled="{Binding Path=DataContext.CanDownload,

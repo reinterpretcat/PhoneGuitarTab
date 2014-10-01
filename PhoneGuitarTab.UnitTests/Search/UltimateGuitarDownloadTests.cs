@@ -44,7 +44,7 @@ namespace PhoneGuitarTab.UnitTests.Search
 
             };
 
-            searcher.Run(SearchContext.DefaulGroupName, SearchContext.DefaultSongName, 0, type);
+            searcher.Run(SearchContext.DefaulGroupName, SearchContext.DefaultSongName, 0, type, ResultsSortOrder.Alphabetical);
 
             mre.WaitOne(SearchContext.SearchTimeout);
 

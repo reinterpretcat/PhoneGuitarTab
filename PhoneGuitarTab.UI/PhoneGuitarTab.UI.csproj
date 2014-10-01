@@ -125,6 +125,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entities\BandBySuggestion.cs" />
+    <Compile Include="Entities\TabsPopular.cs" />
     <Compile Include="Infrastructure\TabTypeNames.cs" />
     <Compile Include="Bootstrap\CloudBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\ComponentRoot.cs" />

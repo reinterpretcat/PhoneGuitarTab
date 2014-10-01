@@ -84,7 +84,7 @@ namespace PhoneGuitarTab.Search.Suggestions
         private void CreateEntry(XElement elem)
         {
             var artistName = GetSafeValue(elem.Element("name"));
-            if (!(this.BaseBands.Contains(artistName) || this.SuggestedArtistsSoFar.Contains(artistName)))
+            if (!(this.BaseBands.Contains(artistName, StringComparer.OrdinalIgnoreCase) || this.SuggestedArtistsSoFar.Contains(artistName, StringComparer.OrdinalIgnoreCase)))
             {
                 var Entry = new SearchMediaEntry();
                 Entry.BandName = artistName;
@@ -103,7 +103,7 @@ namespace PhoneGuitarTab.Search.Suggestions
         #endregion Override methods
 
         public void RunBandSuggestor(List<string> bands )
-        {
+        {          
             this.BaseBands = bands;
             this.SuggestedArtistsSoFar.Clear();
             //Run Suggestions for a maximum of 20 bands

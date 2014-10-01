@@ -1,12 +1,15 @@
-﻿using PhoneGuitarTab.Core.Views;
+﻿using System.Windows;
+using PhoneGuitarTab.Core.Views;
 
 namespace PhoneGuitarTab.UI.Views
 {
-    public partial class SuggestedGroupView : ViewPage
+    public partial class GroupView : ViewPage
     {
-        public SuggestedGroupView()
+        public GroupView()
         {
             InitializeComponent();
         }
+
+       
     }
 }

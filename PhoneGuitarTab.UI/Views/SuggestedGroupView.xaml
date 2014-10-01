@@ -3,14 +3,16 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
                xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
-               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+               xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"               
                xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" x:Name="root"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core"
+               xmlns:ring="clr-namespace:InTheHand.UI.Xaml.Controls;assembly=InTheHand.UI.Xaml.Controls.ProgressRing"
+               xmlns:controls1="clr-namespace:PhoneGuitarTab.UI.Controls"
+               x:Name="root"
                DataContext="{Binding SuggestedGroup, Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -24,38 +26,152 @@
                mc:Ignorable="d">
 
     <Views:ViewPage.Resources>
+     
         <DataTemplate x:Key="SmallPanoramaTitle">
             <ContentPresenter>
                 <TextBlock Text="{Binding}" FontSize="140" Margin="0,0,0,0" />
             </ContentPresenter>
         </DataTemplate>
+        <Infrastructure:UpperStringConverter x:Name="UpperStr" />
+        <Infrastructure:IntToStringConverter x:Name="IntToStr" />
+        <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
+        <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
+
+        <DataTemplate x:Key="ArtistTabItemTemplate">
+            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Tap">
+                        <Command:ExecuteCommandAction Command="{Binding Search.ToggleActionArea, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <Image VerticalAlignment="Center"
+                   Source="{Binding RelativeImageUri}"
+                   Stretch="None" 
+                   Visibility ="Visible" />
+
+                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
+                    <TextBlock Margin="12,0"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextLargeStyle}"
+                           Text="{Binding Name}"
+                           TextTrimming="WordEllipsis" />
+                    <TextBlock Margin="28,0"
+                           HorizontalAlignment="Left"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="{Binding Group}"
+                           TextWrapping="Wrap" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="14,0"
+                               VerticalAlignment="Bottom"
+                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                               Foreground="{StaticResource PhoneAccentBrush}"
+                               Style="{StaticResource PhoneTextNormalStyle}"
+                               Text="{Binding Type}" />
+                        <controls1:RatingControl Margin="12,0,6,4"
+                                              VerticalAlignment="Bottom"
+                                              Rating="{Binding Rating,
+                                                               Converter={StaticResource stringToInt}}" />
+                        <TextBlock VerticalAlignment="Bottom"
+                               FontSize="16"
+                               FontStyle="Italic"
+                               Foreground="Gray"
+                               Visibility="{Binding Votes,
+                                                    Converter={StaticResource intToVisibility}}">
+                        <Run Text="{Binding Path=LocalizedResources.TemplateSearch_Votes, Source={StaticResource LocalizedStrings}}" />
+                        <Run Text="{Binding Votes}" />
+                        </TextBlock>
+
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid x:Name="ActionsGrid"
+                  Grid.Row="1"
+                  Grid.Column="0"      
+                  Grid.ColumnSpan="2"
+                  Visibility="{Binding ActionAreaVisible,
+                                       Converter={StaticResource boolVisibility}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Margin="60,0,0,0"
+                           VerticalAlignment="Center"
+                           FontStyle="Italic"
+                           Foreground="Gray"
+                           Style="{StaticResource PhoneTextNormalStyle}">
+                    <Run Text="{Binding Path=LocalizedResources.TemplateSearch_Version, Source={StaticResource LocalizedStrings}}" />
+                    <Run Text="{Binding Version}" />
+                    </TextBlock>
+
+                    <Button Grid.Column="1"
+                        Command="{Binding Search.DownloadTab, Source={StaticResource Locator}}"
+                        CommandParameter="{Binding SearchId}"
+                        Content="{Binding Path=LocalizedResources.TemplateSearch_Download, Source={StaticResource LocalizedStrings}}"
+                        IsEnabled="{Binding Search.CanDownload, Source={StaticResource Locator}}"
+                        Visibility="{Binding IsNotDownloaded,
+                                             Converter={StaticResource boolVisibility}}" />
+                    <TextBlock Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                           Foreground="{StaticResource PhoneAccentBrush}"
+                           Style="{StaticResource PhoneTextNormalStyle}"
+                           Text="{Binding Path=LocalizedResources.TemplateSearch_Downloaded, Source={StaticResource LocalizedStrings}}"
+                           Visibility="{Binding IsDownloaded,Mode=TwoWay,
+                                                Converter={StaticResource boolVisibility}}" />
+
+                </Grid>
+            </Grid>
+        </DataTemplate>
     </Views:ViewPage.Resources>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <Command:ExecuteCommandAction Command="{Binding Search.LaunchSearchPopularTabs, Source={StaticResource Locator}}" CommandParameter="{Binding CurrentGroup.Name}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <!--  LayoutRoot is the root grid where all page content is placed  -->
     <Grid x:Name="LayoutRoot">
         <!--  Pivot Control  -->
-        <Grid.Resources>
-            <Infrastructure:UpperStringConverter x:Name="UpperStr" />
-            <Infrastructure:IntToStringConverter x:Name="IntToStr" />
-            <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
-            <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
-            
-        </Grid.Resources>
+
         <controls:Panorama x:Name="PivotControl" 
                         Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource SmallPanoramaTitle}">
 
             <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_Tabs, Source={StaticResource LocalizedStrings}}">
+               <Grid>
+                    <ring:ProgressRing x:Name="performanceBar" 
+                                        VerticalAlignment="Top"
+                                    DataContext="{Binding Search, Source={StaticResource Locator}}"
+                                        IsActive="{Binding Search.IsSearching,
+                                                                  Source={StaticResource Locator},
+                                                                  Mode=TwoWay}"
+                                        Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}" >
+                    </ring:ProgressRing>
+
+                    <controls:LongListSelector x:Name="tabsListArtists"
+                            toolkit:TiltEffect.IsTiltEnabled="True"           
+                              Background="Transparent"           
+                              ItemTemplate="{StaticResource ArtistTabItemTemplate}"                            
+                              ItemsSource="{Binding Search.SearchPopularTabs, Source={StaticResource Locator}}"
+                             >
+                    </controls:LongListSelector>
+                </Grid>
+                
                
-                <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
-                         ItemTemplate="{StaticResource TabItemLightDataTemplate}"
-                         ItemsSource="{Binding Path=Tabs.Tabs}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Tap">
-                            <Command:ExecuteCommandAction Command="{Binding GoToTabView}" 
-                                                          CommandParameter="{Binding ElementName=TabList, Path=SelectedItem}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ListBox>
             </controls:PanoramaItem>
 
             <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}">
@@ -96,7 +212,7 @@
             <controls:Panorama.Background>
                 <ImageBrush Stretch="UniformToFill"  Opacity="0.5" AlignmentX="Center" AlignmentY="Center">
                     <ImageBrush.ImageSource>
-                        <BitmapImage UriSource="{Binding Collection.BackGroundImage, Source={StaticResource Locator}, Converter={StaticResource ImageUrlToUriConverter}}" 
+                        <BitmapImage UriSource="{Binding Discover.BackGroundImage, Source={StaticResource Locator}, Converter={StaticResource ImageUrlToUriConverter}}" 
                                      CreateOptions="BackgroundCreation" />
                     </ImageBrush.ImageSource>
                 </ImageBrush>
@@ -105,16 +221,5 @@
        
     </Grid>
 
-    <custom:Bindable.ApplicationBar>
-        <custom:BindableApplicationBar x:Name="AppBar" Opacity="0.3" Mode ="Minimized">
-            <!--  IsEnabled for this button is changing from codebehind PivotSelectionChangedHandler()  -->
-            <custom:BindableApplicationBarButton Command="{Binding SearchCommand}"
-                                                     CommandParameter="{Binding CurrentGroup}"
-                                                     IconUri="/Images/dark/appbar.feature.search.rest.png"
-                                                     Text="{Binding Path=LocalizedResources.Group_MoreOnline, Source={StaticResource LocalizedStrings}}" />
-
-        </custom:BindableApplicationBar>
-    </custom:Bindable.ApplicationBar>
    
-
 </Views:ViewPage>

@@ -216,41 +216,13 @@ namespace PhoneGuitarTab.UI.ViewModels
                 Hub.RaiseTabsRefreshed();
             }
         }
-
-        private void DoRemoveTab(int id)
-        {
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                Database.DeleteTabById(id);
-                DataBind();
-            });
-            Hub.RaiseGroupTabRemoved(id);
-        }
-
-        private void DoSearch(Group group)
-        {
-            NavigationService.NavigateTo(NavigationViewNames.Search, new Dictionary<string, object> {{"SearchTerm", group.Name}});
-        }
-
+             
         private void DoRefreshInfo(Group group)
         {
             GetCurrentGroupInfo(group);
         }
-
-        private void DoHome()
-        {
-            NavigationService.NavigateTo(NavigationViewNames.Startup);
-        }
-
-        private void DoPinTabToStart(int id)
-        {
-            Tab tab = (from Tab t in Database.Tabs
-                where t.Id == id
-                select t).Single();
-
-            TilesForTabs.PinTabToStart(tab);
-        }
-
+      
+      
         #endregion Command handlers
 
         #region Event handlers
@@ -261,13 +233,9 @@ namespace PhoneGuitarTab.UI.ViewModels
         #region Helper methods
 
         private void CreateCommands()
-        {
-            SearchCommand = new ExecuteCommand<Group>(DoSearch);
-            HomeCommand = new ExecuteCommand(DoHome);
-            RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);
-            PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
+        {         
+            RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);          
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
-            RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
         }
 
         private void GetCurrentGroupInfo(Group group)

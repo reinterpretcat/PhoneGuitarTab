@@ -34,6 +34,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private Thickness _pagingListPadding;
         private IEnumerable<string> _pages;
         private TabsByName _searchGroupTabs;
+        private ObservableCollection<TabEntity> _searchPopularTabs;
         private bool _isSearching;
         private string currentSearchText;
         private string currentTypedText;
@@ -144,6 +145,16 @@ namespace PhoneGuitarTab.UI.ViewModels
                 _searchGroupTabs = value;
                 RaisePropertyChanged("SearchGroupTabs");
                 RaisePropertyChanged("IsFooterNeeded");
+            }
+        }
+
+        public ObservableCollection<TabEntity> SearchPopularTabs
+        {
+            get { return _searchPopularTabs; }
+            set
+            {
+                _searchPopularTabs = value;
+                RaisePropertyChanged("SearchPopularTabs");
             }
         }
 
@@ -383,6 +394,8 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public ExecuteCommand<string> LaunchSearchForBand { get; private set; }
 
+        public ExecuteCommand<string> LaunchSearchPopularTabs { get; private set; }
+
         public ExecuteCommand<string> SelectPage { get; private set; }
 
         public ExecuteCommand<string> DownloadTab { get; private set; }
@@ -438,7 +451,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
             SearchInfoTextBlock = String.Format(AppResources.Search_SearchFor, CurrentTypedText);
-            RunSearch(bandName, songName);
+            RunSearch(bandName, songName, ResultsSortOrder.Alphabetical);
         }
 
         private void DoLaunchSearchForBand(string arg)
@@ -448,8 +461,21 @@ namespace PhoneGuitarTab.UI.ViewModels
             CurrentPageIndex = 1;
             HeaderPagingVisibility = Visibility.Collapsed;
             CurrentSearchText = arg;
-            RunSearch(CurrentSearchText, string.Empty);
+            RunSearch(CurrentSearchText, string.Empty, ResultsSortOrder.Alphabetical);
         }
+
+         private void DoLaunchSearchPopularTabs(string arg)
+         {
+             this.SearchPopularTabs = null;
+            SearchMethod = SearchType.ByBand;
+            SearchTabType = TabulatureType.All;
+            CurrentPageIndex = 1;
+            HeaderPagingVisibility = Visibility.Collapsed;
+            CurrentSearchText = arg;
+            RunSearch(CurrentSearchText, string.Empty, ResultsSortOrder.Popularity);
+        }
+
+       
 
         private void DoSelectPage(string index)
         {
@@ -495,7 +521,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                         }
                         break;
                 }
-                RunSearch(bandName, songName);
+                RunSearch(bandName, songName, ResultsSortOrder.Alphabetical);
             }
         }
 
@@ -610,7 +636,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                
                 IsNothingFound = !groupTabs.Any();
                 Pages = Enumerable.Range(1, _tabSearcher.Summary.PageCount).Select(p => p.ToString());
-
+                SearchPopularTabs = new ObservableCollection<TabEntity>(groupTabs);
                 SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
                 FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
               
@@ -736,13 +762,14 @@ namespace PhoneGuitarTab.UI.ViewModels
             HomeCommand = new ExecuteCommand(DoHome);
             LaunchSearch = new ExecuteCommand<string>(DoLaunchSearch);
             LaunchSearchForBand = new ExecuteCommand<string>(DoLaunchSearchForBand);
+            LaunchSearchPopularTabs = new ExecuteCommand<string>(DoLaunchSearchPopularTabs);
             SelectPage = new ExecuteCommand<string>(DoSelectPage);
             DownloadTab = new ExecuteCommand<string>(DoDownloadTab);
             ToggleActionArea = new ExecuteCommand<TabEntity>(DoToggleActionArea);
             NavigatePage = new ExecuteCommand<string>(DoNavigatePage);
         }
 
-        private void RunSearch(string bandName, string songName)
+        private void RunSearch(string bandName, string songName, ResultsSortOrder sortBy)
         {
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
@@ -757,7 +784,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
             IsSearching = true;
 
-            _tabSearcher.Run(bandName, songName, CurrentPageIndex, SearchTabType);
+            _tabSearcher.Run(bandName, songName, CurrentPageIndex, SearchTabType, sortBy);
         }
 
         private void AssignHeaderPagingUI(int pageCount)
