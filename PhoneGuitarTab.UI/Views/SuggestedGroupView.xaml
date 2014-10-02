@@ -32,109 +32,17 @@
                 <TextBlock Text="{Binding}" FontSize="140" Margin="0,0,0,0" />
             </ContentPresenter>
         </DataTemplate>
+        <DataTemplate x:Key="PivotHeaderTitleTemplate">
+            <ContentPresenter>
+                <TextBlock Text="{Binding}" FontSize="50" Margin="0,0,0,0" />
+            </ContentPresenter>
+        </DataTemplate>
         <Infrastructure:UpperStringConverter x:Name="UpperStr" />
         <Infrastructure:IntToStringConverter x:Name="IntToStr" />
         <Infrastructure:ImageUrlToUriConverter x:Key="ImageUrlToUriConverter"/>
         <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
 
-        <DataTemplate x:Key="ArtistTabItemTemplate">
-            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Tap">
-                        <Command:ExecuteCommandAction Command="{Binding Search.ToggleActionArea, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-                <Image VerticalAlignment="Center"
-                   Source="{Binding RelativeImageUri}"
-                   Stretch="None" 
-                   Visibility ="Visible" />
-
-                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top">
-                    <TextBlock Margin="12,0"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextLargeStyle}"
-                           Text="{Binding Name}"
-                           TextTrimming="WordEllipsis" />
-                    <TextBlock Margin="28,0"
-                           HorizontalAlignment="Left"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           Text="{Binding Group}"
-                           TextWrapping="Wrap" />
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="14,0"
-                               VerticalAlignment="Bottom"
-                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                               Foreground="{StaticResource PhoneAccentBrush}"
-                               Style="{StaticResource PhoneTextNormalStyle}"
-                               Text="{Binding Type}" />
-                        <controls1:RatingControl Margin="12,0,6,4"
-                                              VerticalAlignment="Bottom"
-                                              Rating="{Binding Rating,
-                                                               Converter={StaticResource stringToInt}}" />
-                        <TextBlock VerticalAlignment="Bottom"
-                               FontSize="16"
-                               FontStyle="Italic"
-                               Foreground="Gray"
-                               Visibility="{Binding Votes,
-                                                    Converter={StaticResource intToVisibility}}">
-                        <Run Text="{Binding Path=LocalizedResources.TemplateSearch_Votes, Source={StaticResource LocalizedStrings}}" />
-                        <Run Text="{Binding Votes}" />
-                        </TextBlock>
-
-                    </StackPanel>
-                </StackPanel>
-
-                <Grid x:Name="ActionsGrid"
-                  Grid.Row="1"
-                  Grid.Column="0"      
-                  Grid.ColumnSpan="2"
-                  Visibility="{Binding ActionAreaVisible,
-                                       Converter={StaticResource boolVisibility}}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Margin="60,0,0,0"
-                           VerticalAlignment="Center"
-                           FontStyle="Italic"
-                           Foreground="Gray"
-                           Style="{StaticResource PhoneTextNormalStyle}">
-                    <Run Text="{Binding Path=LocalizedResources.TemplateSearch_Version, Source={StaticResource LocalizedStrings}}" />
-                    <Run Text="{Binding Version}" />
-                    </TextBlock>
-
-                    <Button Grid.Column="1"
-                        Command="{Binding Search.DownloadTab, Source={StaticResource Locator}}"
-                        CommandParameter="{Binding SearchId}"
-                        Content="{Binding Path=LocalizedResources.TemplateSearch_Download, Source={StaticResource LocalizedStrings}}"
-                        IsEnabled="{Binding Search.CanDownload, Source={StaticResource Locator}}"
-                        Visibility="{Binding IsNotDownloaded,
-                                             Converter={StaticResource boolVisibility}}" />
-                    <TextBlock Grid.Column="1"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Foreground="{StaticResource PhoneAccentBrush}"
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           Text="{Binding Path=LocalizedResources.TemplateSearch_Downloaded, Source={StaticResource LocalizedStrings}}"
-                           Visibility="{Binding IsDownloaded,Mode=TwoWay,
-                                                Converter={StaticResource boolVisibility}}" />
-
-                </Grid>
-            </Grid>
-        </DataTemplate>
+      
     </Views:ViewPage.Resources>
 
     <i:Interaction.Triggers>
@@ -149,9 +57,9 @@
         <controls:Panorama x:Name="PivotControl" 
                         Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource SmallPanoramaTitle}">
 
-            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_Tabs, Source={StaticResource LocalizedStrings}}">
-               <Grid>
-                    <ring:ProgressRing x:Name="performanceBar" 
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_PopularTabsOnline, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
+                <Grid>
+                    <ring:ProgressRing x:Name="TabLoadingProgressRing" 
                                         VerticalAlignment="Top"
                                     DataContext="{Binding Search, Source={StaticResource Locator}}"
                                         IsActive="{Binding Search.IsSearching,
@@ -169,12 +77,13 @@
                               ItemsSource="{Binding Search.SearchPopularTabs, Source={StaticResource Locator}}"
                              >
                     </controls:LongListSelector>
+                    
                 </Grid>
                 
                
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}">
+            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}"  HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
                 <ScrollViewer>
                     <StackPanel>
                         <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"

@@ -198,6 +198,9 @@
   <data name="Group_MoreOnline" xml:space="preserve">
     <value>more online</value>
   </data>
+  <data name="Group_PopularTabsOnline" xml:space="preserve">
+    <value>popular tabs online</value>
+  </data>
   <data name="Group_Tabs" xml:space="preserve">
     <value>tabs</value>
   </data>
@@ -421,6 +424,9 @@ band name, song name</value>
   </data>
   <data name="TemplateSearch_Downloaded" xml:space="preserve">
     <value>Downloaded</value>
+  </data>
+  <data name="TemplateSearch_Open" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="TemplateSearch_Version" xml:space="preserve">
     <value>version:</value>

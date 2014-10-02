@@ -10,7 +10,9 @@
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" x:Name="root"
+               xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core"
+               xmlns:ring="clr-namespace:InTheHand.UI.Xaml.Controls;assembly=InTheHand.UI.Xaml.Controls.ProgressRing"
+               x:Name="root"
                DataContext="{Binding Group, Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -29,6 +31,12 @@
                 <TextBlock Text="{Binding}" FontSize="140" Margin="0,0,0,0" />
             </ContentPresenter>
         </DataTemplate>
+
+        <DataTemplate x:Key="PivotHeaderTitleTemplate">
+            <ContentPresenter>
+                <TextBlock Text="{Binding}" FontSize="50" Margin="0,0,0,0" />
+            </ContentPresenter>
+        </DataTemplate>
     </Views:ViewPage.Resources>
 
     <!--  LayoutRoot is the root grid where all page content is placed  -->
@@ -44,7 +52,13 @@
         <controls:Panorama x:Name="PivotControl" 
                         Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource SmallPanoramaTitle}">
 
-            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_Tabs, Source={StaticResource LocalizedStrings}}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <Command:ExecuteCommandAction Command="{Binding Search.LaunchSearchPopularTabs, Source={StaticResource Locator}}" CommandParameter="{Binding CurrentGroup.Name}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_Tabs, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
                
                 <ListBox x:Name="TabList" toolkit:TiltEffect.IsTiltEnabled="True"
                          ItemTemplate="{StaticResource TabItemLightDataTemplate}"
@@ -58,7 +72,33 @@
                 </ListBox>
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}">
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_PopularTabsOnline, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
+                <Grid>
+                    <ring:ProgressRing x:Name="TabLoadingBarRing" 
+                                        VerticalAlignment="Top"
+                                    DataContext="{Binding Search, Source={StaticResource Locator}}"
+                                        IsActive="{Binding Search.IsSearching,
+                                                                  Source={StaticResource Locator},
+                                                                  Mode=TwoWay}"
+                                        Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}" >
+                    </ring:ProgressRing>
+
+                    <controls:LongListSelector x:Name="tabsListArtists"
+                            toolkit:TiltEffect.IsTiltEnabled="True"           
+                              Background="Transparent"           
+                              ItemTemplate="{StaticResource ArtistTabItemTemplate}"                            
+                              ItemsSource="{Binding Search.SearchPopularTabs, Source={StaticResource Locator}}"
+                             >
+                    </controls:LongListSelector>
+
+                </Grid>
+
+
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
                 <ScrollViewer>
                     <StackPanel>
                         <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"
@@ -105,16 +145,6 @@
        
     </Grid>
 
-    <custom:Bindable.ApplicationBar>
-        <custom:BindableApplicationBar x:Name="AppBar" Opacity="0.3" Mode ="Minimized">
-            <!--  IsEnabled for this button is changing from codebehind PivotSelectionChangedHandler()  -->
-            <custom:BindableApplicationBarButton Command="{Binding SearchCommand}"
-                                                     CommandParameter="{Binding CurrentGroup}"
-                                                     IconUri="/Images/dark/appbar.feature.search.rest.png"
-                                                     Text="{Binding Path=LocalizedResources.Group_MoreOnline, Source={StaticResource LocalizedStrings}}" />
-
-        </custom:BindableApplicationBar>
-    </custom:Bindable.ApplicationBar>
    
 
 </Views:ViewPage>

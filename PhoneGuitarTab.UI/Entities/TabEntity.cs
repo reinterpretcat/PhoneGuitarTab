@@ -17,12 +17,19 @@ namespace PhoneGuitarTab.UI.Entities
         private Uri relativeImageUri;
         private string imageUrl;
         private string albumCoverImageUrl;
-
+        private int id;
         #endregion Fields
 
         #region Properties
 
-        public int Id { get; set; }
+        public int Id 
+        { get { return id; }
+            set
+            {
+                id = value;
+                RaisePropertyChanged("Id");
+            } 
+        }
         public string Name { get; set; }
         public string Group { get; set; }
         public string Type { get; set; }

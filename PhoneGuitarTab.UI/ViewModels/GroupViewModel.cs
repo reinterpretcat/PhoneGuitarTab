@@ -39,6 +39,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             _mediaSearcherFactory = mediaSearcherFactory;
             CreateCommands();
+            RegisterEvents();
         }
 
         #endregion Constructors
@@ -280,6 +281,14 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         }
 
+        private void RegisterEvents()
+        {
+            Hub.TabsDownloaded += (o, args) =>
+            {
+                Tabs = new TabsForBand(CurrentGroup.Id, Database);
+            };
+
+        }
         void bandInfoSearch_MediaSearchCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             var result = sender as IMediaSearcher;

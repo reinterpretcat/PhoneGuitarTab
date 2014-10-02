@@ -317,7 +317,7 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Tag="{Binding FirstTabInList}" Margin="-4,32,-4,0">
+                              Margin="-4,32,-4,0">
         </phone:LongListSelector>
         <TextBlock x:Name="textBlock" 
                    VerticalAlignment="Top" HorizontalAlignment="Left"

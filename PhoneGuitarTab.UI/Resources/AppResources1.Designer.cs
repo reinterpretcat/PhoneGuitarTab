@@ -304,6 +304,15 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to popular tabs online.
+        /// </summary>
+        public static string Group_PopularTabsOnline {
+            get {
+                return ResourceManager.GetString("Group_PopularTabsOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to tabs.
         /// </summary>
         public static string Group_Tabs {
@@ -968,6 +977,15 @@ namespace PhoneGuitarTab.UI.Resources {
         public static string TemplateSearch_Downloaded {
             get {
                 return ResourceManager.GetString("TemplateSearch_Downloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string TemplateSearch_Open {
+            get {
+                return ResourceManager.GetString("TemplateSearch_Open", resourceCulture);
             }
         }
         

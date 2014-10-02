@@ -52,7 +52,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private bool downloadButtonClicked;
         private Tab currentTab;
         private TabEntity currentTabEntity;
-
+        private ResultsSortOrder _sortOrder;
         #endregion Fields
 
         #region Constructors
@@ -69,6 +69,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             HeaderPagingVisibility = Visibility.Collapsed;
 
             _searchGroupTabs = new TabsByName(database, true);
+          
             _tabSearcher = tabSearcher;
             _mediaSearcherFactory = mediaSearcherFactory;
         }
@@ -144,7 +145,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             {
                 _searchGroupTabs = value;
                 RaisePropertyChanged("SearchGroupTabs");
-                RaisePropertyChanged("IsFooterNeeded");
+               
             }
         }
 
@@ -321,26 +322,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
         }
 
-        public bool IsFooterNeeded
-        {
-            get
-            {
-                return SearchGroupTabs != null && (SearchGroupTabs.Tabs.Count > ItemsNumberForFooterVisibilityThreshold);
-            }
-        }
-
-        /// <summary>
-        ///     Used for "jump to top" feature
-        /// </summary>
-        public TabEntity FirstTabInList
-        {
-            get { return firstTabInList; }
-            set
-            {
-                firstTabInList = value;
-                RaisePropertyChanged("FirstTabInList");
-            }
-        }
+     
         public Tab CurrentTab
         {
             get { return currentTab; }
@@ -399,6 +381,8 @@ namespace PhoneGuitarTab.UI.ViewModels
         public ExecuteCommand<string> SelectPage { get; private set; }
 
         public ExecuteCommand<string> DownloadTab { get; private set; }
+
+        public ExecuteCommand<int> GoToTabView { get; private set; }
 
         public ExecuteCommand<string> NavigatePage { get; private set; }
 
@@ -466,16 +450,19 @@ namespace PhoneGuitarTab.UI.ViewModels
 
          private void DoLaunchSearchPopularTabs(string arg)
          {
-             this.SearchPopularTabs = null;
-            SearchMethod = SearchType.ByBand;
-            SearchTabType = TabulatureType.All;
-            CurrentPageIndex = 1;
-            HeaderPagingVisibility = Visibility.Collapsed;
-            CurrentSearchText = arg;
-            RunSearch(CurrentSearchText, string.Empty, ResultsSortOrder.Popularity);
-        }
+           bool shouldRun = this.SearchPopularTabs == null || this.SearchPopularTabs.Count == 0 || this.SearchPopularTabs.FirstOrDefault().Group.ToLower() != arg.ToLower();
 
-       
+
+           if (shouldRun && NetworkInterface.GetIsNetworkAvailable())
+             {
+                 this.SearchPopularTabs = null;
+                 SearchMethod = SearchType.ByBand;
+                 SearchTabType = TabulatureType.All;
+                 CurrentPageIndex = 1;
+                 RunSearch(arg, string.Empty, ResultsSortOrder.Popularity);
+             }
+               
+        }
 
         private void DoSelectPage(string index)
         {
@@ -555,8 +542,12 @@ namespace PhoneGuitarTab.UI.ViewModels
                 Dialog.Show(AppResources.Search_DownloadFailed);
                 return;
             }
-            TabEntity tab = SearchGroupTabs.Tabs.FirstOrDefault(t => t.SearchId == arg);
-
+            TabEntity tab;
+           
+            if (_sortOrder == ResultsSortOrder.Alphabetical)
+                tab = SearchGroupTabs.Tabs.FirstOrDefault(t => t.SearchId == arg);
+            else
+                tab = SearchPopularTabs.FirstOrDefault(t => t.SearchId == arg);
             //TODO create converter
             var entry = new SearchTabResultEntry
             {
@@ -601,25 +592,27 @@ namespace PhoneGuitarTab.UI.ViewModels
             downloadButtonClicked = false;
         }
 
-        private void DoHome()
+        private void DoGoToTabView(int id)
         {
-            Hub.RaiseTabsRefreshed();
-            NavigationService.NavigateTo(NavigationViewNames.Startup);
+            Tab tab = (from Tab t in Database.Tabs
+                       where t.Id == id
+                       select t).Single();
+            NavigationService.NavigateToTab(new Dictionary<string, object> { { "Tab", tab } });
+            Hub.RaiseBackGroundImageChangeActivity(tab.Group.ExtraLargeImageUrl);
+            Hub.RaiseTabBrowsed();
         }
 
         #endregion Command handlers
 
         #region Event handlers
 
-        private void SearchCompletedHandler(System.Net.DownloadStringCompletedEventArgs e)
+        private void SearchCompletedHandler(object sender, System.Net.DownloadStringCompletedEventArgs e)
         {
+            SearchGroupTabs = null;
             //TODO examine e.Error 
             if (e.Error == null)
             {
-                Deployment.Current.Dispatcher.BeginInvoke(
-                    () =>
-                    {  });
-             
+                            
                 var groupTabs = _tabSearcher.Entries.Where(FilterTab).
                     Select(entry => new TabEntity
                     {
@@ -635,21 +628,65 @@ namespace PhoneGuitarTab.UI.ViewModels
                     });
                
                 IsNothingFound = !groupTabs.Any();
-                Pages = Enumerable.Range(1, _tabSearcher.Summary.PageCount).Select(p => p.ToString());
+
+                if (_sortOrder == ResultsSortOrder.Popularity)
+                {
+                    SearchPopularTabs = new ObservableCollection<TabEntity>(groupTabs.Take(100));
+                    Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
+                    //There is a fundamenal Architectural Mistake in the project in terms of Search Header hide/show logic in the SearchView
+                    //If SearchGroupTabs is not initialized after a search is performed - the search header is never visible, therefore a dummy initialization is necessary after an external search.
+                    SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(new List<TabEntity>()), Database);
+                }
+                else
+                {
+                    Pages = Enumerable.Range(1, _tabSearcher.Summary.PageCount).Select(p => p.ToString());
+                    SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
+                    Deployment.Current.Dispatcher.BeginInvoke(
+                   () =>
+                   {
+                       if (Pages.Any())
+                           SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
+                       RaisePropertyChanged("SelectedPage");
+                       AssignHeaderPagingUI(_tabSearcher.Summary.PageCount);
+                       IsSearching = false;
+                   });
+                }
+               
+
+                             
+            }
+            else
+            {
+                IsSearching = false;
+                Dialog.Show(AppResources.Search_Sorry, AppResources.Search_ServerUnavailable);
+            }
+        }
+
+        private void SearchCompletedForPopularHandler(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        {
+           
+
+            if (e.Error == null)
+            {
+                var groupTabs = _tabSearcher.Entries.Where(FilterTab).Take(100).
+                  Select(entry => new TabEntity
+                  {
+                      SearchId = entry.Id,
+                      SearchUrl = entry.Url,
+                      Name = entry.Name,
+                      Group = entry.Artist,
+                      Rating = entry.Rating,
+                      Type = entry.Type,
+                      ImageUrl = Database.GetTabTypeByName(entry.Type).ImageUrl,
+                      Votes = entry.Votes,
+                      Version = entry.Version
+                  });
+
+                IsNothingFound = !groupTabs.Any();
                 SearchPopularTabs = new ObservableCollection<TabEntity>(groupTabs);
-                SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
-                FirstTabInList = SearchGroupTabs.GetFirstTabInFirstNonEmptyGroup();
-              
-                Deployment.Current.Dispatcher.BeginInvoke(
-                    () =>
-                    {
-                        if (Pages.Any())
-                            SelectedPage = Pages.ElementAt(CurrentPageIndex - 1);
-                        RaisePropertyChanged("SelectedPage");                                
-                        AssignHeaderPagingUI(_tabSearcher.Summary.PageCount);
-                        IsSearching = false;
-                    });
-              
+      
+                Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
+
             }
             else
             {
@@ -661,7 +698,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private void DownloadTabComplete(TabEntity tab, string filePath)
         {
             CurrentTabEntity = tab;
-          
+           // TabEntity CurrentPopularTabEntity = SearchPopularTabs.FirstOrDefault(t => t.SearchId == tab.SearchId);
             Deployment.Current.Dispatcher.BeginInvoke(
                 () =>
                 {
@@ -685,12 +722,13 @@ namespace PhoneGuitarTab.UI.ViewModels
                     tabAlbumSearch.RunMediaSearch(CurrentTab.Group.Name, CurrentTab.Name);
                     Hub.RaiseTabsDownloaded();
 
-                    //run group images search
-                    var groupImagesSearch = _mediaSearcherFactory.Create();
-                    groupImagesSearch.MediaSearchCompleted += groupImagesSearch_MediaSearchCompleted;
-                    groupImagesSearch.RunMediaSearch(tab.Group, string.Empty);
-                                                               
-                    CurrentTabEntity.IsDownloaded = true;
+                        //run group images search
+                        var groupImagesSearch = _mediaSearcherFactory.Create();
+                        groupImagesSearch.MediaSearchCompleted += groupImagesSearch_MediaSearchCompleted;
+                        groupImagesSearch.RunMediaSearch(tab.Group, string.Empty);
+                  
+                    CurrentTabEntity.IsDownloaded =  true;
+                    CurrentTabEntity.Id =  CurrentTab.Id;
                     IsDownloading = false;
 
                     Dialog.Show(AppResources.Search_TabDownloadedText, 
@@ -759,7 +797,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void CreateCommands()
         {
-            HomeCommand = new ExecuteCommand(DoHome);
+            GoToTabView = new ExecuteCommand<int>(DoGoToTabView);
             LaunchSearch = new ExecuteCommand<string>(DoLaunchSearch);
             LaunchSearchForBand = new ExecuteCommand<string>(DoLaunchSearchForBand);
             LaunchSearchPopularTabs = new ExecuteCommand<string>(DoLaunchSearchPopularTabs);
@@ -771,6 +809,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void RunSearch(string bandName, string songName, ResultsSortOrder sortBy)
         {
+            _sortOrder = sortBy;
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
                 Dialog.Show(AppResources.Search_NoInternetConnection, AppResources.Search_OperationFailed);
@@ -778,14 +817,25 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
 
             SearchGroupTabs = null;
+            SearchPopularTabs = null;
             IsHintVisible = false;
-            IsNothingFound = false;
-            _tabSearcher.SearchComplete += (s, e) => SearchCompletedHandler(e);
+            IsNothingFound = false;          
+
+                _tabSearcher.SearchComplete += SearchCompletedHandler;
+                //_tabSearcher.SearchComplete -= SearchCompletedForPopularHandler;
+
+                //_tabSearcher.SearchComplete +=  SearchCompletedForPopularHandler;
+                //_tabSearcher.SearchComplete -= SearchCompletedHandler;
+
+           
 
             IsSearching = true;
 
             _tabSearcher.Run(bandName, songName, CurrentPageIndex, SearchTabType, sortBy);
         }
+
+    
+       
 
         private void AssignHeaderPagingUI(int pageCount)
         {
@@ -800,15 +850,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 : Visibility.Collapsed;
         }
 
-        private void DoGoToTabView(int id)
-        {
-            Tab tab = (from Tab t in Database.Tabs
-                where t.Id == id
-                select t).Single();
-            NavigationService.NavigateToTab(new Dictionary<string, object> {{"Tab", tab}});
-            Hub.RaiseBackGroundImageChangeActivity(tab.Group.ExtraLargeImageUrl);
-            Hub.RaiseTabBrowsed();
-        }
+      
 
         #endregion Helper methods
     }
