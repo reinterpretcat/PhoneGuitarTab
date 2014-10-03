@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Windows;
+using System.Windows.Media.Animation;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
 using PhoneGuitarTab.Search;
@@ -71,6 +72,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             _searchGroupTabs = new TabsByName(database, true);
           
             _tabSearcher = tabSearcher;
+            _tabSearcher.SearchComplete += SearchCompletedHandler;
             _mediaSearcherFactory = mediaSearcherFactory;
         }
 
@@ -613,7 +615,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             if (e.Error == null)
             {
                             
-                var groupTabs = _tabSearcher.Entries.Where(FilterTab).
+              var groupTabs = _tabSearcher.Entries.Where(FilterTab).
                     Select(entry => new TabEntity
                     {
                         SearchId = entry.Id,
@@ -631,8 +633,9 @@ namespace PhoneGuitarTab.UI.ViewModels
 
                 if (_sortOrder == ResultsSortOrder.Popularity)
                 {
-                    SearchPopularTabs = new ObservableCollection<TabEntity>(groupTabs.Take(100));
-                    Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
+                    var grouped = groupTabs.OrderByDescending(t => t.Votes);
+
+                    SearchPopularTabs = new ObservableCollection<TabEntity>(grouped.Take(100));                                       
                     //There is a fundamenal Architectural Mistake in the project in terms of Search Header hide/show logic in the SearchView
                     //If SearchGroupTabs is not initialized after a search is performed - the search header is never visible, therefore a dummy initialization is necessary after an external search.
                     SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(new List<TabEntity>()), Database);
@@ -651,8 +654,8 @@ namespace PhoneGuitarTab.UI.ViewModels
                        IsSearching = false;
                    });
                 }
-               
 
+                Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
                              
             }
             else
@@ -662,38 +665,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
         }
 
-        private void SearchCompletedForPopularHandler(object sender, System.Net.DownloadStringCompletedEventArgs e)
-        {
-           
-
-            if (e.Error == null)
-            {
-                var groupTabs = _tabSearcher.Entries.Where(FilterTab).Take(100).
-                  Select(entry => new TabEntity
-                  {
-                      SearchId = entry.Id,
-                      SearchUrl = entry.Url,
-                      Name = entry.Name,
-                      Group = entry.Artist,
-                      Rating = entry.Rating,
-                      Type = entry.Type,
-                      ImageUrl = Database.GetTabTypeByName(entry.Type).ImageUrl,
-                      Votes = entry.Votes,
-                      Version = entry.Version
-                  });
-
-                IsNothingFound = !groupTabs.Any();
-                SearchPopularTabs = new ObservableCollection<TabEntity>(groupTabs);
-      
-                Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
-
-            }
-            else
-            {
-                IsSearching = false;
-                Dialog.Show(AppResources.Search_Sorry, AppResources.Search_ServerUnavailable);
-            }
-        }
+        
 
         private void DownloadTabComplete(TabEntity tab, string filePath)
         {
@@ -820,14 +792,6 @@ namespace PhoneGuitarTab.UI.ViewModels
             SearchPopularTabs = null;
             IsHintVisible = false;
             IsNothingFound = false;          
-
-                _tabSearcher.SearchComplete += SearchCompletedHandler;
-                //_tabSearcher.SearchComplete -= SearchCompletedForPopularHandler;
-
-                //_tabSearcher.SearchComplete +=  SearchCompletedForPopularHandler;
-                //_tabSearcher.SearchComplete -= SearchCompletedHandler;
-
-           
 
             IsSearching = true;
 
