@@ -635,10 +635,11 @@ namespace PhoneGuitarTab.UI.ViewModels
                 {
                     var grouped = groupTabs.OrderByDescending(t => t.Votes);
 
-                    SearchPopularTabs = new ObservableCollection<TabEntity>(grouped.Take(100));                                       
-                    //There is a fundamenal Architectural Mistake in the project in terms of Search Header hide/show logic in the SearchView
-                    //If SearchGroupTabs is not initialized after a search is performed - the search header is never visible, therefore a dummy initialization is necessary after an external search.
-                    SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(new List<TabEntity>()), Database);
+                    SearchPopularTabs = new ObservableCollection<TabEntity>(grouped.Take(100));
+                    Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
+                    //Clear the Search Area (for the Search Page)
+                    this.ClearSearchArea();
+
                 }
                 else
                 {
@@ -655,7 +656,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                    });
                 }
 
-                Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
+               
                              
             }
             else
@@ -798,9 +799,14 @@ namespace PhoneGuitarTab.UI.ViewModels
             _tabSearcher.Run(bandName, songName, CurrentPageIndex, SearchTabType, sortBy);
         }
 
-    
-       
-
+        private void ClearSearchArea()
+        {
+            //There is a fundamenal Architectural Mistake in the project in terms of Search Header hide/show logic in the SearchView
+            //If SearchGroupTabs is not initialized after a search is performed - the search header is never visible, therefore a dummy initialization is necessary after an external search.
+            SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(new List<TabEntity>()), Database);
+            this.CurrentTypedText = this.CurrentSearchText = null;
+            HeaderPagingVisibility = Visibility.Collapsed;
+        }
         private void AssignHeaderPagingUI(int pageCount)
         {
             PagesListAlignment = HorizontalAlignment.Center;
