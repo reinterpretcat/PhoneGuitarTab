@@ -19,12 +19,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 {
     public class SearchViewModel : DataContextViewModel
     {
-        #region Constants
-
-        private const int ItemsNumberForFooterVisibilityThreshold = 10;
-
-        #endregion Constants
-
+      
         #region Fields
 
         private readonly IMediaSearcherFactory _mediaSearcherFactory; 
@@ -69,10 +64,9 @@ namespace PhoneGuitarTab.UI.ViewModels
 
             HeaderPagingVisibility = Visibility.Collapsed;
 
-            _searchGroupTabs = new TabsByName(database, true);
-          
+            _searchGroupTabs = new TabsByName(database, true);         
             _tabSearcher = tabSearcher;
-            _tabSearcher.SearchComplete += SearchCompletedHandler;
+            _tabSearcher.SearchComplete += (s, e) => SearchCompletedHandler(e);
             _mediaSearcherFactory = mediaSearcherFactory;
         }
 
@@ -452,7 +446,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
          private void DoLaunchSearchPopularTabs(string arg)
          {
-           bool shouldRun = this.SearchPopularTabs == null || this.SearchPopularTabs.Count == 0 || this.SearchPopularTabs.FirstOrDefault().Group.ToLower() != arg.ToLower();
+           bool shouldRun = (this.SearchPopularTabs == null || this.SearchPopularTabs.Count == 0 || this.SearchPopularTabs.FirstOrDefault().Group.ToLower() != arg.ToLower()) && !IsSearching;
 
 
            if (shouldRun && NetworkInterface.GetIsNetworkAvailable())
@@ -608,7 +602,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Event handlers
 
-        private void SearchCompletedHandler(object sender, System.Net.DownloadStringCompletedEventArgs e)
+        private void SearchCompletedHandler( System.Net.DownloadStringCompletedEventArgs e)
         {
             SearchGroupTabs = null;
             //TODO examine e.Error 
@@ -665,8 +659,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 Dialog.Show(AppResources.Search_Sorry, AppResources.Search_ServerUnavailable);
             }
         }
-
-        
 
         private void DownloadTabComplete(TabEntity tab, string filePath)
         {
@@ -795,7 +787,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             IsNothingFound = false;          
 
             IsSearching = true;
-
+        
             _tabSearcher.Run(bandName, songName, CurrentPageIndex, SearchTabType, sortBy);
         }
 

@@ -104,8 +104,9 @@ namespace PhoneGuitarTab.UI.ViewModels
                 this.SuggestedGroups.Clear();
                 var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name).ToList();
                 _bandSuggestor.RunBandSuggestor(baseBands);
-                _bandSuggestor.SuggestionSearchCompleted += _bandSuggestor_SuggestionSearchCompleted;
+              
             }
+          
            
         }
 
@@ -147,6 +148,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 isRefreshNeeded = true;
                 IsBaseBandAvailable = true;
             };
+            _bandSuggestor.SuggestionSearchCompleted += (s, e) => SuggestionSearchCompleted(s);
 
         }
         #endregion HelperMethods
@@ -163,13 +165,13 @@ namespace PhoneGuitarTab.UI.ViewModels
         #endregion
 
         #region Event Handlers
-        void _bandSuggestor_SuggestionSearchCompleted(object sender, DownloadStringCompletedEventArgs e)
+        void SuggestionSearchCompleted(object sender)
         {
 
-            var suggestion = sender as IBandSuggestor;
+            var suggestions = sender as IBandSuggestor;
             try
             {
-                foreach (var band in suggestion.Results)
+                foreach (var band in suggestions.Results)
                 {
                     if (this.SuggestedGroups.All(b => b.Name != band.BandName))
                     {

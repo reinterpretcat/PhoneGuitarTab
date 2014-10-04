@@ -274,7 +274,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private void GetCurrentGroupInfo(Group group)
         {
             var bandInfoSearch = _mediaSearcherFactory.Create();
-            bandInfoSearch.MediaSearchCompleted += bandInfoSearch_MediaSearchCompleted;
+            bandInfoSearch.MediaSearchCompleted += (s, e) => MediaSearchCompleted(s);
             bandInfoSearch.RunMediaSearch(group.Name, string.Empty);        
             IsLoading = true;
             NothingFound = false;
@@ -287,9 +287,10 @@ namespace PhoneGuitarTab.UI.ViewModels
             {
                 Tabs = new TabsForBand(CurrentGroup.Id, Database);
             };
+           
 
         }
-        void bandInfoSearch_MediaSearchCompleted(object sender, DownloadStringCompletedEventArgs e)
+        void MediaSearchCompleted(object sender)
         {
             var result = sender as IMediaSearcher;
             try
