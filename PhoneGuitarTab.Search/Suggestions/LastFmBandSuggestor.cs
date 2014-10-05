@@ -106,6 +106,7 @@ namespace PhoneGuitarTab.Search.Suggestions
         public void RunBandSuggestor(List<string> bands )
         {          
             this.BaseBands = bands;
+             
             this.SuggestedArtistsSoFar.Clear();
             //Run Suggestions for a maximum of 20 bands
             foreach (string band in bands.Take(20))

@@ -22,6 +22,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private readonly IBandSuggestor _bandSuggestor;
 
         private BandBySuggestion suggestedGroups;
+        private List<string> baseBands;
         private bool isLoading;
         private bool isRefreshNeeded;
         private bool isBaseBandAvailable;
@@ -102,8 +103,18 @@ namespace PhoneGuitarTab.UI.ViewModels
                 this.IsLoading = true;
                 this.isRefreshNeeded = false;
                 this.SuggestedGroups.Clear();
-                var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name.TransLiterate()).ToList();
-                _bandSuggestor.RunBandSuggestor(baseBands);
+                this.baseBands.Clear();
+               // var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name.TransLiterate()).ToList();
+               var allBandsInTabDownloadOrder = Database.Tabs.OrderByDescending(t => t.Id).Select(g => g.Group.Name.TransLiterate()).ToList();
+               //Add each distinct artist to the basebands list. Note: GroupBy or Distinct clause can not be used here as both of them sorts the grouped list.
+                //We need unsorted order of Bands so the 1st element of the list will be the last downloaded tabs artist
+               foreach (var artist in allBandsInTabDownloadOrder)
+                {
+                    if (!baseBands.Contains(artist))
+                        baseBands.Add(artist);
+                }
+
+                _bandSuggestor.RunBandSuggestor(baseBands);                  
               
             }
           
@@ -143,11 +154,12 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
 
             Hub.BandSuggestionRequest += (o, args) => DoSearchSuggestions();
-            Hub.BandCreated += (o, args) =>
+            Hub.TabsDownloaded += (o, args) =>
             {
                 isRefreshNeeded = true;
                 IsBaseBandAvailable = true;
             };
+         
             _bandSuggestor.SuggestionSearchCompleted += (s, e) => SuggestionSearchCompleted(s);
 
         }
@@ -158,6 +170,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         protected override void DataBind()
         {
             this.SuggestedGroups = new BandBySuggestion();
+            this.baseBands = new List<string>();
             this.isRefreshNeeded = true;
             this.IsBaseBandAvailable = Database.Groups.Any();
         }
