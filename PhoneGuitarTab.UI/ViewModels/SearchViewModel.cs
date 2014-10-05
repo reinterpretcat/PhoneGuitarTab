@@ -657,6 +657,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             else
             {
                 IsSearching = false;
+                ClearSearchArea();
                 Dialog.Show(AppResources.Search_Sorry, AppResources.Search_ServerUnavailable);
             }
         }

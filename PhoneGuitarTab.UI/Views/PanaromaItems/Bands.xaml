@@ -71,6 +71,7 @@
                                    FontSize="20"
                                    Foreground="White"
                                    Style="{StaticResource PhoneTextLargeStyle}"
+                                    TextWrapping="Wrap"
                                    Text="{Binding Item2.Name}" />
                         <TextBlock Margin="5,0,0,19"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"

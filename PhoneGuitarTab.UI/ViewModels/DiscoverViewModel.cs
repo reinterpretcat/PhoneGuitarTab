@@ -104,7 +104,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 this.isRefreshNeeded = false;
                 this.SuggestedGroups.Clear();
                 this.baseBands.Clear();
-               // var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name.TransLiterate()).ToList();
+               
                var allBandsInTabDownloadOrder = Database.Tabs.OrderByDescending(t => t.Id).Select(g => g.Group.Name.TransLiterate()).ToList();
                //Add each distinct artist to the basebands list. Note: GroupBy or Distinct clause can not be used here as both of them sorts the grouped list.
                 //We need unsorted order of Bands so the 1st element of the list will be the last downloaded tabs artist
