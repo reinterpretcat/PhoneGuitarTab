@@ -7,8 +7,8 @@ using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
+using PhoneGuitarTab.Search.Extensions;
 using PhoneGuitarTab.Search.Suggestions;
-using PhoneGuitarTab.Search.Arts;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
@@ -102,7 +102,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 this.IsLoading = true;
                 this.isRefreshNeeded = false;
                 this.SuggestedGroups.Clear();
-                var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name).ToList();
+                var baseBands = Database.Groups.OrderByDescending(g => g.Id).Select(g => g.Name.TransLiterate()).ToList();
                 _bandSuggestor.RunBandSuggestor(baseBands);
               
             }
@@ -173,7 +173,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             {
                 foreach (var band in suggestions.Results)
                 {
-                    if (this.SuggestedGroups.All(b => b.Name != band.BandName))
+                    if (this.SuggestedGroups.All(b => b.Name.TransLiterate() != band.BandName.TransLiterate()))
                     {
                         var group = new Group();
                         group.Name = band.BandName;

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Windows;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
-using PhoneGuitarTab.Search;
 using PhoneGuitarTab.Search.Arts;
 using PhoneGuitarTab.UI.Data;
 using PhoneGuitarTab.UI.Entities;
@@ -184,9 +181,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public ExecuteCommand<Group> SearchCommand { get; set; }
 
-        public ExecuteCommand<int> PinTabToStart { get; private set; }
-
-        public ExecuteCommand HomeCommand { get; set; }
+        public ExecuteCommand<int> PinTabToStart { get; private set; }      
 
         public ExecuteCommand GetMoreInfo
         {

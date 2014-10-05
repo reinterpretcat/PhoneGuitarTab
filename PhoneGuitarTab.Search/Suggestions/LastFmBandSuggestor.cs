@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 using PhoneGuitarTab.Search.Arts;
+using PhoneGuitarTab.Search.Extensions;
 
 
 namespace PhoneGuitarTab.Search.Suggestions
@@ -54,7 +55,7 @@ namespace PhoneGuitarTab.Search.Suggestions
                 {
                     var similar = XMLroot.Element("similar");
                     //If Bands in collection are less than 10, than get suggestions for all the similar artists.
-                    //Otherwise take only 3 similar artist for suggestions.
+                    //Otherwise take only 3 similar artist for each of the root artist
                     if (BaseBands.Count < 10)
                     {
                         foreach (var artist in similar.Elements())
@@ -84,7 +85,7 @@ namespace PhoneGuitarTab.Search.Suggestions
         private void CreateEntry(XElement elem)
         {
             var artistName = GetSafeValue(elem.Element("name"));
-            if (!(this.BaseBands.Contains(artistName, StringComparer.OrdinalIgnoreCase) || this.SuggestedArtistsSoFar.Contains(artistName, StringComparer.OrdinalIgnoreCase)))
+            if (!(this.BaseBands.Contains(artistName.TransLiterate(), StringComparer.OrdinalIgnoreCase) || this.SuggestedArtistsSoFar.Contains(artistName.TransLiterate(), StringComparer.OrdinalIgnoreCase)))
             {
                 var Entry = new SearchMediaEntry();
                 Entry.BandName = artistName;
