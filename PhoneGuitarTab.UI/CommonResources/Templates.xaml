@@ -302,12 +302,7 @@
                            Style="{StaticResource PhoneTextLargeStyle}"
                            Text="{Binding Name}"
                            TextTrimming="WordEllipsis" />
-                <TextBlock Margin="28,0"
-                           HorizontalAlignment="Left"
-                           FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                           Style="{StaticResource PhoneTextNormalStyle}"
-                           Text="{Binding Group}"
-                           TextWrapping="Wrap" />
+               
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="14,0"
                                VerticalAlignment="Bottom"

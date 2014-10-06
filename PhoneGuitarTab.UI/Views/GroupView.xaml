@@ -4,8 +4,7 @@
                xmlns:Command="clr-namespace:PhoneCore.Framework.Views.Commands;assembly=PhoneGuitarTab.Core"
                xmlns:Infrastructure="clr-namespace:PhoneGuitarTab.UI.Infrastructure"
                xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-               xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
+               xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"              
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -74,15 +73,22 @@
 
             <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_PopularTabsOnline, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
                 <Grid>
-                    <ring:ProgressRing x:Name="TabLoadingBarRing" 
-                                        VerticalAlignment="Top"
-                                    DataContext="{Binding Search, Source={StaticResource Locator}}"
-                                        IsActive="{Binding Search.IsSearching,
-                                                                  Source={StaticResource Locator},
-                                                                  Mode=TwoWay}"
-                                        Visibility="{Binding Search.IsSearching,
+                    <ProgressBar x:Name="DownloadBar" VerticalAlignment="Top"  Margin="0,-30,0,0"
+                                 DataContext="{Binding Search, Source={StaticResource Locator}}"
+                                  Visibility="{Binding Search.IsDownloading,
                                                              Source={StaticResource Locator},
-                                                             Converter={StaticResource boolVisibility}}" >
+                                                             Converter={StaticResource boolVisibility}}"
+                                 IsIndeterminate="{Binding Search.IsDownloading,
+                                                                  Source={StaticResource Locator},
+                                                                  Mode=TwoWay}">
+                    </ProgressBar>
+
+                    <ring:ProgressRing x:Name="TabLoadingProgressRing" 
+                                       Height="60" Width="60" VerticalAlignment="Top"
+                                       DataContext="{Binding Search, Source={StaticResource Locator}}"
+                                        IsActive="{Binding Search.IsSearching,
+                                                                  Source={StaticResource Locator}}" >
+
                     </ring:ProgressRing>
 
                     <controls:LongListSelector x:Name="tabsListArtists"
@@ -94,8 +100,6 @@
                     </controls:LongListSelector>
 
                 </Grid>
-
-
             </controls:PanoramaItem>
 
             <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
