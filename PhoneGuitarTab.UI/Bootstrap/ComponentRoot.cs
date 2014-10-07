@@ -123,6 +123,13 @@ namespace PhoneGuitarTab.UI.Bootstrap
             get { return _container.Resolve<ViewModel>(NavigationViewNames.SuggestedGroup) as SuggestedGroupViewModel; }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+         "CA1822:MarkMembersAsStatic",
+         Justification = "This non-static member is needed for data binding purposes.")]
+        public GenreGroupsViewModel GenreGroups
+        {
+            get { return _container.Resolve<ViewModel>(NavigationViewNames.GenreGroups) as GenreGroupsViewModel; }
+        }
 
         #endregion View models
     }

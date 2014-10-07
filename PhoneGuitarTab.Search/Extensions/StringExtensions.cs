@@ -10,6 +10,9 @@ namespace PhoneGuitarTab.Search.Extensions
             //Convert non-english characters to English.
             string unaccentedString = str.ToLower().StripAccents();
             unaccentedString = unaccentedString.Replace("'", "");
+            unaccentedString = unaccentedString.Replace("+", " ");
+            unaccentedString = unaccentedString.Replace("&", " ");
+            unaccentedString = unaccentedString.Replace(".", "");
             return unaccentedString.Replace("the ", "");
         }
        

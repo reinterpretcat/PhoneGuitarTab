@@ -94,6 +94,7 @@ function isTitleClean(songTitle) {
 
     if (wordInString(songTitle, 'cover')
         || wordInString(songTitle, 'remix')
+        || wordInString(songTitle, 'demo')
         || wordInString(songTitle, 'ft')
         || wordInString(songTitle, 'feat')
         || wordInString(songTitle, 'version')
@@ -103,6 +104,7 @@ function isTitleClean(songTitle) {
         || wordInString(songTitle, 'drumstep')
         || wordInString(songTitle, 'dubstep')
         || wordInString(songTitle, 'edit')
+        || wordInString(songTitle, 'edition')
         || wordInString(songTitle, 'rmx')
         || wordInString(songTitle, 'arrangement')
         || wordInString(songTitle, 'mix')

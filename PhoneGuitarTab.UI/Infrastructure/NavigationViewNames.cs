@@ -10,6 +10,7 @@
         public const string Help = "Help";
         public const string About = "About";
         public const string Group = "Group";
+        public const string GenreGroups = "GenreGroups";
         public const string SuggestedGroup = "SuggestedGroup";
         public const string Collection = "Collection";
         public const string Discover = "Discover";

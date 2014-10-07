@@ -40,6 +40,7 @@ namespace PhoneGuitarTab.UI.Bootstrap
             Container.Register(Component.For<IAudioSearcherFactory>().Use<AudioSearcherFactory>());
             Container.Register(Component.For<IMediaSearcherFactory>().Use<MediaSearcherFactory>());
             Container.Register(Component.For<IBandSuggestor>().Use<LastFmBandSuggestor>());
+            Container.Register(Component.For<IGenreBrowser>().Use<LastFmGenreBrowser>());
            
             return true;
         }

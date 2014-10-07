@@ -124,8 +124,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entities\BandBySuggestion.cs" />
-    <Compile Include="Entities\TabsPopular.cs" />
+    <Compile Include="CommonResources\ItemTemplateSelector.cs" />
+    <Compile Include="CommonResources\TemplateSelector.cs" />
+    <Compile Include="Entities\ItemsForSuggestion.cs" />
     <Compile Include="Infrastructure\TabTypeNames.cs" />
     <Compile Include="Bootstrap\CloudBootstrapperPlugin.cs" />
     <Compile Include="Bootstrap\ComponentRoot.cs" />
@@ -158,12 +159,16 @@
     <Compile Include="Infrastructure\NavigationViewNames.cs" />
     <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\DiscoverViewModel.cs" />
+    <Compile Include="ViewModels\GenreGroupsViewModel.cs" />
     <Compile Include="ViewModels\SuggestedGroupViewModel.cs" />
     <Compile Include="ViewModels\SynchronizeViewModel.cs" />
     <Compile Include="ViewModels\StaveTabViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
     <Compile Include="Views\ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GenreGroupsView.xaml.cs">
+      <DependentUpon>GenreGroupsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SuggestedGroupView.xaml.cs">
       <DependentUpon>SuggestedGroupView.xaml</DependentUpon>
@@ -245,6 +250,10 @@
     <Page Include="Views\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GenreGroupsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SuggestedGroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -433,6 +442,15 @@
     <Content Include="Images\dark\Find_dark.png" />
     <Content Include="Images\dark\refresh.png" />
     <Content Include="Images\dark\Text-Justify-Align_dark.png" />
+    <Content Include="Images\genres\90s.jpg" />
+    <Content Include="Images\genres\alternative.jpg" />
+    <Content Include="Images\genres\classicrock.jpg" />
+    <Content Include="Images\genres\heavymetal.jpg" />
+    <Content Include="Images\genres\indie.jpg" />
+    <Content Include="Images\genres\jazz.jpg" />
+    <Content Include="Images\genres\pop.jpg" />
+    <Content Include="Images\genres\punk.jpg" />
+    <Content Include="Images\genres\rock.jpg" />
     <Content Include="Images\instrument\bass_tile.png" />
     <Content Include="Images\instrument\chords_tile.png" />
     <Content Include="Images\instrument\default.png" />

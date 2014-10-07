@@ -24,7 +24,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
             { new Tuple<string, Uri>(NavigationViewNames.StaveTab, new Uri(@"/Views/StaveTabView.xaml", UriKind.Relative)),typeof (StaveTabViewModel) },
             { new Tuple<string, Uri>(NavigationViewNames.About, new Uri(@"/Views/AboutView.xaml", UriKind.Relative)), typeof (AboutViewModel) },
             { new Tuple<string, Uri>(NavigationViewNames.Group, new Uri(@"/Views/GroupView.xaml", UriKind.Relative)), typeof (GroupViewModel) },
-             { new Tuple<string, Uri>(NavigationViewNames.SuggestedGroup, new Uri(@"/Views/SuggestedGroupView.xaml", UriKind.Relative)), typeof (SuggestedGroupViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.SuggestedGroup, new Uri(@"/Views/SuggestedGroupView.xaml", UriKind.Relative)), typeof (SuggestedGroupViewModel) },
+            { new Tuple<string, Uri>(NavigationViewNames.GenreGroups, new Uri(@"/Views/GenreGroupsView.xaml", UriKind.Relative)), typeof (GenreGroupsViewModel) },
             { new Tuple<string, Uri>(NavigationViewNames.Synchronize, new Uri(@"/Views/SynchronizeView.xaml", UriKind.Relative)), typeof (SynchronizeViewModel) },
             { new Tuple<string, Uri>(NavigationViewNames.Discover, new Uri(@"/Views/PanaromaItems/Discover.xaml", UriKind.Relative)), typeof (DiscoverViewModel) },
             // TODO restyling artefact?

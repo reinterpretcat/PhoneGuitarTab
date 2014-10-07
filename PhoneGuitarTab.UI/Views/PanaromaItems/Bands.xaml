@@ -67,7 +67,7 @@
                     </Image>
                     <StackPanel  VerticalAlignment="Bottom" HorizontalAlignment="Left">
                         <TextBlock Margin="5,0,-20,0"
-                                   FontFamily="{StaticResource PhoneFontFamilyBold}"
+                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    FontSize="20"
                                    Foreground="White"
                                    Style="{StaticResource PhoneTextLargeStyle}"

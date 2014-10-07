@@ -232,6 +232,15 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BROWSE BY GENRE.
+        /// </summary>
+        public static string Discover_BrowseByGenre {
+            get {
+                return ResourceManager.GetString("Discover_BrowseByGenre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download some tabs and we will suggest you artists you will like..
         /// </summary>
         public static string Discover_DiscoverTip {
@@ -250,7 +259,7 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SUGGESTIONS BASED ON YOUR MUSIC TASTE.
+        ///   Looks up a localized string similar to SUGGESTIONS FOR YOU.
         /// </summary>
         public static string Discover_SuggestionsTitle {
             get {

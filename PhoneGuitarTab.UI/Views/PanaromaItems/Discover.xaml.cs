@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Phone.Controls;
+using PhoneGuitarTab.UI.ViewModels;
 
 namespace PhoneGuitarTab.UI.Views.PanaromaItems
 {
@@ -9,6 +10,9 @@ namespace PhoneGuitarTab.UI.Views.PanaromaItems
         {
               
             InitializeComponent();
+          
         }
+
+        
     }
 }

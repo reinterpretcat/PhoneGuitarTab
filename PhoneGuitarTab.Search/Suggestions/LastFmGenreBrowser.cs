@@ -6,15 +6,13 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 using PhoneGuitarTab.Search.Arts;
-using PhoneGuitarTab.Search.Extensions;
 
 
 namespace PhoneGuitarTab.Search.Suggestions
 {
-    public class LastFmBandSuggestor: IBandSuggestor
+    public class LastFmGenreBrowser: IGenreBrowser
     {
         public event DownloadStringCompletedEventHandler SuggestionSearchCompleted;
-
         public enum ImageSize
         {
             Small,
@@ -22,16 +20,13 @@ namespace PhoneGuitarTab.Search.Suggestions
             ExtraLarge
         };
 
-        public LastFmBandSuggestor()
+        public LastFmGenreBrowser()
         {
             Results = new List<SearchMediaEntry>();
-            SuggestedArtistsSoFar = new List<string>();
+           
         }
 
-        public List<SearchMediaEntry> Results { get; private set; }
-
-        private List<string> BaseBands { get;  set; }
-        private List<string> SuggestedArtistsSoFar { get; set; } 
+        public List<SearchMediaEntry> Results { get; private set; }             
 
         private void InvokeSearchComplete(DownloadStringCompletedEventArgs e)
         {
@@ -49,15 +44,16 @@ namespace PhoneGuitarTab.Search.Suggestions
             {
                 //Clear existing Results
                 this.Results.Clear();
-                var XMLroot = root.Element("artist");
+                var topArtists = root.Element("topartists");
 
-                if (XMLroot != null)
+                if (topArtists != null)
                 {
-                    var similar = XMLroot.Element("similar");                 
-                        foreach (var artist in similar.Elements())
-                        {
-                            this.CreateEntry(artist);
-                        }                  
+                    foreach (var artist in topArtists.Elements())
+                    {
+                        this.CreateEntry(artist);
+                    }
+                                             
+                               
                 }
     
             }
@@ -72,40 +68,24 @@ namespace PhoneGuitarTab.Search.Suggestions
         private void CreateEntry(XElement elem)
         {
             var artistName = GetSafeValue(elem.Element("name"));
-            if (!(this.BaseBands.Contains(artistName.TransLiterate(), StringComparer.OrdinalIgnoreCase) || this.SuggestedArtistsSoFar.Contains(artistName.TransLiterate(), StringComparer.OrdinalIgnoreCase)))
-            {
+          
                 var Entry = new SearchMediaEntry();
                 Entry.BandName = artistName;
-                Entry.ExtraLargeImageUrl = GetImageUrl(elem, ImageSize.ExtraLarge);
-                SuggestedArtistsSoFar.Add(artistName);
+                Entry.ExtraLargeImageUrl = GetImageUrl(elem, ImageSize.ExtraLarge);               
                 Results.Add(Entry);
-            }
         }
 
         protected string GetRequestTemplate()
         {         
-           var lang = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-           return "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={0}&lang="+ lang + "&autocorrect=1&api_key=dee2df7c96b013246bba7fe491be1f40";
+           return "http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag={0}&api_key=dee2df7c96b013246bba7fe491be1f40";
         }
 
         #endregion Override methods
 
-        public void RunBandSuggestor(List<string> bands )
-        {          
-            this.BaseBands = bands;
-             
-            this.SuggestedArtistsSoFar.Clear();
+        public void Run(string genre )
+        {                      
+            this.Results.Clear();
 
-            foreach (string band in BaseBands.Take(10))
-            {  
-                  this.RunForSingleBand(band);
-            }
-           
-            
-        }
-
-        private void RunForSingleBand(string artist)
-        {
             WebClient client = new WebClient();
             client.DownloadStringCompleted += (s, e) =>
             {
@@ -128,12 +108,13 @@ namespace PhoneGuitarTab.Search.Suggestions
                     //xml parse exceptions. buried intentionally
                 }
                 finally
-                {               
-                        InvokeSearchComplete(e);                                        
+                {
+                    InvokeSearchComplete(e);
                 }
             };
 
-            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(), artist)));
+            client.DownloadStringAsync(new Uri(String.Format(GetRequestTemplate(), genre)));
+            
         }
 
        
