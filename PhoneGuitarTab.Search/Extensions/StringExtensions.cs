@@ -12,6 +12,7 @@ namespace PhoneGuitarTab.Search.Extensions
             unaccentedString = unaccentedString.Replace("'", "");
             unaccentedString = unaccentedString.Replace("+", " ");
             unaccentedString = unaccentedString.Replace("&", " ");
+            unaccentedString = unaccentedString.Replace("/", " ");
             unaccentedString = unaccentedString.Replace(".", "");
             return unaccentedString.Replace("the ", "");
         }
