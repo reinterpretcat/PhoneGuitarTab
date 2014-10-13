@@ -33,7 +33,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 {
                     string document = _textTabAdapter.Adapt(new StreamReader(stream).ReadToEnd());
 
-                    if (Tablature.TabType.Name == "chords")
+                    if (Tablature.TabType.Name == "chords" || Tablature.TabType.Name=="tab")
                     {
                         var phoneAccentBrush = (Color)Application.Current.Resources["PhoneAccentColor"];
 

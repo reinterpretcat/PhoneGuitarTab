@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.Xna.Framework.Media;
 using PhoneGuitarTab.Core.Primitives;
-using PhoneGuitarTab.Search.Suggestions;
 using PhoneGuitarTab.UI.Data;
 
 namespace PhoneGuitarTab.UI.Entities
