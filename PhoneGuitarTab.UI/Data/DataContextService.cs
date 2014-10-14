@@ -195,7 +195,7 @@ namespace PhoneGuitarTab.UI.Data
 
         public Group GetOrCreateGroupByName(string name)
         {
-            string defaultGroupImageUrl = "/Images/light/band_light.png";
+            string defaultGroupImageUrl = "/Images/applogo.png";
 
             Group group = (from Group g in Groups
                 where g.Name == name

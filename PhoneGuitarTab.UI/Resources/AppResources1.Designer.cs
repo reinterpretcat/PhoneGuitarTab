@@ -259,6 +259,33 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading Artists.
+        /// </summary>
+        public static string Discover_LoadingArtists {
+            get {
+                return ResourceManager.GetString("Discover_LoadingArtists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading tabs by popularity....
+        /// </summary>
+        public static string Discover_LoadingPopularTabs {
+            get {
+                return ResourceManager.GetString("Discover_LoadingPopularTabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no available tabs for this artist. Check back in the future and if a tab will become available, we will deliver it to you..
+        /// </summary>
+        public static string Discover_NothingFound {
+            get {
+                return ResourceManager.GetString("Discover_NothingFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SUGGESTIONS FOR YOU.
         /// </summary>
         public static string Discover_SuggestionsTitle {

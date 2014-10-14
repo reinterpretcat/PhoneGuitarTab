@@ -38,17 +38,17 @@
         <Infrastructure:BooleanToVisibilityConverter x:Key="boolVisibility" />
 
         <DataTemplate x:Key="SuggestedArtistDataTemplate">
-            <Grid Margin="10,10,10,10" Height="200" Width="200" HorizontalAlignment="Center">
+            <Grid Margin="10" Height="220" Width="220" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Image VerticalAlignment="Center" HorizontalAlignment="Center" 
-                              Stretch="UniformToFill" MaxHeight="200" MaxWidth="200" Opacity="0.01" Source="/Images/light/band_light.png">
+                              Stretch="UniformToFill" MaxHeight="220" MaxWidth="220" Opacity="0.05" Source="/Images/applogo.png">
                 </Image>
                 <Image VerticalAlignment="Center" HorizontalAlignment="Center"
                            Stretch="UniformToFill"
-                           Visibility="Visible" MaxHeight="200" MaxWidth="200" Opacity="0.8">
+                           Visibility="Visible" MaxHeight="220" MaxWidth="220" Opacity="0.8">
                     <Image.Source >
                         <BitmapImage UriSource="{Binding ExtraLargeImageUrl, Converter={StaticResource ImageUrlToUriConverter}}"  />
                     </Image.Source>
@@ -90,17 +90,23 @@
                         Title="{Binding CurrentGenre.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource PivotHeaderTitleTemplate}">
             <controls:PivotItem  >
                 <Grid>
-                   <ring:ProgressRing x:Name="TabLoadingProgressRing" 
-                                       Height="60" Width="60"
-                                      
+                    <ring:ProgressRing x:Name="TabLoadingProgressRing" 
+                                       Height="60" Width="60" HorizontalAlignment="Center" Margin="0,-150,0,0"                                  
                                         IsActive="{Binding IsLoading}" >
-                                                                  
-
                     </ring:ProgressRing>
-
+                    <TextBlock x:Name="LoadingTextBlock" VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontFamily="Segoe UI Light"
+                   FontSize="24"
+                   Opacity="0.5"
+                   TextWrapping="Wrap"
+                   Foreground="{StaticResource PhoneForegroundBrush}"
+                   Text="{Binding Path=LocalizedResources.Discover_LoadingArtists, Source={StaticResource LocalizedStrings}}"
+                   Visibility="{Binding IsLoading, Converter={StaticResource boolVisibility}}">
+                    </TextBlock>
                     <controls:LongListSelector x:Name="genreArtists" 
                             toolkit:TiltEffect.IsTiltEnabled="True"           
-                              Background="Transparent" LayoutMode="Grid" GridCellSize="200,200"         
+                              Background="Transparent" LayoutMode="Grid" GridCellSize="220,220"         
                               ItemTemplate="{StaticResource SuggestedArtistDataTemplate}"                            
                               ItemsSource="{Binding Groups}">
                     </controls:LongListSelector>

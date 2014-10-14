@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using Microsoft.Phone.Net.NetworkInformation;
-using Microsoft.Phone.Reactive;
-using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
-using PhoneGuitarTab.Search;
-using PhoneGuitarTab.Search.Arts;
 using PhoneGuitarTab.Search.Suggestions;
 using PhoneGuitarTab.UI.Data;
-using PhoneGuitarTab.UI.Entities;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModels
@@ -24,7 +14,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private readonly IGenreBrowser _genreBrowser;
         private Group _currentGenre;
-      
+        private string lastRunGenre;
         private ObservableCollection<Group> _groups;
 
         private bool isLoading;
@@ -41,6 +31,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             _genreBrowser = genreBrowser;
             CreateCommands();
             RegisterEvents();
+            this.Groups = new ObservableCollection<Group>(); 
         }
 
         #endregion Constructors
@@ -82,11 +73,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         #endregion Properties
 
         #region Override members
-      
-        protected override void DataBind()
-        {
-            this.Groups = new ObservableCollection<Group>(); 
-        }
+   
 
         protected override void ReadNavigationParameters()
         {
@@ -107,11 +94,12 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private void DoSearch()
         {
-            if (NetworkInterface.GetIsNetworkAvailable())
+            if (NetworkInterface.GetIsNetworkAvailable() && lastRunGenre != CurrentGenre.Name)
             {
                 IsLoading = true;
                 this.Groups.Clear();
                 _genreBrowser.Run(CurrentGenre.Name);
+                lastRunGenre = CurrentGenre.Name;
             }
         }
 

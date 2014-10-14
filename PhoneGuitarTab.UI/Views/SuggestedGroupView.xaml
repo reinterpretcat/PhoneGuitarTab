@@ -67,14 +67,38 @@
                                                                   Source={StaticResource Locator},
                                                                   Mode=TwoWay}">
                     </ProgressBar>
+                    <TextBlock x:Name="NothingFoundForPopularTextBlock" 
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   FontFamily="Segoe UI Light"
+                   FontSize="20"
+                   Margin="20,2"
+                   TextWrapping="Wrap"
+                   Foreground="{StaticResource PhoneForegroundBrush}"
+                   Text="{Binding Path=LocalizedResources.Discover_NothingFound, Source={StaticResource LocalizedStrings}}"
+                   Visibility="{Binding Search.IsNothingPopularFound,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+                    </TextBlock>
+                  
                     <ring:ProgressRing x:Name="TabLoadingProgressRing" 
-                                       Height="60" Width="60" VerticalAlignment="Top"
+                                       Height="60" Width="60" HorizontalAlignment="Center"  VerticalAlignment="Top" Margin="0,80,0,0"
                                        DataContext="{Binding Search, Source={StaticResource Locator}}"
                                         IsActive="{Binding Search.IsSearching,
                                                                   Source={StaticResource Locator}}" >
                                         
                     </ring:ProgressRing>
-
+                    <TextBlock x:Name="LoadingTextBlock" Margin ="20"
+                   HorizontalAlignment="Center"
+                   FontFamily="Segoe UI Light"
+                   FontSize="24"
+                   Opacity="0.5"
+                   TextWrapping="Wrap"
+                   Foreground="{StaticResource PhoneForegroundBrush}"
+                   Text="{Binding Path=LocalizedResources.Discover_LoadingPopularTabs, Source={StaticResource LocalizedStrings}}"
+                   Visibility="{Binding Search.IsSearching,
+                                                             Source={StaticResource Locator},
+                                                             Converter={StaticResource boolVisibility}}">
+                    </TextBlock>
                     <controls:LongListSelector x:Name="tabsListArtists"
                             toolkit:TiltEffect.IsTiltEnabled="True"           
                               Background="Transparent"           

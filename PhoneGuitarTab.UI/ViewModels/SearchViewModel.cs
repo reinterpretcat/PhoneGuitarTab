@@ -38,6 +38,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         private bool isDownloading;
         private bool isSearchButtonEnabled;
         private bool isNothingFound;
+        private bool isNothingPopularFound;
         private bool isHintVisible = true;
         private SearchType searchMethod = SearchType.ByBand;
         private TabulatureType searchTabType = TabulatureType.All;
@@ -233,6 +234,17 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("IsSearchButtonEnabled");
             }
         }
+
+        public bool IsNothingPopularFound
+        {
+            get { return isNothingPopularFound; }
+            set
+            {
+                isNothingPopularFound = value;
+                RaisePropertyChanged("IsNothingPopularFound");
+            }
+        }
+
 
         public bool IsNothingFound
         {
@@ -623,13 +635,13 @@ namespace PhoneGuitarTab.UI.ViewModels
                         Version = entry.Version
                     });
                
-                IsNothingFound = !groupTabs.Any();
+              
 
                 if (_sortOrder == ResultsSortOrder.Popularity)
                 {
                     var artistName = CurrentSearchText.TransLiterate();
                     var grouped = groupTabs.Where(t => t.Group.TransLiterate() == artistName).OrderByDescending(t => t.Votes);
-
+                    IsNothingPopularFound = !grouped.Any();
                     SearchPopularTabs = new ObservableCollection<TabEntity>(grouped.Take(100));
                     Deployment.Current.Dispatcher.BeginInvoke(() => { IsSearching = false; });
                     //Clear the Search Area (for the Search Page)
@@ -638,6 +650,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 }
                 else
                 {
+                    IsNothingFound = !groupTabs.Any();
                     Pages = Enumerable.Range(1, _tabSearcher.Summary.PageCount).Select(p => p.ToString());
                     SearchGroupTabs = new TabsByName(new ObservableCollection<TabEntity>(groupTabs), Database);
                     Deployment.Current.Dispatcher.BeginInvoke(
@@ -786,10 +799,14 @@ namespace PhoneGuitarTab.UI.ViewModels
             SearchGroupTabs = null;
             SearchPopularTabs = null;
             IsHintVisible = false;
-            IsNothingFound = false;          
-
-            IsSearching = true;
-        
+            Deployment.Current.Dispatcher.BeginInvoke(
+                () =>
+                {
+                    IsNothingFound = false;
+                    IsNothingPopularFound = false;
+                    IsSearching = true;
+                });
+      
             _tabSearcher.Run(bandName, songName, CurrentPageIndex, SearchTabType, sortBy);
         }
 

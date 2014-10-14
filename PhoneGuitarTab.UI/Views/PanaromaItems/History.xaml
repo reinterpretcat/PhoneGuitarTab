@@ -41,7 +41,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Image VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"
-                              Stretch="UniformToFill" MaxHeight="275" MaxWidth="275" Opacity="0.05" Source="/Images/light/band_light.png">
+                              Stretch="UniformToFill" MaxHeight="275" MaxWidth="275" Opacity="0.05" Source="/Images/applogo.png">
                         </Image>
                         <Image VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1"
                            Stretch="UniformToFill"

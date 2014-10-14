@@ -183,6 +183,12 @@
   <data name="Discover_Header" xml:space="preserve">
     <value>discover</value>
   </data>
+  <data name="Discover_LoadingArtists" xml:space="preserve">
+    <value>Loading Artists</value>
+  </data>
+  <data name="Discover_NothingFound" xml:space="preserve">
+    <value>There are currently no available tabs for this artist. Check back in the future and if a tab will become available, we will deliver it to you.</value>
+  </data>
   <data name="Discover_SuggestionsTitle" xml:space="preserve">
     <value>MÜZİK ZEVKİNİZE GÖRE ÖNERİLERİMİZ</value>
   </data>

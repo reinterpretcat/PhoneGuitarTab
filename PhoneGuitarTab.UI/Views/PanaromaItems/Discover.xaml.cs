@@ -10,7 +10,7 @@ namespace PhoneGuitarTab.UI.Views.PanaromaItems
         {
               
             InitializeComponent();
-          
+           
         }
 
         
