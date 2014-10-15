@@ -33,7 +33,8 @@ namespace PhoneGuitarTab.UI.Bootstrap
 
             Container.Register(Component.For<MessageHub>().Use<MessageHub>().Singleton());
 
-            Container.Register(Component.For<RatingService>().Use<RatingService>().Singleton());
+            Container.Register(Component.For<PopUpMessageService>().Use<PopUpMessageService>().Singleton());
+            Container.Register(Component.For<ConfigService>().Use<ConfigService>().Singleton());
             Container.Register(Component.For<IDialogController>().Use<ToastDialogController>().Singleton());
 
             Container.Register(Component.For<ITabSearcher>().Use<UltimateGuitarTabSearcher>());

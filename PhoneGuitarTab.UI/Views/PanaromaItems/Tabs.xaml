@@ -14,7 +14,8 @@
     <phone:PanoramaItem.Resources>
         <Infrastructure:TabsGroupsCollectionToVisibilityConverter x:Key="tabsGroupsCollectionToVisibility" />
     </phone:PanoramaItem.Resources>
-    <toolkit:LongListMultiSelector x:Name="TabList" Margin="0,0,0,70"
+    <Grid>
+        <toolkit:LongListMultiSelector x:Name="TabList" Margin="{Binding Startup.ListMargin, Source={StaticResource Locator}}"
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="true" HideEmptyGroups ="true"
                               GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"
@@ -23,14 +24,14 @@
                               IsSelectionEnabled="{Binding IsSelectionEnabled}"
                               EnforceIsSelectionEnabled="{Binding IsSelectionEnabled}"
                               ItemsSource="{Binding AllTabs, Mode=TwoWay}" IsSelectionEnabledChanged="TabList_IsSelectionEnabledChanged" >
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="SelectionChanged">
-                <Command:ExecuteCommandAction Command="{Binding SetSelectedItems}" CommandParameter="{Binding ElementName=TabList}" />
-            </i:EventTrigger>        
-        </i:Interaction.Triggers>
-        <toolkit:LongListMultiSelector.ListHeaderTemplate>
-            <DataTemplate>
-                <TextBlock Margin="0,80"
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <Command:ExecuteCommandAction Command="{Binding SetSelectedItems}" CommandParameter="{Binding ElementName=TabList}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <toolkit:LongListMultiSelector.ListHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="0,80"
                            HorizontalAlignment="Center"
                            FontSize="24"
                            Opacity="0.5"
@@ -38,7 +39,9 @@
                            Visibility="{Binding DataContext.AllTabs,
                                                 ElementName=TabList,
                                                 Converter={StaticResource tabsGroupsCollectionToVisibility}}" />
-            </DataTemplate>
-        </toolkit:LongListMultiSelector.ListHeaderTemplate>
-    </toolkit:LongListMultiSelector>
+                </DataTemplate>
+            </toolkit:LongListMultiSelector.ListHeaderTemplate>
+        </toolkit:LongListMultiSelector>
+    </Grid>
+   
 </phone:PanoramaItem>

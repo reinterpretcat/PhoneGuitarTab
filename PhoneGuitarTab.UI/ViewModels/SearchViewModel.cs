@@ -23,6 +23,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private readonly IMediaSearcherFactory _mediaSearcherFactory; 
         private readonly ITabSearcher _tabSearcher;
+        private readonly ConfigService _configService;
         private SearchTabResultSummary _searchGroupTabsSummary;
         private Visibility _headerPagingVisibility;
         private HorizontalAlignment _pagesListAlignment;
@@ -43,31 +44,35 @@ namespace PhoneGuitarTab.UI.ViewModels
         private SearchType searchMethod = SearchType.ByBand;
         private TabulatureType searchTabType = TabulatureType.All;
         private List<SearchType> searchMethodOptions;
-        private List<TabulatureType> searchTabTypeOptions;
-        private TabEntity firstTabInList;
+        private List<TabulatureType> searchTabTypeOptions;     
         private bool downloadButtonClicked;
         private Tab currentTab;
         private TabEntity currentTabEntity;
         private ResultsSortOrder _sortOrder;
+        private bool isAdEnabled;
+
         #endregion Fields
 
         #region Constructors
 
         [Dependency]
-        public SearchViewModel(IMediaSearcherFactory mediaSearcherFactory, ITabSearcher tabSearcher, IDataContextService database, MessageHub hub)
+        public SearchViewModel(IMediaSearcherFactory mediaSearcherFactory, ITabSearcher tabSearcher, ConfigService configService, IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
-            CreateCommands();
-
+            _tabSearcher = tabSearcher;
+            _configService = configService;
+            _mediaSearcherFactory = mediaSearcherFactory;
+       
             CurrentPageIndex = 1;
             CurrentSearchText = String.Empty;
 
             HeaderPagingVisibility = Visibility.Collapsed;
+            _searchGroupTabs = new TabsByName(database, true);
 
-            _searchGroupTabs = new TabsByName(database, true);         
-            _tabSearcher = tabSearcher;
-            _tabSearcher.SearchComplete += (s, e) => SearchCompletedHandler(e);
-            _mediaSearcherFactory = mediaSearcherFactory;
+            CreateCommands();
+            RegisterEvents();
+            SetConfigVariables();
+          
         }
 
         #endregion Constructors
@@ -245,7 +250,6 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
         }
 
-
         public bool IsNothingFound
         {
             get { return isNothingFound; }
@@ -328,7 +332,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 return searchTabTypeOptions;
             }
         }
-
      
         public Tab CurrentTab
         {
@@ -346,6 +349,22 @@ namespace PhoneGuitarTab.UI.ViewModels
             {
                 currentTabEntity = value;
                 RaisePropertyChanged("CurrentTabEntity");
+            }
+        }
+
+        public bool IsAdEnabled
+        {
+            get
+            {
+                return isAdEnabled;
+            }
+        }
+
+        public Thickness ListMargin
+        {
+            get
+            {
+                return IsAdEnabled ? new Thickness(-4, 102, -4, 0) : new Thickness(-4, 32, -4, 0);
             }
         }
 
@@ -785,6 +804,16 @@ namespace PhoneGuitarTab.UI.ViewModels
             DownloadTab = new ExecuteCommand<string>(DoDownloadTab);
             ToggleActionArea = new ExecuteCommand<TabEntity>(DoToggleActionArea);
             NavigatePage = new ExecuteCommand<string>(DoNavigatePage);
+        }
+
+        private void RegisterEvents()
+        {
+            _tabSearcher.SearchComplete += (s, e) => SearchCompletedHandler(e);
+        }
+
+        private void SetConfigVariables()
+        {
+            isAdEnabled = _configService.AdEnabled;
         }
 
         private void RunSearch(string bandName, string songName, ResultsSortOrder sortBy)

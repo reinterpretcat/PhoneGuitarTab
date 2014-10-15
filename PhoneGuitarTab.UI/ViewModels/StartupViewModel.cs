@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
@@ -15,21 +16,25 @@ namespace PhoneGuitarTab.UI.ViewModels
     {
         #region Fields
 
-        private readonly RatingService _ratingService;
+        private readonly PopUpMessageService _ratingService;
+        private readonly ConfigService _configService;
         private bool _isSelectionEnabled;
         private string _backGroundImage;
-
+        private bool isAdEnabled;
         #endregion Fields
 
         #region Constructors
 
         [Dependency]
-        public StartupViewModel(IDataContextService database, RatingService ratingService, MessageHub hub)
+        public StartupViewModel(IDataContextService database, PopUpMessageService ratingService, ConfigService configService, MessageHub hub)
             : base(database, hub)
         {
             _ratingService = ratingService;
+            _configService = configService;
+            
             RegisterEvents();
             CreateCommands();
+            SetConfigVariables();
             ProductVersion = App.Version;
         }
 
@@ -59,6 +64,22 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
         }
 
+        public bool IsAdEnabled
+        {
+            get
+            {
+                return isAdEnabled;
+            }
+        }
+
+        public Thickness ListMargin
+        {
+            get
+            {
+                return IsAdEnabled ? new Thickness(0, 48, 0, 70) : new Thickness(0, 0, 0, 70);
+            }
+        }
+
         #endregion Properties
 
         #region Commands
@@ -68,6 +89,8 @@ namespace PhoneGuitarTab.UI.ViewModels
         public ExecuteCommand<object> GoToTabView { get; private set; }
 
         public ExecuteCommand Review { get; private set; }
+
+        public ExecuteCommand PurchasePro { get; private set; }
 
         public ExecuteCommand RequestBandSuggestion { get; private set; }
 
@@ -99,6 +122,17 @@ namespace PhoneGuitarTab.UI.ViewModels
             _ratingService.RateApp();
             new MarketplaceReviewTask().Show();
         }
+
+        private void DoPurchasePro()
+        {
+            MarketplaceDetailTask marketplaceDetailTask = new MarketplaceDetailTask();
+            //Change the app GUID to the pro version
+            marketplaceDetailTask.ContentIdentifier = "29a4c1d6-3cb0-4051-97b1-56813a4340c4";
+            marketplaceDetailTask.ContentType = MarketplaceContentType.Applications;
+
+            marketplaceDetailTask.Show();
+        }
+
 
         private void DoRequestBandSuggestion()
         {
@@ -147,6 +181,7 @@ namespace PhoneGuitarTab.UI.ViewModels
             GoTo = new ExecuteCommand<string>(DoGoTo);
             GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
             Review = new ExecuteCommand(DoReview);
+            PurchasePro = new ExecuteCommand(DoPurchasePro);
             RequestBandSuggestion = new ExecuteCommand(DoRequestBandSuggestion);
         }
 
@@ -154,6 +189,11 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             Hub.SelectorIsSelectionEnabled += (o, enabled) => { IsSelectionEnabled = enabled; };
             Hub.BackGroundImageChangeActivity += (o, image) => { BackGroundImage = image; };
+        }
+
+        private void SetConfigVariables()
+        {
+            isAdEnabled = _configService.AdEnabled;
         }
 
         #endregion Helper methods

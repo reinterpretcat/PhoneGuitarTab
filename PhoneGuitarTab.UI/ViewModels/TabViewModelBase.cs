@@ -20,6 +20,7 @@ namespace PhoneGuitarTab.UI.ViewModels
     public abstract class TabViewModelBase : DataContextViewModel
     {
         private readonly IAudioSearcherFactory _audioSearcherFactory;
+        private readonly ConfigService _configService;
       
         public string TabContent { get; set; }
 
@@ -41,7 +42,17 @@ namespace PhoneGuitarTab.UI.ViewModels
             }
         }
 
-        public RatingService RatingService { get; private set; }
+        public PopUpMessageService PopUpMessageService { get; private set; }
+
+        private bool isAdEnabled;
+        public bool IsAdEnabled
+        {
+            get
+            {
+                return isAdEnabled;
+            }
+        }
+        
 
         [Dependency]
         protected IDialogController Dialog { get; set; }
@@ -51,12 +62,14 @@ namespace PhoneGuitarTab.UI.ViewModels
         public delegate void AudioUrlRetrievedHandler(string audioUrl);
 
         [Dependency]
-        protected TabViewModelBase(IAudioSearcherFactory audioSearcherFactory, IDataContextService database, RatingService ratingService, MessageHub hub)
+        protected TabViewModelBase(IAudioSearcherFactory audioSearcherFactory, IDataContextService database, PopUpMessageService popUpMessageService, ConfigService configService, MessageHub hub)
             : base(database, hub)
         {
             _audioSearcherFactory = audioSearcherFactory;
-            RatingService = ratingService;
+            _configService = configService;
+            PopUpMessageService = popUpMessageService;
             CreateCommands();
+            SetConfigVariables();
         }
 
 
@@ -87,7 +100,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             //TODO: Get Local song at first
             GetOnlineAudioStreamUrl();
-            RunRating();
+            RunPopUpMessages();
             PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
         }
 
@@ -153,21 +166,43 @@ namespace PhoneGuitarTab.UI.ViewModels
                     AppResources.Tab_ConnectDevicePhraseEnd);
         }
 
-       
-
-        private void RunRating()
+        private void RunPopUpMessages()
         {
-            if (!RatingService.IsAppRated() && RatingService.IsNeedShowMessage())
+            //Run if ads are enabled only
+            if (IsAdEnabled)
             {
-                MessageBoxResult result = MessageBox.Show(AppResources.Tab_ReviewTheApp, AppResources.Tab_RateTheApp,
-                    MessageBoxButton.OKCancel);
-                //show message.
-                if (result == MessageBoxResult.OK)
+                // Run the App rate or review
+                if (!PopUpMessageService.IsAppRated() && PopUpMessageService.IsNeedShowRatingMessage())
                 {
-                    RatingService.RateApp();
-                    new MarketplaceReviewTask().Show();
+                    MessageBoxResult result = MessageBox.Show(AppResources.Tab_ReviewTheApp, AppResources.Tab_RateTheApp,
+                        MessageBoxButton.OKCancel);
+                    //show message.
+                    if (result == MessageBoxResult.OK)
+                    {
+                        PopUpMessageService.RateApp();
+                        new MarketplaceReviewTask().Show();
+                    }
+                }
+
+                //Ask for purchasing the pro - a one time question.
+                if (PopUpMessageService.IsNeedShowPurchaseProMessage())
+                {
+                    MessageBoxResult result = MessageBox.Show(AppResources.Tab_PurchaseProHeader, AppResources.Tab_PurchaseProText,
+                       MessageBoxButton.OKCancel);
+
+                    if (result == MessageBoxResult.OK)
+                    {
+                        MarketplaceDetailTask marketplaceDetailTask = new MarketplaceDetailTask();
+                        //Change the app GUID to the pro version
+                        marketplaceDetailTask.ContentIdentifier = "29a4c1d6-3cb0-4051-97b1-56813a4340c4";
+                        marketplaceDetailTask.ContentType = MarketplaceContentType.Applications;
+
+                        marketplaceDetailTask.Show();
+                    }
+                  
                 }
             }
+          
         }
 
         private void CreateCommands()
@@ -176,6 +211,12 @@ namespace PhoneGuitarTab.UI.ViewModels
             ToggleSlide = new ExecuteCommand<object>(DoToggleSlide);
             ToggleLightMode = new ExecuteCommand(DoToggleLightMode);
         }
+
+        private void SetConfigVariables()
+        {
+            isAdEnabled = _configService.AdEnabled;
+        }
+
 
         #endregion
 

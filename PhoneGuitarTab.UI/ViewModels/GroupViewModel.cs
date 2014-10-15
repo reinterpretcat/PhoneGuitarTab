@@ -19,6 +19,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         #region  Fields
 
         private readonly IMediaSearcherFactory _mediaSearcherFactory;
+        private readonly ConfigService _configService;
         private Group _currentGroup;
         private string _summary;
         private string _imageUrl;
@@ -28,18 +29,21 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private bool isLoading;
         private bool infoFound;
-
+        private bool isAdEnabled;
         #endregion  Fields
 
         #region Constructors
 
         [Dependency]
-        public GroupViewModel(IMediaSearcherFactory mediaSearcherFactory, IDataContextService database, MessageHub hub)
+        public GroupViewModel(IMediaSearcherFactory mediaSearcherFactory, ConfigService configService, IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
             _mediaSearcherFactory = mediaSearcherFactory;
+            _configService = configService;
+
             CreateCommands();
             RegisterEvents();
+            SetConfigVariables();
         }
 
         #endregion Constructors
@@ -131,6 +135,22 @@ namespace PhoneGuitarTab.UI.ViewModels
                 infoFound = !value;
                 RaisePropertyChanged("NothingFound");
                 RaisePropertyChanged("InfoLoaded");
+            }
+        }
+
+        public bool IsAdEnabled
+        {
+            get
+            {
+                return isAdEnabled;
+            }
+        }
+
+        public Thickness PanoramaMargin
+        {
+            get
+            {
+                return IsAdEnabled ? new Thickness(0, 0, 0, 80) : new Thickness(0, 0, 0, 0);
             }
         }
 
@@ -255,41 +275,6 @@ namespace PhoneGuitarTab.UI.ViewModels
         #endregion Command handlers
 
         #region Event handlers
-
-
-        #endregion Event handlers
-
-        #region Helper methods
-
-        private void CreateCommands()
-        {
-            SearchCommand = new ExecuteCommand<Group>(DoSearch);
-            HomeCommand = new ExecuteCommand(DoHome);
-            RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);
-            PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
-            GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
-            RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
-        }
-
-        private void GetCurrentGroupInfo(Group group)
-        {
-            var bandInfoSearch = _mediaSearcherFactory.Create();
-            bandInfoSearch.MediaSearchCompleted += (s, e) => MediaSearchCompleted(s);
-            bandInfoSearch.RunMediaSearch(group.Name, string.Empty);        
-            IsLoading = true;
-            NothingFound = false;
-
-        }
-
-        private void RegisterEvents()
-        {
-            Hub.TabsDownloaded += (o, args) =>
-            {
-                Tabs = new TabsForBand(CurrentGroup.Id, Database);
-            };
-           
-
-        }
         void MediaSearchCompleted(object sender)
         {
             var result = sender as IMediaSearcher;
@@ -325,7 +310,47 @@ namespace PhoneGuitarTab.UI.ViewModels
             {
                 IsLoading = false;
             }
+
+        }
+
+        #endregion Event handlers
+
+        #region Helper methods
+
+        private void CreateCommands()
+        {
+            SearchCommand = new ExecuteCommand<Group>(DoSearch);
+            HomeCommand = new ExecuteCommand(DoHome);
+            RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);
+            PinTabToStart = new ExecuteCommand<int>(DoPinTabToStart);
+            GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
+            RemoveTab = new ExecuteCommand<int>(DoRemoveTab);
+        }
+
+        private void GetCurrentGroupInfo(Group group)
+        {
+            var bandInfoSearch = _mediaSearcherFactory.Create();
+            bandInfoSearch.MediaSearchCompleted += (s, e) => MediaSearchCompleted(s);
+            bandInfoSearch.RunMediaSearch(group.Name, string.Empty);        
+            IsLoading = true;
+            NothingFound = false;
+
+        }
+
+        private void RegisterEvents()
+        {
+            Hub.TabsDownloaded += (o, args) =>
+            {
+                Tabs = new TabsForBand(CurrentGroup.Id, Database);
+            };
            
+
+        }
+      
+
+        private void SetConfigVariables()
+        {
+            isAdEnabled = _configService.AdEnabled;
         }
 
         #endregion Helper methods

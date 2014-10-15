@@ -108,8 +108,8 @@
         </DataTemplate>
     </phone:PanoramaItem.Resources>
     <Grid>
-      
-        <phone:LongListSelector x:Name="SuggestedGroupList"  Margin="0,0,0,20"   
+
+        <phone:LongListSelector x:Name="SuggestedGroupList"  Margin="{Binding Startup.ListMargin, Source={StaticResource Locator}}" 
                               toolkit:TiltEffect.IsTiltEnabled="True"
                               IsGroupingEnabled="False" LayoutMode="List" 
                               HideEmptyGroups="True"                            

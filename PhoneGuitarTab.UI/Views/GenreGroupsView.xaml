@@ -11,6 +11,7 @@
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core"
                xmlns:ring="clr-namespace:InTheHand.UI.Xaml.Controls;assembly=InTheHand.UI.Xaml.Controls.ProgressRing"
+               xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
                x:Name="root"
                DataContext="{Binding GenreGroups, Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -86,7 +87,7 @@
     <Grid x:Name="LayoutRoot">
         <!--  Pivot Control  -->
        
-        <controls:Pivot x:Name="PivotControl" 
+        <controls:Pivot x:Name="PivotControl" Margin="{Binding PivotMargin}"
                         Title="{Binding CurrentGenre.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource PivotHeaderTitleTemplate}">
             <controls:PivotItem  >
                 <Grid>
@@ -130,7 +131,10 @@
             </-->
 
         </controls:Pivot>
-       
+
+        <Grid Name="AdContainer">
+            <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Bottom" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}"  />
+        </Grid>
     </Grid>
 
    

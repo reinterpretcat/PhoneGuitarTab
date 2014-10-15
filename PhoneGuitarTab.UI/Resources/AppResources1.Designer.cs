@@ -810,6 +810,15 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to remove ads &amp; get pro.
+        /// </summary>
+        public static string Startup_RemoveAds {
+            get {
+                return ResourceManager.GetString("Startup_RemoveAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select.
         /// </summary>
         public static string Startup_Select {
@@ -977,6 +986,24 @@ namespace PhoneGuitarTab.UI.Resources {
         public static string Tab_ConnectDevicePhraseStart {
             get {
                 return ResourceManager.GetString("Tab_ConnectDevicePhraseStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One time question; Would you like to support us?.
+        /// </summary>
+        public static string Tab_PurchaseProHeader {
+            get {
+                return ResourceManager.GetString("Tab_PurchaseProHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Why see ugly ads in this nice application all the time? You can do a little help by purchasing the pro version so that we can update our guitar equipment and you will not be seeing the ads anymore!.
+        /// </summary>
+        public static string Tab_PurchaseProText {
+            get {
+                return ResourceManager.GetString("Tab_PurchaseProText", resourceCulture);
             }
         }
         

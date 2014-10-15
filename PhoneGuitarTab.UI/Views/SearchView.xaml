@@ -12,6 +12,7 @@
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
                     x:Name="root"
                     DataContext="{Binding Search, Source={StaticResource Locator}}"
                     Style="{StaticResource TransitionPageStyle}"
@@ -308,6 +309,9 @@
                                                              Converter={StaticResource boolVisibility}}" >
             </ring:ProgressRing>
         </StackPanel>
+        <Grid Name="AdContainer" >
+            <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}" />
+        </Grid>
         <phone:LongListSelector x:Name="tabsList"
                             toolkit:TiltEffect.IsTiltEnabled="True"
                               Background="Transparent" IsGroupingEnabled="True" HideEmptyGroups="True"
@@ -317,7 +321,7 @@
                               JumpListStyle="{StaticResource SearchListJumpListStyle}"
                               ItemTemplate="{StaticResource SearchTabItemTemplate}"
                               ItemsSource="{Binding SearchGroupTabs}"
-                              Margin="-4,32,-4,0">
+                              Margin="{Binding ListMargin}">
         </phone:LongListSelector>
         <TextBlock x:Name="textBlock" 
                    VerticalAlignment="Top" HorizontalAlignment="Left"

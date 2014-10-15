@@ -11,6 +11,7 @@
                xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core"
                xmlns:ring="clr-namespace:InTheHand.UI.Xaml.Controls;assembly=InTheHand.UI.Xaml.Controls.ProgressRing"
+               xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
                x:Name="root"
                DataContext="{Binding SuggestedGroup, Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -56,7 +57,7 @@
         <controls:Panorama x:Name="PivotControl" 
                         Title="{Binding CurrentGroup.Name, Converter={StaticResource UpperStr}}"  TitleTemplate="{StaticResource SmallPanoramaTitle}">
 
-            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_PopularTabsOnline, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
+            <controls:PanoramaItem Header="{Binding Path=LocalizedResources.Group_PopularTabsOnline, Source={StaticResource LocalizedStrings}}" HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}" Margin="{Binding PanoramaMargin}">
                 <Grid>
                     <ProgressBar x:Name="DownloadBar" VerticalAlignment="Top"  Margin="0,-30,0,0"
                                  DataContext="{Binding Search, Source={StaticResource Locator}}"
@@ -112,7 +113,7 @@
                
             </controls:PanoramaItem>
 
-            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}"  HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}">
+            <controls:PanoramaItem x:Name="InfoPivotItem" Header="{Binding Path=LocalizedResources.Group_Info, Source={StaticResource LocalizedStrings}}"  HeaderTemplate="{StaticResource PivotHeaderTitleTemplate}" Margin="{Binding PanoramaMargin}">
                 <ScrollViewer>
                     <StackPanel>
                         <RichTextBox FontSize="{StaticResource PhoneFontSizeMedium}"
@@ -156,7 +157,10 @@
                 </ImageBrush>
             </controls:Panorama.Background>
         </controls:Panorama>
-       
+
+        <Grid Name="AdContainer">
+            <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Bottom" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}"  />
+        </Grid>
     </Grid>
 
    

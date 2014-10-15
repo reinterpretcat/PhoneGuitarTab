@@ -12,6 +12,7 @@
                xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:panaromaItems="clr-namespace:PhoneGuitarTab.UI.Views.PanaromaItems"
+               xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"               
                DataContext="{Binding Startup,  Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -49,6 +50,31 @@
                                                      Text="{Binding Path=LocalizedResources.Startup_About, Source={StaticResource LocalizedStrings}}" />             
             </custom:BindableApplicationBar.MenuItems>
         </custom:BindableApplicationBar>
+        <custom:BindableApplicationBar x:Key="TabsAppBarAdEnabled"  Mode="Default" BindableOpacity="0.6">
+            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
+                                                     CommandParameter="MainSearch"                                      
+                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
+                                                     Text="{Binding Path=LocalizedResources.Startup_TabSearch, Source={StaticResource LocalizedStrings}}">
+            </custom:BindableApplicationBarButton>
+            <custom:BindableApplicationBarButton 
+                                                     Command="{Binding Collection.SetIsSelectionEnabled, Source={StaticResource Locator}}"
+                                                     CommandParameter="true"
+                                                     IconUri="/Images/light/multi.png"
+                                                     Text="{Binding Path=LocalizedResources.Startup_Select, Source={StaticResource LocalizedStrings}}" />
+            <custom:BindableApplicationBar.MenuItems>
+                <custom:BindableApplicationBarMenuItem
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="Synchronize"
+                                                     Text="{Binding Path=LocalizedResources.Startup_Syncronize, Source={StaticResource LocalizedStrings}}" />
+                <custom:BindableApplicationBarMenuItem 
+                                                     Command="{Binding GoTo}"
+                                                     CommandParameter="About"
+                                                     Text="{Binding Path=LocalizedResources.Startup_About, Source={StaticResource LocalizedStrings}}" />
+                <custom:BindableApplicationBarMenuItem 
+                                                     Command="{Binding PurchasePro}"                                                   
+                                                     Text="{Binding Path=LocalizedResources.Startup_RemoveAds, Source={StaticResource LocalizedStrings}}" />
+            </custom:BindableApplicationBar.MenuItems>
+        </custom:BindableApplicationBar>
         <custom:BindableApplicationBar x:Key="Default" Mode="Default" BindableOpacity="0.6">
             <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
                                                      CommandParameter="MainSearch"                                      
@@ -66,7 +92,12 @@
             </custom:BindableApplicationBar.MenuItems>
 
         </custom:BindableApplicationBar>
-        <custom:BindableApplicationBar x:Key="Discover" Mode="Minimized"  BindableOpacity="0.6">
+        <custom:BindableApplicationBar x:Key="DefaultAdEnabled" Mode="Default" BindableOpacity="0.6">
+            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
+                                                     CommandParameter="MainSearch"                                      
+                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
+                                                     Text="{Binding Path=LocalizedResources.Startup_TabSearch, Source={StaticResource LocalizedStrings}}">
+            </custom:BindableApplicationBarButton>
             <custom:BindableApplicationBar.MenuItems>
                 <custom:BindableApplicationBarMenuItem 
                                                      Command="{Binding Review}"                                                   
@@ -75,15 +106,13 @@
                                                      Command="{Binding GoTo}"
                                                      CommandParameter="About"
                                                      Text="{Binding Path=LocalizedResources.Startup_About, Source={StaticResource LocalizedStrings}}" />
+                <custom:BindableApplicationBarMenuItem 
+                                                     Command="{Binding PurchasePro}"                                                   
+                                                     Text="{Binding Path=LocalizedResources.Startup_RemoveAds, Source={StaticResource LocalizedStrings}}" />
             </custom:BindableApplicationBar.MenuItems>
+
         </custom:BindableApplicationBar>
-        <custom:BindableApplicationBar x:Key="Recent" Mode="Default" BindableOpacity="0.6">
-            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
-                                                     CommandParameter="MainSearch"                                      
-                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
-                                                     Text="{Binding Path=LocalizedResources.Startup_TabSearch, Source={StaticResource LocalizedStrings}}">
-            </custom:BindableApplicationBarButton>
-        </custom:BindableApplicationBar>        
+
         <custom:BindableApplicationBar x:Key="MultiSelectAppBar" Mode="Default"  BindableOpacity="0.6">
             <custom:BindableApplicationBarButton
                                                     Command="{Binding Collection.RemoveTabs, Source={StaticResource Locator}}"
@@ -109,7 +138,7 @@
     </Views:ViewPage.Resources>
 
         <Grid x:Name="LayoutRoot">
-        <Controls:Panorama Name="MainPanorama" Title="Phone Guitar Tab" TitleTemplate="{StaticResource EmptyTitleTemplate}" SelectionChanged="MainPanorama_SelectionChanged">        
+        <Controls:Panorama Name="MainPanorama" Title="Phone Guitar Tab" TitleTemplate="{StaticResource EmptyTitleTemplate}" SelectionChanged="MainPanorama_SelectionChanged" Loaded="MainPanorama_OnLoaded">        
             <panaromaItems:Tabs />
             <panaromaItems:Bands />
             <panaromaItems:Discover />
@@ -127,32 +156,12 @@
                 </ImageBrush>
             </Controls:Panorama.Background>
         </Controls:Panorama>
-      
+            <Grid Name="AdContainer">
+                <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}" Margin="0,80,0,0" />
+            </Grid>
+
+
     </Grid>
 
-    <custom:Bindable.ApplicationBar >
-        <custom:BindableApplicationBar x:Name="TabsAppBar"  Mode="Default" BindableOpacity="0.6">
-            <custom:BindableApplicationBarButton  Command="{Binding GoTo}"
-                                                     CommandParameter="MainSearch"                                      
-                                                     IconUri="/Images/light/appbar.feature.search.rest.png"
-                                                     Text="{Binding Path=LocalizedResources.Startup_TabSearch, Source={StaticResource LocalizedStrings}}">
-            </custom:BindableApplicationBarButton>
-            <custom:BindableApplicationBarButton 
-                                                     Command="{Binding Collection.SetIsSelectionEnabled, Source={StaticResource Locator}}"
-                                                     CommandParameter="true"
-                                                     IconUri="/Images/light/multi.png"
-                                                     Text="{Binding Path=LocalizedResources.Startup_Select, Source={StaticResource LocalizedStrings}}" />
-            <custom:BindableApplicationBar.MenuItems>
-                <custom:BindableApplicationBarMenuItem
-                                                     Command="{Binding GoTo}"
-                                                     CommandParameter="Synchronize"
-                                                     Text="{Binding Path=LocalizedResources.Startup_Syncronize, Source={StaticResource LocalizedStrings}}" />
-                <custom:BindableApplicationBarMenuItem 
-                                                     Command="{Binding GoTo}"
-                                                     CommandParameter="About"
-                                                     Text="{Binding Path=LocalizedResources.Startup_About, Source={StaticResource LocalizedStrings}}" />
-            </custom:BindableApplicationBar.MenuItems>
-        </custom:BindableApplicationBar>
-    </custom:Bindable.ApplicationBar>
-
+    
 </Views:ViewPage>

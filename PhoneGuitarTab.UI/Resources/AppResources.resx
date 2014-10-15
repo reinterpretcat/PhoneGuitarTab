@@ -368,6 +368,9 @@ band name, song name</value>
   <data name="Startup_RateApp" xml:space="preserve">
     <value>rate the app</value>
   </data>
+  <data name="Startup_RemoveAds" xml:space="preserve">
+    <value>remove ads &amp; get pro</value>
+  </data>
   <data name="Startup_Select" xml:space="preserve">
     <value>select</value>
   </data>
@@ -424,6 +427,12 @@ band name, song name</value>
   </data>
   <data name="Tab_ConnectDevicePhraseStart" xml:space="preserve">
     <value>Connect your device to internet to play</value>
+  </data>
+  <data name="Tab_PurchaseProHeader" xml:space="preserve">
+    <value>One time question; Would you like to support us?</value>
+  </data>
+  <data name="Tab_PurchaseProText" xml:space="preserve">
+    <value>Why see ugly ads in this nice application all the time? You can do a little help by purchasing the pro version so that we can update our guitar equipment and you will not be seeing the ads anymore!</value>
   </data>
   <data name="Tab_RateTheApp" xml:space="preserve">
     <value>Rate the app?</value>

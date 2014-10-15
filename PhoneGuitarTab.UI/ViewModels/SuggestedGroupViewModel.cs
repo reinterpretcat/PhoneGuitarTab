@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using Microsoft.Phone.Tasks;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
@@ -16,6 +17,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         #region  Fields
 
         private readonly IMediaSearcherFactory _mediaSearcherFactory;
+        private readonly ConfigService _configService;
         private Group _currentGroup;
         private string _summary;
         private string _imageUrl;
@@ -25,17 +27,20 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         private bool isLoading;
         private bool infoFound;
-
+        private bool isAdEnabled;
         #endregion  Fields
 
         #region Constructors
 
         [Dependency]
-        public SuggestedGroupViewModel(IMediaSearcherFactory mediaSearcherFactory, IDataContextService database, MessageHub hub)
+        public SuggestedGroupViewModel(IMediaSearcherFactory mediaSearcherFactory, ConfigService configService, IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
             _mediaSearcherFactory = mediaSearcherFactory;
+            _configService = configService;
+
             CreateCommands();
+            SetConfigVariables();
         }
 
         #endregion Constructors
@@ -52,7 +57,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 DataBind();
             }
         }
-
         public string Summary
         {
             get { return _summary; }
@@ -62,7 +66,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("Summary");
             }
         }
-
         public string ImageUrl
         {
             get { return _imageUrl; }
@@ -72,7 +75,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("ImageUrl");
             }
         }
-
         public string LargeImageUrl
         {
             get { return _largeImageUrl; }
@@ -82,7 +84,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("LargeImageUrl");
             }
         }
-
         public string ExtraLargeImageUrl
         {
             get { return _extraLargeImageUrl; }
@@ -92,7 +93,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("ExtraLargeImageUrl");
             }
         }
-
         public TabsForBand Tabs
         {
             get { return _tabs; }
@@ -102,7 +102,6 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("Tabs");
             }
         }
-
         public bool IsLoading
         {
             get { return isLoading; }
@@ -113,12 +112,10 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("InfoLoaded");
             }
         }
-
         public bool InfoLoaded
         {
             get { return !IsLoading && infoFound; }
         }
-
         public bool NothingFound
         {
             get { return !infoFound; }
@@ -129,7 +126,20 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("InfoLoaded");
             }
         }
-
+        public bool IsAdEnabled
+        {
+            get
+            {
+                return isAdEnabled;
+            }
+        }
+        public Thickness PanoramaMargin
+        {
+            get
+            {
+                return IsAdEnabled ? new Thickness(0, 0, 0, 80) : new Thickness(0, 0, 0, 0);
+            }
+        }
         #endregion Properties
 
         #region Override members
@@ -222,27 +232,6 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Event handlers
 
-
-        #endregion Event handlers
-
-        #region Helper methods
-
-        private void CreateCommands()
-        {         
-            RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);          
-            GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
-        }
-
-        private void GetCurrentGroupInfo(Group group)
-        {
-            var bandInfoSearch = _mediaSearcherFactory.Create();
-            bandInfoSearch.MediaSearchCompleted += (s,e) => MediaSearchCompleted(s);
-            bandInfoSearch.RunMediaSearch(group.Name, string.Empty);        
-            IsLoading = true;
-            NothingFound = false;
-
-        }
-
         void MediaSearchCompleted(object sender)
         {
             var result = sender as IMediaSearcher;
@@ -278,8 +267,35 @@ namespace PhoneGuitarTab.UI.ViewModels
             {
                 IsLoading = false;
             }
-           
+
         }
+        #endregion Event handlers
+
+        #region Helper methods
+
+        private void CreateCommands()
+        {         
+            RefreshInfoCommand = new ExecuteCommand<Group>(DoRefreshInfo);          
+            GoToTabView = new ExecuteCommand<object>(DoGoToTabView);
+        }
+
+        private void SetConfigVariables()
+        {
+            isAdEnabled = _configService.AdEnabled;
+        }
+
+
+        private void GetCurrentGroupInfo(Group group)
+        {
+            var bandInfoSearch = _mediaSearcherFactory.Create();
+            bandInfoSearch.MediaSearchCompleted += (s,e) => MediaSearchCompleted(s);
+            bandInfoSearch.RunMediaSearch(group.Name, string.Empty);        
+            IsLoading = true;
+            NothingFound = false;
+
+        }
+
+      
 
         #endregion Helper methods
     }

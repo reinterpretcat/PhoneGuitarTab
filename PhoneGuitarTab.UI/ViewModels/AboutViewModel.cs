@@ -12,7 +12,7 @@ namespace PhoneGuitarTab.UI.ViewModels
     public class AboutViewModel : ViewModel
     {
         [Dependency]
-        public AboutViewModel(RatingService ratingService)
+        public AboutViewModel(PopUpMessageService ratingService)
         {
             AppTitle = AppResources.About_AppTitle;
             CompanyUrl = AppResources.About_CompanyUrl;
@@ -32,7 +32,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         public string AppTitle { get; set; }
         public string ApplicationVersion { get; set; }
 
-        private readonly RatingService _ratingService;
+        private readonly PopUpMessageService _ratingService;
 
         public ICommand ViewWebsiteCommand
         {

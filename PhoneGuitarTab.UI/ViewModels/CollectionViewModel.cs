@@ -15,6 +15,7 @@ namespace PhoneGuitarTab.UI.ViewModels
     {
         #region Fields
 
+      
         private BandByName groups;
         private TabsByName allTabs;
         private TabsForHistory _tabsHistory;
@@ -115,6 +116,8 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("BackGroundImage");
             }
         }
+
+        
         #endregion Properties
 
 

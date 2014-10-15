@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Automation.Provider;
 using System.Windows.Media;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Search.Audio;
 using PhoneGuitarTab.UI.Data;
-using PhoneGuitarTab.Search;
 using PhoneGuitarTab.UI.Infrastructure;
 
 namespace PhoneGuitarTab.UI.ViewModels
@@ -17,8 +15,8 @@ namespace PhoneGuitarTab.UI.ViewModels
         private readonly TextTabAdapter _textTabAdapter;
 
         [Dependency]
-        public TextTabViewModel(IAudioSearcherFactory audioSearcherFactory, IDataContextService database, RatingService ratingService, MessageHub hub)
-            : base(audioSearcherFactory, database, ratingService, hub)
+        public TextTabViewModel(IAudioSearcherFactory audioSearcherFactory, IDataContextService database, PopUpMessageService popUpMessageService, ConfigService configService, MessageHub hub)
+            : base(audioSearcherFactory, database, popUpMessageService, configService, hub)
         {
             _textTabAdapter = new TextTabAdapter();
         }

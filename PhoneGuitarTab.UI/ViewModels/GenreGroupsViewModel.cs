@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using Microsoft.Phone.Net.NetworkInformation;
 using PhoneGuitarTab.Core.Dependencies;
 using PhoneGuitarTab.Core.Views.Commands;
@@ -13,24 +14,27 @@ namespace PhoneGuitarTab.UI.ViewModels
         #region  Fields
 
         private readonly IGenreBrowser _genreBrowser;
+        private readonly ConfigService _configService;
         private Group _currentGenre;
         private string lastRunGenre;
         private ObservableCollection<Group> _groups;
 
         private bool isLoading;
-
+        private bool isAdEnabled;
 
         #endregion  Fields
 
         #region Constructors
 
         [Dependency]
-        public GenreGroupsViewModel(IGenreBrowser genreBrowser, IDataContextService database, MessageHub hub)
+        public GenreGroupsViewModel(IGenreBrowser genreBrowser, ConfigService configService, IDataContextService database, MessageHub hub)
             : base(database, hub)
         {
             _genreBrowser = genreBrowser;
+            _configService = configService;
             CreateCommands();
             RegisterEvents();
+            SetConfigVariables();
             this.Groups = new ObservableCollection<Group>(); 
         }
 
@@ -68,8 +72,22 @@ namespace PhoneGuitarTab.UI.ViewModels
                 RaisePropertyChanged("IsLoading");
               
             }
-        }      
+        }
 
+        public bool IsAdEnabled
+        {
+            get
+            {
+                return isAdEnabled;
+            }
+        }
+        public Thickness PivotMargin
+        {
+            get
+            {
+                return IsAdEnabled ? new Thickness(0, 0, 0, 80) : new Thickness(0, 0, 0, 0);
+            }
+        }
         #endregion Properties
 
         #region Override members
@@ -132,7 +150,11 @@ namespace PhoneGuitarTab.UI.ViewModels
             _genreBrowser.SuggestionSearchCompleted += (s, e) => SuggestionSearchCompleted(s);
         }
 
-       
+        private void SetConfigVariables()
+        {
+            isAdEnabled = _configService.AdEnabled;
+        }
+
        
 
         #endregion Helper methods

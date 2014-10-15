@@ -3,7 +3,7 @@ using PhoneGuitarTab.Core.Services;
 
 namespace PhoneGuitarTab.UI.Infrastructure
 {
-    public class RatingService
+    public class PopUpMessageService
     {
         private const string IsAppRatedKeyName = "isApprated";
         private const string TabViewCountKeyName = "tabViewCount";
@@ -12,10 +12,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private const int TabViewCountDefault = 0;
         private const int ShowRatingInEveryN = 7;
 
+        private const int ShowProMessageAt = 25;
         private readonly ISettingService _settingService;
 
         [Dependency]
-        public RatingService(ISettingService settingService)
+        public PopUpMessageService(ISettingService settingService)
         {
             _settingService = settingService;
         }
@@ -26,9 +27,14 @@ namespace PhoneGuitarTab.UI.Infrastructure
                 _settingService.Save();
         }
 
-        public bool IsNeedShowMessage()
+        public bool IsNeedShowRatingMessage()
         {
             return (_settingService.GetValueOrDefault(TabViewCountKeyName, TabViewCountDefault)%ShowRatingInEveryN) == 0;
+        }
+
+        public bool IsNeedShowPurchaseProMessage()
+        {
+            return _settingService.GetValueOrDefault(TabViewCountKeyName, TabViewCountDefault) == ShowProMessageAt;
         }
 
         public void IncreaseTabViewCount()

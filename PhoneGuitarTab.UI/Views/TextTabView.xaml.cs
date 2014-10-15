@@ -53,7 +53,12 @@ namespace PhoneGuitarTab.UI
             }
 
             if (!(ApplicationBar.Mode == ApplicationBarMode.Minimized))
+            {
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
+                //Set the adcontrol margin depending on the app bar mode
+                AdControl.Margin = new Thickness(0,0,0,30);
+            }
+                
         }
 
         private void tabWebBrowser_ScriptNotify(object sender, NotifyEventArgs e)
@@ -97,7 +102,7 @@ namespace PhoneGuitarTab.UI
         {
             base.OnNavigatedTo(e);                            
             var viewModel = DataContext as TextTabViewModel;
-            viewModel.RatingService.IncreaseTabViewCount();
+            viewModel.PopUpMessageService.IncreaseTabViewCount();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

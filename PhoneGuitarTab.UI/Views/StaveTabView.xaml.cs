@@ -98,7 +98,7 @@ namespace PhoneGuitarTab.UI.Views
         }
 
         // Handle navigation failures.
-        private void Browser_NavigationFailed(object sender, System.Windows.Navigation.NavigationFailedEventArgs e)
+        private void Browser_NavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             MessageBox.Show(AppResources.Stave_NavigationFailed);
         }
@@ -130,7 +130,12 @@ namespace PhoneGuitarTab.UI.Views
             ListPickerInstrument.Visibility = Visibility.Collapsed;
 
             if (ApplicationBar.Mode != ApplicationBarMode.Minimized)
+            {
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
+                //Set the adcontrol margin depending on the app bar mode
+                AdControl.Margin = new Thickness(0, 0, 0, 30);
+            }
+               
         }
 
         /// <summary>
@@ -224,7 +229,7 @@ namespace PhoneGuitarTab.UI.Views
             base.OnNavigatedTo(e);
            
             var viewModel = DataContext as StaveTabViewModel;
-            viewModel.RatingService.IncreaseTabViewCount();
+            viewModel.PopUpMessageService.IncreaseTabViewCount();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
