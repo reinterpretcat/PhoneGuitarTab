@@ -110,8 +110,11 @@ namespace PhoneGuitarTab.UI.Views
             {
                 Browser.InvokeScript("pullTabContent", viewModel.TabContent, viewModel.IsNightMode.ToString());
                 OrientationChanged += (_, __) => Browser.InvokeScript("showTab");
+                //Trigger Audio Stream Url retrieval - after the tab content is being pulled.
+                viewModel.GetOnlineAudioStreamUrl();
+                isBrowserReady = true;
             }
-            isBrowserReady = true;
+           
             viewModel.Browser_ScriptNotify(sender, e);
         }
 

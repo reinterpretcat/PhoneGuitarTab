@@ -12,6 +12,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
         private const int TabViewCountDefault = 0;
         private const int ShowRatingInEveryN = 7;
 
+        private const string TabViewCountForProMessageKeyName = "tabViewCountForProMessage";
         private const int ShowProMessageAt = 25;
         private readonly ISettingService _settingService;
 
@@ -34,7 +35,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
 
         public bool IsNeedShowPurchaseProMessage()
         {
-            return _settingService.GetValueOrDefault(TabViewCountKeyName, TabViewCountDefault) == ShowProMessageAt;
+            return _settingService.GetValueOrDefault(TabViewCountForProMessageKeyName, TabViewCountDefault) == ShowProMessageAt;
         }
 
         public void IncreaseTabViewCount()
@@ -42,6 +43,11 @@ namespace PhoneGuitarTab.UI.Infrastructure
             int tabCount = _settingService.GetValueOrDefault(TabViewCountKeyName, TabViewCountDefault);
 
             if (_settingService.AddOrUpdateValue(TabViewCountKeyName, (tabCount + 1)))
+                _settingService.Save();
+
+            int tabCountPro = _settingService.GetValueOrDefault(TabViewCountForProMessageKeyName, TabViewCountDefault);
+
+            if (_settingService.AddOrUpdateValue(TabViewCountForProMessageKeyName, (tabCountPro + 1)))
                 _settingService.Save();
         }
 

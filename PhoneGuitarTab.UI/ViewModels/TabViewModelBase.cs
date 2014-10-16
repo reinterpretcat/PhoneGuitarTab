@@ -98,8 +98,7 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         public void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
-            //TODO: Get Local song at first
-            GetOnlineAudioStreamUrl();
+            
             RunPopUpMessages();
             PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
         }
@@ -154,8 +153,12 @@ namespace PhoneGuitarTab.UI.ViewModels
 
         #region Helpers
 
-        private void GetOnlineAudioStreamUrl()
+        /// <summary>
+        /// Invokes the browser script to get the start point stream url for the song; note that this url is not the end point.
+        /// </summary>
+        public void GetOnlineAudioStreamUrl()
         {
+            //TODO: Get Local song at first
             if (NetworkInterface.GetIsNetworkAvailable())
             {
                Application.Current.RootVisual.Dispatcher.BeginInvoke(
@@ -187,7 +190,7 @@ namespace PhoneGuitarTab.UI.ViewModels
                 //Ask for purchasing the pro - a one time question.
                 if (PopUpMessageService.IsNeedShowPurchaseProMessage())
                 {
-                    MessageBoxResult result = MessageBox.Show(AppResources.Tab_PurchaseProHeader, AppResources.Tab_PurchaseProText,
+                    MessageBoxResult result = MessageBox.Show(AppResources.Tab_PurchaseProText, AppResources.Tab_PurchaseProHeader,
                        MessageBoxButton.OKCancel);
 
                     if (result == MessageBoxResult.OK)

@@ -73,6 +73,10 @@ namespace PhoneGuitarTab.UI
                         viewModel.IsNightMode.ToString());
                 }
                 isBrowserReady = true;
+
+                //Trigger Audio Stream Url retrieval - after the tab content is being pulled.
+                viewModel.GetOnlineAudioStreamUrl();
+
             }
         }
 
