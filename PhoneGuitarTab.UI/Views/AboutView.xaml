@@ -28,9 +28,10 @@
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="144" />
-            <RowDefinition Height="249*" />
-            <RowDefinition Height="186*"/>
-            <RowDefinition Height="221*"/>
+            <RowDefinition Height="253*" />
+            <RowDefinition Height="263*"/>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="TitlePanel"
@@ -63,17 +64,17 @@
 
         <StackPanel Margin="0,0,2,0" Grid.Row="1">
             <TextBlock Margin="23,15,0,6"
-        		TextWrapping="Wrap" Foreground="White" Height="231" >
+        		TextWrapping="Wrap" Foreground="White" Height="252" >
         		<Run FontFamily="Segoe WP Semibold" Text="{Binding Path=LocalizedResources.About_AppTitle, Source={StaticResource LocalizedStrings}}"/>
         		<Run Text="{Binding Path=LocalizedResources.About_AppDescription, Source={StaticResource LocalizedStrings}}"/>
         		<LineBreak/>
         		<Run/>
-        		<LineBreak/>
-        		<Run Text="{Binding Path=LocalizedResources.About_AppInvitation, Source={StaticResource LocalizedStrings}}"/>
+                <LineBreak/>
+        		<Run Text="{Binding PurchaseOrThanksMessage}"/>
             </TextBlock>
         </StackPanel>
 
-        <StackPanel Margin="0,0,2,0" Grid.Row="2" toolkit:TiltEffect.IsTiltEnabled="True">
+        <StackPanel Margin="0,0,2,0" Grid.Row="2" toolkit:TiltEffect.IsTiltEnabled="True" Grid.RowSpan="2">
             <Grid Height="220">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="13*"/>
@@ -89,14 +90,14 @@
                     <Image x:Name="rate" Source="/Images/about/rate.png" Grid.Column="1" Height="80" Width="52">
                     </Image>
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
+                        <i:EventTrigger EventName="Tap">
                             <Command:ExecuteCommandAction Command="{Binding ReviewCommand, Mode=OneWay}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
                 <Button BorderThickness="0" Grid.Column="1" Content="{Binding Path=LocalizedResources.About_RateAndReview, Source={StaticResource LocalizedStrings}}" Margin="0,111,0,29"  FontWeight="ExtraLight" VerticalContentAlignment="Stretch" FontSize="16" Grid.RowSpan="2" Foreground="White" RenderTransformOrigin="0.51,0.513">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
+                        <i:EventTrigger EventName="Tap">
                             <Command:ExecuteCommandAction Command="{Binding ReviewCommand, Mode=OneWay}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -105,7 +106,7 @@
                 <Button BorderThickness="0" Grid.Column="3" Margin="0,0,0,1" HorizontalAlignment="Left" Width="152" >
                     <Image x:Name="fb" Source="/Images/about/fb.png" Width="69"/>
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
+                        <i:EventTrigger EventName="Tap">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
         					CommandParameter="{Binding FacebookUrl}"/>
                         </i:EventTrigger>
@@ -116,7 +117,7 @@
                         Height="80" FontWeight="ExtraLight" 
                         FontSize="16" Grid.RowSpan="2" Foreground="White">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
+                        <i:EventTrigger EventName="Tap">
                             <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
         					CommandParameter="{Binding FacebookUrl}"/>
                         </i:EventTrigger>
@@ -125,7 +126,7 @@
 
                 <Button BorderThickness="0" Grid.Column="2" Margin="0,6,0,1"  >
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
+                        <i:EventTrigger EventName="Tap">
                             <Command:ExecuteCommandAction Command="{Binding SupportQuestionCommand, Mode=OneWay}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -134,7 +135,7 @@
 
                 <Button BorderThickness="0" Content="{Binding Path=LocalizedResources.About_GiveFeedback, Source={StaticResource LocalizedStrings}}" VerticalContentAlignment="Stretch"  Grid.Column="2"  Margin="0,111,0,29"  FontWeight="ExtraLight" FontSize="16" Grid.RowSpan="2" Foreground="White">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
+                        <i:EventTrigger EventName="Tap">
                             <Command:ExecuteCommandAction Command="{Binding SupportQuestionCommand, Mode=OneWay}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -142,39 +143,20 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel Margin="2,5,0,0" Grid.Row="3" toolkit:TiltEffect.IsTiltEnabled="True">
-            <Grid Height="215" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="25*"/>
-                    <RowDefinition Height="197*"/>
-                </Grid.RowDefinitions>
+        <StackPanel Grid.Row="3">
+            <Button BorderThickness="2" Content="{Binding Path=LocalizedResources.Startup_RemoveAds, Source={StaticResource LocalizedStrings}}" VerticalContentAlignment="Stretch"   FontWeight="ExtraLight" FontSize="20"  Foreground="White" HorizontalAlignment="Center" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Tap">
+                        <Command:ExecuteCommandAction Command="{Binding Startup.PurchasePro, Source={StaticResource Locator}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
 
-                <Button  BorderThickness="0" Margin="199,27,176,87" Grid.Row="1">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
-            					CommandParameter="{Binding CompanyUrl}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
-                    <Image x:Name="codeplex" Source="/Images/about/codeplex.png" Height="55" Width="45"  />
-
-                </Button>
-                <Button BorderThickness="0" Content="project page &#xA;on CodePlex" Margin="0,83,176,0" Width="103" FlowDirection="LeftToRight"
-            		Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="68" 
-            		TextOptions.TextHintingMode="Animated" FontWeight="ExtraLight" FontSize="14" Foreground="White" Grid.Row="1" >
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <Command:ExecuteCommandAction Command="{Binding ViewWebsiteCommand, Mode=OneWay}"
-            					CommandParameter="{Binding CompanyUrl}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-
-                <TextBlock Margin="126,146,0,10" Foreground="White"
-            		Text="{Binding Copyright}"
-            		TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="14" Grid.Row="1"  />
-            </Grid>
+        <StackPanel Margin="2,5,0,0" Grid.Row="4" toolkit:TiltEffect.IsTiltEnabled="True">
+            <TextBlock Foreground="White"
+        		Text="{Binding Copyright}" TextAlignment="Center"
+        		TextWrapping="Wrap" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="14" Height="40" RenderTransformOrigin="0.533,-2.997" />
         </StackPanel>
 
 

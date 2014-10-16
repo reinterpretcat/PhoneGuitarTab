@@ -11,8 +11,11 @@ namespace PhoneGuitarTab.UI.ViewModels
 {
     public class AboutViewModel : ViewModel
     {
+        private readonly PopUpMessageService _ratingService;
+        private readonly ConfigService _configService;
+
         [Dependency]
-        public AboutViewModel(PopUpMessageService ratingService)
+        public AboutViewModel(PopUpMessageService ratingService, ConfigService configService)
         {
             AppTitle = AppResources.About_AppTitle;
             CompanyUrl = AppResources.About_CompanyUrl;
@@ -22,6 +25,8 @@ namespace PhoneGuitarTab.UI.ViewModels
             Support = AppResources.About_Support;
             ApplicationVersion = App.Version;
             _ratingService = ratingService;
+            _configService = configService;
+            IsAdEnabled = _configService.AdEnabled;
         }
 
         public string CompanyUrl { get; set; }
@@ -31,9 +36,15 @@ namespace PhoneGuitarTab.UI.ViewModels
         public string Support { get; set; }
         public string AppTitle { get; set; }
         public string ApplicationVersion { get; set; }
+        
+        public bool IsAdEnabled { get; set; }
 
-        private readonly PopUpMessageService _ratingService;
+        public string PurchaseOrThanksMessage
+        {
+            get { return IsAdEnabled ? AppResources.About_PleasePurchase : AppResources.About_ThanksForPurchasing; }
+        }
 
+      
         public ICommand ViewWebsiteCommand
         {
             get

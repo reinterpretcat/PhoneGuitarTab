@@ -133,6 +133,16 @@ namespace PhoneGuitarTab.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you like this app and want to support us please purchase the pro version. 
+        ///For suggestions, feedback or questions please don&apos;t hesitate to contact us..
+        /// </summary>
+        public static string About_PleasePurchase {
+            get {
+                return ResourceManager.GetString("About_PleasePurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to rate and review.
         /// </summary>
         public static string About_RateAndReview {
@@ -156,6 +166,15 @@ namespace PhoneGuitarTab.UI.Resources {
         public static string About_SupportEmail {
             get {
                 return ResourceManager.GetString("About_SupportEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for purchasing the pro version and supporting us. If you have suggestions, feedback or questions please don&apos;t hesitate to contact us. We respond to every single message written to us..
+        /// </summary>
+        public static string About_ThanksForPurchasing {
+            get {
+                return ResourceManager.GetString("About_ThanksForPurchasing", resourceCulture);
             }
         }
         

@@ -10,7 +10,7 @@ namespace PhoneGuitarTab.UI.Infrastructure
         [Dependency]
         public ConfigService()
         {
-            AdEnabled = true;
+            AdEnabled = false;
         }
      
     }

@@ -141,6 +141,10 @@
   <data name="About_GiveFeedback" xml:space="preserve">
     <value>wyraź opinię</value>
   </data>
+  <data name="About_PleasePurchase" xml:space="preserve">
+    <value>If you like this app and want to support us please purchase the pro version. 
+For suggestions, feedback or questions please don't hesitate to contact us.</value>
+  </data>
   <data name="About_RateAndReview" xml:space="preserve">
     <value>Oceń i skomentuj</value>
   </data>
@@ -149,6 +153,9 @@
   </data>
   <data name="About_SupportEmail" xml:space="preserve">
     <value>phoneguitartab@gmail.com</value>
+  </data>
+  <data name="About_ThanksForPurchasing" xml:space="preserve">
+    <value>Thank you for purchasing the pro version and supporting us. If you have suggestions, feedback or questions please don't hesitate to contact us. We respond to every single message written to us.</value>
   </data>
   <data name="About_Version" xml:space="preserve">
     <value>wersja</value>

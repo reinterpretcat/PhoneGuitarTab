@@ -57,7 +57,7 @@
                                    FontSize="20"
                                    Foreground="White"
                                    Style="{StaticResource PhoneTextLargeStyle}"
-                                   TextTrimming="WordEllipsis"
+                                   TextWrapping="Wrap"
                                    Text="{Binding Name}" />
                             <TextBlock Margin="5,0,0,19"
                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
