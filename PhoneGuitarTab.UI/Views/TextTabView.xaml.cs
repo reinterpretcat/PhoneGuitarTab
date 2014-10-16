@@ -127,10 +127,17 @@ namespace PhoneGuitarTab.UI
                 (Orientation == PageOrientation.LandscapeRight))
             {
                 ApplicationBar.IsVisible = false;
+                //Set the adcontrol margins depending on the orientation
+                AdControl.Margin = new Thickness(0, 0, 0, 0);
+                AdControl.HorizontalAlignment = HorizontalAlignment.Right;
             }
             else
             {
                 ApplicationBar.IsVisible = true;
+
+                //Set the adcontrol margins depending on the orientation
+                AdControl.Margin = new Thickness(0, 0, 0, 30);
+                AdControl.HorizontalAlignment = HorizontalAlignment.Center;
             }
         }
 
