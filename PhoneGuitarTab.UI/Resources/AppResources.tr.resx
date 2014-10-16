@@ -142,8 +142,8 @@
     <value>iletişim</value>
   </data>
   <data name="About_PleasePurchase" xml:space="preserve">
-    <value>If you like this app and want to support us please purchase the pro version. 
-For suggestions, feedback or questions please don't hesitate to contact us.</value>
+    <value>Bu uygulamayı beğeniyorsanız ve bize destek olmak istiyorsanız, lütfen pro versiyonu satın alınız.
+Önerileriniz ve yorumlarınız için, lütfen aşağıdaki iletişim fasilitesiyle bize yazınız. Yazılan mesajların hepsini okuyup cevap yazıyoruz.</value>
   </data>
   <data name="About_RateAndReview" xml:space="preserve">
     <value>yorum yaz</value>
@@ -155,7 +155,8 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>phoneguitartab@gmail.com</value>
   </data>
   <data name="About_ThanksForPurchasing" xml:space="preserve">
-    <value>Thank you for purchasing the pro version and supporting us. If you have suggestions, feedback or questions please don't hesitate to contact us. We respond to every single message written to us.</value>
+    <value>Pro versiyonu satın alıp bize destek olduğunuz için teşekkür ederiz.
+Önerileriniz ve yorumlarınız için, lütfen aşağıdaki iletişim fasilitesiyle bize yazınız. Yazılan mesajların hepsini okuyup cevap yazıyoruz.</value>
   </data>
   <data name="About_Version" xml:space="preserve">
     <value>versiyon</value>
@@ -182,19 +183,23 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>Tablar: </value>
   </data>
   <data name="Discover_BrowseByGenre" xml:space="preserve">
-    <value>BROWSE BY GENRE</value>
+    <value>MÜZİK TÜRÜNE GÖRE GRUPLAR</value>
   </data>
   <data name="Discover_DiscoverTip" xml:space="preserve">
     <value>Download some tabs and we will suggest you artists you will like.</value>
   </data>
   <data name="Discover_Header" xml:space="preserve">
-    <value>discover</value>
+    <value>keşfet</value>
   </data>
   <data name="Discover_LoadingArtists" xml:space="preserve">
-    <value>Loading Artists</value>
+    <value>Sanatçı listesi yükleniyor..</value>
+  </data>
+  <data name="Discover_LoadingPopularTabs" xml:space="preserve">
+    <value>Tablar yükleniyor..</value>
   </data>
   <data name="Discover_NothingFound" xml:space="preserve">
-    <value>There are currently no available tabs for this artist. Check back in the future and if a tab will become available, we will deliver it to you.</value>
+    <value>Üzgünüz, bu sanatçı için bir tab bulamadık. Daha sonra tekrar bakabilirsiniz.
+Şayet bu sanatçıya ait bir tab internete yüklenirse, burada görebilirsiniz.</value>
   </data>
   <data name="Discover_SuggestionsTitle" xml:space="preserve">
     <value>MÜZİK ZEVKİNİZE GÖRE ÖNERİLERİMİZ</value>
@@ -215,7 +220,7 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>daha fazla</value>
   </data>
   <data name="Group_PopularTabsOnline" xml:space="preserve">
-    <value>popüler tablar online</value>
+    <value>popüler tablar</value>
   </data>
   <data name="Group_Tabs" xml:space="preserve">
     <value>tablar</value>
@@ -373,7 +378,7 @@ grup adı, şarkı adı</value>
     <value>oyla ve yorum yaz</value>
   </data>
   <data name="Startup_RemoveAds" xml:space="preserve">
-    <value>remove ads &amp; get pro</value>
+    <value>reklamları kaldır &amp; pro</value>
   </data>
   <data name="Startup_Select" xml:space="preserve">
     <value>seç</value>
@@ -433,10 +438,10 @@ grup adı, şarkı adı</value>
     <value>Bu şarkıyı dinlemek için cihazınızın internete bağlı olması gerekir.</value>
   </data>
   <data name="Tab_PurchaseProHeader" xml:space="preserve">
-    <value>One time question; Would you like to support us?</value>
+    <value>Tek seferlik soru; Bize destek olmak istermiydiniz?</value>
   </data>
   <data name="Tab_PurchaseProText" xml:space="preserve">
-    <value>Why see ugly ads in this nice application all the time? You can do a little help by purchasing the pro version so that we can update our guitar equipment and you will not be seeing the ads anymore!</value>
+    <value>Neden bu güzel uygulamada çirkin reklamları göresiniz ki? Pro versiyonu satın alarak bize destek olabilir ve reklamlardan kurtulabilirsiniz.</value>
   </data>
   <data name="Tab_RateTheApp" xml:space="preserve">
     <value>Oylasan süper olur aslında?</value>

@@ -157,7 +157,7 @@
             </Controls:Panorama.Background>
         </Controls:Panorama>
             <Grid Name="AdContainer">
-                <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}" Margin="0,80,0,0" />
+                <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}" Margin="0,84,0,0" />
             </Grid>
 
 
