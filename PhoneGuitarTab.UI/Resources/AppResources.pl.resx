@@ -142,8 +142,8 @@
     <value>wyraź opinię</value>
   </data>
   <data name="About_PleasePurchase" xml:space="preserve">
-    <value>If you like this app and want to support us please purchase the pro version. 
-For suggestions, feedback or questions please don't hesitate to contact us.</value>
+    <value>Jeśli podoba Ci się ta aplikacja i chcesz nas wesprzeć, proszę kup wersję pro.
+Jeśli masz jakieś sugestie albo pytanie skontaktuj się z nami.</value>
   </data>
   <data name="About_RateAndReview" xml:space="preserve">
     <value>Oceń i skomentuj</value>
@@ -155,7 +155,8 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>phoneguitartab@gmail.com</value>
   </data>
   <data name="About_ThanksForPurchasing" xml:space="preserve">
-    <value>Thank you for purchasing the pro version and supporting us. If you have suggestions, feedback or questions please don't hesitate to contact us. We respond to every single message written to us.</value>
+    <value>Dziękujemy za zakup wersji pro.
+Jeśli masz jakieś sugestie albo pytanie skontaktuj się z nami.</value>
   </data>
   <data name="About_Version" xml:space="preserve">
     <value>wersja</value>
@@ -182,25 +183,26 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>Karty: </value>
   </data>
   <data name="Discover_BrowseByGenre" xml:space="preserve">
-    <value>BROWSE BY GENRE</value>
+    <value>PRZEGLĄDAJ WG GATUNKU</value>
   </data>
   <data name="Discover_DiscoverTip" xml:space="preserve">
     <value>Download some tabs and we will suggest you artists you will like.</value>
   </data>
   <data name="Discover_Header" xml:space="preserve">
-    <value>discover</value>
+    <value>odkrywaj</value>
   </data>
   <data name="Discover_LoadingArtists" xml:space="preserve">
-    <value>Loading Artists</value>
+    <value>Ładowanie Artystów</value>
   </data>
   <data name="Discover_LoadingPopularTabs" xml:space="preserve">
-    <value>Loading tabs by popularity...</value>
+    <value>Ładowanie kart...</value>
   </data>
   <data name="Discover_NothingFound" xml:space="preserve">
-    <value>There are currently no available tabs for this artist. Check back in the future and if a tab will become available, we will deliver it to you.</value>
+    <value>W tym momencie nie ma dostępnych kart tego artysty.
+Przepraszamy.</value>
   </data>
   <data name="Discover_SuggestionsTitle" xml:space="preserve">
-    <value>SUGGESTIONS BASED ON YOUR MUSIC TASTE</value>
+    <value>SUGESTIE DLA CIEBIE</value>
   </data>
   <data name="Error_Message" xml:space="preserve">
     <value>Unfortunately, we cannot handle this error. If it repeats every time, please reinstall application. Then, you can download previous synchronized tabs using synchronization feature. Error details:</value>
@@ -218,7 +220,7 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>więcej kart</value>
   </data>
   <data name="Group_PopularTabsOnline" xml:space="preserve">
-    <value>popular tabs online</value>
+    <value>popularne karty</value>
   </data>
   <data name="Group_Tabs" xml:space="preserve">
     <value>karty</value>
@@ -376,7 +378,7 @@ artysta, piosenka</value>
     <value>oceń aplikacje</value>
   </data>
   <data name="Startup_RemoveAds" xml:space="preserve">
-    <value>remove ads &amp; get pro</value>
+    <value>omiń reklamy &amp; pro</value>
   </data>
   <data name="Startup_Select" xml:space="preserve">
     <value>wybierz</value>
@@ -436,10 +438,10 @@ artysta, piosenka</value>
     <value>Połącz z internetem, aby odsłuchać</value>
   </data>
   <data name="Tab_PurchaseProHeader" xml:space="preserve">
-    <value>One time question; Would you like to support us?</value>
+    <value>Krótkie pytanie, czy chciałbyś nas wesprzeć?</value>
   </data>
   <data name="Tab_PurchaseProText" xml:space="preserve">
-    <value>Why see ugly ads in this nice application all the time? You can do a little help by purchasing the pro version so that we can update our guitar equipment and you will not be seeing the ads anymore!</value>
+    <value> Po co oglądać te irytujące reklamy? Możesz nam pomóc kupując wersję pro i tym samym nie będziesz ich więcej widzieć.</value>
   </data>
   <data name="Tab_RateTheApp" xml:space="preserve">
     <value>Oceń aplikację?</value>
@@ -454,7 +456,7 @@ artysta, piosenka</value>
     <value>Pobrane</value>
   </data>
   <data name="TemplateSearch_Open" xml:space="preserve">
-    <value>Open</value>
+    <value>Otwórz</value>
   </data>
   <data name="TemplateSearch_Version" xml:space="preserve">
     <value>wersja:</value>
