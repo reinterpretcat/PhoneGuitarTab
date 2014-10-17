@@ -142,8 +142,7 @@
     <value>обратная связь</value>
   </data>
   <data name="About_PleasePurchase" xml:space="preserve">
-    <value>If you like this app and want to support us please purchase the pro version. 
-For suggestions, feedback or questions please don't hesitate to contact us.</value>
+    <value>Понравилось наше приложение? Приобретайте про-версию PhoneGuitarTab и поддержите наш проект! Появились вопросы или предложения по улучшению программы? Тогда пишите нам!</value>
   </data>
   <data name="About_RateAndReview" xml:space="preserve">
     <value>оставить отзыв</value>
@@ -155,7 +154,7 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>phoneguitartab@gmail.com</value>
   </data>
   <data name="About_ThanksForPurchasing" xml:space="preserve">
-    <value>Thank you for purchasing the pro version and supporting us. If you have suggestions, feedback or questions please don't hesitate to contact us. We respond to every single message written to us.</value>
+    <value>Благодарим за приобретение про-версии PhoneGuitarTab! Ваша поддержка важна для нас. Если у Вас есть вопросы, пожелания или предложения по улучшению программы, пожалуйста, напишите нам.</value>
   </data>
   <data name="About_Version" xml:space="preserve">
     <value>версия</value>
@@ -182,25 +181,25 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>Табулатур: </value>
   </data>
   <data name="Discover_BrowseByGenre" xml:space="preserve">
-    <value>BROWSE BY GENRE</value>
+    <value>ПОИСК ПО ЖАНРУ</value>
   </data>
   <data name="Discover_DiscoverTip" xml:space="preserve">
-    <value>Download some tabs and we will suggest you artists you will like.</value>
+    <value>Скачайте несколько табулатур, и мы предложим вам табулатуры похожих исполнителей.</value>
   </data>
   <data name="Discover_Header" xml:space="preserve">
-    <value>discover</value>
+    <value>разное</value>
   </data>
   <data name="Discover_LoadingArtists" xml:space="preserve">
-    <value>Loading Artists</value>
+    <value>Загрузка исполнителей</value>
   </data>
   <data name="Discover_LoadingPopularTabs" xml:space="preserve">
-    <value>Loading tabs by popularity...</value>
+    <value>Загрузка популярных табулатур..</value>
   </data>
   <data name="Discover_NothingFound" xml:space="preserve">
-    <value>There are currently no available tabs for this artist. Check back in the future and if a tab will become available, we will deliver it to you.</value>
+    <value>К сожалению, табулатуры выбранного исполнителя отсутствуют в базе. Пожалуйста, попробуйте позже.</value>
   </data>
   <data name="Discover_SuggestionsTitle" xml:space="preserve">
-    <value>SUGGESTIONS BASED ON YOUR MUSIC TASTE</value>
+    <value>ПОИСК ПО ПРЕДПОЧТЕНИЯМ</value>
   </data>
   <data name="Error_Message" xml:space="preserve">
     <value>К сожалению, мы не можем обработать эту ошибку. Если она будет повторяться, попробуйте, пожалуйста, переустановить приложение. Затем, вы можете скачать предварительно синхронизированные табулатуры назад. Ошибка:</value>
@@ -218,7 +217,7 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>еще..</value>
   </data>
   <data name="Group_PopularTabsOnline" xml:space="preserve">
-    <value>popular tabs online</value>
+    <value>Популярное онлайн</value>
   </data>
   <data name="Group_Tabs" xml:space="preserve">
     <value>табулатуры</value>
@@ -376,7 +375,7 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>оценить</value>
   </data>
   <data name="Startup_RemoveAds" xml:space="preserve">
-    <value>remove ads &amp; get pro</value>
+    <value>установить pro версию..</value>
   </data>
   <data name="Startup_Select" xml:space="preserve">
     <value>выбор</value>
@@ -436,10 +435,10 @@ For suggestions, feedback or questions please don't hesitate to contact us.</val
     <value>Необходимо интернет соединение для проигрывания</value>
   </data>
   <data name="Tab_PurchaseProHeader" xml:space="preserve">
-    <value>One time question; Would you like to support us?</value>
+    <value>Нравится проект и хотите поддержать нас?</value>
   </data>
   <data name="Tab_PurchaseProText" xml:space="preserve">
-    <value>Why see ugly ads in this nice application all the time? You can do a little help by purchasing the pro version so that we can update our guitar equipment and you will not be seeing the ads anymore!</value>
+    <value>Надоела реклама? Купите про-версию и поддержите проект! Качайте любимые табулатуры без рекламы!</value>
   </data>
   <data name="Tab_RateTheApp" xml:space="preserve">
     <value>Оценить приложение?</value>
