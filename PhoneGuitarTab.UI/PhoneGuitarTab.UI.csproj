@@ -451,9 +451,11 @@
     <Content Include="Images\genres\90s.jpg" />
     <Content Include="Images\genres\alternative.jpg" />
     <Content Include="Images\genres\classicrock.jpg" />
+    <Content Include="Images\genres\country.jpg" />
     <Content Include="Images\genres\heavymetal.jpg" />
     <Content Include="Images\genres\indie.jpg" />
     <Content Include="Images\genres\jazz.jpg" />
+    <Content Include="Images\genres\latino.jpg" />
     <Content Include="Images\genres\pop.jpg" />
     <Content Include="Images\genres\punk.jpg" />
     <Content Include="Images\genres\rock.jpg" />

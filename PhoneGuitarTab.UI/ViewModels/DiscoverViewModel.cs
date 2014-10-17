@@ -229,6 +229,10 @@ namespace PhoneGuitarTab.UI.ViewModels
                 new Group { Name = "PUNK", ExtraLargeImageUrl = "/Images/genres/punk.jpg" }));
             this.SuggestedItems.Add(new ObservableTuple<ItemType, Group>(ItemType.ByGenre,
                 new Group { Name = "POP", ExtraLargeImageUrl = "/Images/genres/pop.jpg" }));
+            this.SuggestedItems.Add(new ObservableTuple<ItemType, Group>(ItemType.ByGenre,
+               new Group { Name = "COUNTRY", ExtraLargeImageUrl = "/Images/genres/country.jpg" }));
+            this.SuggestedItems.Add(new ObservableTuple<ItemType, Group>(ItemType.ByGenre,
+               new Group { Name = "LATINO", ExtraLargeImageUrl = "/Images/genres/latino.jpg" }));
         }
 
         private void InitSuggestedBandsHeader()
