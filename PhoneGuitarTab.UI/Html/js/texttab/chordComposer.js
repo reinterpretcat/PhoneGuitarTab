@@ -31,7 +31,7 @@ function getChordPopUpVisibility() {
 function closeChordPopUp() {
     if (isChordPopUpOpen == 'true') {
         vex.close($vexContent.data().vex.id);
-        isChordPopUpOpen = 'false'
+        isChordPopUpOpen = 'false';
     }     
 }
 
@@ -80,6 +80,7 @@ function getChordPositions(chord) {
         case 'Asus2':
             return 'X02200';
         case 'Asus4':
+        case 'Asus':
             return 'X02230';
 
         //A# & Bb
@@ -138,6 +139,8 @@ function getChordPositions(chord) {
             return 'X13311';
         case 'A#sus4':
         case 'Bbsus4':
+        case 'A#sus':
+        case 'Bbsus':
             return 'X11341';
 
             //B
@@ -177,6 +180,7 @@ function getChordPositions(chord) {
         case 'Bsus2':
             return 'X24422';
         case 'Bsus4':
+        case 'Bsus':
             return 'X24452';
 
             //C
@@ -216,6 +220,7 @@ function getChordPositions(chord) {
         case 'Csus2':
             return 'X30013';
         case 'Csus4':
+        case 'Csus':
             return 'X3301X';
 
             //C# & Db
@@ -274,6 +279,8 @@ function getChordPositions(chord) {
             return 'XX112X';
         case 'C#sus4':
         case 'Dbsus4':
+        case 'C#sus':
+        case 'Dbsus':
             return 'X46674';
       
 
@@ -314,6 +321,7 @@ function getChordPositions(chord) {
         case 'Dsus2':
             return 'XX0230';
         case 'Dsus4':
+        case 'Dsus':
             return 'XX0233';
 
             //D# & Eb
@@ -372,6 +380,8 @@ function getChordPositions(chord) {
             return 'XX1341';
         case 'D#sus4':
         case 'Ebsus4':
+        case 'D#sus':
+        case 'Ebsus':
             return 'XX1344';
 
             //E
@@ -411,6 +421,7 @@ function getChordPositions(chord) {
         case 'Esus2':
             return 'XX2452';
         case 'Esus4':
+        case 'Esus':
             return '022200';
 
 
@@ -451,6 +462,7 @@ function getChordPositions(chord) {
         case 'Fsus2':
             return 'XX3011';
         case 'Fsus4':
+        case 'Fsus':
             return '133311';
 
             //F# & Gb
@@ -509,6 +521,8 @@ function getChordPositions(chord) {
             return '2XX122';
         case 'F#sus4':
         case 'Gbsus4':
+        case 'F#sus':
+        case 'Gbsus':
             return '244422';
 
 
@@ -549,6 +563,7 @@ function getChordPositions(chord) {
         case 'Gsus2':
             return 'XX3011';
         case 'Gsus4':
+        case 'Gsus':
             return '300233';
 
             //G# & Ab
@@ -607,6 +622,8 @@ function getChordPositions(chord) {
             return 'X11144';
         case 'G#sus4':
         case 'Absus4':
+        case 'G#sus':
+        case 'Absus':
             return 'XX1124';
 
 
@@ -656,6 +673,7 @@ function getFingers(chord) {
         case 'Asus2':
             return '--12--';
         case 'Asus4':
+        case 'Asus':
             return '--123-';
 
             //A# & Bb
@@ -714,6 +732,8 @@ function getFingers(chord) {
             return '-13411';
         case 'A#sus4':
         case 'Bbsus4':
+        case 'A#sus':
+        case 'Bbsus':
             return '-11341';
 
             //B
@@ -753,6 +773,7 @@ function getFingers(chord) {
         case 'Bsus2':
             return '-13411';
         case 'Bsus4':
+        case 'Bsus':
             return '-12341';
 
             //C
@@ -792,6 +813,7 @@ function getFingers(chord) {
         case 'Csus2':
             return '-3--14';
         case 'Csus4':
+        case 'Csus':
             return '-34-1-';
 
             //C# & Db
@@ -850,6 +872,8 @@ function getFingers(chord) {
             return '--113-';
         case 'C#sus4':
         case 'Dbsus4':
+        case 'C#sus':
+        case 'Dbsus':
             return '-12341';
 
             //D
@@ -889,6 +913,7 @@ function getFingers(chord) {
         case 'Dsus2':
             return '---13-';
         case 'Dsus4':
+        case 'Dsus':
             return '---134';
 
             //D# & Eb
@@ -947,6 +972,8 @@ function getFingers(chord) {
             return '--1341';
         case 'D#sus4':
         case 'Ebsus4':
+        case 'D#sus':
+        case 'Ebsus':
             return '--1344';
 
             //E
@@ -986,6 +1013,7 @@ function getFingers(chord) {
         case 'Esus2':
             return '--1341';
         case 'Esus4':
+        case 'Esus':
             return '-234--';
 
             //F
@@ -1025,6 +1053,7 @@ function getFingers(chord) {
         case 'Fsus2':
             return '--3-11';
         case 'Fsus4':
+        case 'Fsus':
             return '123411';
 
             //F# & Gb
@@ -1083,6 +1112,8 @@ function getFingers(chord) {
             return '2--134';
         case 'F#sus4':
         case 'Gbsus4':
+        case 'F#sus':
+        case 'Gbsus':
             return '133311';
 
             //G
@@ -1122,6 +1153,7 @@ function getFingers(chord) {
         case 'Gsus2':
             return '2--134';
         case 'Gsus4':
+        case 'Gsus':
             return '133311';
 
             //G# & Ab
@@ -1180,6 +1212,8 @@ function getFingers(chord) {
             return '-11144';
         case 'G#sus4':
         case 'Absus4':
+        case 'G#sus':
+        case 'Absus':
             return '--1124';
         default:
             return '------';
