@@ -133,7 +133,7 @@
         </controls:Pivot>
 
         <Grid Name="AdContainer">
-            <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Bottom" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}"  />
+            <ui:AdControl ApplicationId="398538e9-3217-46b2-90d2-58bd4208d95f" AdUnitId="10867699" HorizontalAlignment="Center" Height="80" VerticalAlignment="Bottom" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}"  />
         </Grid>
     </Grid>
 

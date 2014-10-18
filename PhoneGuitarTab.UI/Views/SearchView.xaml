@@ -310,7 +310,7 @@
             </ring:ProgressRing>
         </StackPanel>
         <Grid Name="AdContainer" >
-            <ui:AdControl ApplicationId="test_client" AdUnitId="Image480_80" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}" />
+            <ui:AdControl ApplicationId="398538e9-3217-46b2-90d2-58bd4208d95f" AdUnitId="10867696" HorizontalAlignment="Center" Height="80" VerticalAlignment="Top" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}" />
         </Grid>
         <phone:LongListSelector x:Name="tabsList"
                             toolkit:TiltEffect.IsTiltEnabled="True"

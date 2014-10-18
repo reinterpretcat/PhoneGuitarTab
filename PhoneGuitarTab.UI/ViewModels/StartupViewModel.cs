@@ -127,7 +127,7 @@ namespace PhoneGuitarTab.UI.ViewModels
         {
             MarketplaceDetailTask marketplaceDetailTask = new MarketplaceDetailTask();
             //Change the app GUID to the pro version
-            marketplaceDetailTask.ContentIdentifier = "29a4c1d6-3cb0-4051-97b1-56813a4340c4";
+            marketplaceDetailTask.ContentIdentifier = "00a9816d-8059-4ebb-aff7-277f0b5366b1";
             marketplaceDetailTask.ContentType = MarketplaceContentType.Applications;
 
             marketplaceDetailTask.Show();

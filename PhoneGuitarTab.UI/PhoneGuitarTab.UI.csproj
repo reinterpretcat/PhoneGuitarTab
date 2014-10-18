@@ -333,7 +333,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicationIconPro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BackgroundPro.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Background.png">
@@ -500,6 +506,7 @@
     <Content Include="Images\light\refresh.png" />
     <Content Include="Images\light\next.png" />
     <Content Include="Images\light\Text-Justify-Align_light.png" />
+    <Content Include="SplashScreenImagePro.jpg" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
