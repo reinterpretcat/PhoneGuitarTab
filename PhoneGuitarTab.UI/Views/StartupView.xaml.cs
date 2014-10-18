@@ -48,59 +48,7 @@ namespace PhoneGuitarTab.UI.Views
 
         private void MainPanorama_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            //"Bindable.ApplicationBar property needs to be set on a PhoneApplicationPage element."
-            //Therefore this piece of code can not be moved to ViewModel
-
-            //Switch appbars depending on the selected pivot.
-            switch (MainPanorama.SelectedIndex)
-            {  //suggestions
-                case 3:
-                    if (vm.IsAdEnabled)
-                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
-                    else
-                    Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
-                    
-                    if (MainPanorama.Background.Opacity > 0.21)
-                        OpacityFadeOut.Begin();                  
-                    break;
-             
-                    //discover
-                case 2:
-                    if (vm.IsAdEnabled)
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
-                    else
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
-                    if (MainPanorama.Background.Opacity > 0.21)
-                        OpacityFadeOut.Begin();
-                    vm.RequestBandSuggestion.Execute(null);
-                    break;
-                    //groups
-                case 1:
-                    if (vm.IsAdEnabled)
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
-                    else
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
-                    if (MainPanorama.Background.Opacity > 0.21)
-                        OpacityFadeOut.Begin();
-                   
-                    break;
-                    //Tabs
-                case 0:
-                    if (vm.IsAdEnabled)
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBarAdEnabled"]);
-                    else
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]);
-                    if (MainPanorama.Background.Opacity < 0.6)
-                        OpacityFadeIn.Begin();
-                    break;
-
-                default:
-                    if (vm.IsAdEnabled)
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
-                    else
-                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);              
-                    break;
-            }
+            UpdateAppBarAndDoUIActions();
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -123,10 +71,64 @@ namespace PhoneGuitarTab.UI.Views
 
         private void MainPanorama_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if(vm.IsAdEnabled)
-            Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBarAdEnabled"]);
-            else
-            Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]);
+            UpdateAppBarAndDoUIActions();
+        }
+
+        private void UpdateAppBarAndDoUIActions()
+        {
+            //"Bindable.ApplicationBar property needs to be set on a PhoneApplicationPage element."
+            //Therefore this piece of code can not be moved to ViewModel
+
+            //Switch appbars depending on the selected pivot.
+            switch (MainPanorama.SelectedIndex)
+            {  //suggestions
+                case 3:
+                    if (vm.IsAdEnabled)
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
+                    else
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
+
+                    if (MainPanorama.Background.Opacity > 0.21)
+                        OpacityFadeOut.Begin();
+                    break;
+
+                //discover
+                case 2:
+                    if (vm.IsAdEnabled)
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
+                    else
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
+                    if (MainPanorama.Background.Opacity > 0.21)
+                        OpacityFadeOut.Begin();
+                    vm.RequestBandSuggestion.Execute(null);
+                    break;
+                //groups
+                case 1:
+                    if (vm.IsAdEnabled)
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
+                    else
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
+                    if (MainPanorama.Background.Opacity > 0.21)
+                        OpacityFadeOut.Begin();
+
+                    break;
+                //Tabs
+                case 0:
+                    if (vm.IsAdEnabled)
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBarAdEnabled"]);
+                    else
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["TabsAppBar"]);
+                    if (MainPanorama.Background.Opacity < 0.6)
+                        OpacityFadeIn.Begin();
+                    break;
+
+                default:
+                    if (vm.IsAdEnabled)
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["DefaultAdEnabled"]);
+                    else
+                        Bindable.SetApplicationBar(this, (BindableApplicationBar)Resources["Default"]);
+                    break;
+            }
         }
     }
 }
