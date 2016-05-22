@@ -12,11 +12,10 @@
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                    xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
                     x:Name="root"
                     DataContext="{Binding Search, Source={StaticResource Locator}}"
                     Style="{StaticResource TransitionPageStyle}"
-                    mc:Ignorable="d">
+                    mc:Ignorable="d" Orientation="Portrait">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="BackKeyPress">
             <Command:ExecuteCommandAction Command="{Binding Collection.RefreshData, Source={StaticResource Locator}}" />

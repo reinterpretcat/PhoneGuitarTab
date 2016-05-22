@@ -12,7 +12,6 @@
                xmlns:Views="clr-namespace:PhoneGuitarTab.Core.Views;assembly=PhoneGuitarTab.Core" 
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
                xmlns:panaromaItems="clr-namespace:PhoneGuitarTab.UI.Views.PanaromaItems"
-               xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"               
                DataContext="{Binding Startup,  Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                FontSize="{StaticResource PhoneFontSizeNormal}"

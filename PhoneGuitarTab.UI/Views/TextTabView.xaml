@@ -9,7 +9,6 @@
                xmlns:Controls="clr-namespace:PhoneGuitarTab.UI.Controls" x:Class="PhoneGuitarTab.UI.TextTabView"
                x:Name="root"
                xmlns:custom="clr-namespace:PhoneGuitarTab.Controls;assembly=PhoneGuitarTab.Controls"
-               xmlns:ui="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
                DataContext="{Binding TextTab, Source={StaticResource Locator}}"
                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                FontSize="{StaticResource PhoneFontSizeNormal}"
