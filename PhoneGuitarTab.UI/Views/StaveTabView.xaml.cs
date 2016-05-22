@@ -136,7 +136,8 @@ namespace PhoneGuitarTab.UI.Views
             {
                 ApplicationBar.Mode = ApplicationBarMode.Minimized;
                 //Set the adcontrol margin depending on the app bar mode
-                AdControl.Margin = new Thickness(0, 0, 0, 30);
+                //Refactoring to 8.1
+                //AdControl.Margin = new Thickness(0, 0, 0, 30);
             }
                
         }
@@ -254,15 +255,17 @@ namespace PhoneGuitarTab.UI.Views
             {
                 ApplicationBar.IsVisible = false;
                 //Set the adcontrol margins depending on the orientation
-                AdControl.Margin = new Thickness(0, 0, 0, 0);
-                AdControl.HorizontalAlignment = HorizontalAlignment.Right;
+                //Refactoring to 8.1
+                //AdControl.Margin = new Thickness(0, 0, 0, 0);
+                //AdControl.HorizontalAlignment = HorizontalAlignment.Right;
             }
             else
             {
                 ApplicationBar.IsVisible = true;
                 //Set the adcontrol margins depending on the orientation
-                AdControl.Margin = new Thickness(0, 0, 0, 30);
-                AdControl.HorizontalAlignment = HorizontalAlignment.Center;
+                //Refactoring to 8.1
+                //AdControl.Margin = new Thickness(0, 0, 0, 30);
+                //AdControl.HorizontalAlignment = HorizontalAlignment.Center;
             }
         }
 

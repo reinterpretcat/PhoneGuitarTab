@@ -90,9 +90,9 @@
             </toolkit:ListPicker>
 
         </Grid>
-        <Grid Name="AdContainer">
+        <!--<Grid Name="AdContainer">
             <ui:AdControl x:Name="AdControl" ApplicationId="398538e9-3217-46b2-90d2-58bd4208d95f" AdUnitId="10867701" HorizontalAlignment="Center" Height="80" VerticalAlignment="Bottom" Width="480" Visibility="{Binding IsAdEnabled, Converter={StaticResource boolVisibility}}" Margin="0,0,0,72"  />
-        </Grid>
+        </Grid>-->
     </Grid>
    
 
