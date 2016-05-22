@@ -127,7 +127,7 @@
     <value>PhoneGuitarTab</value>
   </data>
   <data name="About_CompanyUrl" xml:space="preserve">
-    <value>http://phoneguitartab.codeplex.com</value>
+    <value>https://github.com/reinterpretcat/PhoneGuitarTab</value>
   </data>
   <data name="About_Copyright" xml:space="preserve">
     <value>Copyright © 2011-2014 Phone guitar tab</value>
